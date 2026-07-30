@@ -1,0 +1,747 @@
+.
+├── ./apps
+│   ├── ./apps/admin
+│   │   ├── ./apps/admin/app
+│   │   │   ├── ./apps/admin/app/(dashboard)
+│   │   │   │   ├── ./apps/admin/app/(dashboard)/analytics
+│   │   │   │   │   └── ./apps/admin/app/(dashboard)/analytics/page.tsx
+│   │   │   │   ├── ./apps/admin/app/(dashboard)/applications
+│   │   │   │   │   ├── ./apps/admin/app/(dashboard)/applications/[id]
+│   │   │   │   │   │   └── ./apps/admin/app/(dashboard)/applications/[id]/page.tsx
+│   │   │   │   │   └── ./apps/admin/app/(dashboard)/applications/page.tsx
+│   │   │   │   ├── ./apps/admin/app/(dashboard)/employers
+│   │   │   │   │   ├── ./apps/admin/app/(dashboard)/employers/[id]
+│   │   │   │   │   │   └── ./apps/admin/app/(dashboard)/employers/[id]/page.tsx
+│   │   │   │   │   └── ./apps/admin/app/(dashboard)/employers/page.tsx
+│   │   │   │   ├── ./apps/admin/app/(dashboard)/jobs
+│   │   │   │   │   ├── ./apps/admin/app/(dashboard)/jobs/[id]
+│   │   │   │   │   │   └── ./apps/admin/app/(dashboard)/jobs/[id]/page.tsx
+│   │   │   │   │   └── ./apps/admin/app/(dashboard)/jobs/page.tsx
+│   │   │   │   ├── ./apps/admin/app/(dashboard)/jobseekers
+│   │   │   │   │   ├── ./apps/admin/app/(dashboard)/jobseekers/[id]
+│   │   │   │   │   │   └── ./apps/admin/app/(dashboard)/jobseekers/[id]/page.tsx
+│   │   │   │   │   └── ./apps/admin/app/(dashboard)/jobseekers/page.tsx
+│   │   │   │   ├── ./apps/admin/app/(dashboard)/layout.tsx
+│   │   │   │   ├── ./apps/admin/app/(dashboard)/notifications
+│   │   │   │   │   └── ./apps/admin/app/(dashboard)/notifications/page.tsx
+│   │   │   │   ├── ./apps/admin/app/(dashboard)/page.tsx
+│   │   │   │   ├── ./apps/admin/app/(dashboard)/reports-moderation
+│   │   │   │   │   ├── ./apps/admin/app/(dashboard)/reports-moderation/[id]
+│   │   │   │   │   │   └── ./apps/admin/app/(dashboard)/reports-moderation/[id]/page.tsx
+│   │   │   │   │   └── ./apps/admin/app/(dashboard)/reports-moderation/page.tsx
+│   │   │   │   ├── ./apps/admin/app/(dashboard)/settings
+│   │   │   │   │   └── ./apps/admin/app/(dashboard)/settings/page.tsx
+│   │   │   │   ├── ./apps/admin/app/(dashboard)/subscription-payments
+│   │   │   │   │   └── ./apps/admin/app/(dashboard)/subscription-payments/page.tsx
+│   │   │   │   └── ./apps/admin/app/(dashboard)/verification
+│   │   │   │       ├── ./apps/admin/app/(dashboard)/verification/[id]
+│   │   │   │       │   └── ./apps/admin/app/(dashboard)/verification/[id]/page.tsx
+│   │   │   │       └── ./apps/admin/app/(dashboard)/verification/page.tsx
+│   │   │   ├── ./apps/admin/app/favicon.ico
+│   │   │   ├── ./apps/admin/app/globals.css
+│   │   │   ├── ./apps/admin/app/layout.tsx
+│   │   │   └── ./apps/admin/app/login
+│   │   │       └── ./apps/admin/app/login/page.tsx
+│   │   ├── ./apps/admin/components
+│   │   │   ├── ./apps/admin/components/action-modal.tsx
+│   │   │   ├── ./apps/admin/components/header.tsx
+│   │   │   ├── ./apps/admin/components/management-header.tsx
+│   │   │   └── ./apps/admin/components/sidebar.tsx
+│   │   ├── ./apps/admin/context
+│   │   │   └── ./apps/admin/context/auth-context.tsx
+│   │   ├── ./apps/admin/eslint.config.mjs
+│   │   ├── ./apps/admin/features
+│   │   │   ├── ./apps/admin/features/analytics
+│   │   │   │   └── ./apps/admin/features/analytics/components
+│   │   │   │       ├── ./apps/admin/features/analytics/components/analytics-charts.tsx
+│   │   │   │       ├── ./apps/admin/features/analytics/components/analytics-overview.tsx
+│   │   │   │       └── ./apps/admin/features/analytics/components/job-status-chart.tsx
+│   │   │   ├── ./apps/admin/features/applications
+│   │   │   │   └── ./apps/admin/features/applications/components
+│   │   │   │       ├── ./apps/admin/features/applications/components/applications-stats.tsx
+│   │   │   │       └── ./apps/admin/features/applications/components/applications-table.tsx
+│   │   │   ├── ./apps/admin/features/auth
+│   │   │   │   ├── ./apps/admin/features/auth/components
+│   │   │   │   │   ├── ./apps/admin/features/auth/components/forgot-password-form.tsx
+│   │   │   │   │   └── ./apps/admin/features/auth/components/login-form.tsx
+│   │   │   │   └── ./apps/admin/features/auth/lib
+│   │   │   │       └── ./apps/admin/features/auth/lib/auth-schemas.ts
+│   │   │   ├── ./apps/admin/features/dashboard
+│   │   │   │   └── ./apps/admin/features/dashboard/components
+│   │   │   │       ├── ./apps/admin/features/dashboard/components/bottom-sections.tsx
+│   │   │   │       ├── ./apps/admin/features/dashboard/components/dashboard-charts.tsx
+│   │   │   │       └── ./apps/admin/features/dashboard/components/dashboard-stats.tsx
+│   │   │   ├── ./apps/admin/features/employers
+│   │   │   │   └── ./apps/admin/features/employers/components
+│   │   │   │       ├── ./apps/admin/features/employers/components/employers-stats.tsx
+│   │   │   │       └── ./apps/admin/features/employers/components/employers-table.tsx
+│   │   │   ├── ./apps/admin/features/jobs
+│   │   │   │   ├── ./apps/admin/features/jobs/components
+│   │   │   │   │   ├── ./apps/admin/features/jobs/components/jobs-stats.tsx
+│   │   │   │   │   └── ./apps/admin/features/jobs/components/jobs-table.tsx
+│   │   │   │   └── ./apps/admin/features/jobs/README.md
+│   │   │   ├── ./apps/admin/features/jobseekers
+│   │   │   │   └── ./apps/admin/features/jobseekers/components
+│   │   │   │       ├── ./apps/admin/features/jobseekers/components/jobseekers-stats.tsx
+│   │   │   │       └── ./apps/admin/features/jobseekers/components/jobseekers-table.tsx
+│   │   │   ├── ./apps/admin/features/reports
+│   │   │   │   └── ./apps/admin/features/reports/components
+│   │   │   │       ├── ./apps/admin/features/reports/components/moderation-queue.tsx
+│   │   │   │       ├── ./apps/admin/features/reports/components/moderation-stats.tsx
+│   │   │   │       └── ./apps/admin/features/reports/components/reports-table.tsx
+│   │   │   ├── ./apps/admin/features/settings
+│   │   │   │   └── ./apps/admin/features/settings/components
+│   │   │   │       ├── ./apps/admin/features/settings/components/appearance-settings.tsx
+│   │   │   │       ├── ./apps/admin/features/settings/components/general-settings.tsx
+│   │   │   │       ├── ./apps/admin/features/settings/components/integration-settings.tsx
+│   │   │   │       ├── ./apps/admin/features/settings/components/notification-settings.tsx
+│   │   │   │       ├── ./apps/admin/features/settings/components/security-settings.tsx
+│   │   │   │       └── ./apps/admin/features/settings/components/settings-sidebar.tsx
+│   │   │   ├── ./apps/admin/features/subscriptions
+│   │   │   │   └── ./apps/admin/features/subscriptions/components
+│   │   │   │       ├── ./apps/admin/features/subscriptions/components/active-subscriptions.tsx
+│   │   │   │       ├── ./apps/admin/features/subscriptions/components/payment-history.tsx
+│   │   │   │       ├── ./apps/admin/features/subscriptions/components/subscription-plans.tsx
+│   │   │   │       └── ./apps/admin/features/subscriptions/components/subscription-stats.tsx
+│   │   │   ├── ./apps/admin/features/transactions
+│   │   │   │   └── ./apps/admin/features/transactions/README.md
+│   │   │   ├── ./apps/admin/features/users
+│   │   │   │   └── ./apps/admin/features/users/README.md
+│   │   │   └── ./apps/admin/features/verification
+│   │   │       ├── ./apps/admin/features/verification/components
+│   │   │       │   ├── ./apps/admin/features/verification/components/verification-stats.tsx
+│   │   │       │   └── ./apps/admin/features/verification/components/verification-table.tsx
+│   │   │       └── ./apps/admin/features/verification/README.md
+│   │   ├── ./apps/admin/.gitignore
+│   │   ├── ./apps/admin/lib
+│   │   │   ├── ./apps/admin/lib/api.ts
+│   │   │   ├── ./apps/admin/lib/env.ts
+│   │   │   └── ./apps/admin/lib/utils.ts
+│   │   ├── ./apps/admin/middleware.ts
+│   │   ├── ./apps/admin/.next
+│   │   │   └── ./apps/admin/.next/trace
+│   │   ├── ./apps/admin/next.config.ts
+│   │   ├── ./apps/admin/package.json
+│   │   ├── ./apps/admin/postcss.config.mjs
+│   │   ├── ./apps/admin/public
+│   │   │   ├── ./apps/admin/public/file.svg
+│   │   │   ├── ./apps/admin/public/globe.svg
+│   │   │   ├── ./apps/admin/public/next.svg
+│   │   │   ├── ./apps/admin/public/vercel.svg
+│   │   │   └── ./apps/admin/public/window.svg
+│   │   ├── ./apps/admin/README.md
+│   │   └── ./apps/admin/tsconfig.json
+│   ├── ./apps/client
+│   │   ├── ./apps/client/app
+│   │   │   ├── ./apps/client/app/about-us
+│   │   │   │   └── ./apps/client/app/about-us/page.tsx
+│   │   │   ├── ./apps/client/app/contact-us
+│   │   │   │   └── ./apps/client/app/contact-us/page.tsx
+│   │   │   ├── ./apps/client/app/dashboard
+│   │   │   │   ├── ./apps/client/app/dashboard/applications
+│   │   │   │   │   └── ./apps/client/app/dashboard/applications/page.tsx
+│   │   │   │   ├── ./apps/client/app/dashboard/employer
+│   │   │   │   │   ├── ./apps/client/app/dashboard/employer/applications
+│   │   │   │   │   │   ├── ./apps/client/app/dashboard/employer/applications/[applicantId]
+│   │   │   │   │   │   │   └── ./apps/client/app/dashboard/employer/applications/[applicantId]/page.tsx
+│   │   │   │   │   │   └── ./apps/client/app/dashboard/employer/applications/page.tsx
+│   │   │   │   │   ├── ./apps/client/app/dashboard/employer/create
+│   │   │   │   │   │   ├── ./apps/client/app/dashboard/employer/create/page.tsx
+│   │   │   │   │   │   └── ./apps/client/app/dashboard/employer/create/preview
+│   │   │   │   │   │       └── ./apps/client/app/dashboard/employer/create/preview/page.tsx
+│   │   │   │   │   ├── ./apps/client/app/dashboard/employer/find-workers
+│   │   │   │   │   │   └── ./apps/client/app/dashboard/employer/find-workers/page.tsx
+│   │   │   │   │   ├── ./apps/client/app/dashboard/employer/jobs
+│   │   │   │   │   │   └── ./apps/client/app/dashboard/employer/jobs/[id]
+│   │   │   │   │   │       └── ./apps/client/app/dashboard/employer/jobs/[id]/edit
+│   │   │   │   │   │           └── ./apps/client/app/dashboard/employer/jobs/[id]/edit/page.tsx
+│   │   │   │   │   ├── ./apps/client/app/dashboard/employer/messages
+│   │   │   │   │   │   └── ./apps/client/app/dashboard/employer/messages/page.tsx
+│   │   │   │   │   ├── ./apps/client/app/dashboard/employer/my-jobs
+│   │   │   │   │   │   └── ./apps/client/app/dashboard/employer/my-jobs/page.tsx
+│   │   │   │   │   ├── ./apps/client/app/dashboard/employer/notifications
+│   │   │   │   │   │   └── ./apps/client/app/dashboard/employer/notifications/page.tsx
+│   │   │   │   │   ├── ./apps/client/app/dashboard/employer/page.tsx
+│   │   │   │   │   └── ./apps/client/app/dashboard/employer/profile
+│   │   │   │   │       └── ./apps/client/app/dashboard/employer/profile/page.tsx
+│   │   │   │   ├── ./apps/client/app/dashboard/find-jobs
+│   │   │   │   │   └── ./apps/client/app/dashboard/find-jobs/page.tsx
+│   │   │   │   ├── ./apps/client/app/dashboard/messages
+│   │   │   │   │   └── ./apps/client/app/dashboard/messages/page.tsx
+│   │   │   │   ├── ./apps/client/app/dashboard/notifications
+│   │   │   │   │   └── ./apps/client/app/dashboard/notifications/page.tsx
+│   │   │   │   ├── ./apps/client/app/dashboard/page.tsx
+│   │   │   │   ├── ./apps/client/app/dashboard/profile
+│   │   │   │   │   ├── ./apps/client/app/dashboard/profile/edit
+│   │   │   │   │   │   └── ./apps/client/app/dashboard/profile/edit/page.tsx
+│   │   │   │   │   └── ./apps/client/app/dashboard/profile/page.tsx
+│   │   │   │   └── ./apps/client/app/dashboard/saved-jobs
+│   │   │   │       └── ./apps/client/app/dashboard/saved-jobs/page.tsx
+│   │   │   ├── ./apps/client/app/favicon.ico
+│   │   │   ├── ./apps/client/app/find-workers
+│   │   │   │   └── ./apps/client/app/find-workers/page.tsx
+│   │   │   ├── ./apps/client/app/fonts
+│   │   │   │   ├── ./apps/client/app/fonts/GeistMonoVF.woff
+│   │   │   │   └── ./apps/client/app/fonts/GeistVF.woff
+│   │   │   ├── ./apps/client/app/forgot-password
+│   │   │   │   └── ./apps/client/app/forgot-password/page.tsx
+│   │   │   ├── ./apps/client/app/globals.css
+│   │   │   ├── ./apps/client/app/jobs
+│   │   │   │   ├── ./apps/client/app/jobs/[id]
+│   │   │   │   │   └── ./apps/client/app/jobs/[id]/page.tsx
+│   │   │   │   └── ./apps/client/app/jobs/page.tsx
+│   │   │   ├── ./apps/client/app/layout.tsx
+│   │   │   ├── ./apps/client/app/login
+│   │   │   │   └── ./apps/client/app/login/page.tsx
+│   │   │   ├── ./apps/client/app/onboarding
+│   │   │   │   └── ./apps/client/app/onboarding/page.tsx
+│   │   │   ├── ./apps/client/app/page.module.css
+│   │   │   ├── ./apps/client/app/page.tsx
+│   │   │   ├── ./apps/client/app/register
+│   │   │   │   ├── ./apps/client/app/register/client
+│   │   │   │   │   └── ./apps/client/app/register/client/page.tsx
+│   │   │   │   ├── ./apps/client/app/register/jobseeker
+│   │   │   │   │   └── ./apps/client/app/register/jobseeker/page.tsx
+│   │   │   │   └── ./apps/client/app/register/page.tsx
+│   │   │   └── ./apps/client/app/verify-email
+│   │   │       └── ./apps/client/app/verify-email/page.tsx
+│   │   ├── ./apps/client/contexts
+│   │   │   ├── ./apps/client/contexts/auth-context.tsx
+│   │   │   ├── ./apps/client/contexts/notification-context.tsx
+│   │   │   └── ./apps/client/contexts/profile-context.tsx
+│   │   ├── ./apps/client/eslint.config.js
+│   │   ├── ./apps/client/features
+│   │   │   ├── ./apps/client/features/about
+│   │   │   │   ├── ./apps/client/features/about/about-page.tsx
+│   │   │   │   └── ./apps/client/features/about/components
+│   │   │   │       ├── ./apps/client/features/about/components/about-cta-section.tsx
+│   │   │   │       ├── ./apps/client/features/about/components/about-hero-section.tsx
+│   │   │   │       ├── ./apps/client/features/about/components/about-main-section.tsx
+│   │   │   │       └── ./apps/client/features/about/components/platform-impact-section.tsx
+│   │   │   ├── ./apps/client/features/applications
+│   │   │   │   └── ./apps/client/features/applications/README.md
+│   │   │   ├── ./apps/client/features/auth
+│   │   │   │   ├── ./apps/client/features/auth/components
+│   │   │   │   │   ├── ./apps/client/features/auth/components/auth-shell.tsx
+│   │   │   │   │   ├── ./apps/client/features/auth/components/forgot-password-form.tsx
+│   │   │   │   │   ├── ./apps/client/features/auth/components/login-form.tsx
+│   │   │   │   │   ├── ./apps/client/features/auth/components/register-form.tsx
+│   │   │   │   │   └── ./apps/client/features/auth/components/verify-email-form.tsx
+│   │   │   │   ├── ./apps/client/features/auth/lib
+│   │   │   │   │   └── ./apps/client/features/auth/lib/auth-schemas.ts
+│   │   │   │   └── ./apps/client/features/auth/README.md
+│   │   │   ├── ./apps/client/features/chat
+│   │   │   │   └── ./apps/client/features/chat/README.md
+│   │   │   ├── ./apps/client/features/contact
+│   │   │   │   ├── ./apps/client/features/contact/components
+│   │   │   │   │   ├── ./apps/client/features/contact/components/contact-details-card.tsx
+│   │   │   │   │   ├── ./apps/client/features/contact/components/contact-faq-section.tsx
+│   │   │   │   │   └── ./apps/client/features/contact/components/contact-form-card.tsx
+│   │   │   │   └── ./apps/client/features/contact/contact-page.tsx
+│   │   │   ├── ./apps/client/features/employer-dashboard
+│   │   │   │   ├── ./apps/client/features/employer-dashboard/components
+│   │   │   │   │   └── ./apps/client/features/employer-dashboard/components/employer-sidebar.tsx
+│   │   │   │   ├── ./apps/client/features/employer-dashboard/employer-applicant-profile-page.tsx
+│   │   │   │   ├── ./apps/client/features/employer-dashboard/employer-applications-page.tsx
+│   │   │   │   ├── ./apps/client/features/employer-dashboard/employer-create-job-page.tsx
+│   │   │   │   ├── ./apps/client/features/employer-dashboard/employer-dashboard-page.tsx
+│   │   │   │   ├── ./apps/client/features/employer-dashboard/employer-edit-job-page.tsx
+│   │   │   │   ├── ./apps/client/features/employer-dashboard/employer-find-workers-page.tsx
+│   │   │   │   ├── ./apps/client/features/employer-dashboard/employer-messages-page.tsx
+│   │   │   │   ├── ./apps/client/features/employer-dashboard/employer-my-jobs-page.tsx
+│   │   │   │   ├── ./apps/client/features/employer-dashboard/employer-notifications-page.tsx
+│   │   │   │   ├── ./apps/client/features/employer-dashboard/employer-onboarding.tsx
+│   │   │   │   ├── ./apps/client/features/employer-dashboard/employer-preview-job-page.tsx
+│   │   │   │   └── ./apps/client/features/employer-dashboard/employer-profile-page.tsx
+│   │   │   ├── ./apps/client/features/find-workers
+│   │   │   │   └── ./apps/client/features/find-workers/find-workers-page.tsx
+│   │   │   ├── ./apps/client/features/jobs
+│   │   │   │   ├── ./apps/client/features/jobs/job-detail-page.tsx
+│   │   │   │   ├── ./apps/client/features/jobs/jobs-page.tsx
+│   │   │   │   ├── ./apps/client/features/jobs/lib
+│   │   │   │   │   └── ./apps/client/features/jobs/lib/job-schemas.ts
+│   │   │   │   └── ./apps/client/features/jobs/README.md
+│   │   │   ├── ./apps/client/features/jobseeker-dashboard
+│   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/components
+│   │   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/components/dashboard-icons.tsx
+│   │   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/components/findJobsComponent.tsx
+│   │   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/components/jobseeker-sidebar.tsx
+│   │   │   │   │   └── ./apps/client/features/jobseeker-dashboard/components/profile-settings-layout.tsx
+│   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/dashboard-find-jobs-page.tsx
+│   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/edit-basic-profile-page.tsx
+│   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/jobseeker-applications-page.tsx
+│   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/jobseeker-dashboard-page.tsx
+│   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/jobseeker-profile-page.tsx
+│   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/messages-data.ts
+│   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/messages-page.tsx
+│   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/modals
+│   │   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/modals/change-email-modal.tsx
+│   │   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/modals/change-password-modal.tsx
+│   │   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/modals/edit-basic-profile-modal.tsx
+│   │   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/modals/edit-education-modal.tsx
+│   │   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/modals/edit-experience-modal.tsx
+│   │   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/modals/edit-profile-image-modal.tsx
+│   │   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/modals/edit-resumes-socials-modal.tsx
+│   │   │   │   │   └── ./apps/client/features/jobseeker-dashboard/modals/index.ts
+│   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/notifications-data.ts
+│   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/notifications-page.tsx
+│   │   │   │   ├── ./apps/client/features/jobseeker-dashboard/profile-data.ts
+│   │   │   │   └── ./apps/client/features/jobseeker-dashboard/saved-jobs-page.tsx
+│   │   │   ├── ./apps/client/features/landing
+│   │   │   │   ├── ./apps/client/features/landing/components
+│   │   │   │   │   ├── ./apps/client/features/landing/components/hero-section.tsx
+│   │   │   │   │   ├── ./apps/client/features/landing/components/how-it-works-section.tsx
+│   │   │   │   │   ├── ./apps/client/features/landing/components/landing-cta-section.tsx
+│   │   │   │   │   ├── ./apps/client/features/landing/components/landing-footer.tsx
+│   │   │   │   │   ├── ./apps/client/features/landing/components/landing-header.tsx
+│   │   │   │   │   ├── ./apps/client/features/landing/components/recent-jobs-section.tsx
+│   │   │   │   │   ├── ./apps/client/features/landing/components/start-journey-section.tsx
+│   │   │   │   │   └── ./apps/client/features/landing/components/top-categories-section.tsx
+│   │   │   │   └── ./apps/client/features/landing/landing-page.tsx
+│   │   │   ├── ./apps/client/features/landing-page
+│   │   │   │   ├── ./apps/client/features/landing-page/components
+│   │   │   │   │   ├── ./apps/client/features/landing-page/components/hero-section.tsx
+│   │   │   │   │   ├── ./apps/client/features/landing-page/components/how-it-works-section.tsx
+│   │   │   │   │   ├── ./apps/client/features/landing-page/components/landing-cta-section.tsx
+│   │   │   │   │   ├── ./apps/client/features/landing-page/components/landing-footer.tsx
+│   │   │   │   │   ├── ./apps/client/features/landing-page/components/landing-header.tsx
+│   │   │   │   │   ├── ./apps/client/features/landing-page/components/recent-jobs-section.tsx
+│   │   │   │   │   ├── ./apps/client/features/landing-page/components/start-journey-section.tsx
+│   │   │   │   │   └── ./apps/client/features/landing-page/components/top-categories-section.tsx
+│   │   │   │   └── ./apps/client/features/landing-page/landing-page.tsx
+│   │   │   └── ./apps/client/features/notifications
+│   │   │       └── ./apps/client/features/notifications/README.md
+│   │   ├── ./apps/client/.gitignore
+│   │   ├── ./apps/client/hooks
+│   │   │   ├── ./apps/client/hooks/use-current-user.ts
+│   │   │   └── ./apps/client/hooks/use-profile.ts
+│   │   ├── ./apps/client/lib
+│   │   │   ├── ./apps/client/lib/api.ts
+│   │   │   └── ./apps/client/lib/env.ts
+│   │   ├── ./apps/client/middleware.ts
+│   │   ├── ./apps/client/.next
+│   │   │   └── ./apps/client/.next/dev
+│   │   │       ├── ./apps/client/.next/dev/build-manifest.json
+│   │   │       ├── ./apps/client/.next/dev/cache
+│   │   │       │   ├── ./apps/client/.next/dev/cache/images
+│   │   │       │   │   └── ./apps/client/.next/dev/cache/images/FZYoepvaA0IzZjVUnCgLQ64fUmm0DavTPWjbXxveFx0
+│   │   │       │   │       └── ./apps/client/.next/dev/cache/images/FZYoepvaA0IzZjVUnCgLQ64fUmm0DavTPWjbXxveFx0/14400.1785460745808.nfjiZOtGKN_pzMfP50H8SA4DGvkOfQzuoqA_g-bsH34.Vy8iYjlmZjQtMTlmMDM4YTE1YTgi.webp
+│   │   │       │   ├── ./apps/client/.next/dev/cache/next-devtools-config.json
+│   │   │       │   ├── ./apps/client/.next/dev/cache/.rscinfo
+│   │   │       │   └── ./apps/client/.next/dev/cache/turbopack
+│   │   │       │       └── ./apps/client/.next/dev/cache/turbopack/0ca967b8
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000002.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000003.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000004.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000005.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000006.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000008.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000013.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000014.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000015.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000016.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000017.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000019.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000024.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000025.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000026.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000027.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000028.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000030.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000035.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000036.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000037.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000038.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000039.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000041.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000042.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000043.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000044.del
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000045.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000046.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000047.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000048.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000049.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000050.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000051.sst
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000052.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000053.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000054.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/00000055.meta
+│   │   │       │           ├── ./apps/client/.next/dev/cache/turbopack/0ca967b8/CURRENT
+│   │   │       │           └── ./apps/client/.next/dev/cache/turbopack/0ca967b8/LOG
+│   │   │       ├── ./apps/client/.next/dev/fallback-build-manifest.json
+│   │   │       ├── ./apps/client/.next/dev/lock
+│   │   │       ├── ./apps/client/.next/dev/logs
+│   │   │       │   └── ./apps/client/.next/dev/logs/next-development.log
+│   │   │       ├── ./apps/client/.next/dev/package.json
+│   │   │       ├── ./apps/client/.next/dev/prerender-manifest.json
+│   │   │       ├── ./apps/client/.next/dev/routes-manifest.json
+│   │   │       ├── ./apps/client/.next/dev/server
+│   │   │       │   ├── ./apps/client/.next/dev/server/app
+│   │   │       │   │   ├── ./apps/client/.next/dev/server/app/contact-us
+│   │   │       │   │   │   ├── ./apps/client/.next/dev/server/app/contact-us/page
+│   │   │       │   │   │   │   ├── ./apps/client/.next/dev/server/app/contact-us/page/app-paths-manifest.json
+│   │   │       │   │   │   │   ├── ./apps/client/.next/dev/server/app/contact-us/page/build-manifest.json
+│   │   │       │   │   │   │   ├── ./apps/client/.next/dev/server/app/contact-us/page/next-font-manifest.json
+│   │   │       │   │   │   │   ├── ./apps/client/.next/dev/server/app/contact-us/page/react-loadable-manifest.json
+│   │   │       │   │   │   │   └── ./apps/client/.next/dev/server/app/contact-us/page/server-reference-manifest.json
+│   │   │       │   │   │   ├── ./apps/client/.next/dev/server/app/contact-us/page_client-reference-manifest.js
+│   │   │       │   │   │   ├── ./apps/client/.next/dev/server/app/contact-us/page.js
+│   │   │       │   │   │   └── ./apps/client/.next/dev/server/app/contact-us/page.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/server/app/find-workers
+│   │   │       │   │   │   ├── ./apps/client/.next/dev/server/app/find-workers/page
+│   │   │       │   │   │   │   ├── ./apps/client/.next/dev/server/app/find-workers/page/app-paths-manifest.json
+│   │   │       │   │   │   │   ├── ./apps/client/.next/dev/server/app/find-workers/page/build-manifest.json
+│   │   │       │   │   │   │   ├── ./apps/client/.next/dev/server/app/find-workers/page/next-font-manifest.json
+│   │   │       │   │   │   │   ├── ./apps/client/.next/dev/server/app/find-workers/page/react-loadable-manifest.json
+│   │   │       │   │   │   │   └── ./apps/client/.next/dev/server/app/find-workers/page/server-reference-manifest.json
+│   │   │       │   │   │   ├── ./apps/client/.next/dev/server/app/find-workers/page_client-reference-manifest.js
+│   │   │       │   │   │   ├── ./apps/client/.next/dev/server/app/find-workers/page.js
+│   │   │       │   │   │   └── ./apps/client/.next/dev/server/app/find-workers/page.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/server/app/jobs
+│   │   │       │   │   │   ├── ./apps/client/.next/dev/server/app/jobs/page
+│   │   │       │   │   │   │   ├── ./apps/client/.next/dev/server/app/jobs/page/app-paths-manifest.json
+│   │   │       │   │   │   │   ├── ./apps/client/.next/dev/server/app/jobs/page/build-manifest.json
+│   │   │       │   │   │   │   ├── ./apps/client/.next/dev/server/app/jobs/page/next-font-manifest.json
+│   │   │       │   │   │   │   ├── ./apps/client/.next/dev/server/app/jobs/page/react-loadable-manifest.json
+│   │   │       │   │   │   │   └── ./apps/client/.next/dev/server/app/jobs/page/server-reference-manifest.json
+│   │   │       │   │   │   ├── ./apps/client/.next/dev/server/app/jobs/page_client-reference-manifest.js
+│   │   │       │   │   │   ├── ./apps/client/.next/dev/server/app/jobs/page.js
+│   │   │       │   │   │   └── ./apps/client/.next/dev/server/app/jobs/page.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/server/app/page
+│   │   │       │   │   │   ├── ./apps/client/.next/dev/server/app/page/app-paths-manifest.json
+│   │   │       │   │   │   ├── ./apps/client/.next/dev/server/app/page/build-manifest.json
+│   │   │       │   │   │   ├── ./apps/client/.next/dev/server/app/page/next-font-manifest.json
+│   │   │       │   │   │   ├── ./apps/client/.next/dev/server/app/page/react-loadable-manifest.json
+│   │   │       │   │   │   └── ./apps/client/.next/dev/server/app/page/server-reference-manifest.json
+│   │   │       │   │   ├── ./apps/client/.next/dev/server/app/page_client-reference-manifest.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/server/app/page.js
+│   │   │       │   │   └── ./apps/client/.next/dev/server/app/page.js.map
+│   │   │       │   ├── ./apps/client/.next/dev/server/app-paths-manifest.json
+│   │   │       │   ├── ./apps/client/.next/dev/server/chunks
+│   │   │       │   │   └── ./apps/client/.next/dev/server/chunks/ssr
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0i4a_@swc_helpers_cjs__interop_require_wildcard_cjs_12ga2q9._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0i4a_@swc_helpers_cjs__interop_require_wildcard_cjs_12ga2q9._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_0oas_og._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_0oas_og._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_0qsfa-s._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_0qsfa-s._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_0vdi1r6._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_0vdi1r6._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_0w.2pi3._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_0w.2pi3._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_10ayfuw._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_10ayfuw._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_client_components_06hs8uc._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_client_components_06hs8uc._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_client_components_builtin_forbidden_05g4ij4.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_client_components_builtin_forbidden_05g4ij4.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_client_components_builtin_global-error_0xykmah.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_client_components_builtin_global-error_0xykmah.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_client_components_builtin_unauthorized_10tkuax.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_client_components_builtin_unauthorized_10tkuax.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_compiled_0pkl4b2._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_compiled_0pkl4b2._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_esm_112a-bc._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/0o8k_next_dist_esm_112a-bc._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/_0t3-326._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/_0t3-326._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/_12h7f72._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/_12h7f72._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client_features_1141p0_._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client_features_1141p0_._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client_features_landing_components_0u1fkwt._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client_features_landing_components_0u1fkwt._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client_features_landing-page_components_landing-header_tsx_026o9a7._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client_features_landing-page_components_landing-header_tsx_026o9a7._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client__next-internal_server_app_contact-us_page_actions_0oy917_.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client__next-internal_server_app_contact-us_page_actions_0oy917_.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client__next-internal_server_app_find-workers_page_actions_0sw9mwg.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client__next-internal_server_app_find-workers_page_actions_0sw9mwg.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client__next-internal_server_app_jobs_page_actions_0-.wx84.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client__next-internal_server_app_jobs_page_actions_0-.wx84.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client__next-internal_server_app_page_actions_0kp5bww.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/apps_client__next-internal_server_app_page_actions_0kp5bww.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/[externals]__0.~q4c8._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/[externals]__0.~q4c8._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/node_modules__pnpm_0.6qw23._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/node_modules__pnpm_0.6qw23._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/node_modules__pnpm_0haxct~._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/node_modules__pnpm_0haxct~._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/node_modules__pnpm_0qi48me._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/node_modules__pnpm_0qi48me._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/node_modules__pnpm_10ie.k2._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/node_modules__pnpm_10ie.k2._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/[root-of-the-server]__02xxm8u._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/[root-of-the-server]__02xxm8u._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/[root-of-the-server]__0dt5h50._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/[root-of-the-server]__0dt5h50._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/[root-of-the-server]__0q~026n._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/[root-of-the-server]__0q~026n._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/[root-of-the-server]__0r_rvjq._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/[root-of-the-server]__0r_rvjq._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/[root-of-the-server]__0uh2wz.._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/[root-of-the-server]__0uh2wz.._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/chunks/ssr/[turbopack]_runtime.js
+│   │   │       │   │       └── ./apps/client/.next/dev/server/chunks/ssr/[turbopack]_runtime.js.map
+│   │   │       │   ├── ./apps/client/.next/dev/server/edge
+│   │   │       │   │   └── ./apps/client/.next/dev/server/edge/chunks
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/edge/chunks/0o8k_next_dist_11f5zgw._.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/edge/chunks/0o8k_next_dist_11f5zgw._.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/edge/chunks/0o8k_next_dist_esm_build_templates_edge-wrapper_0~x~7y6.js.map
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/edge/chunks/0vpf_next_dist_esm_build_templates_edge-wrapper_0~x~7y6.js
+│   │   │       │   │       ├── ./apps/client/.next/dev/server/edge/chunks/[root-of-the-server]__0b8k0l3._.js
+│   │   │       │   │       └── ./apps/client/.next/dev/server/edge/chunks/[root-of-the-server]__0b8k0l3._.js.map
+│   │   │       │   ├── ./apps/client/.next/dev/server/interception-route-rewrite-manifest.js
+│   │   │       │   ├── ./apps/client/.next/dev/server/middleware
+│   │   │       │   │   └── ./apps/client/.next/dev/server/middleware/middleware-manifest.json
+│   │   │       │   ├── ./apps/client/.next/dev/server/middleware-build-manifest.js
+│   │   │       │   ├── ./apps/client/.next/dev/server/middleware-manifest.json
+│   │   │       │   ├── ./apps/client/.next/dev/server/next-font-manifest.js
+│   │   │       │   ├── ./apps/client/.next/dev/server/next-font-manifest.json
+│   │   │       │   ├── ./apps/client/.next/dev/server/pages-manifest.json
+│   │   │       │   ├── ./apps/client/.next/dev/server/server-reference-manifest.js
+│   │   │       │   └── ./apps/client/.next/dev/server/server-reference-manifest.json
+│   │   │       ├── ./apps/client/.next/dev/static
+│   │   │       │   ├── ./apps/client/.next/dev/static/chunks
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/_01c7ol6._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/_01c7ol6._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/_04q_85j._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/_04q_85j._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/_0.hkdu_._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/_0.hkdu_._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0i4a_@swc_helpers_cjs_0hvz.20._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0i4a_@swc_helpers_cjs_0hvz.20._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_0cg~w32._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_0cg~w32._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_0b-kjc7._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_0b-kjc7._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_13lz9kk._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_13lz9kk._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_build_polyfills_polyfill-nomodule.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_build_polyfills_polyfill-nomodule.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_client_05z35r7._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_client_05z35r7._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_client_components_builtin_global-error_10o2tbr.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_compiled_0a1nwtq._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_compiled_0a1nwtq._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_compiled_next-devtools_index_11u3o4e.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_compiled_next-devtools_index_11u3o4e.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_compiled_react-dom_055fw5m._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_compiled_react-dom_055fw5m._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_compiled_react-server-dom-turbopack_10fwrdx._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/0o8k_next_dist_compiled_react-server-dom-turbopack_10fwrdx._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/_128p-89._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/_128p-89._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_0o42o-k._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_0rqeker._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_app_069woi.._.css
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_app_069woi.._.css.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_app_contact-us_page_tsx_10o2tbr._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_app_find-workers_page_tsx_10o2tbr._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_app_geistmono_df95d851_module_css_0w3-wzy._.single.css
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_app_geistmono_df95d851_module_css_0w3-wzy._.single.css.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_app_geistsans_d025f23b_module_css_0w3-wzy._.single.css
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_app_geistsans_d025f23b_module_css_0w3-wzy._.single.css.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_app_globals_css_0w3-wzy._.single.css
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_app_globals_css_0w3-wzy._.single.css.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_app_jobs_page_tsx_10o2tbr._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_app_layout_tsx_0lxszs6._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_app_page_tsx_10o2tbr._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_features_landing_components_0mcp_mk._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/apps_client_features_landing_components_0mcp_mk._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/node_modules__pnpm_0za6lme._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/node_modules__pnpm_0za6lme._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/turbopack-apps_client_0o42o-k._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_08ga5~h._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_08ga5~h._.js.map
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0jv~~do._.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0yjw1oe._.js
+│   │   │       │   │   └── ./apps/client/.next/dev/static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0yjw1oe._.js.map
+│   │   │       │   ├── ./apps/client/.next/dev/static/development
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/development/_buildManifest.js
+│   │   │       │   │   ├── ./apps/client/.next/dev/static/development/_clientMiddlewareManifest.js
+│   │   │       │   │   └── ./apps/client/.next/dev/static/development/_ssgManifest.js
+│   │   │       │   └── ./apps/client/.next/dev/static/media
+│   │   │       │       ├── ./apps/client/.next/dev/static/media/favicon.0x3dzn~oxb6tn.ico
+│   │   │       │       ├── ./apps/client/.next/dev/static/media/GeistMonoVF-s.p.0ifhplp~93ddj.woff
+│   │   │       │       └── ./apps/client/.next/dev/static/media/GeistVF-s.p.04dvp7dj03si8.woff
+│   │   │       ├── ./apps/client/.next/dev/trace
+│   │   │       └── ./apps/client/.next/dev/types
+│   │   │           ├── ./apps/client/.next/dev/types/cache-life.d.ts
+│   │   │           ├── ./apps/client/.next/dev/types/routes.d.ts
+│   │   │           └── ./apps/client/.next/dev/types/validator.ts
+│   │   ├── ./apps/client/next.config.js
+│   │   ├── ./apps/client/next-env.d.ts
+│   │   ├── ./apps/client/package.json
+│   │   ├── ./apps/client/postcss.config.mjs
+│   │   ├── ./apps/client/public
+│   │   │   ├── ./apps/client/public/aboutheroimage.png
+│   │   │   ├── ./apps/client/public/file-text.svg
+│   │   │   ├── ./apps/client/public/globe.svg
+│   │   │   ├── ./apps/client/public/hero-image.png
+│   │   │   ├── ./apps/client/public/imagesecondimage.png
+│   │   │   ├── ./apps/client/public/next.svg
+│   │   │   ├── ./apps/client/public/turborepo-dark.svg
+│   │   │   ├── ./apps/client/public/turborepo-light.svg
+│   │   │   ├── ./apps/client/public/vercel.svg
+│   │   │   └── ./apps/client/public/window.svg
+│   │   ├── ./apps/client/README.md
+│   │   └── ./apps/client/tsconfig.json
+│   └── ./apps/docs
+│       ├── ./apps/docs/app
+│       │   ├── ./apps/docs/app/favicon.ico
+│       │   ├── ./apps/docs/app/fonts
+│       │   │   ├── ./apps/docs/app/fonts/GeistMonoVF.woff
+│       │   │   └── ./apps/docs/app/fonts/GeistVF.woff
+│       │   ├── ./apps/docs/app/globals.css
+│       │   ├── ./apps/docs/app/layout.tsx
+│       │   ├── ./apps/docs/app/page.module.css
+│       │   └── ./apps/docs/app/page.tsx
+│       ├── ./apps/docs/eslint.config.js
+│       ├── ./apps/docs/.gitignore
+│       ├── ./apps/docs/.next
+│       │   └── ./apps/docs/.next/dev
+│       │       ├── ./apps/docs/.next/dev/build-manifest.json
+│       │       ├── ./apps/docs/.next/dev/cache
+│       │       │   ├── ./apps/docs/.next/dev/cache/.rscinfo
+│       │       │   └── ./apps/docs/.next/dev/cache/turbopack
+│       │       │       └── ./apps/docs/.next/dev/cache/turbopack/0ca967b8
+│       │       │           ├── ./apps/docs/.next/dev/cache/turbopack/0ca967b8/00000001.sst
+│       │       │           ├── ./apps/docs/.next/dev/cache/turbopack/0ca967b8/00000002.sst
+│       │       │           ├── ./apps/docs/.next/dev/cache/turbopack/0ca967b8/00000003.sst
+│       │       │           ├── ./apps/docs/.next/dev/cache/turbopack/0ca967b8/00000004.sst
+│       │       │           ├── ./apps/docs/.next/dev/cache/turbopack/0ca967b8/00000005.meta
+│       │       │           ├── ./apps/docs/.next/dev/cache/turbopack/0ca967b8/00000006.meta
+│       │       │           ├── ./apps/docs/.next/dev/cache/turbopack/0ca967b8/00000007.meta
+│       │       │           ├── ./apps/docs/.next/dev/cache/turbopack/0ca967b8/00000008.meta
+│       │       │           ├── ./apps/docs/.next/dev/cache/turbopack/0ca967b8/CURRENT
+│       │       │           └── ./apps/docs/.next/dev/cache/turbopack/0ca967b8/LOG
+│       │       ├── ./apps/docs/.next/dev/fallback-build-manifest.json
+│       │       ├── ./apps/docs/.next/dev/lock
+│       │       ├── ./apps/docs/.next/dev/logs
+│       │       │   └── ./apps/docs/.next/dev/logs/next-development.log
+│       │       ├── ./apps/docs/.next/dev/package.json
+│       │       ├── ./apps/docs/.next/dev/prerender-manifest.json
+│       │       ├── ./apps/docs/.next/dev/routes-manifest.json
+│       │       ├── ./apps/docs/.next/dev/server
+│       │       │   ├── ./apps/docs/.next/dev/server/app-paths-manifest.json
+│       │       │   ├── ./apps/docs/.next/dev/server/interception-route-rewrite-manifest.js
+│       │       │   ├── ./apps/docs/.next/dev/server/middleware-build-manifest.js
+│       │       │   ├── ./apps/docs/.next/dev/server/middleware-manifest.json
+│       │       │   ├── ./apps/docs/.next/dev/server/next-font-manifest.js
+│       │       │   ├── ./apps/docs/.next/dev/server/next-font-manifest.json
+│       │       │   ├── ./apps/docs/.next/dev/server/pages-manifest.json
+│       │       │   ├── ./apps/docs/.next/dev/server/server-reference-manifest.js
+│       │       │   └── ./apps/docs/.next/dev/server/server-reference-manifest.json
+│       │       ├── ./apps/docs/.next/dev/static
+│       │       │   └── ./apps/docs/.next/dev/static/development
+│       │       │       ├── ./apps/docs/.next/dev/static/development/_buildManifest.js
+│       │       │       ├── ./apps/docs/.next/dev/static/development/_clientMiddlewareManifest.js
+│       │       │       └── ./apps/docs/.next/dev/static/development/_ssgManifest.js
+│       │       ├── ./apps/docs/.next/dev/trace
+│       │       └── ./apps/docs/.next/dev/types
+│       │           ├── ./apps/docs/.next/dev/types/cache-life.d.ts
+│       │           ├── ./apps/docs/.next/dev/types/routes.d.ts
+│       │           └── ./apps/docs/.next/dev/types/validator.ts
+│       ├── ./apps/docs/next.config.js
+│       ├── ./apps/docs/next-env.d.ts
+│       ├── ./apps/docs/package.json
+│       ├── ./apps/docs/public
+│       │   ├── ./apps/docs/public/file-text.svg
+│       │   ├── ./apps/docs/public/globe.svg
+│       │   ├── ./apps/docs/public/next.svg
+│       │   ├── ./apps/docs/public/turborepo-dark.svg
+│       │   ├── ./apps/docs/public/turborepo-light.svg
+│       │   ├── ./apps/docs/public/vercel.svg
+│       │   └── ./apps/docs/public/window.svg
+│       ├── ./apps/docs/README.md
+│       └── ./apps/docs/tsconfig.json
+├── ./docs
+│   └── ./docs/FRONTEND_ARCHITECTURE.md
+├── ./.gitignore
+├── ./.npmrc
+├── ./package.json
+├── ./packages
+│   ├── ./packages/api-client
+│   │   ├── ./packages/api-client/eslint.config.mjs
+│   │   ├── ./packages/api-client/package.json
+│   │   ├── ./packages/api-client/src
+│   │   │   ├── ./packages/api-client/src/http.ts
+│   │   │   ├── ./packages/api-client/src/index.ts
+│   │   │   └── ./packages/api-client/src/modules
+│   │   │       ├── ./packages/api-client/src/modules/admin.ts
+│   │   │       ├── ./packages/api-client/src/modules/applications.ts
+│   │   │       ├── ./packages/api-client/src/modules/auth.ts
+│   │   │       ├── ./packages/api-client/src/modules/chat.ts
+│   │   │       ├── ./packages/api-client/src/modules/jobs.ts
+│   │   │       ├── ./packages/api-client/src/modules/notifications.ts
+│   │   │       ├── ./packages/api-client/src/modules/payments.ts
+│   │   │       ├── ./packages/api-client/src/modules/profiles
+│   │   │       │   ├── ./packages/api-client/src/modules/profiles/common.ts
+│   │   │       │   ├── ./packages/api-client/src/modules/profiles/company-profile.ts
+│   │   │       │   ├── ./packages/api-client/src/modules/profiles/index.ts
+│   │   │       │   ├── ./packages/api-client/src/modules/profiles/individual-employer-profile.ts
+│   │   │       │   └── ./packages/api-client/src/modules/profiles/jobseeker-profile.ts
+│   │   │       └── ./packages/api-client/src/modules/profiles.ts
+│   │   └── ./packages/api-client/tsconfig.json
+│   ├── ./packages/eslint-config
+│   │   ├── ./packages/eslint-config/base.js
+│   │   ├── ./packages/eslint-config/next.js
+│   │   ├── ./packages/eslint-config/package.json
+│   │   ├── ./packages/eslint-config/react-internal.js
+│   │   └── ./packages/eslint-config/README.md
+│   ├── ./packages/types
+│   │   ├── ./packages/types/eslint.config.mjs
+│   │   ├── ./packages/types/package.json
+│   │   ├── ./packages/types/src
+│   │   │   ├── ./packages/types/src/admin.ts
+│   │   │   ├── ./packages/types/src/applications.ts
+│   │   │   ├── ./packages/types/src/auth.ts
+│   │   │   ├── ./packages/types/src/chat.ts
+│   │   │   ├── ./packages/types/src/index.ts
+│   │   │   ├── ./packages/types/src/jobs.ts
+│   │   │   ├── ./packages/types/src/notifications.ts
+│   │   │   ├── ./packages/types/src/payments.ts
+│   │   │   └── ./packages/types/src/profile.ts
+│   │   └── ./packages/types/tsconfig.json
+│   ├── ./packages/typescript-config
+│   │   ├── ./packages/typescript-config/base.json
+│   │   ├── ./packages/typescript-config/nextjs.json
+│   │   ├── ./packages/typescript-config/package.json
+│   │   └── ./packages/typescript-config/react-library.json
+│   └── ./packages/ui
+│       ├── ./packages/ui/eslint.config.mjs
+│       ├── ./packages/ui/index.ts
+│       ├── ./packages/ui/package.json
+│       ├── ./packages/ui/src
+│       │   ├── ./packages/ui/src/components
+│       │   │   ├── ./packages/ui/src/components/badge.tsx
+│       │   │   ├── ./packages/ui/src/components/button.tsx
+│       │   │   ├── ./packages/ui/src/components/card.tsx
+│       │   │   ├── ./packages/ui/src/components/code.tsx
+│       │   │   ├── ./packages/ui/src/components/container.tsx
+│       │   │   ├── ./packages/ui/src/components/input.tsx
+│       │   │   ├── ./packages/ui/src/components/job-card.tsx
+│       │   │   ├── ./packages/ui/src/components/modal.tsx
+│       │   │   ├── ./packages/ui/src/components/section-header.tsx
+│       │   │   ├── ./packages/ui/src/components/select.tsx
+│       │   │   ├── ./packages/ui/src/components/spinner.tsx
+│       │   │   ├── ./packages/ui/src/components/stat-card.tsx
+│       │   │   └── ./packages/ui/src/components/textarea.tsx
+│       │   ├── ./packages/ui/src/index.ts
+│       │   └── ./packages/ui/src/lib
+│       │       └── ./packages/ui/src/lib/cn.ts
+│       └── ./packages/ui/tsconfig.json
+├── ./pnpm-lock.yaml
+├── ./pnpm-workspace.yaml
+├── ./project_structure.txt
+├── ./README.md
+├── ./.turbo
+│   ├── ./.turbo/cache
+│   └── ./.turbo/preferences
+│       └── ./.turbo/preferences/tui.json
+└── ./turbo.json
+
+173 directories, 571 files

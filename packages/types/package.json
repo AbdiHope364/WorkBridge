@@ -1,0 +1,26 @@
+{
+  "name": "@repo/types",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./auth": "./src/auth.ts",
+    "./jobs": "./src/jobs.ts",
+    "./applications": "./src/applications.ts",
+    "./chat": "./src/chat.ts",
+    "./notifications": "./src/notifications.ts",
+    "./payments": "./src/payments.ts",
+    "./admin": "./src/admin.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "eslint": "^9.39.1",
+    "typescript": "5.9.2"
+  }
+}

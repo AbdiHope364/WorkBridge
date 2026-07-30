@@ -1,0 +1,39 @@
+{
+  "name": "@repo/ui",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./index.ts",
+    "./badge": "./src/components/badge.tsx",
+    "./button": "./src/components/button.tsx",
+    "./card": "./src/components/card.tsx",
+    "./code": "./src/components/code.tsx",
+    "./container": "./src/components/container.tsx",
+    "./input": "./src/components/input.tsx",
+    "./job-card": "./src/components/job-card.tsx",
+    "./section-header": "./src/components/section-header.tsx",
+    "./select": "./src/components/select.tsx",
+    "./spinner": "./src/components/spinner.tsx",
+    "./stat-card": "./src/components/stat-card.tsx",
+    "./textarea": "./src/components/textarea.tsx",
+    "./components/*": "./src/components/*.tsx"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "generate:component": "turbo gen react-component",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.15.3",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "eslint": "^9.39.1",
+    "typescript": "5.9.2"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  }
+}
