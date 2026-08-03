@@ -194,7 +194,9 @@ function Avatar({
 }
 
 export function cloudinaryUrl(publicId: string | undefined): string | null {
-  return publicId ? `https://res.cloudinary.com/${env.cloudinaryCloudName}/image/upload/${publicId}` : null;
+  return publicId
+    ? `https://res.cloudinary.com/${env.cloudinaryCloudName}/image/upload/${publicId}`
+    : null;
 }
 
 function Field({

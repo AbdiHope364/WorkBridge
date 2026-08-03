@@ -11,7 +11,8 @@ const variantClasses: Record<CardVariant, string> = {
   default: "border border-slate-200 bg-white shadow-sm",
   soft: "border border-emerald-100 bg-emerald-50/50",
   outlined: "border border-slate-200 bg-white",
-  elevated: "border border-slate-100 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.10)]",
+  elevated:
+    "border border-slate-100 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.10)]",
 };
 
 export function Card({
@@ -49,7 +50,10 @@ export function CardTitle({
 }: HTMLAttributes<HTMLHeadingElement>) {
   return (
     <h3
-      className={cn("text-lg font-black tracking-[-0.02em] text-slate-950", className)}
+      className={cn(
+        "text-lg font-black tracking-[-0.02em] text-slate-950",
+        className,
+      )}
       {...props}
     >
       {children}

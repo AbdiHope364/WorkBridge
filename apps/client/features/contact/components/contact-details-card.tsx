@@ -1,7 +1,10 @@
 const details = [
   {
     title: "Address",
-    body: ["Kazanchis Business District,", "Near UNECA Area, Addis Ababa, Ethiopia"],
+    body: [
+      "Kazanchis Business District,",
+      "Near UNECA Area, Addis Ababa, Ethiopia",
+    ],
     icon: "pin",
   },
   {
@@ -40,7 +43,12 @@ function DetailIcon({ type }: { type: string }) {
 
   return (
     <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-emerald-600 text-white">
-      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6" fill="none">
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        className="h-6 w-6"
+        fill="none"
+      >
         <path
           d={path}
           stroke="currentColor"
@@ -49,7 +57,13 @@ function DetailIcon({ type }: { type: string }) {
           strokeWidth="2"
         />
         {type === "pin" ? (
-          <circle cx="12" cy="9" r="2.5" stroke="currentColor" strokeWidth="2" />
+          <circle
+            cx="12"
+            cy="9"
+            r="2.5"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
         ) : null}
       </svg>
     </span>
@@ -75,7 +89,9 @@ export function ContactDetailsCard() {
           >
             <DetailIcon type={item.icon} />
             <div>
-              <h3 className="text-sm font-black text-slate-950">{item.title}</h3>
+              <h3 className="text-sm font-black text-slate-950">
+                {item.title}
+              </h3>
               {item.body.map((line) => (
                 <p key={line} className="text-xs leading-5 text-slate-800">
                   {line}

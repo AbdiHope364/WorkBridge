@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   BellIcon,
   SearchJobIcon,
-} from '../jobseeker-dashboard/components/dashboard-icons';
-import { EmployerSidebar } from './components/employer-sidebar';
-import { useAuth } from '@/contexts/auth-context';
-import { useProfile } from '@/contexts/profile-context';
-import { api } from '@/lib/api';
-import Image from 'next/image';
-import { useNotifications } from '@/contexts/notification-context';
-import { env } from '@/lib/env';
+} from "../jobseeker-dashboard/components/dashboard-icons";
+import { EmployerSidebar } from "./components/employer-sidebar";
+import { useAuth } from "@/contexts/auth-context";
+import { useProfile } from "@/contexts/profile-context";
+import { api } from "@/lib/api";
+import Image from "next/image";
+import { useNotifications } from "@/contexts/notification-context";
+import { env } from "@/lib/env";
 
 /** --- Icons & Glyphs --- */
 const Icons = {
@@ -113,12 +113,12 @@ export function EmployerDashboardPage() {
 
   useEffect(() => {
     const fetchDashboardData = async () => {
-      if (!isAuthenticated || user?.role !== 'employer') return;
+      if (!isAuthenticated || user?.role !== "employer") return;
       try {
         setLoadingData(true);
         const [analyticsRes, jobsRes, appsRes] = await Promise.all([
           api.jobs.getEmployerDashboard(),
-          api.jobs.getEmployerJobs({ limit: 4, status: 'OPEN' }),
+          api.jobs.getEmployerJobs({ limit: 4, status: "OPEN" }),
           api.applications.getApplications({ limit: 5 }),
         ]);
 
@@ -126,7 +126,7 @@ export function EmployerDashboardPage() {
         setActiveJobs(jobsRes.data?.jobs || jobsRes.data || []);
         setRecentApps(appsRes.data?.applications || appsRes.data || []);
       } catch (err) {
-        console.error('Dashboard fetch error:', err);
+        console.error("Dashboard fetch error:", err);
       } finally {
         setLoadingData(false);
       }
@@ -151,7 +151,7 @@ export function EmployerDashboardPage() {
   const initials =
     employerProfile?.companyName?.charAt(0) ||
     employerProfile?.fullName?.charAt(0) ||
-    'E';
+    "E";
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
@@ -286,7 +286,7 @@ export function EmployerDashboardPage() {
                       </div>
                       <div className="min-w-0">
                         <p className="text-sm font-bold text-slate-900 truncate">
-                          {app.applicantSnapshot?.firstName}{' '}
+                          {app.applicantSnapshot?.firstName}{" "}
                           {app.applicantSnapshot?.lastName}
                         </p>
                         <p className="text-[11px] text-slate-500 truncate">

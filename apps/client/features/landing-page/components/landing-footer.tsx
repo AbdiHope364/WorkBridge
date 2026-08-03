@@ -5,7 +5,12 @@ const footerColumns = [
   },
   {
     title: "For Employers",
-    links: ["Post a Job", "Employer Login", "Candidate Search", "Pricing Plans"],
+    links: [
+      "Post a Job",
+      "Employer Login",
+      "Candidate Search",
+      "Pricing Plans",
+    ],
   },
   {
     title: "Company",
@@ -38,7 +43,12 @@ function getFooterHref(label: string) {
 function ContactIcon({ type }: { type: "email" | "location" | "phone" }) {
   if (type === "email") {
     return (
-      <svg aria-hidden="true" className="h-4 w-4" viewBox="0 0 24 24" fill="none">
+      <svg
+        aria-hidden="true"
+        className="h-4 w-4"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
         <path
           d="M4 6h16v12H4V6Zm1.5 1.5 6.5 5 6.5-5"
           stroke="currentColor"
@@ -51,7 +61,12 @@ function ContactIcon({ type }: { type: "email" | "location" | "phone" }) {
 
   if (type === "phone") {
     return (
-      <svg aria-hidden="true" className="h-4 w-4" viewBox="0 0 24 24" fill="none">
+      <svg
+        aria-hidden="true"
+        className="h-4 w-4"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
         <path
           d="M7 5h3l1.5 4-2 1.2c.9 1.9 2.4 3.4 4.3 4.3l1.2-2 4 1.5v3c0 1.1-.9 2-2 2C10.4 19 5 13.6 5 7c0-1.1.9-2 2-2Z"
           stroke="currentColor"

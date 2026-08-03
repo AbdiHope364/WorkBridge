@@ -1,54 +1,54 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 const seekerSteps = [
   {
-    step: '01',
-    heading: 'Create Your Profile',
-    body: 'Add your experience, skills, and resume in minutes',
+    step: "01",
+    heading: "Create Your Profile",
+    body: "Add your experience, skills, and resume in minutes",
   },
   {
-    step: '02',
-    heading: 'Discover Jobs',
-    body: 'Browse verified listings by category, location, or skill set',
+    step: "02",
+    heading: "Discover Jobs",
+    body: "Browse verified listings by category, location, or skill set",
   },
   {
-    step: '03',
-    heading: 'Apply Instantly',
-    body: 'View job details and apply with your saved profile',
+    step: "03",
+    heading: "Apply Instantly",
+    body: "View job details and apply with your saved profile",
   },
   {
-    step: '04',
-    heading: 'Get Hired',
-    body: 'Track applications and chat directly with employers',
+    step: "04",
+    heading: "Get Hired",
+    body: "Track applications and chat directly with employers",
   },
 ];
 
 const employerSteps = [
   {
-    step: '01',
-    heading: 'Create a Company Profile',
-    body: 'Add your company info and get verified on the platform',
+    step: "01",
+    heading: "Create a Company Profile",
+    body: "Add your company info and get verified on the platform",
   },
   {
-    step: '02',
-    heading: 'Post a Job',
-    body: 'Define the role, salary range, and requirements',
+    step: "02",
+    heading: "Post a Job",
+    body: "Define the role, salary range, and requirements",
   },
   {
-    step: '03',
-    heading: 'Review Applicants',
-    body: 'Filter candidates by skills, experience, and fit',
+    step: "03",
+    heading: "Review Applicants",
+    body: "Filter candidates by skills, experience, and fit",
   },
   {
-    step: '04',
-    heading: 'Hire & Manage',
-    body: 'Message, hire, and track your new team members',
+    step: "04",
+    heading: "Hire & Manage",
+    body: "Message, hire, and track your new team members",
   },
 ];
 
 const benefits = [
   {
-    label: 'Smart Job Matching',
+    label: "Smart Job Matching",
     icon: (
       <svg
         viewBox="0 0 20 20"
@@ -68,7 +68,7 @@ const benefits = [
     ),
   },
   {
-    label: 'Real-Time Messaging',
+    label: "Real-Time Messaging",
     icon: (
       <svg
         viewBox="0 0 20 20"
@@ -86,7 +86,7 @@ const benefits = [
     ),
   },
   {
-    label: 'Verified Companies',
+    label: "Verified Companies",
     icon: (
       <svg
         viewBox="0 0 20 20"
@@ -104,7 +104,7 @@ const benefits = [
     ),
   },
   {
-    label: 'Secure Hiring Process',
+    label: "Secure Hiring Process",
     icon: (
       <svg
         viewBox="0 0 20 20"
@@ -137,10 +137,10 @@ function StepList({
   steps: typeof seekerSteps;
   dark?: boolean;
 }) {
-  const numberColor = dark ? 'text-emerald-400' : 'text-emerald-600';
-  const headingColor = dark ? 'text-white' : 'text-slate-950';
-  const bodyColor = dark ? 'text-slate-400' : 'text-slate-500';
-  const connectorColor = dark ? 'border-slate-700' : 'border-slate-200';
+  const numberColor = dark ? "text-emerald-400" : "text-emerald-600";
+  const headingColor = dark ? "text-white" : "text-slate-950";
+  const bodyColor = dark ? "text-slate-400" : "text-slate-500";
+  const connectorColor = dark ? "border-slate-700" : "border-slate-200";
 
   return (
     <ol className="relative mt-8 space-y-0">
@@ -155,7 +155,7 @@ function StepList({
           {/* Number bubble */}
           <span
             className={`relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
-              dark ? 'bg-slate-800' : 'bg-slate-100'
+              dark ? "bg-slate-800" : "bg-slate-100"
             } text-[12px] font-black tabular-nums ${numberColor}`}
           >
             {s.step}

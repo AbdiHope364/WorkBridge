@@ -1,42 +1,42 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/auth-context';
-import { useProfile } from '@/contexts/profile-context';
-import { api } from '@/lib/api';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/auth-context";
+import { useProfile } from "@/contexts/profile-context";
+import { api } from "@/lib/api";
 
-import { EditBasicProfileModal } from '@/features/jobseeker-dashboard/modals/edit-basic-profile-modal';
-import { EditProfileImageModal } from '@/features/jobseeker-dashboard/modals/edit-profile-image-modal';
-import { EditEducationModal } from '@/features/jobseeker-dashboard/modals/edit-education-modal';
-import { EditExperienceModal } from '@/features/jobseeker-dashboard/modals/edit-experience-modal';
-import { EditResumesAndSocialsModal } from '@/features/jobseeker-dashboard/modals/edit-resumes-socials-modal';
+import { EditBasicProfileModal } from "@/features/jobseeker-dashboard/modals/edit-basic-profile-modal";
+import { EditProfileImageModal } from "@/features/jobseeker-dashboard/modals/edit-profile-image-modal";
+import { EditEducationModal } from "@/features/jobseeker-dashboard/modals/edit-education-modal";
+import { EditExperienceModal } from "@/features/jobseeker-dashboard/modals/edit-experience-modal";
+import { EditResumesAndSocialsModal } from "@/features/jobseeker-dashboard/modals/edit-resumes-socials-modal";
 
 const STEPS = [
   {
-    id: 'BASIC',
-    title: 'Personal Details',
+    id: "BASIC",
+    title: "Personal Details",
     desc: "Let's start by creating your professional identity.",
   },
   {
-    id: 'PHOTO',
-    title: 'Profile Photo',
-    desc: 'Add a photo so employers can recognize you.',
+    id: "PHOTO",
+    title: "Profile Photo",
+    desc: "Add a photo so employers can recognize you.",
   },
   {
-    id: 'EDUCATION',
-    title: 'Education',
-    desc: 'Where did you develop your expertise?',
+    id: "EDUCATION",
+    title: "Education",
+    desc: "Where did you develop your expertise?",
   },
   {
-    id: 'EXPERIENCE',
-    title: 'Work Experience',
-    desc: 'Tell us about your career journey.',
+    id: "EXPERIENCE",
+    title: "Work Experience",
+    desc: "Tell us about your career journey.",
   },
   {
-    id: 'SOCIALS',
-    title: 'Social Links',
-    desc: 'Where can employers see your work?',
+    id: "SOCIALS",
+    title: "Social Links",
+    desc: "Where can employers see your work?",
   },
 ];
 
@@ -51,8 +51,8 @@ export default function OnboardingPage() {
 
   useEffect(() => {
     if (!isLoading) {
-      if (!isAuthenticated) router.push('/login');
-      if (user?.role === 'employer') router.push('/dashboard/employer');
+      if (!isAuthenticated) router.push("/login");
+      if (user?.role === "employer") router.push("/dashboard/employer");
     }
   }, [isAuthenticated, user, isLoading, router]);
 
@@ -60,7 +60,7 @@ export default function OnboardingPage() {
     setIsModalActive(false);
     await refreshProfile();
     if (stepIndex >= STEPS.length - 1) {
-      router.push('/dashboard/profile');
+      router.push("/dashboard/profile");
     } else {
       setStepIndex((prev) => prev + 1);
     }
@@ -71,7 +71,7 @@ export default function OnboardingPage() {
     if (stepIndex < STEPS.length - 1) {
       setStepIndex((prev) => prev + 1);
     } else {
-      router.push('/dashboard/profile');
+      router.push("/dashboard/profile");
     }
   };
 
@@ -130,7 +130,7 @@ export default function OnboardingPage() {
       </div>
 
       {/* --- STEP 1: BASIC INFO  --- */}
-      {currentStep.id === 'BASIC' && (
+      {currentStep.id === "BASIC" && (
         <EditBasicProfileModal
           isOpen={isModalActive}
           onClose={() => setIsModalActive(false)}
@@ -141,7 +141,7 @@ export default function OnboardingPage() {
               const payload = {
                 ...data,
                 phone: data.phoneNumber,
-                location: { city: data.location, country: 'ETHIOPIA' },
+                location: { city: data.location, country: "ETHIOPIA" },
               };
 
               if (!jobseekerProfile) {
@@ -151,7 +151,7 @@ export default function OnboardingPage() {
               }
               await moveNext();
             } catch (err: any) {
-              alert(err.message || 'Failed to save details.');
+              alert(err.message || "Failed to save details.");
             } finally {
               setIsSubmitting(false);
             }
@@ -160,7 +160,7 @@ export default function OnboardingPage() {
       )}
 
       {/* --- STEP 2: PHOTO  --- */}
-      {currentStep.id === 'PHOTO' && (
+      {currentStep.id === "PHOTO" && (
         <EditProfileImageModal
           isOpen={isModalActive}
           onClose={() => setIsModalActive(false)}
@@ -170,7 +170,7 @@ export default function OnboardingPage() {
               await api.profiles.jobseeker.uploadAvatar(file);
               await moveNext();
             } catch (err: any) {
-              alert(err.message || 'Photo upload failed.');
+              alert(err.message || "Photo upload failed.");
             } finally {
               setIsSubmitting(false);
             }
@@ -178,7 +178,7 @@ export default function OnboardingPage() {
         />
       )}
 
-      {currentStep.id === 'EDUCATION' && (
+      {currentStep.id === "EDUCATION" && (
         <EditEducationModal
           isOpen={isModalActive}
           onClose={() => setIsModalActive(false)}
@@ -192,7 +192,7 @@ export default function OnboardingPage() {
               await api.profiles.jobseeker.updateMyProfile({ educations });
               await moveNext();
             } catch (err: any) {
-              alert(err.message || 'Education save failed.');
+              alert(err.message || "Education save failed.");
             } finally {
               setIsSubmitting(false);
             }
@@ -200,7 +200,7 @@ export default function OnboardingPage() {
         />
       )}
 
-      {currentStep.id === 'EXPERIENCE' && (
+      {currentStep.id === "EXPERIENCE" && (
         <EditExperienceModal
           isOpen={isModalActive}
           onClose={() => setIsModalActive(false)}
@@ -214,7 +214,7 @@ export default function OnboardingPage() {
               await api.profiles.jobseeker.updateMyProfile({ experiences });
               await moveNext();
             } catch (err: any) {
-              alert(err.message || 'Experience save failed.');
+              alert(err.message || "Experience save failed.");
             } finally {
               setIsSubmitting(false);
             }
@@ -222,7 +222,7 @@ export default function OnboardingPage() {
         />
       )}
 
-      {currentStep.id === 'SOCIALS' && (
+      {currentStep.id === "SOCIALS" && (
         <EditResumesAndSocialsModal
           isOpen={isModalActive}
           onClose={() => setIsModalActive(false)}
@@ -234,7 +234,7 @@ export default function OnboardingPage() {
               });
               await moveNext();
             } catch (err: any) {
-              alert(err.message || 'Socials save failed.');
+              alert(err.message || "Socials save failed.");
             } finally {
               setIsSubmitting(false);
             }

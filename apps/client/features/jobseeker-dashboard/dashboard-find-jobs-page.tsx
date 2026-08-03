@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { JobsPage } from '../jobseeker-dashboard/components/findJobsComponent';
-import { useCurrentUser } from '../../hooks/use-current-user';
-import { JobseekerSidebar } from './components/jobseeker-sidebar';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { JobsPage } from "../jobseeker-dashboard/components/findJobsComponent";
+import { useCurrentUser } from "../../hooks/use-current-user";
+import { JobseekerSidebar } from "./components/jobseeker-sidebar";
 
 export function DashboardFindJobsPage() {
   const router = useRouter();
@@ -12,7 +12,7 @@ export function DashboardFindJobsPage() {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.replace('/login?next=/dashboard/find-jobs');
+      router.replace("/login?next=/dashboard/find-jobs");
     }
   }, [isAuthenticated, isLoading, router]);
 

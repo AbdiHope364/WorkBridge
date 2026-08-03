@@ -8,11 +8,11 @@ import { VerificationTable } from "@/features/verification/components/verificati
 export default function VerificationCenterPage() {
   return (
     <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
-      <ManagementHeader 
-        title="Verification Center" 
-        description="Review and verify identities and business documents for all users" 
+      <ManagementHeader
+        title="Verification Center"
+        description="Review and verify identities and business documents for all users"
       />
-      
+
       <main className="flex-1">
         <VerificationStats />
         <VerificationTable />

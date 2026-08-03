@@ -24,7 +24,7 @@ export function LandingCtaSection() {
               size="lg"
               variant="outline"
               className="text-white bg-[#1b2855]"
-              style={{background:"#1b2855"}}
+              style={{ background: "#1b2855" }}
             >
               Hire Talent
             </Button>

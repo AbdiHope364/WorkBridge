@@ -30,29 +30,41 @@ export function ActionModal({
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" 
+      <div
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
-      
+
       {/* Modal Content */}
       <div className="relative bg-white rounded-[1.5rem] w-full max-w-md shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
-            <div className={cn(
-              "p-2 rounded-lg",
-              confirmVariant === "danger" ? "bg-rose-50 text-rose-500" : 
-              confirmVariant === "warning" ? "bg-amber-50 text-amber-500" : "bg-emerald-50 text-emerald-500"
-            )}>
+            <div
+              className={cn(
+                "p-2 rounded-lg",
+                confirmVariant === "danger"
+                  ? "bg-rose-50 text-rose-500"
+                  : confirmVariant === "warning"
+                    ? "bg-amber-50 text-amber-500"
+                    : "bg-emerald-50 text-emerald-500",
+              )}
+            >
               <AlertTriangle className="w-5 h-5" />
             </div>
-            <button onClick={onClose} className="p-1 hover:bg-slate-100 rounded-lg transition-colors">
+            <button
+              onClick={onClose}
+              className="p-1 hover:bg-slate-100 rounded-lg transition-colors"
+            >
               <X className="w-5 h-5 text-slate-400" />
             </button>
           </div>
 
-          <h3 className="text-xl font-black text-slate-900 tracking-tight mb-2">{title}</h3>
-          <p className="text-sm font-medium text-slate-500 mb-6">{description}</p>
+          <h3 className="text-xl font-black text-slate-900 tracking-tight mb-2">
+            {title}
+          </h3>
+          <p className="text-sm font-medium text-slate-500 mb-6">
+            {description}
+          </p>
 
           <div className="space-y-4">
             <div>
@@ -81,8 +93,11 @@ export function ActionModal({
             disabled={!reason.trim()}
             className={cn(
               "px-5 py-2 rounded-xl text-sm font-black transition-all active:scale-95 disabled:opacity-50 disabled:scale-100",
-              confirmVariant === "danger" ? "bg-rose-500 text-white shadow-lg shadow-rose-200" : 
-              confirmVariant === "warning" ? "bg-amber-500 text-white shadow-lg shadow-amber-200" : "bg-emerald-500 text-white shadow-lg shadow-emerald-200"
+              confirmVariant === "danger"
+                ? "bg-rose-500 text-white shadow-lg shadow-rose-200"
+                : confirmVariant === "warning"
+                  ? "bg-amber-500 text-white shadow-lg shadow-amber-200"
+                  : "bg-emerald-500 text-white shadow-lg shadow-emerald-200",
             )}
           >
             {confirmText}

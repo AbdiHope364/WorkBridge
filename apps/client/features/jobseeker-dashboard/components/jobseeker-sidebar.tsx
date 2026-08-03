@@ -1,9 +1,9 @@
 // components/jobseeker-sidebar.tsx
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   BellIcon,
   BookmarkIcon,
@@ -11,8 +11,8 @@ import {
   HomeIcon,
   MessageIcon,
   SearchJobIcon,
-} from './dashboard-icons';
-import { useAuth } from '@/contexts/auth-context';
+} from "./dashboard-icons";
+import { useAuth } from "@/contexts/auth-context";
 
 export function JobseekerSidebar() {
   const pathname = usePathname();
@@ -44,7 +44,7 @@ export function JobseekerSidebar() {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
-              d={isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
+              d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
             />
           </svg>
         </button>
@@ -61,7 +61,7 @@ export function JobseekerSidebar() {
         className={`
           fixed inset-y-0 left-0 z-50 w-64 transform bg-gradient-to-b from-[#022c22] via-[#064e3b] to-[#0d9488] text-white transition-transform duration-300 ease-in-out
           md:sticky md:top-0 md:h-screen md:translate-x-0 md:w-64 md:shrink-0 flex flex-col
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
         <div className="flex h-20 items-center border-b border-white/10 px-8 shrink-0">
@@ -77,34 +77,34 @@ export function JobseekerSidebar() {
           <ul className="space-y-2">
             {[
               {
-                label: 'Find Jobs',
-                href: '/dashboard/find-jobs',
+                label: "Find Jobs",
+                href: "/dashboard/find-jobs",
                 icon: SearchJobIcon,
               },
               {
-                label: 'Applications',
-                href: '/dashboard/applications',
+                label: "Applications",
+                href: "/dashboard/applications",
                 icon: BriefcaseIcon,
               },
               {
-                label: 'Saved Jobs',
-                href: '/dashboard/saved-jobs',
+                label: "Saved Jobs",
+                href: "/dashboard/saved-jobs",
                 icon: BookmarkIcon,
               },
-              { label: 'Overview', href: '/dashboard', icon: HomeIcon },
+              { label: "Overview", href: "/dashboard", icon: HomeIcon },
               {
-                label: 'Messages',
-                href: '/dashboard/messages',
+                label: "Messages",
+                href: "/dashboard/messages",
                 icon: MessageIcon,
               },
               {
-                label: 'Notifications',
-                href: '/dashboard/notifications',
+                label: "Notifications",
+                href: "/dashboard/notifications",
                 icon: BellIcon,
               },
             ].map((item) => {
               const isActive =
-                item.href === '/dashboard'
+                item.href === "/dashboard"
                   ? pathname === item.href
                   : pathname.startsWith(item.href);
               return (
@@ -113,12 +113,12 @@ export function JobseekerSidebar() {
                     href={item.href}
                     className={`flex h-12 items-center gap-3 rounded-xl px-4 text-sm font-bold transition-all ${
                       isActive
-                        ? 'bg-white text-[#022c22] shadow-lg'
-                        : 'text-emerald-50/70 hover:bg-white/10'
+                        ? "bg-white text-[#022c22] shadow-lg"
+                        : "text-emerald-50/70 hover:bg-white/10"
                     }`}
                   >
                     <item.icon
-                      className={`h-5 w-5 ${isActive ? 'text-[#022c22]' : 'text-emerald-200/50'}`}
+                      className={`h-5 w-5 ${isActive ? "text-[#022c22]" : "text-emerald-200/50"}`}
                     />
                     {item.label}
                   </Link>

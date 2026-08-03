@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
-import { api } from '@/lib/api';
-import { useAuth } from '@/contexts/auth-context';
-import { EmployerSidebar } from './components/employer-sidebar';
+import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { api } from "@/lib/api";
+import { useAuth } from "@/contexts/auth-context";
+import { EmployerSidebar } from "./components/employer-sidebar";
 
 /** --- Icons --- */
 const Icons = {
@@ -106,7 +106,7 @@ export function EmployerApplicantProfilePage() {
   const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
-    if (isAuthLoading || !applicantId || applicantId === 'undefined') return;
+    if (isAuthLoading || !applicantId || applicantId === "undefined") return;
 
     const fetchDetails = async () => {
       try {
@@ -116,7 +116,7 @@ export function EmployerApplicantProfilePage() {
         );
         setApplication(res?.data?.application || res?.data || res);
       } catch (err) {
-        console.error('Fetch Error:', err);
+        console.error("Fetch Error:", err);
       } finally {
         setLoading(false);
       }
@@ -131,7 +131,7 @@ export function EmployerApplicantProfilePage() {
       await api.applications.updateStatus(applicantId as string, status);
       setApplication((prev: any) => ({ ...prev, status }));
     } catch (err) {
-      alert('Failed to update status');
+      alert("Failed to update status");
     } finally {
       setIsUpdating(false);
     }
@@ -146,7 +146,7 @@ export function EmployerApplicantProfilePage() {
 
   const snapshot = application?.applicantSnapshot;
   const resume = application?.attachments?.find(
-    (a: any) => a.type === 'RESUME',
+    (a: any) => a.type === "RESUME",
   );
 
   return (
@@ -211,10 +211,10 @@ export function EmployerApplicantProfilePage() {
                     ))}
                   </div>
                   <p className="text-xs text-slate-400 font-medium mt-3 italic">
-                    Applied on{' '}
+                    Applied on{" "}
                     {new Date(application.createdAt).toLocaleDateString(
-                      'en-US',
-                      { month: 'long', day: 'numeric', year: 'numeric' },
+                      "en-US",
+                      { month: "long", day: "numeric", year: "numeric" },
                     )}
                   </p>
                 </div>
@@ -223,15 +223,15 @@ export function EmployerApplicantProfilePage() {
               {/* ACTION BUTTONS & STATUS */}
               <div className="flex flex-col gap-3 min-w-[160px]">
                 <button
-                  onClick={() => handleStatusUpdate('ACCEPTED')}
-                  disabled={isUpdating || application.status === 'ACCEPTED'}
+                  onClick={() => handleStatusUpdate("ACCEPTED")}
+                  disabled={isUpdating || application.status === "ACCEPTED"}
                   className="h-11 rounded-xl bg-teal-600 text-white font-bold hover:bg-teal-700 transition-all disabled:opacity-50 shadow-md"
                 >
                   Accept
                 </button>
                 <button
-                  onClick={() => handleStatusUpdate('REJECTED')}
-                  disabled={isUpdating || application.status === 'REJECTED'}
+                  onClick={() => handleStatusUpdate("REJECTED")}
+                  disabled={isUpdating || application.status === "REJECTED"}
                   className="h-11 rounded-xl border-2 border-slate-900 bg-white text-slate-900 font-bold hover:bg-slate-50 transition-all disabled:opacity-50"
                 >
                   Reject
@@ -245,21 +245,21 @@ export function EmployerApplicantProfilePage() {
                 <div className="text-slate-300">
                   <Icons.Pin />
                 </div>
-                {snapshot?.location?.city || 'City N/A'},{' '}
-                {snapshot?.location?.country || 'Ethiopia'}
+                {snapshot?.location?.city || "City N/A"},{" "}
+                {snapshot?.location?.country || "Ethiopia"}
               </div>
               <div className="flex items-center gap-3 text-slate-500 font-medium text-sm">
                 <div className="text-slate-300">
                   <Icons.Phone />
                 </div>
-                {snapshot?.phone || 'No phone provided'}
+                {snapshot?.phone || "No phone provided"}
               </div>
             </div>
 
             {/* BOTTOM BAR ACTION */}
             <div className="mt-6 flex flex-col sm:flex-row gap-4">
               <Link
-                href={resume?.url || '#'}
+                href={resume?.url || "#"}
                 target="_blank"
                 className="flex-1 h-12 rounded-xl bg-[#172653] text-white flex items-center justify-center font-bold text-sm hover:bg-[#1c2e63] transition-all"
               >
@@ -305,7 +305,7 @@ export function EmployerApplicantProfilePage() {
           <div className="space-y-6">
             <ContentSection title="About">
               <p className="text-slate-600 leading-relaxed whitespace-pre-wrap">
-                {snapshot?.bio || 'No biography provided.'}
+                {snapshot?.bio || "No biography provided."}
               </p>
             </ContentSection>
 
@@ -341,9 +341,9 @@ export function EmployerApplicantProfilePage() {
                           </p>
                         </div>
                         <span className="text-xs font-bold text-slate-400">
-                          {new Date(exp.startDate).toLocaleDateString()} —{' '}
+                          {new Date(exp.startDate).toLocaleDateString()} —{" "}
                           {exp.isCurrent
-                            ? 'Present'
+                            ? "Present"
                             : new Date(exp.endDate).toLocaleDateString()}
                         </span>
                       </div>
@@ -378,7 +378,7 @@ export function EmployerApplicantProfilePage() {
                   </p>
                   <div className="flex items-center gap-3 h-11 px-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-500 text-xs">
                     <Icons.Phone />
-                    <span>{snapshot?.phone || 'N/A'}</span>
+                    <span>{snapshot?.phone || "N/A"}</span>
                   </div>
                 </div>
               </div>

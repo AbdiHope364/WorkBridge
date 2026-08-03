@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useParams, notFound } from 'next/navigation';
-import { api } from '@/lib/api';
-import { JobDetailPage } from '@/features/jobs/job-detail-page';
+import { useEffect, useState } from "react";
+import { useParams, notFound } from "next/navigation";
+import { api } from "@/lib/api";
+import { JobDetailPage } from "@/features/jobs/job-detail-page";
 
 export default function Page() {
   const params = useParams();
@@ -28,7 +28,7 @@ export default function Page() {
           setJob(jobData);
         }
       } catch (err) {
-        console.error('Failed to fetch job:', err);
+        console.error("Failed to fetch job:", err);
         setError(true);
       } finally {
         setLoading(false);

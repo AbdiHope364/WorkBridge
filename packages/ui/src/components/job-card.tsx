@@ -31,7 +31,7 @@ export function JobCard({
   type,
 }: JobCardProps) {
   return (
-    <Link href={href ?? '#'} className="block w-full min-w-0">
+    <Link href={href ?? "#"} className="block w-full min-w-0">
       <Card className="overflow-hidden h-full flex flex-col transition-all hover:border-teal-500 border-slate-200">
         <CardContent className="p-5 flex-1 min-w-0">
           <div className="flex items-start justify-between gap-4">
@@ -40,7 +40,9 @@ export function JobCard({
                 {title.charAt(0).toUpperCase()}
               </div>
               <div className="min-w-0 flex-1">
-                <CardTitle className="truncate text-base text-slate-900">{title}</CardTitle>
+                <CardTitle className="truncate text-base text-slate-900">
+                  {title}
+                </CardTitle>
                 <CardDescription className="mt-1 text-xs truncate text-slate-500">
                   {company}
                 </CardDescription>
@@ -53,7 +55,9 @@ export function JobCard({
             {salary ? (
               <div className="text-right shrink-0">
                 <p className="text-sm font-black text-emerald-600">{salary}</p>
-                <span className="block text-[10px] font-bold text-slate-400">/month</span>
+                <span className="block text-[10px] font-bold text-slate-400">
+                  /month
+                </span>
               </div>
             ) : null}
           </div>
@@ -65,7 +69,10 @@ export function JobCard({
         <CardFooter className="flex flex-wrap justify-between items-center p-5 pt-0 gap-3">
           <div className="flex flex-wrap gap-2">
             {tags.slice(0, 3).map((tag) => (
-              <Badge key={tag} className="bg-slate-50 text-slate-600 border-slate-100 text-[10px]">
+              <Badge
+                key={tag}
+                className="bg-slate-50 text-slate-600 border-slate-100 text-[10px]"
+              >
                 {tag}
               </Badge>
             ))}

@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { api } from '@/lib/api';
-import { formatDistanceToNow } from 'date-fns';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { api } from "@/lib/api";
+import { formatDistanceToNow } from "date-fns";
 const workplacePill: Record<string, string> = {
-  ON_SITE: 'bg-slate-100 text-slate-600',
-  REMOTE: 'bg-emerald-50 text-emerald-700',
-  HYBRID: 'bg-sky-50 text-sky-700',
+  ON_SITE: "bg-slate-100 text-slate-600",
+  REMOTE: "bg-emerald-50 text-emerald-700",
+  HYBRID: "bg-sky-50 text-sky-700",
 };
 
 const typePill: Record<string, string> = {
-  FULL_TIME: 'bg-slate-100 text-slate-600',
-  PART_TIME: 'bg-amber-50 text-amber-700',
-  FREELANCE: 'bg-violet-50 text-violet-700',
-  CONTRACT: 'bg-rose-50 text-rose-700',
+  FULL_TIME: "bg-slate-100 text-slate-600",
+  PART_TIME: "bg-amber-50 text-amber-700",
+  FREELANCE: "bg-violet-50 text-violet-700",
+  CONTRACT: "bg-rose-50 text-rose-700",
 };
 
 function SaveButton() {
@@ -41,7 +41,7 @@ function JobCard({ job }: { job: any }) {
   // Get relative time (e.g. "2 days ago")
   const postedAt = job.createdAt
     ? formatDistanceToNow(new Date(job.createdAt), { addSuffix: true })
-    : 'Recently';
+    : "Recently";
 
   const initial =
     job.employerSnapshot?.displayName?.charAt(0) || job.title.charAt(0);
@@ -58,7 +58,7 @@ function JobCard({ job }: { job: any }) {
               {job.title}
             </h3>
             <p className="mt-0.5 text-[13px] text-slate-500">
-              {job.employerSnapshot?.displayName || 'Private Employer'}
+              {job.employerSnapshot?.displayName || "Private Employer"}
             </p>
           </div>
         </div>
@@ -68,7 +68,7 @@ function JobCard({ job }: { job: any }) {
             <span className="text-xs font-medium text-slate-400"> ETB</span>
           </p>
           <p className="text-[11px] text-slate-400 uppercase tracking-tighter">
-            /{job.budget?.toLowerCase() || 'month'}
+            /{job.budget?.toLowerCase() || "month"}
           </p>
         </div>
       </div>
@@ -99,17 +99,17 @@ function JobCard({ job }: { job: any }) {
                 strokeWidth="1.4"
               />
             </svg>
-            {job.location?.city?.toLowerCase() || 'Addis Ababa'}
+            {job.location?.city?.toLowerCase() || "Addis Ababa"}
           </span>
           <span
-            className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${workplacePill[job.workplaceType] ?? 'bg-slate-100 text-slate-600'}`}
+            className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${workplacePill[job.workplaceType] ?? "bg-slate-100 text-slate-600"}`}
           >
-            {job.workplaceType?.replace('_', ' ')}
+            {job.workplaceType?.replace("_", " ")}
           </span>
           <span
-            className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${typePill[job.jobType] ?? 'bg-slate-100 text-slate-600'}`}
+            className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${typePill[job.jobType] ?? "bg-slate-100 text-slate-600"}`}
           >
-            {job.jobType?.replace('_', ' ')}
+            {job.jobType?.replace("_", " ")}
           </span>
         </div>
 
@@ -142,11 +142,11 @@ export function RecentJobsSection() {
           : response.data?.jobs || response.jobs || [];
         // Filter for open jobs if the backend uses `status` field
         const openJobs = allJobs.filter(
-          (j: any) => j.status === 'OPEN' || j.jobStatus === 'OPEN',
+          (j: any) => j.status === "OPEN" || j.jobStatus === "OPEN",
         );
         setJobs(openJobs.slice(0, 4));
       } catch (error) {
-        console.error('Error fetching jobs:', error);
+        console.error("Error fetching jobs:", error);
       } finally {
         setLoading(false);
       }

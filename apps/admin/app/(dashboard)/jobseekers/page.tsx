@@ -6,11 +6,11 @@ import { JobseekersTable } from "@/features/jobseekers/components/jobseekers-tab
 export default function JobseekersPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <ManagementHeader 
-        title="Job Seekers" 
-        description="Manage and monitor all registered jobseekers" 
+      <ManagementHeader
+        title="Job Seekers"
+        description="Manage and monitor all registered jobseekers"
       />
-      
+
       <main className="flex-1">
         <JobseekersStats />
         <JobseekersTable />

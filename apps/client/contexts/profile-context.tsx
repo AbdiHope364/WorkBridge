@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   createContext,
@@ -7,11 +7,11 @@ import {
   useEffect,
   useState,
   type ReactNode,
-} from 'react';
+} from "react";
 
-import { api } from '@/lib/api';
-import { useAuth } from './auth-context';
-import type { EmployerProfile, JobseekerProfile } from '@repo/api-client';
+import { api } from "@/lib/api";
+import { useAuth } from "./auth-context";
+import type { EmployerProfile, JobseekerProfile } from "@repo/api-client";
 
 interface ProfileContextValue {
   isLoading: boolean;
@@ -53,25 +53,25 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      if (user.role === 'jobseeker') {
+      if (user.role === "jobseeker") {
         const profile = await api.profiles.jobseeker.getMyProfile();
 
         setJobseekerProfile(profile);
         setEmployerProfile(null);
       }
 
-      if (user.role === 'employer') {
+      if (user.role === "employer") {
         const profile = await api.profiles.employer.getMyProfile();
 
         setEmployerProfile(profile);
         setJobseekerProfile(null);
       }
     } catch (error: any) {
-      if (error.status === 404 || error.message?.includes('not found')) {
-        console.log('No profile exists yet for this user.');
+      if (error.status === 404 || error.message?.includes("not found")) {
+        console.log("No profile exists yet for this user.");
         setJobseekerProfile(null);
       } else {
-        console.error('Failed to load profile:', error);
+        console.error("Failed to load profile:", error);
       }
     }
   }, [user]);
@@ -91,7 +91,6 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
 
     initialize();
   }, [isAuthenticated, user, refreshProfile]);
-
 
   return (
     <ProfileContext.Provider
@@ -113,7 +112,7 @@ export function useProfile() {
   const context = useContext(ProfileContext);
 
   if (!context) {
-    throw new Error('useProfile must be used inside ProfileProvider');
+    throw new Error("useProfile must be used inside ProfileProvider");
   }
 
   return context;

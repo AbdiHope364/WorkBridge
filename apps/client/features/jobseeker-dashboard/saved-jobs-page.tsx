@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { useAuth } from '@/contexts/auth-context';
-import { api } from '@/lib/api';
-import { JobseekerSidebar } from './components/jobseeker-sidebar';
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useAuth } from "@/contexts/auth-context";
+import { api } from "@/lib/api";
+import { JobseekerSidebar } from "./components/jobseeker-sidebar";
 
 const Icons = {
   Location: () => (
@@ -75,7 +75,7 @@ function SavedJobCard({
             </h2>
             <div className="mt-1 flex items-center gap-1.5 text-sm font-semibold text-slate-500">
               <span className="truncate">
-                {job.employerSnapshot?.displayName || 'Employer'}
+                {job.employerSnapshot?.displayName || "Employer"}
               </span>
               <Icons.Verified />
             </div>
@@ -91,7 +91,7 @@ function SavedJobCard({
             {job.salary?.toLocaleString()}
           </p>
           <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-            {job.budget || 'ETB'}
+            {job.budget || "ETB"}
           </p>
         </div>
       </div>
@@ -107,7 +107,7 @@ function SavedJobCard({
               key={i}
               className="px-3 py-1 rounded-lg bg-slate-50 text-slate-500 text-[10px] font-bold border border-slate-100 uppercase tracking-tighter"
             >
-              {typeof skill === 'string' ? skill : skill?.name}
+              {typeof skill === "string" ? skill : skill?.name}
             </span>
           ))}
         </div>
@@ -145,7 +145,7 @@ export function SavedJobsPage() {
         const response = await api.jobs.getSavedJobs();
         setItems(response?.data || []);
       } catch (err) {
-        console.error('Failed to load saved jobs');
+        console.error("Failed to load saved jobs");
       } finally {
         setLoading(false);
       }
@@ -164,7 +164,7 @@ export function SavedJobsPage() {
         ),
       );
     } catch (err) {
-      alert('Failed to remove.');
+      alert("Failed to remove.");
     }
   };
 

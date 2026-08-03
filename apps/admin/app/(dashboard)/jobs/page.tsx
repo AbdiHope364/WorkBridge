@@ -8,11 +8,11 @@ import { JobsTable } from "@/features/jobs/components/jobs-table";
 export default function JobsPage() {
   return (
     <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
-      <ManagementHeader 
-        title="Job Management" 
-        description="Verify, approve, and manage job postings from all employers" 
+      <ManagementHeader
+        title="Job Management"
+        description="Verify, approve, and manage job postings from all employers"
       />
-      
+
       <main className="flex-1">
         <JobsStats />
         <JobsTable />

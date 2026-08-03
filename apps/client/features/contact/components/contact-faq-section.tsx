@@ -29,7 +29,10 @@ export function ContactFaqSection() {
 
       <div className="mx-auto mt-7 max-w-[820px] space-y-5 text-left">
         {faqs.map((faq) => (
-          <article key={faq.question} className="rounded-lg bg-slate-200 px-6 py-5">
+          <article
+            key={faq.question}
+            className="rounded-lg bg-slate-200 px-6 py-5"
+          >
             <h3 className="text-base font-black text-slate-950">
               {faq.question}
             </h3>

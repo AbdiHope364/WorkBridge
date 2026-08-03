@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useAuth } from '@/contexts/auth-context';
-import type { SVGProps } from 'react';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useAuth } from "@/contexts/auth-context";
+import type { SVGProps } from "react";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
@@ -144,27 +144,27 @@ const Icons = {
 };
 
 const navigationItems = [
-  { label: 'Overview', href: '/dashboard/employer', icon: Icons.Home },
-  { label: 'My Jobs', href: '/dashboard/employer/my-jobs', icon: Icons.Jobs },
+  { label: "Overview", href: "/dashboard/employer", icon: Icons.Home },
+  { label: "My Jobs", href: "/dashboard/employer/my-jobs", icon: Icons.Jobs },
   {
-    label: 'Applications',
-    href: '/dashboard/employer/applications',
+    label: "Applications",
+    href: "/dashboard/employer/applications",
     icon: Icons.Users,
   },
-  { label: 'Messages', href: '/dashboard/employer/messages', icon: Icons.Chat },
+  { label: "Messages", href: "/dashboard/employer/messages", icon: Icons.Chat },
   {
-    label: 'Notifications',
-    href: '/dashboard/employer/notifications',
+    label: "Notifications",
+    href: "/dashboard/employer/notifications",
     icon: Icons.Bell,
   },
   {
-    label: 'Profile',
-    href: '/dashboard/employer/profile',
+    label: "Profile",
+    href: "/dashboard/employer/profile",
     icon: Icons.Profile,
   },
   {
-    label: 'Find Workers',
-    href: '/dashboard/employer/find-workers',
+    label: "Find Workers",
+    href: "/dashboard/employer/find-workers",
     icon: Icons.Users,
   },
 ];
@@ -186,7 +186,7 @@ export function EmployerSidebar() {
     try {
       await logout();
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
       setIsLoggingOut(false);
     }
   };
@@ -221,7 +221,7 @@ export function EmployerSidebar() {
       {/* --- Sidebar Container --- */}
       <aside
         className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-[#172653] text-white transition-transform duration-300 ease-in-out md:sticky md:top-0 md:h-screen md:translate-x-0 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
+          isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Brand Header */}
@@ -242,7 +242,7 @@ export function EmployerSidebar() {
             {navigationItems.map((item) => {
               const Icon = item.icon;
               const isActive =
-                item.href === '/dashboard/employer'
+                item.href === "/dashboard/employer"
                   ? pathname === item.href
                   : pathname.startsWith(item.href);
 
@@ -252,12 +252,12 @@ export function EmployerSidebar() {
                   href={item.href}
                   className={`flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold transition-all ${
                     isActive
-                      ? 'bg-teal-500 text-white shadow-lg shadow-teal-500/20'
-                      : 'text-slate-400 hover:bg-white/5 hover:text-white'
+                      ? "bg-teal-500 text-white shadow-lg shadow-teal-500/20"
+                      : "text-slate-400 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   <Icon
-                    className={`h-5 w-5 ${isActive ? 'text-white' : 'text-slate-400'}`}
+                    className={`h-5 w-5 ${isActive ? "text-white" : "text-slate-400"}`}
                   />
                   {item.label}
                 </Link>
@@ -275,7 +275,7 @@ export function EmployerSidebar() {
             className="flex w-full items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-400 transition-all hover:bg-red-500/10 hover:text-red-400 disabled:opacity-50"
           >
             <Icons.Logout className="h-5 w-5" />
-            {isLoggingOut ? 'Signing out...' : 'Sign Out'}
+            {isLoggingOut ? "Signing out..." : "Sign Out"}
           </button>
         </div>
       </aside>

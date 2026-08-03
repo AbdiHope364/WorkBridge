@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import Link from 'next/link';
-import type { ReactNode, SVGProps } from 'react';
-import { api } from '@/lib/api';
-import { useAuth } from '@/contexts/auth-context';
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
+import Link from "next/link";
+import type { ReactNode, SVGProps } from "react";
+import { api } from "@/lib/api";
+import { useAuth } from "@/contexts/auth-context";
 import {
   JOB_CATEGORIES,
   JOB_TYPES,
   WORKPLACE_TYPES,
   EXPERIENCE_LEVELS,
   BUDGET_TYPES,
-} from '@repo/types/jobs';
+} from "@repo/types/jobs";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
@@ -120,7 +120,7 @@ function TextField({
   placeholder,
   value,
   onChange,
-  type = 'text',
+  type = "text",
 }: {
   label: string;
   placeholder: string;
@@ -164,7 +164,7 @@ function SelectField({
         <option value="">Select an option</option>
         {options.map((option) => (
           <option key={option} value={option}>
-            {option.replace(/_/g, ' ')}
+            {option.replace(/_/g, " ")}
           </option>
         ))}
       </select>
@@ -189,10 +189,10 @@ function ChoiceCard({
     <button
       type="button"
       onClick={onClick}
-      className={`relative flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${selected ? 'border-teal-600 bg-teal-50 ring-1 ring-teal-600' : 'border-slate-100 bg-white hover:border-slate-200'}`}
+      className={`relative flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${selected ? "border-teal-600 bg-teal-50 ring-1 ring-teal-600" : "border-slate-100 bg-white hover:border-slate-200"}`}
     >
       <div
-        className={`p-2.5 rounded-lg ${selected ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-500'}`}
+        className={`p-2.5 rounded-lg ${selected ? "bg-teal-600 text-white" : "bg-slate-100 text-slate-500"}`}
       >
         {icon}
       </div>
@@ -201,7 +201,7 @@ function ChoiceCard({
         <div className="text-xs text-slate-500">{description}</div>
       </div>
       <div
-        className={`h-5 w-5 rounded-full border-2 flex items-center justify-center ${selected ? 'border-teal-600 bg-teal-600' : 'border-slate-200'}`}
+        className={`h-5 w-5 rounded-full border-2 flex items-center justify-center ${selected ? "border-teal-600 bg-teal-600" : "border-slate-200"}`}
       >
         {selected && <div className="h-2 w-2 rounded-full bg-white" />}
       </div>
@@ -246,7 +246,7 @@ function SkillsField({
           value={skillInput}
           onChange={(e) => setSkillInput(e.target.value)}
           onKeyDown={(e) =>
-            e.key === 'Enter' && (e.preventDefault(), onAddSkill())
+            e.key === "Enter" && (e.preventDefault(), onAddSkill())
           }
           placeholder="Type skill and press Enter..."
           className="min-w-[180px] flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400"
@@ -262,24 +262,24 @@ export function EmployerEditJobPage() {
   const jobId = params.id as string;
   const { isAuthenticated, isLoading: authLoading } = useAuth();
 
-  const [skillInput, setSkillInput] = useState('');
+  const [skillInput, setSkillInput] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const [initialData, setInitialData] = useState<any>(null);
   const [form, setForm] = useState({
-    title: '',
-    city: '',
-    category: '',
-    jobType: '',
-    workplaceType: '',
-    workerType: '',
-    experienceLevel: '',
-    salary: '',
-    budget: '',
-    deadline: '',
-    description: '',
+    title: "",
+    city: "",
+    category: "",
+    jobType: "",
+    workplaceType: "",
+    workerType: "",
+    experienceLevel: "",
+    salary: "",
+    budget: "",
+    deadline: "",
+    description: "",
     skills: [] as string[],
     vacancies: 1,
     isUrgent: false,
@@ -294,34 +294,34 @@ export function EmployerEditJobPage() {
         const job = response.data || response;
 
         if (!job) {
-          setError('Job data not found.');
+          setError("Job data not found.");
           return;
         }
 
         const mappedData = {
-          title: job.title || '',
-          city: job.location?.city || '',
-          category: job.category || '',
-          jobType: job.jobType || '',
-          workplaceType: job.workplaceType || '',
-          workerType: job.workerType || '',
-          experienceLevel: job.experienceLevel || '',
-          salary: String(job.salary || ''),
-          budget: job.budget || '',
-          deadline: job.deadline?.split('T')[0] || '',
-          description: job.description || '',
+          title: job.title || "",
+          city: job.location?.city || "",
+          category: job.category || "",
+          jobType: job.jobType || "",
+          workplaceType: job.workplaceType || "",
+          workerType: job.workerType || "",
+          experienceLevel: job.experienceLevel || "",
+          salary: String(job.salary || ""),
+          budget: job.budget || "",
+          deadline: job.deadline?.split("T")[0] || "",
+          description: job.description || "",
           vacancies: job.vacancies || 1,
           isUrgent: job.isUrgent || false,
           skills:
-            job.skills?.map((s: any) => (typeof s === 'string' ? s : s.name)) ||
+            job.skills?.map((s: any) => (typeof s === "string" ? s : s.name)) ||
             [],
         };
 
         setForm(mappedData);
         setInitialData(mappedData);
       } catch (err) {
-        console.error('Fetch error:', err);
-        setError('Could not load job details.');
+        console.error("Fetch error:", err);
+        setError("Could not load job details.");
       } finally {
         setIsFetching(false);
       }
@@ -337,13 +337,13 @@ export function EmployerEditJobPage() {
   const addSkill = () => {
     const value = skillInput.trim();
     if (!value || form.skills.includes(value)) return;
-    updateField('skills', [...form.skills, value]);
-    setSkillInput('');
+    updateField("skills", [...form.skills, value]);
+    setSkillInput("");
   };
 
   const removeSkill = (skill: string) => {
     updateField(
-      'skills',
+      "skills",
       form.skills.filter((s) => s !== skill),
     );
   };
@@ -371,13 +371,13 @@ export function EmployerEditJobPage() {
           }
         }
         // Nested Object comparison (Location)
-        else if (key === 'city') {
+        else if (key === "city") {
           if (currentVal !== initialVal) {
-            patchPayload.location = { city: currentVal, country: 'ETHIOPIA' };
+            patchPayload.location = { city: currentVal, country: "ETHIOPIA" };
           }
         }
         // Numeric conversion
-        else if (key === 'salary' || key === 'vacancies') {
+        else if (key === "salary" || key === "vacancies") {
           if (String(currentVal) !== String(initialVal)) {
             patchPayload[key] = Number(currentVal);
           }
@@ -389,16 +389,16 @@ export function EmployerEditJobPage() {
       });
 
       if (Object.keys(patchPayload).length === 0) {
-        alert('No changes detected.');
+        alert("No changes detected.");
         setIsSubmitting(false);
         return;
       }
 
       await api.jobs.updateJob(jobId, patchPayload);
-      alert('Job updated successfully');
-      router.push('/dashboard/employer/my-jobs');
+      alert("Job updated successfully");
+      router.push("/dashboard/employer/my-jobs");
     } catch (err: any) {
-      setError(err.message || 'Update failed.');
+      setError(err.message || "Update failed.");
     } finally {
       setIsSubmitting(false);
     }
@@ -453,25 +453,25 @@ export function EmployerEditJobPage() {
               label="Job Title"
               placeholder="..."
               value={form.title}
-              onChange={(e) => updateField('title', e.target.value)}
+              onChange={(e) => updateField("title", e.target.value)}
             />
             <TextField
               label="Job Location"
               placeholder="..."
               value={form.city}
-              onChange={(e) => updateField('city', e.target.value)}
+              onChange={(e) => updateField("city", e.target.value)}
             />
             <SelectField
               label="Job Category"
               options={JOB_CATEGORIES}
               value={form.category}
-              onChange={(e) => updateField('category', e.target.value)}
+              onChange={(e) => updateField("category", e.target.value)}
             />
             <SelectField
               label="Job Type"
               options={JOB_TYPES}
               value={form.jobType}
-              onChange={(e) => updateField('jobType', e.target.value)}
+              onChange={(e) => updateField("jobType", e.target.value)}
             />
           </div>
         </section>
@@ -486,18 +486,18 @@ export function EmployerEditJobPage() {
               <RequiredLabel>Worker Type</RequiredLabel>
               <div className="grid gap-4 md:grid-cols-2 mt-3">
                 <ChoiceCard
-                  selected={form.workerType === 'DIGITAL'}
+                  selected={form.workerType === "DIGITAL"}
                   title="Digital"
                   description="Tech, Design, Remote Work"
                   icon={<MonitorIcon className="h-5 w-5" />}
-                  onClick={() => updateField('workerType', 'DIGITAL')}
+                  onClick={() => updateField("workerType", "DIGITAL")}
                 />
                 <ChoiceCard
-                  selected={form.workerType === 'PHYSICAL'}
+                  selected={form.workerType === "PHYSICAL"}
                   title="Physical"
                   description="On-site, Manual, Technical"
                   icon={<ToolIcon className="h-5 w-5" />}
-                  onClick={() => updateField('workerType', 'PHYSICAL')}
+                  onClick={() => updateField("workerType", "PHYSICAL")}
                 />
               </div>
             </div>
@@ -506,13 +506,13 @@ export function EmployerEditJobPage() {
                 label="Workplace Type"
                 options={WORKPLACE_TYPES}
                 value={form.workplaceType}
-                onChange={(e) => updateField('workplaceType', e.target.value)}
+                onChange={(e) => updateField("workplaceType", e.target.value)}
               />
               <SelectField
                 label="Experience Level"
                 options={EXPERIENCE_LEVELS}
                 value={form.experienceLevel}
-                onChange={(e) => updateField('experienceLevel', e.target.value)}
+                onChange={(e) => updateField("experienceLevel", e.target.value)}
               />
             </div>
           </div>
@@ -537,7 +537,7 @@ export function EmployerEditJobPage() {
                 title="Detailed Job Description"
                 placeholder="Describe the job requirements and responsibilities"
                 value={form.description}
-                onChange={(e) => updateField('description', e.target.value)}
+                onChange={(e) => updateField("description", e.target.value)}
                 className="w-full min-h-[300px] p-5 mt-1 rounded-xl border border-slate-200 bg-white text-base leading-relaxed outline-none focus:border-teal-500 transition-all resize-y shadow-inner"
                 required
               />
@@ -555,27 +555,27 @@ export function EmployerEditJobPage() {
               label="Salary (ETB)"
               type="number"
               value={form.salary}
-              onChange={(e) => updateField('salary', e.target.value)}
+              onChange={(e) => updateField("salary", e.target.value)}
               placeholder="0"
             />
             <SelectField
               label="Budget Type"
               options={BUDGET_TYPES}
               value={form.budget}
-              onChange={(e) => updateField('budget', e.target.value)}
+              onChange={(e) => updateField("budget", e.target.value)}
             />
             <TextField
               label="Deadline"
               type="date"
               value={form.deadline}
-              onChange={(e) => updateField('deadline', e.target.value)}
+              onChange={(e) => updateField("deadline", e.target.value)}
               placeholder="Select date"
             />
             <TextField
               label="Vacancies"
               type="number"
               value={form.vacancies}
-              onChange={(e) => updateField('vacancies', e.target.value)}
+              onChange={(e) => updateField("vacancies", e.target.value)}
               placeholder="1"
             />
           </div>
@@ -593,7 +593,7 @@ export function EmployerEditJobPage() {
             disabled={isSubmitting}
             className="h-12 px-10 rounded-xl bg-teal-600 text-sm font-bold text-white hover:bg-teal-700 shadow-xl shadow-teal-600/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            {isSubmitting ? 'Updating...' : 'Save Changes'}
+            {isSubmitting ? "Updating..." : "Save Changes"}
             <SendIcon className="h-4 w-4" />
           </button>
         </div>

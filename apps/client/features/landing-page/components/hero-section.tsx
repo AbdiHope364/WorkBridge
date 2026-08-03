@@ -53,7 +53,10 @@ export function HeroSection() {
         </div>
 
         <div className="mt-10  flex justify-end lg:justify-end">
-          <div style={{background:"#04865a"}} className="grid w-full  gap-6 rounded-t-[5rem] bg-[#04865a]  px-10 py-8 text-center text-white sm:grid-cols-2 lg:grid-cols-4">
+          <div
+            style={{ background: "#04865a" }}
+            className="grid w-full  gap-6 rounded-t-[5rem] bg-[#04865a]  px-10 py-8 text-center text-white sm:grid-cols-2 lg:grid-cols-4"
+          >
             {stats.map((stat) => (
               <div key={stat.label}>
                 <p className="text-[29px] font-black leading-none">

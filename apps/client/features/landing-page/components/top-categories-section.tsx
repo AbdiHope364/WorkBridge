@@ -1,13 +1,13 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 const categories = [
   {
-    name: 'Technology',
-    description: 'Software, data, IT support, and engineering roles',
-    badge: 'Trending',
-    badgeStyle: 'bg-violet-100 text-violet-700',
+    name: "Technology",
+    description: "Software, data, IT support, and engineering roles",
+    badge: "Trending",
+    badgeStyle: "bg-violet-100 text-violet-700",
     openRoles: 480,
-    iconBg: 'bg-violet-50 text-violet-600',
+    iconBg: "bg-violet-50 text-violet-600",
     icon: (
       <svg
         viewBox="0 0 20 20"
@@ -41,12 +41,12 @@ const categories = [
     ),
   },
   {
-    name: 'Marketing & Sales',
-    description: 'Digital marketing, brand strategy, and growth roles',
-    badge: 'High Demand',
-    badgeStyle: 'bg-sky-100 text-sky-700',
+    name: "Marketing & Sales",
+    description: "Digital marketing, brand strategy, and growth roles",
+    badge: "High Demand",
+    badgeStyle: "bg-sky-100 text-sky-700",
     openRoles: 310,
-    iconBg: 'bg-sky-50 text-sky-600',
+    iconBg: "bg-sky-50 text-sky-600",
     icon: (
       <svg
         viewBox="0 0 20 20"
@@ -72,12 +72,12 @@ const categories = [
     ),
   },
   {
-    name: 'Healthcare',
-    description: 'Nursing, clinical support, and wellness positions',
-    badge: '320 open roles',
-    badgeStyle: 'bg-rose-100 text-rose-700',
+    name: "Healthcare",
+    description: "Nursing, clinical support, and wellness positions",
+    badge: "320 open roles",
+    badgeStyle: "bg-rose-100 text-rose-700",
     openRoles: 320,
-    iconBg: 'bg-rose-50 text-rose-600',
+    iconBg: "bg-rose-50 text-rose-600",
     icon: (
       <svg
         viewBox="0 0 20 20"
@@ -104,12 +104,12 @@ const categories = [
     ),
   },
   {
-    name: 'Creative & Design',
-    description: 'Graphic design, UX, video, and content creation',
-    badge: 'Trending',
-    badgeStyle: 'bg-amber-100 text-amber-700',
+    name: "Creative & Design",
+    description: "Graphic design, UX, video, and content creation",
+    badge: "Trending",
+    badgeStyle: "bg-amber-100 text-amber-700",
     openRoles: 195,
-    iconBg: 'bg-amber-50 text-amber-600',
+    iconBg: "bg-amber-50 text-amber-600",
     icon: (
       <svg
         viewBox="0 0 20 20"
@@ -135,12 +135,12 @@ const categories = [
     ),
   },
   {
-    name: 'Cleaning Services',
-    description: 'Homes, offices, and commercial cleaning jobs',
-    badge: 'Entry Friendly',
-    badgeStyle: 'bg-teal-100 text-teal-700',
+    name: "Cleaning Services",
+    description: "Homes, offices, and commercial cleaning jobs",
+    badge: "Entry Friendly",
+    badgeStyle: "bg-teal-100 text-teal-700",
     openRoles: 260,
-    iconBg: 'bg-teal-50 text-teal-600',
+    iconBg: "bg-teal-50 text-teal-600",
     icon: (
       <svg
         viewBox="0 0 20 20"
@@ -165,12 +165,12 @@ const categories = [
     ),
   },
   {
-    name: 'Delivery & Logistics',
-    description: 'Last-mile delivery, courier, and supply chain roles',
-    badge: 'High Demand',
-    badgeStyle: 'bg-orange-100 text-orange-700',
+    name: "Delivery & Logistics",
+    description: "Last-mile delivery, courier, and supply chain roles",
+    badge: "High Demand",
+    badgeStyle: "bg-orange-100 text-orange-700",
     openRoles: 410,
-    iconBg: 'bg-orange-50 text-orange-600',
+    iconBg: "bg-orange-50 text-orange-600",
     icon: (
       <svg
         viewBox="0 0 20 20"

@@ -9,9 +9,7 @@ const testimonials = [
 ];
 
 function Stars() {
-  return (
-    <span className="text-sm tracking-wide text-amber-400">*****</span>
-  );
+  return <span className="text-sm tracking-wide text-amber-400">*****</span>;
 }
 
 export function PlatformImpactSection() {

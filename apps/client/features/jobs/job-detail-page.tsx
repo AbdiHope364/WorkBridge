@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { formatDistanceToNow } from 'date-fns';
-import { Badge } from '@repo/ui/badge';
-import { Button } from '@repo/ui/button';
-import { Card } from '@repo/ui/card';
-import { Container } from '@repo/ui/container';
+import React, { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
+import { formatDistanceToNow } from "date-fns";
+import { Badge } from "@repo/ui/badge";
+import { Button } from "@repo/ui/button";
+import { Card } from "@repo/ui/card";
+import { Container } from "@repo/ui/container";
 
-import { api } from '@/lib/api';
-import { useAuth } from '@/contexts/auth-context';
+import { api } from "@/lib/api";
+import { useAuth } from "@/contexts/auth-context";
 
 const Icons = {
   MapPin: () => (
@@ -86,7 +86,7 @@ const Icons = {
   Bookmark: ({ filled }: { filled?: boolean }) => (
     <svg
       viewBox="0 0 24 24"
-      fill={filled ? 'currentColor' : 'none'}
+      fill={filled ? "currentColor" : "none"}
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
@@ -114,9 +114,9 @@ const Icons = {
 
 const formatEnum = (str: string) =>
   str
-    ?.replace(/_/g, ' ')
+    ?.replace(/_/g, " ")
     .toLowerCase()
-    .replace(/\b\w/g, (c) => c.toUpperCase()) || 'N/A';
+    .replace(/\b\w/g, (c) => c.toUpperCase()) || "N/A";
 
 const InfoBox = ({ icon: Icon, label, value }: any) => (
   <div className="flex items-center gap-3 p-4 rounded-2xl bg-white border border-slate-100 shadow-sm">
@@ -141,12 +141,12 @@ export function JobDetailPage({ job }: { job: any }) {
   const [isSaving, setIsSaving] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
   const [isApplying, setIsApplying] = useState(false);
-  const [coverLetter, setCoverLetter] = useState('');
+  const [coverLetter, setCoverLetter] = useState("");
   const [resume, setResume] = useState<File | null>(null);
 
   useEffect(() => {
     const checkStatus = async () => {
-      if (isAuthLoading || !isAuthenticated || user?.role !== 'jobseeker')
+      if (isAuthLoading || !isAuthenticated || user?.role !== "jobseeker")
         return;
       try {
         const res = (await api.jobs.getSavedJobs()) as any;
@@ -159,7 +159,7 @@ export function JobDetailPage({ job }: { job: any }) {
           );
         }
       } catch (err) {
-        console.warn('Unauthorized saved status check.');
+        console.warn("Unauthorized saved status check.");
       }
     };
     checkStatus();
@@ -167,8 +167,8 @@ export function JobDetailPage({ job }: { job: any }) {
 
   const handleSaveToggle = async () => {
     if (!isAuthenticated) return router.push(`/login?next=/jobs/${job.id}`);
-    if (user?.role !== 'jobseeker')
-      return alert('Only jobseekers can save jobs.');
+    if (user?.role !== "jobseeker")
+      return alert("Only jobseekers can save jobs.");
 
     try {
       setIsSaving(true);
@@ -180,7 +180,7 @@ export function JobDetailPage({ job }: { job: any }) {
         setIsSaved(true);
       }
     } catch (err) {
-      alert('Action failed.');
+      alert("Action failed.");
     } finally {
       setIsSaving(false);
     }
@@ -194,24 +194,24 @@ export function JobDetailPage({ job }: { job: any }) {
     try {
       const formData = new FormData();
 
-      formData.append('jobId', job.id || job._id);
+      formData.append("jobId", job.id || job._id);
 
       if (coverLetter.trim()) {
-        formData.append('coverLetter', coverLetter.trim());
+        formData.append("coverLetter", coverLetter.trim());
       }
 
       if (resume) {
-        formData.append('attachments', resume);
+        formData.append("attachments", resume);
       }
       await api.applications.submitApplication(formData);
 
-      alert('Application submitted!');
+      alert("Application submitted!");
       setShowApplyModal(false);
 
-      setCoverLetter('');
+      setCoverLetter("");
       setResume(null);
     } catch (err: any) {
-      alert(err?.message || 'Submission failed.');
+      alert(err?.message || "Submission failed.");
     } finally {
       setIsApplying(false);
     }
@@ -220,7 +220,7 @@ export function JobDetailPage({ job }: { job: any }) {
   const company = job.employerSnapshot;
   const postedDate = job.createdAt
     ? formatDistanceToNow(new Date(job.createdAt), { addSuffix: true })
-    : 'Recently';
+    : "Recently";
 
   return (
     <main className="min-h-screen bg-[#F8FAFC] pb-20">
@@ -251,19 +251,19 @@ export function JobDetailPage({ job }: { job: any }) {
 
             <div className="flex items-center gap-3">
               <Button
-                variant={isSaved ? 'primary' : 'outline'}
+                variant={isSaved ? "primary" : "outline"}
                 disabled={isSaving}
                 onClick={handleSaveToggle}
-                className={`h-12 px-6 rounded-xl font-bold flex items-center gap-2 ${isSaved ? 'bg-teal-600 border-teal-600 text-white' : 'text-slate-600'}`}
+                className={`h-12 px-6 rounded-xl font-bold flex items-center gap-2 ${isSaved ? "bg-teal-600 border-teal-600 text-white" : "text-slate-600"}`}
               >
                 <Icons.Bookmark filled={isSaved} />
-                {isSaved ? 'Saved' : 'Save Job'}
+                {isSaved ? "Saved" : "Save Job"}
               </Button>
               <Button
                 onClick={() =>
                   isAuthenticated
                     ? setShowApplyModal(true)
-                    : router.push('/login')
+                    : router.push("/login")
                 }
                 className="h-12 px-10 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black shadow-lg shadow-teal-600/20"
               >
@@ -347,7 +347,7 @@ export function JobDetailPage({ job }: { job: any }) {
                   {company?.displayName}
                 </h3>
                 <p className="text-xs font-bold text-teal-600 uppercase tracking-widest mt-1">
-                  {company?.industry || 'Enterprise'}
+                  {company?.industry || "Enterprise"}
                 </p>
                 <div className="mt-8 space-y-4 text-xs text-left border-t border-slate-50 pt-6">
                   <div className="flex justify-between">
@@ -420,7 +420,7 @@ export function JobDetailPage({ job }: { job: any }) {
                   disabled={isApplying}
                   className="flex-1 h-12 rounded-xl bg-teal-600 text-white font-bold shadow-lg shadow-teal-600/20"
                 >
-                  {isApplying ? 'Submitting...' : 'Submit Application'}
+                  {isApplying ? "Submitting..." : "Submit Application"}
                 </Button>
               </div>
             </form>

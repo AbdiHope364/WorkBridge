@@ -36,7 +36,6 @@ export default function AnalyticsPage() {
         onSearch={handleSearch}
         onFilterChange={handleFilterChange}
         filterOptions={filterOptions}
-      
       />
       <main className="flex-1">
         <AnalyticsOverview />

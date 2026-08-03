@@ -54,7 +54,8 @@ export function AuthShell({
                   Local Talent. Real Opportunities
                 </dt>
                 <dd className="mt-2 text-slate-400">
-                  Discover jobs and connect with trusted employers and skilled professionals across your growing workforce.
+                  Discover jobs and connect with trusted employers and skilled
+                  professionals across your growing workforce.
                 </dd>
               </div>
             </dl>

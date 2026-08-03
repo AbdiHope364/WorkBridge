@@ -236,9 +236,7 @@ function MessageBubble({ message }: { message: (typeof messages)[number] }) {
         <p
           className={
             `rounded-lg px-5 py-4 text-sm leading-tight ` +
-            (isEmployer
-              ? "bg-[#172653] text-white"
-              : "bg-[#d8d8d8] text-black")
+            (isEmployer ? "bg-[#172653] text-white" : "bg-[#d8d8d8] text-black")
           }
         >
           {message.text}
@@ -246,8 +244,7 @@ function MessageBubble({ message }: { message: (typeof messages)[number] }) {
       </div>
       <span
         className={
-          `mt-2 text-xs text-[#3d3d3d] ` +
-          (isEmployer ? "mr-2" : "ml-[62px]")
+          `mt-2 text-xs text-[#3d3d3d] ` + (isEmployer ? "mr-2" : "ml-[62px]")
         }
       >
         {message.time}

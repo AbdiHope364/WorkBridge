@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import type { ReactNode, SVGProps } from 'react';
-import { api } from '@/lib/api';
-import { useAuth } from '@/contexts/auth-context';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import type { ReactNode, SVGProps } from "react";
+import { api } from "@/lib/api";
+import { useAuth } from "@/contexts/auth-context";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
@@ -190,7 +190,7 @@ function CalendarIcon(props: IconProps) {
 
 function PreviewField({
   children,
-  className = '',
+  className = "",
 }: {
   children: ReactNode;
   className?: string;
@@ -216,7 +216,7 @@ function DetailRow({
   wide?: boolean;
 }) {
   return (
-    <PreviewField className={wide ? 'lg:col-span-2' : undefined}>
+    <PreviewField className={wide ? "lg:col-span-2" : undefined}>
       <div className="grid grid-cols-[22px_1fr_auto] items-center gap-3 text-xs">
         <Icon className="h-4 w-4 text-[#00aaa8]" />
         <span className="text-[#555]">{label}</span>
@@ -239,16 +239,16 @@ export function EmployerPreviewJobPage() {
   // Check authentication
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push('/login');
+      router.push("/login");
     }
   }, [isLoading, isAuthenticated, router]);
 
   // Load job data from sessionStorage
   useEffect(() => {
-    const data = sessionStorage.getItem('job_preview');
+    const data = sessionStorage.getItem("job_preview");
 
     if (!data) {
-      router.push('/dashboard/employer/create');
+      router.push("/dashboard/employer/create");
       return;
     }
 
@@ -256,8 +256,8 @@ export function EmployerPreviewJobPage() {
       const parsedData = JSON.parse(data);
       setJob(parsedData);
     } catch (err) {
-      console.error('Error parsing job preview data:', err);
-      router.push('/dashboard/employer/create');
+      console.error("Error parsing job preview data:", err);
+      router.push("/dashboard/employer/create");
     }
   }, [router]);
 
@@ -290,28 +290,28 @@ export function EmployerPreviewJobPage() {
         isUrgent: job.isUrgent || false,
         location: {
           city: job.city.trim(),
-          country: 'ETHIOPIA',
+          country: "ETHIOPIA",
         },
       };
 
       await api.jobs.createJob(payload);
 
-      sessionStorage.removeItem('job_preview');
+      sessionStorage.removeItem("job_preview");
 
-      alert('Job posted successfully!');
-      router.push('/dashboard/employer');
+      alert("Job posted successfully!");
+      router.push("/dashboard/employer");
     } catch (err: any) {
-      console.error('Error posting job:', err);
+      console.error("Error posting job:", err);
 
       if (err.status === 401) {
-        setError('Your session has expired. Please log in again.');
-        router.push('/login');
+        setError("Your session has expired. Please log in again.");
+        router.push("/login");
       } else if (err.status === 403) {
-        setError('You do not have permission to create jobs.');
+        setError("You do not have permission to create jobs.");
       } else if (err.status === 400) {
-        setError(err.message || 'Invalid job data. Please check your inputs.');
+        setError(err.message || "Invalid job data. Please check your inputs.");
       } else {
-        setError(err.message || 'Failed to post job. Please try again.');
+        setError(err.message || "Failed to post job. Please try again.");
       }
     } finally {
       setIsSubmitting(false);
@@ -346,19 +346,19 @@ export function EmployerPreviewJobPage() {
         isUrgent: job.isUrgent || false,
         location: {
           city: job.city.trim(),
-          country: 'ETHIOPIA',
+          country: "ETHIOPIA",
         },
-        status: 'DRAFT',
+        status: "DRAFT",
       };
 
       await api.jobs.createJob(payload);
 
-      sessionStorage.removeItem('job_preview');
+      sessionStorage.removeItem("job_preview");
 
-      alert('Draft saved successfully!');
-      router.push('/dashboard/employer');
+      alert("Draft saved successfully!");
+      router.push("/dashboard/employer");
     } catch (err: any) {
-      setError(err.message || 'Failed to save draft');
+      setError(err.message || "Failed to save draft");
     } finally {
       setIsSubmitting(false);
     }
@@ -366,8 +366,8 @@ export function EmployerPreviewJobPage() {
 
   // Format display values
   const formatValue = (value: string) => {
-    if (!value) return 'N/A';
-    return value.replace(/_/g, ' ');
+    if (!value) return "N/A";
+    return value.replace(/_/g, " ");
   };
 
   // Show loading state
@@ -416,13 +416,13 @@ export function EmployerPreviewJobPage() {
         <div className="grid gap-4 lg:grid-cols-2">
           <PreviewField>
             <h2 className="text-xl font-normal text-[#333]">
-              {job.title || 'Untitled'}
+              {job.title || "Untitled"}
             </h2>
           </PreviewField>
           <PreviewField>
             <div className="flex items-center gap-4 text-[10px] text-[#777]">
               <PinIcon className="h-3.5 w-3.5 text-[#777]" />
-              {job.city || 'Unknown'}, Ethiopia
+              {job.city || "Unknown"}, Ethiopia
             </div>
           </PreviewField>
 
@@ -471,7 +471,7 @@ export function EmployerPreviewJobPage() {
           <DetailRow
             label="Application Deadline"
             value={
-              job.deadline ? new Date(job.deadline).toLocaleDateString() : 'N/A'
+              job.deadline ? new Date(job.deadline).toLocaleDateString() : "N/A"
             }
             icon={CalendarIcon}
           />
@@ -497,7 +497,7 @@ export function EmployerPreviewJobPage() {
           <PreviewField className="lg:col-span-2">
             <p className="text-base font-medium text-black">Description</p>
             <div className="mt-3 px-8 text-xs leading-tight text-[#777] whitespace-pre-wrap">
-              {job.description || 'No description provided'}
+              {job.description || "No description provided"}
             </div>
           </PreviewField>
         </div>
@@ -508,14 +508,14 @@ export function EmployerPreviewJobPage() {
             disabled={isSubmitting}
             className="inline-flex h-8 items-center justify-center gap-2 rounded bg-[#00aaa8] text-lg font-semibold text-white hover:bg-[#009999] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isSubmitting ? 'Posting...' : 'Post Job'}
+            {isSubmitting ? "Posting..." : "Post Job"}
             <SendIcon className="h-4 w-4" />
           </button>
 
           <div className="grid gap-5 sm:grid-cols-2">
             <button
               onClick={() => {
-                router.push('/dashboard/employer/create');
+                router.push("/dashboard/employer/create");
               }}
               disabled={isSubmitting}
               className="grid h-8 place-items-center border border-[#00aaa8] bg-white text-base font-medium text-black hover:bg-gray-50"
@@ -527,7 +527,7 @@ export function EmployerPreviewJobPage() {
               disabled={isSubmitting}
               className="h-8 border border-[#00aaa8] bg-white text-base font-medium text-[#00aaa8] hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? 'Saving...' : 'Save as Draft'}
+              {isSubmitting ? "Saving..." : "Save as Draft"}
             </button>
           </div>
 

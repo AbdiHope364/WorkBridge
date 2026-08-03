@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/jobs', label: 'Find Jobs' },
-  { href: '/find-workers', label: 'Find Workers' },
-  { href: '/contact-us', label: 'Help' },
+  { href: "/", label: "Home" },
+  { href: "/jobs", label: "Find Jobs" },
+  { href: "/find-workers", label: "Find Workers" },
+  { href: "/contact-us", label: "Help" },
 ];
 
 function LogoMark() {
@@ -93,9 +93,9 @@ export function LandingHeader() {
   const pathname = usePathname();
 
   function isActive(href: string): boolean {
-    if (href.includes('#')) return false;
-    if (href === '/') return pathname === '/';
-    return pathname === href || pathname.startsWith(href + '/');
+    if (href.includes("#")) return false;
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(href + "/");
   }
 
   function handleAnchorClick(
@@ -103,9 +103,9 @@ export function LandingHeader() {
     anchor: string,
   ) {
     // On home page: prevent navigation, just scroll
-    if (pathname === '/') {
+    if (pathname === "/") {
       e.preventDefault();
-      document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById(anchor)?.scrollIntoView({ behavior: "smooth" });
     }
   }
 
@@ -120,11 +120,11 @@ export function LandingHeader() {
           {navLinks.map((link) => {
             const active = isActive(link.href);
             const cls = [
-              'relative px-4 py-2 text-[14px] font-semibold rounded-lg transition-all duration-150',
+              "relative px-4 py-2 text-[14px] font-semibold rounded-lg transition-all duration-150",
               active
-                ? 'text-emerald-600'
-                : 'text-slate-600 hover:text-slate-950 hover:bg-slate-50',
-            ].join(' ');
+                ? "text-emerald-600"
+                : "text-slate-600 hover:text-slate-950 hover:bg-slate-50",
+            ].join(" ");
 
             return (
               <Link key={link.href} href={link.href} className={cls}>

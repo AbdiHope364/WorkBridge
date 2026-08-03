@@ -6,7 +6,6 @@ import { DashboardCharts } from "@/features/dashboard/components/dashboard-chart
 import { BottomSections } from "@/features/dashboard/components/bottom-sections";
 
 export default function DashboardPage() {
-
   return (
     <div className="flex flex-col min-h-screen">
       <Header />

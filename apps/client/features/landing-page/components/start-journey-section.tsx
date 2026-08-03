@@ -1,28 +1,28 @@
-import { Button } from '@repo/ui/button';
+import { Button } from "@repo/ui/button";
 
 const seekerSteps = [
   {
-    label: 'Browse',
-    detail: 'Thousands of verified listings across every industry',
+    label: "Browse",
+    detail: "Thousands of verified listings across every industry",
   },
-  { label: 'Apply', detail: 'One-click applications with your saved profile' },
-  { label: 'Track', detail: 'Monitor every application in a single dashboard' },
-  { label: 'Get hired', detail: 'Instant alerts when employers respond' },
+  { label: "Apply", detail: "One-click applications with your saved profile" },
+  { label: "Track", detail: "Monitor every application in a single dashboard" },
+  { label: "Get hired", detail: "Instant alerts when employers respond" },
 ];
 
 const employerSteps = [
-  { label: 'Post', detail: 'Go live in minutes with a structured job listing' },
+  { label: "Post", detail: "Go live in minutes with a structured job listing" },
   {
-    label: 'Filter',
-    detail: 'Smart screening surfaces the strongest candidates',
+    label: "Filter",
+    detail: "Smart screening surfaces the strongest candidates",
   },
   {
-    label: 'Connect',
-    detail: 'Message and schedule interviews without leaving the platform',
+    label: "Connect",
+    detail: "Message and schedule interviews without leaving the platform",
   },
   {
-    label: 'Hire',
-    detail: 'Build a verified company profile that attracts top talent',
+    label: "Hire",
+    detail: "Build a verified company profile that attracts top talent",
   },
 ];
 
@@ -31,15 +31,15 @@ function StepList({
   accent,
 }: {
   steps: { label: string; detail: string }[];
-  accent: 'emerald' | 'white';
+  accent: "emerald" | "white";
 }) {
   const numberColor =
-    accent === 'emerald' ? 'text-emerald-500' : 'text-emerald-400';
-  const labelColor = accent === 'emerald' ? 'text-slate-950' : 'text-white';
+    accent === "emerald" ? "text-emerald-500" : "text-emerald-400";
+  const labelColor = accent === "emerald" ? "text-slate-950" : "text-white";
   const detailColor =
-    accent === 'emerald' ? 'text-slate-500' : 'text-slate-400';
+    accent === "emerald" ? "text-slate-500" : "text-slate-400";
   const dividerColor =
-    accent === 'emerald' ? 'border-slate-200' : 'border-slate-700';
+    accent === "emerald" ? "border-slate-200" : "border-slate-700";
 
   return (
     <ol className="mt-8 space-y-0">
@@ -47,13 +47,13 @@ function StepList({
         <li
           key={step.label}
           className={`flex items-start gap-5 py-4 ${
-            i !== steps.length - 1 ? `border-b ${dividerColor}` : ''
+            i !== steps.length - 1 ? `border-b ${dividerColor}` : ""
           }`}
         >
           <span
             className={`w-6 shrink-0 text-right text-[11px] font-black tabular-nums ${numberColor} pt-0.5`}
           >
-            {String(i + 1).padStart(2, '0')}
+            {String(i + 1).padStart(2, "0")}
           </span>
           <div>
             <p className={`text-[15px] font-bold ${labelColor}`}>

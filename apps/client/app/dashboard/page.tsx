@@ -38,7 +38,7 @@ export default function DashboardPage() {
   }
 
   if (user?.role === "jobseeker" && !jobseekerProfile) {
-    return <OnboardingPage/>;
+    return <OnboardingPage />;
   }
 
   if (user?.role === "employer" && !employerProfile) {

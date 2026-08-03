@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import type { ReactNode, SVGProps } from 'react';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import type { ReactNode, SVGProps } from "react";
 import {
   BellIcon,
   SearchJobIcon,
-} from '../jobseeker-dashboard/components/dashboard-icons';
-import { EmployerSidebar } from './components/employer-sidebar';
-import { api } from '@/lib/api';
-import { useAuth } from '@/contexts/auth-context';
+} from "../jobseeker-dashboard/components/dashboard-icons";
+import { EmployerSidebar } from "./components/employer-sidebar";
+import { api } from "@/lib/api";
+import { useAuth } from "@/contexts/auth-context";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
 const statusStyles: Record<string, string> = {
-  OPEN: 'bg-teal-50 text-teal-700 border-teal-100',
-  DRAFT: 'bg-slate-100 text-slate-600 border-slate-200',
-  CLOSED: 'bg-red-50 text-red-600 border-red-100',
+  OPEN: "bg-teal-50 text-teal-700 border-teal-100",
+  DRAFT: "bg-slate-100 text-slate-600 border-slate-200",
+  CLOSED: "bg-red-50 text-red-600 border-red-100",
 };
 
 function PlusIcon(props: IconProps) {
@@ -107,7 +107,7 @@ function JobMetric({
         {label}
       </span>
       <span
-        className={`flex items-center gap-1.5 text-sm font-bold ${muted ? 'text-slate-300' : 'text-slate-800'}`}
+        className={`flex items-center gap-1.5 text-sm font-bold ${muted ? "text-slate-300" : "text-slate-800"}`}
       >
         {icon && <span className="text-teal-500">{icon}</span>}
         {value}
@@ -117,7 +117,7 @@ function JobMetric({
 }
 
 function JobCard({ job }: { job: any }) {
-  const statusDisplay = job.status || 'OPEN';
+  const statusDisplay = job.status || "OPEN";
   const jobId = job._id; // Using _id as seen in your console screenshot
 
   return (
@@ -129,7 +129,7 @@ function JobCard({ job }: { job: any }) {
           </h2>
           <div className="flex gap-2">
             <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md uppercase tracking-wider">
-              {job.category?.replace(/_/g, ' ')}
+              {job.category?.replace(/_/g, " ")}
             </span>
           </div>
         </div>
@@ -156,7 +156,7 @@ function JobCard({ job }: { job: any }) {
           <JobMetric
             label="Deadline"
             value={
-              job.deadline ? new Date(job.deadline).toLocaleDateString() : 'N/A'
+              job.deadline ? new Date(job.deadline).toLocaleDateString() : "N/A"
             }
           />
         </div>
@@ -185,8 +185,8 @@ export function EmployerMyJobsPage() {
   const { user } = useAuth();
   const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState('All');
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("All");
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -200,7 +200,7 @@ export function EmployerMyJobsPage() {
           setJobs([]);
         }
       } catch (error) {
-        console.error('Failed to fetch jobs:', error);
+        console.error("Failed to fetch jobs:", error);
       } finally {
         setLoading(false);
       }
@@ -213,7 +213,7 @@ export function EmployerMyJobsPage() {
       ?.toLowerCase()
       .includes(search.toLowerCase());
     const matchesFilter =
-      filter === 'All' || job.status === filter.toUpperCase();
+      filter === "All" || job.status === filter.toUpperCase();
     return matchesSearch && matchesFilter;
   });
 
@@ -260,14 +260,14 @@ export function EmployerMyJobsPage() {
             {/* Filters */}
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mb-8">
               <div className="flex h-11 p-1 bg-slate-200/50 rounded-xl w-full lg:w-auto">
-                {['All', 'Open', 'Draft', 'Closed'].map((f) => (
+                {["All", "Open", "Draft", "Closed"].map((f) => (
                   <button
                     key={f}
                     onClick={() => setFilter(f)}
                     className={`flex-1 lg:flex-none px-6 rounded-lg text-xs font-bold transition-all ${
                       filter === f
-                        ? 'bg-white text-slate-900 shadow-sm'
-                        : 'text-slate-500 hover:text-slate-700'
+                        ? "bg-white text-slate-900 shadow-sm"
+                        : "text-slate-500 hover:text-slate-700"
                     }`}
                   >
                     {f}

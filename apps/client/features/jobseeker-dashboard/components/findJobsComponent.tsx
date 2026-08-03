@@ -1,34 +1,34 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useCallback } from 'react';
-import { Container } from '@repo/ui/container';
-import { Input } from '@repo/ui/input';
-import { Select } from '@repo/ui/select';
-import { JobCard } from '@repo/ui/job-card';
+import { useEffect, useState, useCallback } from "react";
+import { Container } from "@repo/ui/container";
+import { Input } from "@repo/ui/input";
+import { Select } from "@repo/ui/select";
+import { JobCard } from "@repo/ui/job-card";
 
-import { JOB_CATEGORIES, JOB_TYPES, WORKPLACE_TYPES } from '@repo/types/jobs';
-import { api } from '@/lib/api';
+import { JOB_CATEGORIES, JOB_TYPES, WORKPLACE_TYPES } from "@repo/types/jobs";
+import { api } from "@/lib/api";
 
 const PAGE_SIZE = 6;
 
-// HELPER: Converts "SOFTWARE_DEVELOPMENT" -> "Software Development" 
+// HELPER: Converts "SOFTWARE_DEVELOPMENT" -> "Software Development"
 const formatEnumLabel = (str: string) =>
   str
     ? str
-        .replace(/_/g, ' ')
+        .replace(/_/g, " ")
         .toLowerCase()
         .replace(/\b\w/g, (c) => c.toUpperCase())
-    : '';
+    : "";
 
 export function JobsPage() {
   const [jobs, setJobs] = useState<any[]>([]);
   const [totalJobs, setTotalJobs] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [query, setQuery] = useState('');
-  const [category, setCategory] = useState('');
-  const [location, setLocation] = useState('');
-  const [salary, setSalary] = useState('');
-  const [activeTag, setActiveTag] = useState('All');
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("");
+  const [location, setLocation] = useState("");
+  const [salary, setSalary] = useState("");
+  const [activeTag, setActiveTag] = useState("All");
   const [page, setPage] = useState(1);
 
   const fetchJobs = useCallback(async () => {
@@ -38,17 +38,17 @@ export function JobsPage() {
       const params: any = {
         page,
         limit: PAGE_SIZE,
-        status: 'OPEN',
+        status: "OPEN",
         keyword: query.trim() || undefined,
         location: location || undefined,
         category: category || undefined,
         salary: salary || undefined,
       };
 
-      if (activeTag !== 'All' && activeTag !== 'Urgent') {
+      if (activeTag !== "All" && activeTag !== "Urgent") {
         params.jobType = activeTag;
       }
-      if (activeTag === 'Urgent') {
+      if (activeTag === "Urgent") {
         params.isUrgent = true;
       }
 
@@ -59,7 +59,7 @@ export function JobsPage() {
       setJobs(result.jobs || []);
       setTotalJobs(result.totalJobs || 0);
     } catch (error) {
-      console.error('Fetch Error:', error);
+      console.error("Fetch Error:", error);
       setJobs([]);
       setTotalJobs(0);
     } finally {
@@ -81,7 +81,6 @@ export function JobsPage() {
 
   return (
     <main className="min-h-screen max-w-full bg-slate-50 text-slate-900">
-
       <section className="bg-slate-50 py-10">
         <Container size="xl" className="max-w-6xl">
           <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -140,11 +139,11 @@ export function JobsPage() {
               </span>
               <button
                 type="button"
-                onClick={() => onFilterChange(setActiveTag, 'All')}
+                onClick={() => onFilterChange(setActiveTag, "All")}
                 className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${
-                  activeTag === 'All'
-                    ? 'bg-slate-900 text-white'
-                    : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                  activeTag === "All"
+                    ? "bg-slate-900 text-white"
+                    : "bg-slate-100 text-slate-500 hover:bg-slate-200"
                 }`}
               >
                 All
@@ -156,8 +155,8 @@ export function JobsPage() {
                   onClick={() => onFilterChange(setActiveTag, type)}
                   className={`px-5 py-2 rounded-full text-xs font-bold transition-all border ${
                     activeTag === type
-                      ? 'bg-teal-600 border-teal-600 text-white shadow-md'
-                      : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                      ? "bg-teal-600 border-teal-600 text-white shadow-md"
+                      : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
                   }`}
                 >
                   {formatEnumLabel(type)}
@@ -169,7 +168,7 @@ export function JobsPage() {
           <div className="mt-10 border-y border-slate-200 bg-white px-8 py-5 flex justify-between items-center rounded-xl">
             <p className="text-sm font-bold text-slate-900 tracking-tight">
               {isLoading
-                ? 'Loading information...'
+                ? "Loading information..."
                 : `Found ${totalJobs} matching positions`}
             </p>
             <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">
@@ -190,7 +189,7 @@ export function JobsPage() {
                 <JobCard
                   key={job.id || job._id}
                   title={job.title}
-                  company={job.employerSnapshot?.displayName || 'Employer'}
+                  company={job.employerSnapshot?.displayName || "Employer"}
                   location={job.location?.city}
                   type={formatEnumLabel(job.jobType)}
                   salary={`${job.salary?.toLocaleString()} ETB`}
@@ -198,7 +197,7 @@ export function JobsPage() {
                   tags={
                     job.skills
                       ?.slice(0, 3)
-                      .map((s: any) => (typeof s === 'string' ? s : s.name)) ||
+                      .map((s: any) => (typeof s === "string" ? s : s.name)) ||
                     []
                   }
                   href={`/jobs/${job.id || job._id}`}
@@ -235,8 +234,8 @@ export function JobsPage() {
                       onClick={() => setPage(pNum)}
                       className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${
                         page === pNum
-                          ? 'bg-teal-600 text-white shadow-lg'
-                          : 'bg-white border border-slate-200 text-slate-500 hover:border-teal-500'
+                          ? "bg-teal-600 text-white shadow-lg"
+                          : "bg-white border border-slate-200 text-slate-500 hover:border-teal-500"
                       }`}
                     >
                       {pNum}

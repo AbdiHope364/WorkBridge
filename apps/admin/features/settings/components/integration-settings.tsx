@@ -4,9 +4,9 @@
 import React, { useState } from "react";
 import {
   Puzzle,
-//   Github,
+  //   Github,
   Mail,
-//   Slack,
+  //   Slack,
   Zap,
   CheckCircle2,
   XCircle,

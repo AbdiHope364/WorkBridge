@@ -20,7 +20,8 @@ export function StatCard({
         "rounded-2xl p-5 flex justify-center items-center",
         tone === "brand" && "bg-emerald-500 text-white",
         tone === "dark" && "bg-slate-950 text-white",
-        tone === "light" && "border border-slate-200 bg-white text-slate-950 shadow-sm",
+        tone === "light" &&
+          "border border-slate-200 bg-white text-slate-950 shadow-sm",
         className,
       )}
     >
