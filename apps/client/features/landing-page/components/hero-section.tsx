@@ -15,11 +15,11 @@ export function HeroSection() {
       <Container size="xl" className="w-full">
         <div className="grid items-center gap-12 lg:grid-cols-[0.92fr_1fr]">
           <div>
-            <h1 className="max-w-[560px] text-[38px] font-black leading-[1.12] tracking-[-0.04em] text-slate-950 sm:text-[44px] lg:text-[46px]">
+            <h1 className="max-w-140 text-[38px] font-black leading-[1.12] tracking-[-0.04em] text-slate-950 sm:text-[44px] lg:text-[46px]">
               Hire top talent or find your{" "}
               <span className="text-emerald-600">dream job</span> in Ethiopia.
             </h1>
-            <p className="mt-5 max-w-[500px] text-[17px] leading-[1.28] text-slate-800">
+            <p className="mt-5 max-w-125 text-[17px] leading-[1.28] text-slate-800">
               WorkBridge connects skilled workers and employers across Ethiopia.
               Find trusted professionals or discover new job opportunities
               quickly and securely.
@@ -40,7 +40,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div className="relative mx-auto flex w-full max-w-[610px] items-center justify-center bg-slate-50 px-8 py-5">
+          <div className="relative mx-auto flex w-full max-w-152.5 items-center justify-center bg-slate-50 px-8 py-5">
             <Image
               src="/hero-image.png"
               alt="Professionals looking for jobs and talent"
