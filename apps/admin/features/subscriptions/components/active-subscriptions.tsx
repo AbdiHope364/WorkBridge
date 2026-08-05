@@ -120,7 +120,7 @@ export function ActiveSubscriptions() {
         </div>
       </div>
 
-      <div className="divide-y divide-slate-50 max-h-[480px] overflow-y-auto">
+      <div className="divide-y divide-slate-50 max-h-120 overflow-y-auto">
         {mockSubscriptions.map((sub) => {
           const StatusIcon = statusConfig[sub.status].icon;
           const planColor =
@@ -135,7 +135,7 @@ export function ActiveSubscriptions() {
               <div className="flex items-start justify-between">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center shrink-0">
                       <Building2 className="w-4 h-4" />
                     </div>
                     <div>
@@ -172,7 +172,7 @@ export function ActiveSubscriptions() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 flex-shrink-0">
+                <div className="flex items-center gap-2 shrink-0">
                   <div
                     className={cn(
                       "flex items-center gap-1 px-2 py-0.5 rounded-full text-[8px] font-black uppercase",

@@ -191,7 +191,7 @@ export function SubscriptionPlans() {
                       </p>
                     </div>
                     {isSelected && (
-                      <div className="w-5 h-5 rounded-full bg-[#4100F2] flex items-center justify-center flex-shrink-0">
+                      <div className="w-5 h-5 rounded-full bg-[#4100F2] flex items-center justify-center shrink-0">
                         <Check className="w-3 h-3 text-white" />
                       </div>
                     )}
@@ -220,7 +220,7 @@ export function SubscriptionPlans() {
                       <div key={index} className="flex items-center gap-2">
                         <Check
                           className={cn(
-                            "w-3 h-3 flex-shrink-0",
+                            "w-3 h-3 shrink-0",
                             feature.included
                               ? "text-emerald-500"
                               : "text-slate-300",

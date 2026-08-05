@@ -186,7 +186,7 @@ export function PaymentHistory() {
                       <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center font-black text-[10px]">
                         {payment.company.charAt(0)}
                       </div>
-                      <span className="font-bold text-slate-700 text-[10px] truncate max-w-[120px]">
+                      <span className="font-bold text-slate-700 text-[10px] truncate max-w-30">
                         {payment.company}
                       </span>
                     </div>
