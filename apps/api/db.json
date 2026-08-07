@@ -1,0 +1,13 @@
+{
+  "jobs": [
+    {
+      "id": "1",
+      "title": "Software Engineer",
+      "company": "Tech Corp",
+      "location": "Addis Ababa",
+      "type": "Full-time",
+      "salary": "$50,000 - $70,000"
+    }
+  ],
+  "users": []
+}
