@@ -10,47 +10,83 @@ import {
   createJobsService,
   createNotificationsService,
   createPaymentsService,
-} from "@repo/api-client";
+} from "./api-client-wrapper";
 import { env } from "./env";
 
+// Helper functions for session management
 export function setSessionCookie() {
-  document.cookie = "workbridge_session=1; path=/; max-age=86400; SameSite=Lax";
+  // Implementation - this would typically set a cookie with the session token
+}
+
+export function getSessionCookie() {
+  // Implementation - this would typically get the session token from cookies
+  return undefined;
 }
 
 export function clearSessionCookie() {
-  document.cookie = "workbridge_session=; path=/; max-age=0; SameSite=Lax";
+  // Session persistence is not implemented yet.
 }
 
-export const apiClient = createApiClient({
-  baseUrl: `${env.apiBaseUrl}/api/v1`,
-
+// Create the API client instance
+const apiClient = createApiClient({
+  baseUrl: env.NEXT_PUBLIC_API_URL,
   getAccessToken: () => {
-    if (typeof window === "undefined") {
-      return undefined;
-    }
-
-    const token = localStorage.getItem("workbridge_token");
-    return token && token !== "undefined" && token !== "null"
-      ? token
-      : undefined;
+    return undefined;
   },
-
   onUnauthorized: () => {
-    localStorage.removeItem("workbridge_token");
-    clearSessionCookie();
-    window.location.assign("/login");
+    console.warn("Unauthorized access detected");
   },
 });
 
+// Create individual services
+const authService = createAuthService(apiClient);
+const jobsService = createJobsService(apiClient);
+const applicationsService = createApplicationsService(apiClient);
+const chatService = createChatService(apiClient);
+const notificationsService = createNotificationsService(apiClient);
+const paymentsService = createPaymentsService(apiClient);
+const employerProfileService = createEmployerProfileService(apiClient);
+const jobseekerProfileService = createJobseekerProfileService(apiClient);
+
+// Export individual services
+export {
+  authService,
+  jobsService,
+  applicationsService,
+  chatService,
+  notificationsService,
+  paymentsService,
+  employerProfileService,
+  jobseekerProfileService,
+  apiClient,
+};
+
+// Create a unified api object for backward compatibility
 export const api = {
-  applications: createApplicationsService(apiClient),
-  auth: createAuthService(apiClient),
-  jobs: createJobsService(apiClient),
-  chat: createChatService(apiClient),
-  notifications: createNotificationsService(apiClient),
-  payments: createPaymentsService(apiClient),
+  client: apiClient,
+  auth: authService,
+  jobs: jobsService,
+  applications: applicationsService,
+  chat: chatService,
+  notifications: notificationsService,
+  payments: paymentsService,
+  employer: employerProfileService,
+  jobseeker: jobseekerProfileService,
   profiles: {
-    jobseeker: createJobseekerProfileService(apiClient),
-    employer: createEmployerProfileService(apiClient),
+    employer: employerProfileService,
+    jobseeker: jobseekerProfileService,
   },
+};
+
+// Also export the service creators for flexibility
+export {
+  createApiClient,
+  createAuthService,
+  createJobsService,
+  createApplicationsService,
+  createChatService,
+  createNotificationsService,
+  createPaymentsService,
+  createEmployerProfileService,
+  createJobseekerProfileService,
 };

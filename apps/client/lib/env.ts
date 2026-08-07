@@ -1,4 +1,6 @@
+"use client";
+
 export const env = {
-  apiBaseUrl: process.env.NEXT_PUBLIC_API_BASE_URL!,
-  cloudinaryCloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001",
+  NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
 };
