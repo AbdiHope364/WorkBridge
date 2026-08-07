@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown, Home, Briefcase, Users, HelpCircle, Mail, LogIn, UserPlus, Sparkles, ArrowRight } from "lucide-react";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/jobs", label: "Find Jobs" },
-  { href: "/find-workers", label: "Find Workers" },
-  { href: "/#how-it-works", label: "How it works" },
-  { href: "/contact-us", label: "Help" },
+  { href: "/", label: "Home", icon: <Home className="h-4 w-4" /> },
+  { href: "/jobs", label: "Find Jobs", icon: <Briefcase className="h-4 w-4" /> },
+  { href: "/find-workers", label: "Find Workers", icon: <Users className="h-4 w-4" /> },
+  { href: "/#how-it-works", label: "How it works", icon: <HelpCircle className="h-4 w-4" /> },
+  { href: "/contact-us", label: "Help", icon: <Mail className="h-4 w-4" /> },
 ];
 
 function LogoMark() {
@@ -18,7 +18,7 @@ function LogoMark() {
     <div className="flex items-center gap-2 sm:gap-2.5 text-[#1b2855]">
       <svg
         aria-hidden="true"
-        className="h-8 w-7 sm:h-10 sm:w-9 md:h-12 md:w-10 lg:h-14 lg:w-12"
+        className="h-8 w-7 sm:h-10 sm:w-9 md:h-12 md:w-10 lg:h-14 lg:w-12 transition-all duration-300"
         viewBox="0 0 48 64"
         fill="none"
       >
@@ -57,7 +57,7 @@ function LogoMark() {
 
 function SignInIcon() {
   return (
-    <svg aria-hidden="true" className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" viewBox="0 0 24 24" fill="none">
+    <svg aria-hidden="true" className="h-4 w-4" viewBox="0 0 24 24" fill="none">
       <path
         d="M9 6 15 12 9 18M15 12H3M15 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"
         stroke="currentColor"
@@ -71,7 +71,7 @@ function SignInIcon() {
 
 function SignUpIcon() {
   return (
-    <svg aria-hidden="true" className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" viewBox="0 0 24 24" fill="none">
+    <svg aria-hidden="true" className="h-4 w-4" viewBox="0 0 24 24" fill="none">
       <rect
         x="4"
         y="3"
@@ -92,18 +92,12 @@ function SignUpIcon() {
   );
 }
 
-function MenuIcon() {
-  return <Menu className="h-5 w-5 sm:h-6 sm:w-6" />;
-}
-
-function CloseIcon() {
-  return <X className="h-5 w-5 sm:h-6 sm:w-6" />;
-}
-
 export function LandingHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // Track scroll for shadow effect
   useEffect(() => {
@@ -131,6 +125,22 @@ export function LandingHeader() {
     };
   }, [isMenuOpen]);
 
+  // Close menu on click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuRef.current && 
+        !menuRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const isActive = (href: string) => {
     const linkPath = href.split("#")[0] ?? "";
     if (href === "/") return pathname === "/";
@@ -138,69 +148,88 @@ export function LandingHeader() {
     return false;
   };
 
+  const toggleMenu = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full border-b border-slate-100 bg-white/95 backdrop-blur-sm transition-shadow duration-300 ${
+        className={`sticky top-0 z-50 w-full border-b border-slate-100 bg-white/95 backdrop-blur-sm transition-all duration-300 ${
           isScrolled ? "shadow-lg" : ""
         }`}
       >
         <nav className="w-full px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12">
-          <div className="flex h-16 sm:h-[72px] md:h-[82px] lg:h-[92px] items-center justify-between max-w-full">
+          <div className="flex h-16 sm:h-18 md:h-20.5 lg:h-23 items-center justify-between max-w-full">
             {/* Logo - Left */}
-            <Link href="/" aria-label="Workbridge home" className="shrink-0">
+            <Link href="/" aria-label="Workbridge home" className="shrink-0 transition-transform hover:scale-105 active:scale-95">
               <LogoMark />
             </Link>
 
-            {/* Desktop Navigation - Center with Underline Only on Hover */}
-            <div className="hidden lg:flex items-center gap-4 xl:gap-[52px] text-sm xl:text-[17px] font-bold text-slate-950">
+            {/* Desktop Navigation - Center */}
+            <div className="hidden lg:flex items-center gap-4 xl:gap-13 text-sm xl:text-[17px] font-bold text-slate-950">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative whitespace-nowrap transition-colors duration-200 group ${
+                    className={`relative whitespace-nowrap transition-colors duration-200 group flex items-center gap-1 ${
                       active
                         ? "text-emerald-600"
                         : "text-slate-600 hover:text-slate-950"
                     }`}
                   >
+                    <span className="transition-transform group-hover:scale-110">
+                      {link.icon}
+                    </span>
                     {link.label}
-                    {/* Underline only on hover - never shows for active */}
+                    {/* Underline only on hover - never on active */}
                     <span className="absolute -bottom-1 left-0 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full" />
                   </Link>
                 );
               })}
             </div>
 
-            {/* Right Side - Auth Buttons & Mobile Menu */}
+            {/* Right Side - Desktop Auth Buttons & Mobile Menu */}
             <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-              {/* Sign In - Green Button */}
+              {/* Sign In - Desktop only */}
               <Link
                 href="/login"
-                className="flex items-center gap-1 sm:gap-1.5 h-8 sm:h-9 md:h-10 px-2 sm:px-4 md:px-5 lg:px-6 rounded-xl bg-emerald-600 text-xs sm:text-sm md:text-[14px] lg:text-[17px] font-semibold text-white transition-all hover:bg-emerald-700 hover:shadow-lg hover:shadow-emerald-500/30"
+                className="hidden lg:flex items-center gap-1.5 h-9 md:h-10 px-4 md:px-5 lg:px-6 rounded-xl border border-slate-200 text-sm md:text-[14px] lg:text-[17px] font-semibold text-slate-700 transition-all hover:border-slate-950 hover:bg-slate-950 hover:text-white hover:scale-105 active:scale-95"
               >
                 <SignInIcon />
-                <span className="hidden sm:inline">Sign In</span>
+                Sign In
               </Link>
 
-              {/* Sign Up - Green Button */}
+              {/* Sign Up - Desktop only */}
               <Link
                 href="/register"
-                className="flex items-center gap-1 sm:gap-1.5 h-8 sm:h-9 md:h-10 px-2 sm:px-4 md:px-5 lg:px-6 rounded-xl bg-emerald-600 text-xs sm:text-sm md:text-[14px] lg:text-[17px] font-semibold text-white transition-all hover:bg-emerald-700 hover:shadow-lg hover:shadow-emerald-500/30"
+                className="hidden lg:flex items-center gap-1.5 h-9 md:h-10 px-4 md:px-5 lg:px-6 rounded-xl bg-slate-950 text-sm md:text-[14px] lg:text-[17px] font-semibold text-white transition-all hover:bg-emerald-600 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-emerald-500/30"
               >
                 <SignUpIcon />
-                <span className="hidden sm:inline">Sign Up</span>
+                Sign Up
               </Link>
 
-              {/* Mobile Menu Toggle - Only shows on lg and below */}
+              {/* Mobile Menu Toggle - Only button on mobile */}
               <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden flex items-center justify-center h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 rounded-lg hover:bg-slate-100 transition-colors"
+                ref={buttonRef}
+                onClick={toggleMenu}
+                className={`lg:hidden flex items-center justify-center h-9 w-9 sm:h-10 sm:w-10 rounded-lg transition-all hover:bg-slate-100 active:scale-90 ${
+                  isMenuOpen ? "bg-slate-100" : ""
+                }`}
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               >
-                {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
+                {isMenuOpen ? (
+                  <X className="h-5 w-5 sm:h-6 sm:w-6 transition-transform rotate-90" />
+                ) : (
+                  <Menu className="h-5 w-5 sm:h-6 sm:w-6 transition-transform" />
+                )}
               </button>
             </div>
           </div>
@@ -212,21 +241,24 @@ export function LandingHeader() {
         <div className="fixed inset-0 z-40 lg:hidden">
           {/* Backdrop */}
           <div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setIsMenuOpen(false)}
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-fade-in"
+            onClick={closeMenu}
           />
 
           {/* Menu Panel */}
-          <div className="absolute right-0 top-0 h-full w-[280px] sm:w-[320px] bg-white shadow-2xl">
+          <div 
+            ref={menuRef}
+            className="absolute right-0 top-0 h-full w-70 sm:w-80 bg-white shadow-2xl animate-slide-in"
+          >
             <div className="flex flex-col h-full">
               {/* Mobile Menu Header */}
-              <div className="flex items-center justify-between border-b border-slate-100 p-4">
-                <Link href="/" onClick={() => setIsMenuOpen(false)}>
+              <div className="flex items-center justify-between border-b border-slate-100 p-4 bg-linear-to-r from-emerald-50/50 to-white">
+                <Link href="/" onClick={closeMenu} className="transition-transform hover:scale-105">
                   <LogoMark />
                 </Link>
                 <button
-                  onClick={() => setIsMenuOpen(false)}
-                  className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                  onClick={closeMenu}
+                  className="p-2 rounded-lg hover:bg-slate-100 transition-all hover:rotate-90 active:scale-90"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -241,16 +273,22 @@ export function LandingHeader() {
                       <Link
                         key={link.href}
                         href={link.href}
-                        onClick={() => setIsMenuOpen(false)}
-                        className={`relative flex items-center px-4 py-3 rounded-lg text-base font-medium transition-colors group ${
+                        onClick={closeMenu}
+                        className={`relative flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all group ${
                           active
                             ? "bg-emerald-50 text-emerald-600"
                             : "text-slate-700 hover:bg-slate-50"
                         }`}
                       >
+                        <span className={`transition-transform group-hover:scale-110 ${active ? "text-emerald-600" : ""}`}>
+                          {link.icon}
+                        </span>
                         {link.label}
                         {active && (
-                          <span className="ml-auto h-2 w-2 rounded-full bg-emerald-500" />
+                          <span className="ml-auto h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                        )}
+                        {!active && (
+                          <ChevronDown className="ml-auto h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-1" />
                         )}
                         {/* Underline only on hover for mobile */}
                         <span className="absolute bottom-1 left-4 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-[calc(100%-2rem)]" />
@@ -259,24 +297,70 @@ export function LandingHeader() {
                   })}
                 </div>
 
-                {/* Mobile Auth Buttons - Green */}
+                {/* Mobile Auth Buttons */}
                 <div className="mt-6 space-y-3 border-t border-slate-100 pt-6">
+                  <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">
+                    Account
+                  </p>
+                  
                   <Link
                     href="/login"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full rounded-xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700"
+                    onClick={closeMenu}
+                    className="flex items-center justify-between w-full rounded-xl border border-slate-200 px-4 py-3.5 text-sm font-semibold text-slate-700 transition-all hover:bg-slate-50 hover:scale-[1.02] active:scale-95 group"
                   >
-                    <SignInIcon />
-                    Sign In
+                    <span className="flex items-center gap-3">
+                      <LogIn className="h-4 w-4 text-emerald-600" />
+                      Sign In
+                    </span>
+                    <ArrowRight className="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-1" />
                   </Link>
+
                   <Link
                     href="/register"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full rounded-xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700"
+                    onClick={closeMenu}
+                    className="flex items-center justify-between w-full rounded-xl bg-linear-to-r from-slate-950 to-emerald-600 px-4 py-3.5 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-95 hover:shadow-lg hover:shadow-emerald-500/30 group"
                   >
-                    <SignUpIcon />
-                    Sign Up
+                    <span className="flex items-center gap-3">
+                      <UserPlus className="h-4 w-4" />
+                      Sign Up
+                    </span>
+                    <ArrowRight className="h-4 w-4 text-white/70 transition-transform group-hover:translate-x-1" />
                   </Link>
+                </div>
+
+                {/* Quick Actions */}
+                <div className="mt-6 space-y-2 border-t border-slate-100 pt-6">
+                  <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">
+                    Quick Actions
+                  </p>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Link
+                      href="/jobs"
+                      onClick={closeMenu}
+                      className="flex flex-col items-center gap-1.5 rounded-lg bg-slate-50 px-4 py-3 text-xs font-medium text-slate-700 transition-all hover:bg-slate-100 hover:scale-105 active:scale-95"
+                    >
+                      <Briefcase className="h-5 w-5 text-emerald-600" />
+                      Browse Jobs
+                    </Link>
+                    <Link
+                      href="/find-workers"
+                      onClick={closeMenu}
+                      className="flex flex-col items-center gap-1.5 rounded-lg bg-slate-50 px-4 py-3 text-xs font-medium text-slate-700 transition-all hover:bg-slate-100 hover:scale-105 active:scale-95"
+                    >
+                      <Users className="h-5 w-5 text-emerald-600" />
+                      Find Workers
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Special Offer Banner */}
+                <div className="mt-6 rounded-xl bg-linear-to-r from-emerald-500 to-emerald-600 p-4 text-white">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 animate-pulse" />
+                    <p className="text-xs font-medium">
+                      🎉 New jobs added daily!
+                    </p>
+                  </div>
                 </div>
               </nav>
             </div>
@@ -284,18 +368,34 @@ export function LandingHeader() {
         </div>
       )}
 
-      {/* CSS Animation */}
+      {/* CSS Animations */}
       <style>{`
         @keyframes slideIn {
           from {
             transform: translateX(100%);
+            opacity: 0;
           }
           to {
             transform: translateX(0);
+            opacity: 1;
           }
         }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        
         .animate-slide-in {
-          animation: slideIn 0.3s ease-out;
+          animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .animate-fade-in {
+          animation: fadeIn 0.2s ease-out;
         }
       `}</style>
     </>
