@@ -10,6 +10,7 @@ import {
   ArrowDownRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { api } from "@/lib/api";
 
 interface StatCardProps {
   label: string;
@@ -55,36 +56,44 @@ function StatCard({
 }
 
 export function JobsStats() {
-  // TODO: Integrate with real backend to fetch job stats
+  const [counts, setCounts] = React.useState({ total: 0, active: 0, inactive: 0 });
+
+  React.useEffect(() => {
+    void api.admin.listJobs().then((jobs) => {
+      const active = jobs.filter((job) => job.isActive).length;
+      setCounts({ total: jobs.length, active, inactive: jobs.length - active });
+    });
+  }, []);
+
   const stats = [
     {
       label: "Total Jobs Posted",
-      value: "5,500",
-      trend: "15.4%",
+      value: String(counts.total),
+      trend: "All postings",
       trendType: "up" as const,
       icon: Briefcase,
       gradient: "bg-gradient-to-br from-[#00D47E] to-[#01B972]",
     },
     {
-      label: "Pending Approval",
-      value: "142",
-      trend: "24.1%",
+      label: "Inactive Jobs",
+      value: String(counts.inactive),
+      trend: "Not active",
       trendType: "up" as const,
       icon: Clock,
       gradient: "bg-gradient-to-br from-[#FFA000] to-[#E67E00]",
     },
     {
       label: "Active Jobs",
-      value: "4,200",
-      trend: "8.2%",
+      value: String(counts.active),
+      trend: "Currently live",
       trendType: "up" as const,
       icon: CheckCircle2,
       gradient: "bg-gradient-to-br from-[#4100F2] to-[#2B00A1]",
     },
     {
-      label: "Rejected/Expired",
-      value: "1,158",
-      trend: "5.3%",
+      label: "Applications",
+      value: "—",
+      trend: "Not provided by API",
       trendType: "down" as const,
       icon: AlertCircle,
       gradient: "bg-gradient-to-br from-[#C41AF7] to-[#8E10B3]",

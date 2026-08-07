@@ -242,7 +242,7 @@ export interface CreateJobRequest {
   location: JobLocation;
 }
 
-export interface UpdateJobRequest extends Partial<CreateJobRequest> {}
+export type UpdateJobRequest = Partial<CreateJobRequest>;
 
 export interface UpdateJobStatusRequest {
   status: JobStatus;

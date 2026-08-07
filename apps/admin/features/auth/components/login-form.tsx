@@ -21,7 +21,7 @@ export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const { refreshUser, user } = useAuth();
+  const { refreshUser } = useAuth();
 
   const [form, setForm] = useState<LoginFormValues>({
     email: "",

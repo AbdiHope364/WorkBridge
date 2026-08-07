@@ -13,6 +13,7 @@ import {
   Briefcase,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { api } from "@/lib/api";
 
 interface Job {
   id: string;
@@ -24,60 +25,35 @@ interface Job {
   type: "Full-Time" | "Part-Time" | "Contract";
 }
 
-const mockJobs: Job[] = [
-  {
-    id: "1",
-    title: "Senior React Developer",
-    employer: "TechCorp Solutions",
-    category: "Software Development",
-    postedDate: "June 18, 2025",
-    status: "Pending",
-    type: "Full-Time",
-  },
-  {
-    id: "2",
-    title: "Graphic Designer",
-    employer: "Creative Minds",
-    category: "Design",
-    postedDate: "June 17, 2025",
-    status: "Approved",
-    type: "Contract",
-  },
-  {
-    id: "3",
-    title: "Construction Manager",
-    employer: "Abdisa Leta",
-    category: "Construction",
-    postedDate: "June 16, 2025",
-    status: "Pending",
-    type: "Full-Time",
-  },
-  {
-    id: "4",
-    title: "Marketing Specialist",
-    employer: "Global Logistics",
-    category: "Marketing",
-    postedDate: "June 15, 2025",
-    status: "Rejected",
-    type: "Part-Time",
-  },
-  {
-    id: "5",
-    title: "Backend Engineer",
-    employer: "Green Energy Ltd",
-    category: "Engineering",
-    postedDate: "June 14, 2025",
-    status: "Approved",
-    type: "Full-Time",
-  },
-];
-
 export function JobsTable() {
   const [filterStatus, setFilterStatus] = React.useState<
     "All" | "Pending" | "Approved" | "Rejected"
   >("All");
+  const [jobs, setJobs] = React.useState<Job[]>([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
-  const filteredJobs = mockJobs.filter(
+  React.useEffect(() => {
+    let mounted = true;
+    void api.admin.listJobs()
+      .then((items) => {
+        if (!mounted) return;
+        setJobs(items.map((job) => ({
+          id: String(job.id), title: job.title, employer: job.company,
+          category: job.category,
+          postedDate: new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(job.createdAt)),
+          status: job.isActive ? "Approved" : "Rejected",
+          type: job.type as Job["type"],
+        })));
+      })
+      .catch((requestError: unknown) => {
+        if (mounted) setError(requestError instanceof Error ? requestError.message : "Unable to load jobs.");
+      })
+      .finally(() => { if (mounted) setIsLoading(false); });
+    return () => { mounted = false; };
+  }, []);
+
+  const filteredJobs = jobs.filter(
     (job) => filterStatus === "All" || job.status === filterStatus,
   );
 
@@ -130,6 +106,9 @@ export function JobsTable() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-50">
+            {isLoading && <tr><td colSpan={6} className="px-5 py-10 text-center text-sm text-slate-500">Loading jobs…</td></tr>}
+            {error && !isLoading && <tr><td colSpan={6} className="px-5 py-10 text-center text-sm text-rose-600">{error}</td></tr>}
+            {!isLoading && !error && filteredJobs.length === 0 && <tr><td colSpan={6} className="px-5 py-10 text-center text-sm text-slate-500">No jobs found.</td></tr>}
             {filteredJobs.map((job) => (
               <tr
                 key={job.id}
@@ -202,8 +181,8 @@ export function JobsTable() {
         <div className="flex items-center justify-between px-6 py-4 border-t border-slate-50 bg-white">
           <p className="text-[11px] font-bold text-slate-500 italic">
             Showing{" "}
-            <span className="text-slate-800">1 to {filteredJobs.length}</span>{" "}
-            of <span className="text-slate-800">5500</span>
+            <span className="text-slate-800">{filteredJobs.length === 0 ? 0 : 1} to {filteredJobs.length}</span>{" "}
+            of <span className="text-slate-800">{jobs.length}</span>
           </p>
 
           <div className="flex items-center gap-1.5">

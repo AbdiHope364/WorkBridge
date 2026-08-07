@@ -22,7 +22,7 @@ export class ApiError extends Error {
 }
 
 export interface ApiClient {
-  request<TResponse>(
+  request<TResponse = any>(
     path: string,
     options?: RequestOptions,
   ): Promise<TResponse>;
@@ -36,7 +36,7 @@ export function createApiClient({
   const normalizedBaseUrl = baseUrl.replace(/\/$/, "");
 
   return {
-    async request<TResponse>(
+    async request<TResponse = any>(
       path: string,
       options: RequestOptions = {},
     ): Promise<TResponse> {
@@ -116,10 +116,10 @@ function getErrorMessage(payload: unknown): string | undefined {
   if (
     typeof payload === "object" &&
     payload !== null &&
-    "message" in payload &&
-    typeof payload.message === "string"
+    ("message" in payload || "error" in payload)
   ) {
-    return payload.message;
+    const value = "message" in payload ? payload.message : payload.error;
+    return typeof value === "string" ? value : undefined;
   }
 
   return undefined;

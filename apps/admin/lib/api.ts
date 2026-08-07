@@ -18,7 +18,7 @@ export function clearSessionCookie() {
 }
 
 export const apiClient = createApiClient({
-  baseUrl: `${env.apiBaseUrl}/api/v1`,
+  baseUrl: env.apiBaseUrl,
 
   getAccessToken: () => {
     if (typeof window === "undefined") {
