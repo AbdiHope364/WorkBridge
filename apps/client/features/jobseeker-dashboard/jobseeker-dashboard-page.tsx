@@ -13,6 +13,23 @@ import { JobseekerSidebar } from "./components/jobseeker-sidebar";
 import { useAuth } from "@/contexts/auth-context";
 import { useProfile } from "@/contexts/profile-context";
 
+// Define proper types
+interface DashboardAnalytics {
+  cards?: {
+    applied?: number;
+    inReview?: number;
+    accepted?: number;
+    rejected?: number;
+  };
+  profileViews?: number;
+  resumeDownloads?: number;
+  data?: DashboardAnalytics;
+}
+
+interface ApiResponse {
+  data?: DashboardAnalytics;
+}
+
 // Mapping icons to colors
 const metricIconClasses: Record<string, string> = {
   applied: "bg-emerald-50 text-emerald-600",
@@ -25,17 +42,17 @@ export function JobseekerDashboardPage() {
   const { isLoading: authLoading, isAuthenticated, user } = useAuth();
   const { isLoading: profileLoading, jobseekerProfile } = useProfile();
 
-  const [analytics, setAnalytics] = useState<any>(null);
+  const [analytics, setAnalytics] = useState<DashboardAnalytics | null>(null);
   const [loadingAnalytics, setLoadingAnalytics] = useState(true);
 
   useEffect(() => {
     const loadDashboardData = async () => {
       try {
         setLoadingAnalytics(true);
-        const res = (await api.jobs.getJobseekerDashboard()) as any;
+        const res = (await api.jobs.getJobseekerDashboard()) as ApiResponse;
 
         const actualData = res.data?.data || res.data || res;
-        setAnalytics(actualData);
+        setAnalytics(actualData as DashboardAnalytics);
       } catch (err) {
         console.error("Failed to load analytics:", err);
       } finally {
@@ -106,13 +123,13 @@ export function JobseekerDashboardPage() {
               </Link>
               <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white font-bold text-sm shadow-lg">
                 {jobseekerProfile?.firstName?.charAt(0) ||
-                  user?.displayName?.charAt(0) ||
+                  user?.fullName?.charAt(0) ||
                   "U"}
               </div>
             </div>
           </header>
 
-          <div className="w-full max-w-[1100px] px-6 py-10 md:px-10">
+          <div className="w-full max-w-275 px-6 py-10 md:px-10">
             <div className="mb-10">
               <h1 className="text-4xl font-black text-slate-900 tracking-tight">
                 Hello, {jobseekerProfile?.firstName || "Jobseeker"}
@@ -127,7 +144,7 @@ export function JobseekerDashboardPage() {
               {metrics.map((metric, idx) => (
                 <article
                   key={idx}
-                  className="relative p-6 rounded-[1.5rem] border border-slate-200 bg-white shadow-sm transition-all hover:shadow-md"
+                  className="relative p-6 rounded-3xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-md"
                 >
                   <div className="absolute left-0 top-6 h-10 w-1 bg-teal-500 rounded-r-full" />
                   <div className="flex flex-col items-center justify-center text-center">
@@ -186,7 +203,7 @@ export function JobseekerDashboardPage() {
 
             <div className="mt-10 grid gap-8 lg:grid-cols-2">
               {/* Profile Visibility */}
-              <section className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
+              <section className="rounded-4xl border border-slate-200 bg-white p-8 shadow-sm">
                 <div className="flex items-center gap-3 mb-10">
                   <div className="p-2 bg-emerald-50 rounded-lg text-emerald-600">
                     <EyeIcon className="w-5 h-5" />
@@ -234,7 +251,7 @@ export function JobseekerDashboardPage() {
               </section>
 
               {/* Recent Activity */}
-              <section className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm flex flex-col">
+              <section className="rounded-4xl border border-slate-200 bg-white p-8 shadow-sm flex flex-col">
                 <div className="flex items-center gap-3 mb-8">
                   <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
                     <BellIcon className="w-5 h-5" />
