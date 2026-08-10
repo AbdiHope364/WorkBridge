@@ -261,10 +261,10 @@ export function JobseekerProfilePage() {
           <ProfileTopHeader
             condition={!jobseekerProfile?.avatar?.publicId}
             initials={initials}
-            url={`https://res.cloudinary.com/${env.cloudinaryCloudName}/image/upload/${jobseekerProfile?.avatar?.publicId}`}
+            url={`https://res.cloudinary.com/${env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${jobseekerProfile?.avatar?.publicId}`}
           />
 
-          <div className="mx-auto grid max-w-[1180px] gap-8 px-6 py-9 lg:grid-cols-[240px_1fr]">
+          <div className="mx-auto grid max-w-295 gap-8 px-6 py-9 lg:grid-cols-[240px_1fr]">
             <aside className="space-y-5">
               <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
                 <div className="mb-3 flex items-center justify-between">
@@ -318,7 +318,7 @@ export function JobseekerProfilePage() {
                   >
                     {jobseekerProfile?.avatar?.publicId ? (
                       <Image
-                        src={`https://res.cloudinary.com/${env.cloudinaryCloudName}/image/upload/${jobseekerProfile.avatar.publicId}`}
+                        src={`https://res.cloudinary.com/${env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${jobseekerProfile.avatar.publicId}`}
                         alt="Profile Avatar"
                         width={100}
                         height={100}
@@ -342,7 +342,7 @@ export function JobseekerProfilePage() {
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <h2 className="text-xl font-normal leading-tight text-slate-950">
-                          {fullName ?? "Robera Wakjira"}
+                          {fullName ?? "Abdi Abiot"}
                         </h2>
                         <p className="text-sm font-semibold text-teal-600">
                           {jobseekerProfile?.bio ?? "Full Stack developer"}
@@ -368,7 +368,7 @@ export function JobseekerProfilePage() {
                       <span className="flex items-center gap-2">
                         <MapPinIcon />
                         {jobseekerProfile?.location?.toString() ??
-                          "Jimma, Ethiopia"}
+                          "Dire Dawa, Ethiopia"}
                       </span>
                       <span className="flex items-center gap-2">
                         <PhoneIcon />
