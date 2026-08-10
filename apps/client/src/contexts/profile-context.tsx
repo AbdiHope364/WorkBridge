@@ -11,19 +11,25 @@ interface Profile {
   skills?: string[];
   experience?: any[];
   education?: any[];
+  firstName?: string;
+  lastName?: string;
 }
 
 interface ProfileContextType {
   profile: Profile | null;
+  jobseekerProfile: Profile | null;
+  employerProfile: Profile | null;
   isLoading: boolean;
-  updateProfile: (data: any) => Promise<void>;
   isEmployer: boolean;
+  updateProfile: (data: any) => Promise<void>;
 }
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [jobseekerProfile, setJobseekerProfile] = useState<Profile | null>(null);
+  const [employerProfile, setEmployerProfile] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isEmployer, setIsEmployer] = useState(false);
 
@@ -31,15 +37,17 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     const loadProfile = async () => {
       try {
         // Try to load employer profile first
-        const employerProfile = await employerProfileService.getByUser('current');
-        if (employerProfile) {
-          setProfile(employerProfile);
+        const employer = await employerProfileService.getByUser('current');
+        if (employer) {
+          setEmployerProfile(employer);
+          setProfile(employer);
           setIsEmployer(true);
         } else {
           // Try jobseeker profile
-          const jobseekerProfile = await jobseekerProfileService.getByUser('current');
-          if (jobseekerProfile) {
-            setProfile(jobseekerProfile);
+          const jobseeker = await jobseekerProfileService.getByUser('current');
+          if (jobseeker) {
+            setJobseekerProfile(jobseeker);
+            setProfile(jobseeker);
             setIsEmployer(false);
           }
         }
@@ -59,8 +67,10 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
       let updatedProfile;
       if (isEmployer) {
         updatedProfile = await employerProfileService.update(data);
+        setEmployerProfile(updatedProfile);
       } else {
         updatedProfile = await jobseekerProfileService.update(data);
+        setJobseekerProfile(updatedProfile);
       }
       setProfile(updatedProfile);
     } finally {
@@ -69,7 +79,14 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <ProfileContext.Provider value={{ profile, isLoading, updateProfile, isEmployer }}>
+    <ProfileContext.Provider value={{
+      profile,
+      jobseekerProfile,
+      employerProfile,
+      isLoading,
+      isEmployer,
+      updateProfile,
+    }}>
       {children}
     </ProfileContext.Provider>
   );
