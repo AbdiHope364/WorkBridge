@@ -31,10 +31,14 @@ export function clearSessionCookie() {
 const apiClient = createApiClient({
   baseUrl: env.NEXT_PUBLIC_API_URL,
   getAccessToken: () => {
-    return undefined;
+    if (typeof window === "undefined") return undefined;
+    return localStorage.getItem("token") ?? undefined;
   },
   onUnauthorized: () => {
-    console.warn("Unauthorized access detected");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("token");
+      window.location.href = "/auth/login";
+    }
   },
 });
 
