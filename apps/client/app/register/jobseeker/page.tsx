@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { RegisterForm } from "@/features/auth/components/register-form";
 import Link from "next/link";
 
@@ -47,12 +48,14 @@ export default function RegisterJobseekerPage() {
             </div>
           </section>
           <section>
-            <RegisterForm
-              role="jobseeker"
-              title="Create your candidate account"
-              subtitle="Use your email to register and verify your account before applying to jobs."
-              buttonLabel="Create candidate account"
-            />
+            <Suspense fallback={<div className="flex items-center justify-center min-h-[200px]">Loading...</div>}>
+              <RegisterForm
+                role="jobseeker"
+                title="Create your candidate account"
+                subtitle="Use your email to register and verify your account before applying to jobs."
+                buttonLabel="Create candidate account"
+              />
+            </Suspense>
             <p className="text-sm text-slate-500 p-4">
               Already have an account?
               <Link

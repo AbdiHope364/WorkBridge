@@ -7,8 +7,19 @@
     "start": "next start",
     "lint": "eslint . --max-warnings 0"
   },
+  "dependencies": {
+    "@repo/ui": "workspace:^",
+    "next": "16.2.12",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
-    "eslint": "^9.39.5"
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9.39.5",
+    "typescript": "^5"
   }
 }

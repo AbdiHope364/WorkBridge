@@ -129,7 +129,7 @@ export function RegisterForm({
     const next = searchParams.get("next");
     const params = new URLSearchParams({ role });
     if (next) params.set("next", next);
-    window.location.href = `${env.apiBaseUrl}/auth/google?${params.toString()}`;
+    window.location.href = `${env.NEXT_PUBLIC_API_URL}/auth/google?${params.toString()}`;
   };
 
   return (

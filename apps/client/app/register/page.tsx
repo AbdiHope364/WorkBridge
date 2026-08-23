@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button, Card, CardTitle, CardDescription } from "@repo/ui";
+import { Card, CardTitle, CardDescription } from "@repo/ui";
 
 const options = [
   {

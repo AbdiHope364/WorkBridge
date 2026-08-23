@@ -1,4 +1,4 @@
-import type { ApiClient } from '../http';
+import type { ApiClient } from '../http.js';
 
 export function createApplicationsService(api: ApiClient) {
   return {
@@ -7,7 +7,7 @@ export function createApplicationsService(api: ApiClient) {
      * @param formData Should contain 'coverLetter' and 'attachments' (files)
      */
     submitApplication(formData: FormData) {
-      return api.request<any>('/jobs/applications', {
+      return api.request('/jobs/applications', {
         method: 'POST',
         body: formData,
         headers: {},
@@ -19,26 +19,26 @@ export function createApplicationsService(api: ApiClient) {
       limit?: number;
       status?: string;
     }) {
-      return api.request<any>('/jobs/applications', { query });
+      return api.request('/jobs/applications', { query });
     },
 
     getApplication(id: string) {
-      return api.request<any>(`/jobs/applications/${id}`);
+      return api.request(`/jobs/applications/${id}`);
     },
 
     getJobApplications(jobId: string) {
-      return api.request<any>(`/jobs/applications/job/${jobId}`);
+      return api.request(`/jobs/applications/job/${jobId}`);
     },
 
     updateStatus(id: string, status: string) {
-      return api.request<any>(`/jobs/applications/${id}/status`, {
+      return api.request(`/jobs/applications/${id}/status`, {
         method: 'PATCH',
         body: { status },
       });
     },
 
     withdrawApplication(id: string) {
-      return api.request<any>(`/jobs/applications/${id}/withdraw`, {
+      return api.request(`/jobs/applications/${id}/withdraw`, {
         method: 'PATCH',
       });
     },

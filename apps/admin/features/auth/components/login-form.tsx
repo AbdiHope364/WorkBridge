@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react"; // or use any icon library
 
 import {
   Button,
@@ -29,6 +30,7 @@ export function LoginForm() {
   });
 
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // ✅ New state for password visibility
 
   const [dirty, setDirty] = useState<Record<keyof LoginFormValues, boolean>>({
     email: false,
@@ -95,6 +97,10 @@ export function LoginForm() {
         [field]: true,
       }));
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -170,18 +176,34 @@ export function LoginForm() {
           placeholder="admin@example.com"
         />
 
-        <Input
-          label="Password"
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          value={form.password}
-          onChange={(e) => handleChange("password", e.target.value)}
-          onBlur={() => handleBlur("password")}
-          error={visibleError("password")}
-          isValid={isFieldValid("password")}
-          placeholder="Enter your password"
-        />
+        <div className="relative">
+          <Input
+            label="Password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            autoComplete="current-password"
+            value={form.password}
+            onChange={(e) => handleChange("password", e.target.value)}
+            onBlur={() => handleBlur("password")}
+            error={visibleError("password")}
+            isValid={isFieldValid("password")}
+            placeholder="Enter your password"
+          />
+          
+          {/* Password toggle button */}
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute right-3 top-8.5 text-slate-400 hover:text-slate-600 transition-colors"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? (
+              <EyeOff className="h-5 w-5" />
+            ) : (
+              <Eye className="h-5 w-5" />
+            )}
+          </button>
+        </div>
 
         <div className="flex items-center justify-between text-sm text-slate-600">
           <label className="inline-flex cursor-pointer items-center gap-2">
@@ -195,7 +217,7 @@ export function LoginForm() {
           </label>
 
           <Link
-            href="/forgot-password"
+            href="/forgot-password-form"
             className="font-semibold text-slate-950 hover:text-slate-700"
           >
             Forgot password?

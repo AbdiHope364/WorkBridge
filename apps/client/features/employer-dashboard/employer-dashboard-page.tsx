@@ -11,8 +11,6 @@ import { useAuth } from "@/contexts/auth-context";
 import { useProfile } from "@/contexts/profile-context";
 import { api } from "@/lib/api";
 import Image from "next/image";
-import { useNotifications } from "@/contexts/notification-context";
-import { env } from "@/lib/env";
 
 /** --- Icons & Glyphs --- */
 const Icons = {
@@ -148,10 +146,13 @@ export function EmployerDashboardPage() {
     );
   }
 
-  const initials =
-    employerProfile?.companyName?.charAt(0) ||
-    employerProfile?.fullName?.charAt(0) ||
-    "E";
+  const initials = (() => {
+    if (!employerProfile) return "E";
+    if (employerProfile.employerType === "COMPANY_EMPLOYER") {
+      return employerProfile.companyName?.charAt(0) ?? "E";
+    }
+    return employerProfile.fullName?.charAt(0) ?? "E";
+  })();
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
@@ -168,7 +169,7 @@ export function EmployerDashboardPage() {
               <BellIcon className="h-5 w-5 text-slate-400 cursor-pointer" />
               <Link href="/dashboard/employer/profile">
                 <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white font-black text-sm shadow-lg overflow-hidden border-2 border-slate-900">
-                  {employerProfile?.companyLogoUrl?.url ? (
+                  {employerProfile?.employerType === "COMPANY_EMPLOYER" && employerProfile.companyLogoUrl?.url ? (
                     <Image
                       src={employerProfile.companyLogoUrl.url}
                       alt="Logo"

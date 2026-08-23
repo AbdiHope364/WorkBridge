@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "inspect-workspace",
+			"type": "shell",
+			"command": "cd /home/hope/WORKBRIDGE/WorkBridge && printf '\\n--- package.json ---\\n' && cat package.json && printf '\\n--- apps/client/package.json ---\\n' && cat apps/client/package.json && printf '\\n--- apps/client/tsconfig.json ---\\n' && cat apps/client/tsconfig.json && printf '\\n--- apps/admin/tsconfig.json ---\\n' && cat apps/admin/tsconfig.json",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "show-config",
+			"type": "shell",
+			"command": "cd /home/hope/WORKBRIDGE/WorkBridge && echo '--- root package.json ---' && sed -n '1,220p' package.json && echo '\\n--- apps/client/package.json ---' && sed -n '1,220p' apps/client/package.json && echo '\\n--- apps/client/tsconfig.json ---' && sed -n '1,220p' apps/client/tsconfig.json && echo '\\n--- apps/admin/tsconfig.json ---' && sed -n '1,220p' apps/admin/tsconfig.json",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "verify-build",
+			"type": "shell",
+			"command": "cd /home/hope/WORKBRIDGE/WorkBridge && pwd && ls && echo '---' && pnpm -v || npm -v",
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}

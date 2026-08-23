@@ -15,7 +15,7 @@ import {
 import { loginSchema, type LoginFormValues } from "../lib/auth-schemas";
 import { api, setSessionCookie } from "@/lib/api";
 import { useAuth } from "@/contexts/auth-context";
-import { env } from "@/lib/env";
+import { env } from "../../../lib/env";
 
 export function LoginForm() {
   const router = useRouter();
@@ -109,7 +109,7 @@ export function LoginForm() {
     const next = searchParams.get("next");
     const params = new URLSearchParams({ role: "jobseeker" });
     if (next) params.set("next", next);
-    window.location.href = `${env.apiBaseUrl}/auth/google?${params.toString()}`;
+    window.location.href = `${env.NEXT_PUBLIC_API_URL}/auth/google?${params.toString()}`;
   };
 
   return (

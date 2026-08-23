@@ -1,92 +1,122 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { employerProfileService, jobseekerProfileService } from '@/lib/api';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 
-interface Profile {
-  id: string;
-  userId: string;
-  company?: string;
-  title?: string;
-  skills?: string[];
-  experience?: any[];
-  education?: any[];
-  firstName?: string;
-  lastName?: string;
-}
+import { api } from "@/lib/api";
+import { useAuth } from "./auth-context";
+import type { EmployerProfile, JobseekerProfile } from "@repo/api-client";
 
-interface ProfileContextType {
-  profile: Profile | null;
-  jobseekerProfile: Profile | null;
-  employerProfile: Profile | null;
+interface ProfileContextValue {
   isLoading: boolean;
-  isEmployer: boolean;
-  updateProfile: (data: any) => Promise<void>;
+  employerProfile: EmployerProfile | null;
+  jobseekerProfile: JobseekerProfile | null;
+  refreshProfile: () => Promise<void>;
+  setEmployerProfile: React.Dispatch<
+    React.SetStateAction<EmployerProfile | null>
+  >;
+  setJobseekerProfile: React.Dispatch<
+    React.SetStateAction<JobseekerProfile | null>
+  >;
 }
 
-const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
+const ProfileContext = createContext<ProfileContextValue | undefined>(
+  undefined,
+);
 
-export function ProfileProvider({ children }: { children: React.ReactNode }) {
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [jobseekerProfile, setJobseekerProfile] = useState<Profile | null>(null);
-  const [employerProfile, setEmployerProfile] = useState<Profile | null>(null);
+export function ProfileProvider({ children }: { children: ReactNode }) {
+  const { user, isAuthenticated } = useAuth();
+
+  const [jobseekerProfile, setJobseekerProfile] =
+    useState<JobseekerProfile | null>(null);
+
+  const [employerProfile, setEmployerProfile] =
+    useState<EmployerProfile | null>(null);
+
   const [isLoading, setIsLoading] = useState(true);
-  const [isEmployer, setIsEmployer] = useState(false);
 
-  useEffect(() => {
-    const loadProfile = async () => {
-      try {
-        // Try to load employer profile first
-        const employer = await employerProfileService.getByUser('current');
-        if (employer) {
-          setEmployerProfile(employer);
-          setProfile(employer);
-          setIsEmployer(true);
-        } else {
-          // Try jobseeker profile
-          const jobseeker = await jobseekerProfileService.getByUser('current');
-          if (jobseeker) {
-            setJobseekerProfile(jobseeker);
-            setProfile(jobseeker);
-            setIsEmployer(false);
-          }
-        }
-      } catch (error) {
-        console.error('Error loading profile:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadProfile();
-  }, []);
-
-  const updateProfile = async (data: any) => {
-    setIsLoading(true);
-    try {
-      let updatedProfile;
-      if (isEmployer) {
-        updatedProfile = await employerProfileService.update(data);
-        setEmployerProfile(updatedProfile);
-      } else {
-        updatedProfile = await jobseekerProfileService.update(data);
-        setJobseekerProfile(updatedProfile);
-      }
-      setProfile(updatedProfile);
-    } finally {
-      setIsLoading(false);
-    }
+  const clearProfiles = () => {
+    setJobseekerProfile(null);
+    setEmployerProfile(null);
   };
 
+  const refreshProfile = useCallback(async () => {
+    if (!user) {
+      clearProfiles();
+      return;
+    }
+
+    try {
+      if (user.role === "jobseeker") {
+        const profile = await api.profiles.jobseeker.getMyProfile();
+
+        setJobseekerProfile(profile);
+        setEmployerProfile(null);
+      }
+
+      if (user.role === "employer") {
+        const profile = await api.profiles.employer.getMyProfile();
+
+        setEmployerProfile(profile);
+        setJobseekerProfile(null);
+      }
+    } catch (error) {
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "status" in error &&
+        (error as { status: number }).status === 404
+      ) {
+        console.log("No profile exists yet for this user.");
+        setJobseekerProfile(null);
+      } else if (
+        typeof error === "object" &&
+        error !== null &&
+        "message" in error &&
+        typeof (error as { message?: string }).message === "string" &&
+        (error as { message: string }).message.includes("not found")
+      ) {
+        console.log("No profile exists yet for this user.");
+        setJobseekerProfile(null);
+      } else {
+        console.error("Failed to load profile:", error);
+      }
+    }
+  }, [user]);
+
+  useEffect(() => {
+    async function initialize() {
+      if (!isAuthenticated || !user) {
+        clearProfiles();
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(true);
+      await refreshProfile();
+      setIsLoading(false);
+    }
+
+    initialize();
+  }, [isAuthenticated, user, refreshProfile]);
+
   return (
-    <ProfileContext.Provider value={{
-      profile,
-      jobseekerProfile,
-      employerProfile,
-      isLoading,
-      isEmployer,
-      updateProfile,
-    }}>
+    <ProfileContext.Provider
+      value={{
+        isLoading,
+        employerProfile,
+        jobseekerProfile,
+        refreshProfile,
+        setEmployerProfile,
+        setJobseekerProfile,
+      }}
+    >
       {children}
     </ProfileContext.Provider>
   );
@@ -94,8 +124,10 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
 
 export function useProfile() {
   const context = useContext(ProfileContext);
-  if (context === undefined) {
-    throw new Error('useProfile must be used within a ProfileProvider');
+
+  if (!context) {
+    throw new Error("useProfile must be used inside ProfileProvider");
   }
+
   return context;
 }

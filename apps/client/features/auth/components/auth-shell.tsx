@@ -26,7 +26,7 @@ export function AuthShell({
   return (
     <main className="min-h-screen bg-slate-100 py-10 px-4 sm:py-16">
       <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.15fr_0.9fr]">
-        <section className="hidden overflow-hidden rounded-[32px] border border-slate-200 bg-slate-950/5 p-10 text-white shadow-lg lg:block">
+        <section className="hidden overflow-hidden rounded-4xl border border-slate-200 bg-slate-950/5 p-10 text-white shadow-lg lg:block">
           <div className="space-y-8">
             <div className="rounded-3xl bg-emerald-700 p-8 shadow-inner shadow-slate-900/5">
               <p className="text-sm uppercase tracking-[0.24em] text-emerald-500">

@@ -62,9 +62,11 @@ export function ProfileTopHeader({
   condition,
 }: {
   initials: string;
-  url: string;
-  condition: boolean | undefined;
+  url?: string;
+  condition?: boolean;
 }) {
+  const showInitials = condition ?? !url;
+
   return (
     <header className="flex h-20 items-center justify-between border-b border-slate-200 bg-white px-8">
       <LogoMark />
@@ -80,11 +82,11 @@ export function ProfileTopHeader({
           aria-label="Profile"
           className="grid h-12 w-12 place-items-center rounded-full border-4 border-emerald-950 bg-slate-900 text-sm font-black text-emerald-100 shadow-sm"
         >
-          {condition ? (
+          {showInitials ? (
             initials
           ) : (
             <Image
-              src={url}
+              src={url ?? ""}
               width={70}
               height={70}
               style={{ width: "48", height: "48", borderRadius: "50%" }}

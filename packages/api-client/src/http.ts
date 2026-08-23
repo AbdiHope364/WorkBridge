@@ -2,9 +2,15 @@ export interface ApiClientOptions {
   baseUrl: string;
   getAccessToken?: () => string | undefined | Promise<string | undefined>;
   onUnauthorized?: () => void | Promise<void>;
+  /** Prevent unavailable APIs from leaving UI loading states indefinitely. */
+  timeoutMs?: number;
 }
 
 export type ApiBody = object | FormData | BodyInit;
+// API endpoints without a response schema remain backwards-compatible with existing consumers.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type UnspecifiedApiResponse = any;
+
 export interface RequestOptions extends Omit<RequestInit, "body"> {
   body?: ApiBody;
   query?: Record<string, string | number | boolean | undefined>;
@@ -22,7 +28,7 @@ export class ApiError extends Error {
 }
 
 export interface ApiClient {
-  request<TResponse = any>(
+  request<TResponse = UnspecifiedApiResponse>(
     path: string,
     options?: RequestOptions,
   ): Promise<TResponse>;
@@ -32,11 +38,12 @@ export function createApiClient({
   baseUrl,
   getAccessToken,
   onUnauthorized,
+  timeoutMs = 8_000,
 }: ApiClientOptions): ApiClient {
   const normalizedBaseUrl = baseUrl.replace(/\/$/, "");
 
   return {
-    async request<TResponse = any>(
+    async request<TResponse = UnspecifiedApiResponse>(
       path: string,
       options: RequestOptions = {},
     ): Promise<TResponse> {
@@ -77,11 +84,28 @@ export function createApiClient({
         body = JSON.stringify(options.body);
       }
 
-      const response = await fetch(url.toString(), {
-        ...options,
-        headers,
-        body,
-      });
+      const timeoutController = new AbortController();
+      const timeoutId = setTimeout(() => timeoutController.abort(), timeoutMs);
+      const signal = options.signal
+        ? AbortSignal.any([options.signal, timeoutController.signal])
+        : timeoutController.signal;
+
+      let response: Response;
+      try {
+        response = await fetch(url.toString(), {
+          ...options,
+          headers,
+          body,
+          signal,
+        });
+      } catch (error) {
+        if (timeoutController.signal.aborted && !options.signal?.aborted) {
+          throw new ApiError("The server took too long to respond. Please try again.", 408);
+        }
+        throw error;
+      } finally {
+        clearTimeout(timeoutId);
+      }
 
       if (response.status === 401) {
         await onUnauthorized?.();

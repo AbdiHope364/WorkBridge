@@ -1,4 +1,4 @@
-import type { ApiClient } from '../http';
+import type { ApiClient } from '../http.js';
 
 export function createJobsService(api: ApiClient) {
   return {

@@ -37,23 +37,6 @@ function BackIcon(props: IconProps) {
   );
 }
 
-function PinIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
-      <path
-        d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 12.2a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4Z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-    </svg>
-  );
-}
 
 function MonitorIcon(props: IconProps) {
   return (
@@ -307,9 +290,9 @@ export function EmployerCreateJobPage() {
   const router = useRouter();
   const { user, isAuthenticated, isLoading } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoadingForm, setIsLoadingForm] = useState(true);
   const [skillInput, setSkillInput] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [isLoadingForm, setIsLoadingForm] = useState(true);
 
   const [form, setForm] = useState({
     title: "",
@@ -373,7 +356,7 @@ export function EmployerCreateJobPage() {
     }
   }, [isLoading, user, router]);
 
-  if (isLoading) {
+  if (isLoading || isLoadingForm) {
     return <div>Loading...</div>;
   }
 

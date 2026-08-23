@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { api } from "@/lib/api";
@@ -99,7 +99,7 @@ function ContentSection({
 
 export function EmployerApplicantProfilePage() {
   const { applicantId } = useParams();
-  const { user, isAuthenticated, isLoading: isAuthLoading } = useAuth();
+  const { user: _, isAuthenticated, isLoading: isAuthLoading } = useAuth();
 
   const [application, setApplication] = useState<any>(null);
   const [loading, setLoading] = useState(true);

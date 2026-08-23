@@ -21,6 +21,37 @@ export interface BackendJob {
   applicants: string[];
 }
 
+export interface DashboardStats {
+  totalJobseekers: number;
+  totalEmployers: number;
+  activeJobs: number;
+  totalApplications: number;
+}
+
+export interface OverviewPoint {
+  name: string;
+  jobseeker: number;
+  employer: number;
+  jobs: number;
+  applications: number;
+}
+
+export interface JobStatusPoint {
+  name: string;
+  value: number;
+}
+
+export interface CategoryPoint {
+  name: string;
+  count: number;
+}
+
+export interface VerificationPoint {
+  name: string;
+  value: number;
+  color: string;
+}
+
 export function createAdminService(api: ApiClient) {
   return {
     async listUsers() {
@@ -38,6 +69,26 @@ export function createAdminService(api: ApiClient) {
       return api.request<void>(`/admin/verifications/${id}/approve`, {
         method: "POST",
       });
+    },
+    async getDashboardStats() {
+      const response = await api.request<DashboardStats>("/admin/dashboard/stats");
+      return response;
+    },
+    async getDashboardOverview() {
+      const response = await api.request<{ overviewData: OverviewPoint[] }>("/admin/dashboard/overview");
+      return response.overviewData;
+    },
+    async getDashboardJobStatus() {
+      const response = await api.request<{ jobStatusData: JobStatusPoint[] }>("/admin/dashboard/job-status");
+      return response.jobStatusData;
+    },
+    async getDashboardCategories() {
+      const response = await api.request<{ categories: CategoryPoint[] }>("/admin/dashboard/categories");
+      return response.categories;
+    },
+    async getDashboardVerifications() {
+      const response = await api.request<{ verificationData: VerificationPoint[] }>("/admin/dashboard/verifications");
+      return response.verificationData;
     },
   };
 }

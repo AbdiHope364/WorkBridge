@@ -46,7 +46,7 @@ export default function OnboardingPage() {
   const { jobseekerProfile, refreshProfile, isLoading } = useProfile();
 
   const [stepIndex, setStepIndex] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [, setIsSubmitting] = useState(false);
   const [isModalActive, setIsModalActive] = useState(false);
 
   useEffect(() => {

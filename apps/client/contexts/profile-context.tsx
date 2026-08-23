@@ -66,8 +66,22 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
         setEmployerProfile(profile);
         setJobseekerProfile(null);
       }
-    } catch (error: any) {
-      if (error.status === 404 || error.message?.includes("not found")) {
+    } catch (error) {
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "status" in error &&
+        (error as { status: number }).status === 404
+      ) {
+        console.log("No profile exists yet for this user.");
+        setJobseekerProfile(null);
+      } else if (
+        typeof error === "object" &&
+        error !== null &&
+        "message" in error &&
+        typeof (error as { message?: string }).message === "string" &&
+        (error as { message: string }).message.includes("not found")
+      ) {
         console.log("No profile exists yet for this user.");
         setJobseekerProfile(null);
       } else {

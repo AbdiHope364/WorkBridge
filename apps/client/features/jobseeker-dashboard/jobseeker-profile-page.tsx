@@ -27,9 +27,8 @@ import { useState } from "react";
 import { useProfile } from "@/contexts/profile-context";
 import {
   JobseekerProfile,
-  UpdateJobseekerProfileRequest,
 } from "@repo/api-client";
-import { env } from "@/lib/env";
+import { env } from "../../lib/env";
 import { Spinner } from "@repo/ui";
 
 function EditIcon({ className = "h-4 w-4" }: { className?: string }) {
@@ -187,7 +186,6 @@ function IconButton({
 export function JobseekerProfilePage() {
   const { isLoading, isAuthenticated, user } = useAuth();
   const {
-    isLoading: profileLoading,
     jobseekerProfile,
     setJobseekerProfile,
     refreshProfile,
@@ -554,7 +552,7 @@ export function JobseekerProfilePage() {
               <ProfileShellCard title="Resume & Socials">
                 <div className="space-y-3">
                   {(jobseekerProfile?.socialLinks ?? profileSocialLinks).map(
-                    (link) => (
+                    (link: { platform: string; url: string }) => (
                       <div
                         key={link.platform}
                         className="flex h-9 items-center justify-between rounded-md border border-slate-200 px-3 text-xs text-neutral-500"

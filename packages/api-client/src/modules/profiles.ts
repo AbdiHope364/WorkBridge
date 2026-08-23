@@ -1,19 +1,19 @@
-import type { ApiClient } from '../http';
+import type { ApiClient } from '../http.js';
 
 import type {
   JobseekerProfile,
   UpdateJobseekerProfileRequest,
-} from './profiles/jobseeker-profile';
+} from './profiles/jobseeker-profile.js';
 
 import type {
   CompanyProfile,
   UpdateCompanyProfileRequest,
-} from './profiles/company-profile';
+} from './profiles/company-profile.js';
 
 import type {
   IndividualEmployerProfile,
   UpdateIndividualEmployerProfileRequest,
-} from './profiles/individual-employer-profile';
+} from './profiles/individual-employer-profile.js';
 
 export interface ApiResponse<T> {
   success: boolean;

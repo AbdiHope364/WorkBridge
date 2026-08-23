@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback, useMemo } from "react";
 import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { api } from "@/lib/api";
 import { useAuth } from "@/contexts/auth-context";
 import { EmployerSidebar } from "./components/employer-sidebar";
@@ -74,9 +74,8 @@ const Icons = {
 };
 
 export function EmployerApplicationsPage() {
-  const { user } = useAuth();
+  const { user: _user } = useAuth();
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   const jobId = searchParams.get("jobId");
 

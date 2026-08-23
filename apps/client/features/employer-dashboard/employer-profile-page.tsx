@@ -15,7 +15,7 @@ import { ReactNode, SVGProps, useState, useCallback } from "react";
 import { useAuth } from "@/contexts/auth-context";
 import Image from "next/image";
 import { api } from "../../lib/api";
-import { Input } from "@repo/ui";
+;
 import { useNotifications } from "@/contexts/notification-context";
 import { env } from "@/lib/env";
 
@@ -195,7 +195,7 @@ function Avatar({
 
 export function cloudinaryUrl(publicId: string | undefined): string | null {
   return publicId
-    ? `https://res.cloudinary.com/${env.cloudinaryCloudName}/image/upload/${publicId}`
+    ? `https://res.cloudinary.com/${env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${publicId}`
     : null;
 }
 

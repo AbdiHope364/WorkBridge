@@ -1,3 +1,5 @@
+import type { Skill } from "@repo/api-client";
+
 export interface ProfileChecklistItem {
   id: string;
   label: string;
@@ -33,13 +35,13 @@ export const profileChecklist: ProfileChecklistItem[] = [
   { id: "resume", label: "Resumes", isComplete: false },
 ];
 
-export const profileSkills = [
-  "Figma design",
-  "Node js",
-  "Express js",
-  "Mongodb",
-  "web service",
-  "photoshop",
+export const profileSkills: Skill[] = [
+  { _id: "1", name: "Figma design" },
+  { _id: "2", name: "Node.js" },
+  { _id: "3", name: "Express.js" },
+  { _id: "4", name: "MongoDB" },
+  { _id: "5", name: "Web services" },
+  { _id: "6", name: "Photoshop" },
 ];
 
 export const profileExperience: ProfileExperience = {

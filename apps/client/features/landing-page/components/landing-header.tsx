@@ -98,17 +98,6 @@ export function LandingHeader() {
     return pathname === href || pathname.startsWith(href + "/");
   }
 
-  function handleAnchorClick(
-    e: React.MouseEvent<HTMLAnchorElement>,
-    anchor: string,
-  ) {
-    // On home page: prevent navigation, just scroll
-    if (pathname === "/") {
-      e.preventDefault();
-      document.getElementById(anchor)?.scrollIntoView({ behavior: "smooth" });
-    }
-  }
-
   return (
     <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/95 backdrop-blur-sm">
       <nav className="mx-auto flex h-[72px] max-w-[1300px] items-center justify-between px-6">

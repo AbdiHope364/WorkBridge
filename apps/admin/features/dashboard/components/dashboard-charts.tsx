@@ -15,35 +15,64 @@ import {
   Cell,
 } from "recharts";
 import { ChevronDown } from "lucide-react";
+import { api } from "@/lib/api";
 
-// Mock data for the line chart
-const overviewData = [
-  { name: "January", jobseeker: 45, employer: 32, jobs: 60, applications: 25 },
-  { name: "February", jobseeker: 65, employer: 45, jobs: 70, applications: 35 },
-  { name: "March", jobseeker: 40, employer: 30, jobs: 55, applications: 20 },
-  { name: "April", jobseeker: 55, employer: 40, jobs: 65, applications: 30 },
-  { name: "May", jobseeker: 85, employer: 48, jobs: 80, applications: 45 },
-  { name: "June", jobseeker: 60, employer: 35, jobs: 65, applications: 30 },
-  { name: "July", jobseeker: 70, employer: 50, jobs: 75, applications: 38 },
-  { name: "August", jobseeker: 75, employer: 55, jobs: 85, applications: 42 },
-  {
-    name: "September",
-    jobseeker: 80,
-    employer: 60,
-    jobs: 90,
-    applications: 48,
-  },
-];
+const JOB_STATUS_COLORS: Record<string, string> = {
+  OPEN: "#4100F2",
+  CLOSED: "#FFA000",
+  DRAFT: "#C41AF7",
+  EXPIRED: "#00D47E",
+  PAUSED: "#FFA000",
+  REMOVED: "#64748b",
+  Active: "#4100F2",
+  Inactive: "#00D47E",
+};
 
-const jobStatusData = [
-  { name: "Active Jobs", value: 4200, color: "#4100F2" },
-  { name: "Pending Jobs", value: 800, color: "#FFA000" },
-  { name: "Rejected Jobs", value: 300, color: "#C41AF7" },
-  { name: "Expired Jobs", value: 150, color: "#00D47E" },
-  { name: "Removed Jobs", value: 50, color: "#64748b" },
-];
+const DEFAULT_COLORS = ["#4100F2", "#FFA000", "#C41AF7", "#00D47E", "#64748b", "#ef4444"];
 
 export function DashboardCharts() {
+  const [overviewData, setOverviewData] = React.useState<{ name: string; jobseeker: number; employer: number; jobs: number; applications: number }[]>([]);
+  const [jobStatusData, setJobStatusData] = React.useState<{ name: string; value: number; color: string }[]>([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    let mounted = true;
+    void Promise.all([
+      api.admin.getDashboardOverview(),
+      api.admin.getDashboardJobStatus(),
+    ])
+      .then(([overview, jobStatus]) => {
+        if (!mounted) return;
+        setOverviewData(overview);
+        const colored = jobStatus.map((item, index) => ({
+          ...item,
+          color: JOB_STATUS_COLORS[item.name] || DEFAULT_COLORS[index % DEFAULT_COLORS.length],
+        }));
+        setJobStatusData(colored);
+      })
+      .catch((requestError: unknown) => {
+        if (mounted) setError(requestError instanceof Error ? requestError.message : "Unable to load charts.");
+      })
+      .finally(() => { if (mounted) setIsLoading(false); });
+    return () => { mounted = false; };
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-10 mb-8">
+        <div className="lg:col-span-2 bg-white rounded-[1.5rem] p-6 shadow-sm border border-slate-100 h-[350px] animate-pulse" />
+        <div className="bg-white rounded-[1.5rem] p-6 shadow-sm border border-slate-100 h-[350px] animate-pulse" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="px-10 mb-8 text-sm text-rose-600">{error}</div>;
+  }
+
+  const totalJobs = jobStatusData.reduce((sum, item) => sum + item.value, 0);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-10 mb-8">
       {/* Overview Line Chart */}
@@ -59,69 +88,72 @@ export function DashboardCharts() {
         </div>
 
         <div className="h-[280px] w-full">
-          {/* TODO: Integrate with real backend to fetch overview trend data */}
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={overviewData}>
-              <CartesianGrid
-                strokeDasharray="3 3"
-                vertical={false}
-                stroke="#f1f5f9"
-              />
-              <XAxis
-                dataKey="name"
-                axisLine={false}
-                tickLine={false}
-                tick={{ fill: "#94a3b8", fontSize: 10 }}
-                dy={10}
-              />
-              <YAxis
-                axisLine={false}
-                tickLine={false}
-                tick={{ fill: "#94a3b8", fontSize: 10 }}
-              />
-              <Tooltip
-                contentStyle={{
-                  borderRadius: "0.75rem",
-                  border: "none",
-                  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-                }}
-              />
-              <Legend
-                verticalAlign="top"
-                align="center"
-                iconType="circle"
-                wrapperStyle={{ paddingBottom: "10px", fontSize: "11px" }}
-              />
-              <Line
-                type="monotone"
-                dataKey="jobseeker"
-                stroke="#C41AF7"
-                strokeWidth={2}
-                dot={{ r: 3, strokeWidth: 1, fill: "#fff" }}
-              />
-              <Line
-                type="monotone"
-                dataKey="employer"
-                stroke="#FFA000"
-                strokeWidth={2}
-                dot={{ r: 3, strokeWidth: 1, fill: "#fff" }}
-              />
-              <Line
-                type="monotone"
-                dataKey="jobs"
-                stroke="#00D47E"
-                strokeWidth={2}
-                dot={{ r: 3, strokeWidth: 1, fill: "#fff" }}
-              />
-              <Line
-                type="monotone"
-                dataKey="applications"
-                stroke="#4100F2"
-                strokeWidth={2}
-                dot={{ r: 3, strokeWidth: 1, fill: "#fff" }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          {overviewData.length === 0 ? (
+            <div className="h-full flex items-center justify-center text-sm text-slate-400">No data available</div>
+          ) : (
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={overviewData}>
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  vertical={false}
+                  stroke="#f1f5f9"
+                />
+                <XAxis
+                  dataKey="name"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: "#94a3b8", fontSize: 10 }}
+                  dy={10}
+                />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: "#94a3b8", fontSize: 10 }}
+                />
+                <Tooltip
+                  contentStyle={{
+                    borderRadius: "0.75rem",
+                    border: "none",
+                    boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+                  }}
+                />
+                <Legend
+                  verticalAlign="top"
+                  align="center"
+                  iconType="circle"
+                  wrapperStyle={{ paddingBottom: "10px", fontSize: "11px" }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="jobseeker"
+                  stroke="#C41AF7"
+                  strokeWidth={2}
+                  dot={{ r: 3, strokeWidth: 1, fill: "#fff" }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="employer"
+                  stroke="#FFA000"
+                  strokeWidth={2}
+                  dot={{ r: 3, strokeWidth: 1, fill: "#fff" }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="jobs"
+                  stroke="#00D47E"
+                  strokeWidth={2}
+                  dot={{ r: 3, strokeWidth: 1, fill: "#fff" }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="applications"
+                  stroke="#4100F2"
+                  strokeWidth={2}
+                  dot={{ r: 3, strokeWidth: 1, fill: "#fff" }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          )}
         </div>
       </div>
 
@@ -132,28 +164,31 @@ export function DashboardCharts() {
         </h3>
 
         <div className="h-[220px] w-full relative">
-          {/* TODO: Integrate with real backend to fetch job status counts */}
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={jobStatusData}
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={85}
-                paddingAngle={5}
-                dataKey="value"
-              >
-                {jobStatusData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+          {jobStatusData.length === 0 ? (
+            <div className="h-full flex items-center justify-center text-sm text-slate-400">No data available</div>
+          ) : (
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={jobStatusData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={85}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {jobStatusData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          )}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
             <p className="text-2xl font-black text-slate-800 leading-none">
-              5500
+              {totalJobs}
             </p>
             <p className="text-[9px] font-bold text-slate-400 mt-1 uppercase">
               Total Jobs
