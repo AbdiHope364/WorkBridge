@@ -95,7 +95,7 @@ export function JobseekersTable() {
 
   return (
     <div className="px-10 pb-10">
-      <div className="bg-white rounded-[1.5rem] shadow-sm border border-slate-100 overflow-hidden">
+      <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
         {/* Modal for Suspend/Delete */}
         <ActionModal
           isOpen={!!activeModal}
@@ -159,18 +159,18 @@ export function JobseekersTable() {
                     <div className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 font-bold border border-emerald-100 text-xs">
                       {jobseeker.name.charAt(0)}
                     </div>
-                    <span className="font-black text-slate-800 text-xs tracking-tight truncate max-w-[120px]">
+                    <span className="font-black text-slate-800 text-xs tracking-tight truncate max-w-30">
                       {jobseeker.name}
                     </span>
                   </div>
                 </td>
-                <td className="px-5 py-2.5 text-[11px] font-medium text-slate-500 truncate max-w-[150px]">
+                <td className="px-5 py-2.5 text-[11px] font-medium text-slate-500 truncate max-w-37.5">
                   {jobseeker.email}
                 </td>
                 <td className="px-5 py-2.5 text-[11px] font-bold text-slate-700">
                   {jobseeker.phone}
                 </td>
-                <td className="px-5 py-2.5 text-[11px] font-medium text-slate-500 truncate max-w-[150px]">
+                <td className="px-5 py-2.5 text-[11px] font-medium text-slate-500 truncate max-w-37.5">
                   {jobseeker.skills.join(", ")}
                 </td>
                 <td className="px-5 py-2.5">
