@@ -1,37 +1,30 @@
+// HTTP Client with proper error handling
+
+interface RequestConfig {
+  url: string;
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  data?: any;
+  headers?: Record<string, string>;
+  params?: Record<string, string>;
+  timeout?: number;
+}
+
 export interface ApiClientOptions {
   baseUrl: string;
   getAccessToken?: () => string | undefined | Promise<string | undefined>;
   onUnauthorized?: () => void | Promise<void>;
-  /** Prevent unavailable APIs from leaving UI loading states indefinitely. */
   timeoutMs?: number;
 }
 
 export type ApiBody = object | FormData | BodyInit;
-// API endpoints without a response schema remain backwards-compatible with existing consumers.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type UnspecifiedApiResponse = any;
 
 export interface RequestOptions extends Omit<RequestInit, "body"> {
   body?: ApiBody;
   query?: Record<string, string | number | boolean | undefined>;
 }
 
-export class ApiError extends Error {
-  constructor(
-    message: string,
-    public readonly status: number,
-    public readonly details?: unknown,
-  ) {
-    super(message);
-    this.name = "ApiError";
-  }
-}
-
 export interface ApiClient {
-  request<TResponse = UnspecifiedApiResponse>(
-    path: string,
-    options?: RequestOptions,
-  ): Promise<TResponse>;
+  request<TResponse = any>(path: string, options?: RequestOptions): Promise<TResponse>;
 }
 
 export function createApiClient({
@@ -43,10 +36,7 @@ export function createApiClient({
   const normalizedBaseUrl = baseUrl.replace(/\/$/, "");
 
   return {
-    async request<TResponse = UnspecifiedApiResponse>(
-      path: string,
-      options: RequestOptions = {},
-    ): Promise<TResponse> {
+    async request<TResponse = any>(path: string, options: RequestOptions = {}): Promise<TResponse> {
       const url = new URL(`${normalizedBaseUrl}${path}`);
 
       for (const [key, value] of Object.entries(options.query ?? {})) {
@@ -75,11 +65,7 @@ export function createApiClient({
         typeof options.body === "string"
       ) {
         body = options.body;
-
-        // Let the browser set multipart/form-data boundary.
-        // Also don't override headers for strings, blobs, etc.
       } else {
-        // Plain object → JSON
         headers.set("Content-Type", "application/json");
         body = JSON.stringify(options.body);
       }
@@ -133,10 +119,22 @@ async function readJson(response: Response): Promise<unknown> {
 
   const text = await response.text();
 
-  return text ? JSON.parse(text) : undefined;
+  if (!text) {
+    return undefined;
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return text;
+  }
 }
 
 function getErrorMessage(payload: unknown): string | undefined {
+  if (typeof payload === "string") {
+    return payload;
+  }
+
   if (
     typeof payload === "object" &&
     payload !== null &&
@@ -148,3 +146,23 @@ function getErrorMessage(payload: unknown): string | undefined {
 
   return undefined;
 }
+
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    public readonly status: number,
+    public readonly details?: unknown,
+  ) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
+
+export class NetworkError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "NetworkError";
+  }
+}
+
+

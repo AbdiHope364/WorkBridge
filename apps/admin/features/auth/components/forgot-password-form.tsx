@@ -10,6 +10,7 @@ import {
   CardContent,
   Input,
 } from "@repo/ui";
+import { api } from "@/lib/api";
 import {
   forgotPasswordSchema,
   type ForgotPasswordFormValues,
@@ -21,6 +22,7 @@ export function ForgotPasswordForm() {
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const parsed = useMemo(() => forgotPasswordSchema.safeParse(form), [form]);
   const fieldErrors = useMemo(() => {
@@ -54,8 +56,8 @@ export function ForgotPasswordForm() {
     setIsSubmitting(true);
 
     try {
-      await new Promise((resolve) => window.setTimeout(resolve, 400));
-      router.push("/verify-email");
+      await api.auth.forgotPassword({ email: form.email });
+      setIsSuccess(true);
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Unable to send reset link.";
@@ -65,12 +67,36 @@ export function ForgotPasswordForm() {
     }
   };
 
+  if (isSuccess) {
+    return (
+      <div className="space-y-6">
+        <CardHeader>
+          <CardTitle>Check your email</CardTitle>
+          <CardDescription>
+            We sent a password reset link to{" "}
+            <span className="font-semibold">{form.email}</span>. Follow the
+            instructions in the email to regain access to your account.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button
+            type="button"
+            onClick={() => router.replace("/login")}
+            className="w-full"
+          >
+            Back to login
+          </Button>
+        </CardContent>
+      </div>
+    );
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <CardHeader>
         <CardTitle>Forgot password?</CardTitle>
         <CardDescription>
-          Enter your email and we’ll send you a secure reset code to regain
+          Enter your email and we’ll send you a secure reset link to regain
           access.
         </CardDescription>
       </CardHeader>
@@ -84,7 +110,7 @@ export function ForgotPasswordForm() {
             setForm((prev) => ({ ...prev, email: event.target.value }))
           }
           onBlur={() => handleBlur("email")}
-          error={fieldErrors.email}
+          error={touched.email ? fieldErrors.email : undefined}
           isValid={Boolean(touched.email && !fieldErrors.email)}
           validMessage={getValidMessage("email")}
           placeholder="name@company.com"
@@ -98,9 +124,6 @@ export function ForgotPasswordForm() {
       <div className="grid gap-3">
         <Button type="submit" isLoading={isSubmitting}>
           Send reset link
-        </Button>
-        <Button variant="outline" type="button" disabled>
-          Sign in with Google
         </Button>
       </div>
     </form>

@@ -3,12 +3,13 @@
 import { 
   createApiClient as createApiClientBase,
   type ApiClient,
-} from "@repo/api-client/src/http";
-import { createAuthService } from "@repo/api-client/src/modules/auth";
-import { createApplicationsService } from "@repo/api-client/src/modules/applications";
-import { createChatService } from "@repo/api-client/src/modules/chat";
-import { createNotificationsService } from "@repo/api-client/src/modules/notifications";
-import { createPaymentsService } from "@repo/api-client/src/modules/payments";
+  createAuthService,
+  createApplicationsService,
+  createChatService,
+  createJobsApi,
+  createNotificationsService,
+  createPaymentsService,
+} from "@repo/api-client";
 
 // Create the API client with proper options
 export function createApiClient(options: {
@@ -25,10 +26,11 @@ export function createApiClient(options: {
 
 // Create Jobs Service
 export function createJobsService(api: ApiClient) {
+  const jobsApi = createJobsApi(api);
+
   return {
-    getAll: async (params?: any) => {
-      const queryString = params ? `?${new URLSearchParams(params).toString()}` : '';
-      return api.request(`/jobs${queryString}`);
+    getAll: async (params?: Record<string, string | number | boolean | undefined>) => {
+      return jobsApi.getJobs(params);
     },
     getRecent: async (limit: number = 5) => {
       return api.request(`/jobs?_limit=${limit}&_sort=createdAt&_order=desc`);
@@ -39,13 +41,31 @@ export function createJobsService(api: ApiClient) {
     getFeatured: async () => {
       return api.request(`/jobs?featured=true`);
     },
-    create: async (data: any) => {
+    getJobs: async (params?: Record<string, string | number | boolean | undefined>) => {
+      return jobsApi.getJobs(params);
+    },
+    getJob: async (id: string) => {
+      return api.request(`/jobs/${id}`);
+    },
+    create: async (data: object) => {
       return api.request("/jobs", {
         method: "POST",
         body: data,
       });
     },
-    update: async (id: string, data: any) => {
+    createJob: async (data: object) => {
+      return api.request("/jobs", {
+        method: "POST",
+        body: data,
+      });
+    },
+    update: async (id: string, data: object) => {
+      return api.request(`/jobs/${id}`, {
+        method: "PUT",
+        body: data,
+      });
+    },
+    updateJob: async (id: string, data: object) => {
       return api.request(`/jobs/${id}`, {
         method: "PUT",
         body: data,
@@ -62,6 +82,14 @@ export function createJobsService(api: ApiClient) {
     getJobseekerDashboard: async () => {
       return api.request(`/dashboard/jobseeker`);
     },
+    getEmployerDashboard: async () => api.request("/jobs/employer/dashboard"),
+    getEmployerJobs: async (params?: Record<string, string | number | boolean | undefined>) =>
+      api.request("/jobs/employer", { query: params }),
+    getSavedJobs: async () => api.request("/jobs/saved"),
+    saveJob: async (id: string) =>
+      api.request(`/jobs/${id}/save`, { method: "POST" }),
+    removeSavedJob: async (id: string) =>
+      api.request(`/jobs/saved/${id}`, { method: "DELETE" }),
   };
 }
 

@@ -15,22 +15,54 @@ import { env } from "../../lib/env";
 
 // Helper functions for session management
 export function setSessionCookie() {
-  // Implementation
+  if (typeof window === "undefined") return;
+  document.cookie = "session=true; path=/; max-age=604800";
 }
 
 export function getSessionCookie() {
-  // Implementation
-  return undefined;
+  if (typeof window === "undefined") return undefined;
+  return document.cookie.includes("session=true");
+}
+
+export function clearSessionCookie() {
+  if (typeof window === "undefined") return;
+  document.cookie = "session=; path=/; max-age=0";
+}
+
+// Token management functions
+export function setAuthToken(token: string) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem("workbridge_token", token);
+}
+
+export function clearAuthToken() {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem("workbridge_token");
+}
+
+export function getAuthToken(): string | null {
+  if (typeof window === "undefined") return null;
+  const token = localStorage.getItem("workbridge_token");
+  return token && token !== "undefined" && token !== "null" ? token : null;
 }
 
 // Create the API client instance
 const apiClient = createApiClient({
   baseUrl: env.NEXT_PUBLIC_API_URL,
   getAccessToken: () => {
-    return undefined;
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const token = localStorage.getItem("workbridge_token");
+    return token && token !== "undefined" && token !== "null"
+      ? token
+      : undefined;
   },
   onUnauthorized: () => {
-    console.warn("Unauthorized access detected");
+    localStorage.removeItem("workbridge_token");
+    clearSessionCookie();
+    window.location.assign("/login");
   },
 });
 
@@ -68,6 +100,10 @@ export const api = {
   payments: paymentsService,
   employer: employerProfileService,
   jobseeker: jobseekerProfileService,
+  profiles: {
+    employer: employerProfileService,
+    jobseeker: jobseekerProfileService,
+  },
 };
 
 // Also export the service creators for flexibility

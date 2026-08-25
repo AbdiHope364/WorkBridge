@@ -56,10 +56,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await refreshUser();
   };
 
-  const logout = () => {
-    localStorage.removeItem('workbridge_token');
-    clearSessionCookie();
-    setUser(null);
+  const logout = async () => {
+    try {
+      await api.auth.logout();
+    } catch {
+      // ignore logout errors
+    } finally {
+      localStorage.removeItem('workbridge_token');
+      clearSessionCookie();
+      setUser(null);
+    }
   };
   
   return (

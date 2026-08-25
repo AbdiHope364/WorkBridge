@@ -17,7 +17,7 @@ import Image from "next/image";
 import { api } from "../../lib/api";
 ;
 import { useNotifications } from "@/contexts/notification-context";
-import { env } from "@/lib/env";
+import { env } from "../../lib/env";
 
 type IconProps = SVGProps<SVGSVGElement>;
 type ProfileTab = "personal" | "company" | "verification" | "security";

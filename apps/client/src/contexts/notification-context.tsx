@@ -1,83 +1,115 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { notificationsService } from '@/lib/api';
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { api } from "@/lib/api";
+import { useAuth } from "./auth-context";
 
 interface Notification {
-  id: string;
+  _id?: string;
+  id?: string;
+  userId: string;
+  type: string;
   title: string;
   message: string;
-  type: string;
   read: boolean;
-  createdAt: string;
+  createdAt?: string;
 }
 
 interface NotificationContextType {
   notifications: Notification[];
   unreadCount: number;
   isLoading: boolean;
+  error: string | null;
   markAsRead: (id: string) => Promise<void>;
   markAllAsRead: () => Promise<void>;
   fetchNotifications: () => Promise<void>;
 }
 
-const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
+const NotificationContext = createContext<NotificationContextType | undefined>(
+  undefined
+);
 
-export function NotificationProvider({ children }: { children: React.ReactNode }) {
+export function NotificationProvider({ children }: { children: ReactNode }) {
+  const { isAuthenticated } = useAuth();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchNotifications = async () => {
-    setIsLoading(true);
+    // Don't fetch if user is not authenticated
+    if (!isAuthenticated) {
+      setNotifications([]);
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const data = await notificationsService.getFeed();
-      setNotifications(data);
+      setIsLoading(true);
+      setError(null);
+      const response = await api.notifications.getNotifications();
+      setNotifications(response?.notifications || response?.data || []);
     } catch (error) {
-      console.error('Error fetching notifications:', error);
+      console.error("Failed to fetch notifications:", error);
+      
+      // Check if it's an auth error
+      if (error instanceof Error && error.message.includes("Authorization")) {
+        // User is not authenticated - clear notifications
+        setNotifications([]);
+        setError("Please log in to view notifications");
+      } else {
+        setError("Failed to load notifications");
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchNotifications();
-  }, []);
-
   const markAsRead = async (id: string) => {
+    if (!isAuthenticated) return;
+    
     try {
-      await notificationsService.markAsRead(id);
-      setNotifications(prev =>
-        prev.map(notif =>
-          notif.id === id ? { ...notif, read: true } : notif
+      await api.notifications.markAsRead(id);
+      setNotifications((prev) =>
+        prev.map((n) =>
+          n.id === id || n._id === id ? { ...n, read: true } : n
         )
       );
     } catch (error) {
-      console.error('Error marking notification as read:', error);
+      console.error("Failed to mark notification as read:", error);
     }
   };
 
   const markAllAsRead = async () => {
+    if (!isAuthenticated) return;
+    
     try {
-      await notificationsService.markAllAsRead('current');
-      setNotifications(prev =>
-        prev.map(notif => ({ ...notif, read: true }))
+      await api.notifications.markAllAsRead();
+      setNotifications((prev) =>
+        prev.map((n) => ({ ...n, read: true }))
       );
     } catch (error) {
-      console.error('Error marking all notifications as read:', error);
+      console.error("Failed to mark all notifications as read:", error);
     }
   };
 
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const unreadCount = notifications.filter((n) => !n.read).length;
+
+  useEffect(() => {
+    fetchNotifications();
+  }, [isAuthenticated]);
 
   return (
-    <NotificationContext.Provider value={{
-      notifications,
-      unreadCount,
-      isLoading,
-      markAsRead,
-      markAllAsRead,
-      fetchNotifications,
-    }}>
+    <NotificationContext.Provider
+      value={{
+        notifications,
+        unreadCount,
+        isLoading,
+        error,
+        markAsRead,
+        markAllAsRead,
+        fetchNotifications,
+      }}
+    >
       {children}
     </NotificationContext.Provider>
   );
@@ -85,8 +117,8 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
 
 export function useNotifications() {
   const context = useContext(NotificationContext);
-  if (context === undefined) {
-    throw new Error('useNotifications must be used within a NotificationProvider');
+  if (!context) {
+    throw new Error("useNotifications must be used within a NotificationProvider");
   }
   return context;
 }

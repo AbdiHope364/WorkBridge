@@ -1,4 +1,7 @@
+// HTTP Client
 export * from "./http";
+
+// All modules
 export * from "./modules/admin";
 export * from "./modules/applications";
 export * from "./modules/auth";

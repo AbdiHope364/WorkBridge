@@ -1,94 +1,107 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { authService } from '@/lib/api';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import { api, setAuthToken, clearAuthToken, getAuthToken } from "@/lib/api";
 
 interface User {
   id: string;
   email: string;
-  name: string;
-  role?: string;
-  fullName?: string;
+  fullName: string;
+  role: "admin" | "employer" | "jobseeker";
+  avatar?: string;
 }
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
-  register: (data: any) => Promise<void>;
   refreshUser: () => Promise<void>;
+  login: (email: string, password: string) => Promise<{ token: string }>;
+  logout: () => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>;
+  resetPassword: (token: string, password: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    // Check if user is logged in on mount
-    const checkAuth = async () => {
-      try {
-        // Try to get current user
-        const currentUser = await authService.me();
-        setUser(currentUser);
-      } catch (error) {
-        // User is not authenticated
+  const refreshUser = async () => {
+    try {
+      const token = getAuthToken();
+      if (!token) {
         setUser(null);
-      } finally {
-        setIsLoading(false);
+        return;
       }
-    };
 
-    checkAuth();
-  }, []);
+      const response = await api.auth.me();
+      setUser(response.user);
+    } catch (error) {
+      console.error("Failed to refresh user:", error);
+      if (error instanceof Error && 
+          (error.message.includes("Authorization") || 
+           error.message.includes("token") ||
+           error.message.includes("401"))) {
+        clearAuthToken();
+        setUser(null);
+      }
+    }
+  };
 
   const login = async (email: string, password: string) => {
-    setIsLoading(true);
-    try {
-      const response = await authService.login({ email, password });
-      setUser(response.user);
-    } finally {
-      setIsLoading(false);
-    }
+    const response = await api.auth.login({ email, password });
+    const { token } = response;
+
+    setAuthToken(token);
+    await refreshUser();
+
+    return { token };
   };
 
   const logout = async () => {
-    setIsLoading(true);
     try {
-      await authService.logout();
-      setUser(null);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const register = async (data: any) => {
-    setIsLoading(true);
-    try {
-      const response = await authService.register(data);
-      setUser(response.user);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const refreshUser = async () => {
-    setIsLoading(true);
-    try {
-      const currentUser = await authService.me();
-      setUser(currentUser);
+      await api.auth.logout();
     } catch (error) {
-      setUser(null);
+      console.error("Logout error:", error);
     } finally {
-      setIsLoading(false);
+      clearAuthToken();
+      setUser(null);
     }
   };
+
+  const forgotPassword = async (email: string) => {
+    await api.auth.forgotPassword({ email });
+  };
+
+  const resetPassword = async (token: string, password: string) => {
+    await api.auth.resetPassword({ token, password });
+  };
+
+  useEffect(() => {
+    refreshUser().finally(() => setIsLoading(false));
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, isAuthenticated: !!user, login, logout, register, refreshUser }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isLoading,
+        isAuthenticated: !!user,
+        refreshUser,
+        login,
+        logout,
+        forgotPassword,
+        resetPassword,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -96,8 +109,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }

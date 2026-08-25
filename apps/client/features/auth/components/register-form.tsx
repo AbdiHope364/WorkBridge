@@ -13,7 +13,7 @@ import {
 import { api } from "../../../lib/api";
 import { registerSchema, type RegisterFormValues } from "../lib/auth-schemas";
 import type { RegisterRequest } from "@repo/types/auth";
-import { env } from "@/lib/env";
+import { env } from "../../../lib/env";
 
 interface RegisterFormProps {
   role: "jobseeker" | "employer";
