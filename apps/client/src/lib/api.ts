@@ -10,6 +10,8 @@ import {
   createJobsService,
   createNotificationsService,
   createPaymentsService,
+  ApiError,
+  NetworkError,
 } from "./api-client-wrapper";
 import { env } from "../../lib/env";
 
@@ -117,4 +119,6 @@ export {
   createPaymentsService,
   createEmployerProfileService,
   createJobseekerProfileService,
+  ApiError,
+  NetworkError,
 };

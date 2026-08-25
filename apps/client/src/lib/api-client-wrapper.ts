@@ -9,6 +9,8 @@ import {
   createJobsApi,
   createNotificationsService,
   createPaymentsService,
+  ApiError,
+  NetworkError,
 } from "@repo/api-client";
 
 // Create the API client with proper options
@@ -93,15 +95,6 @@ export function createJobsService(api: ApiClient) {
   };
 }
 
-// Re-export existing services directly
-export { 
-  createAuthService,
-  createApplicationsService,
-  createChatService,
-  createNotificationsService,
-  createPaymentsService,
-};
-
 // Create Employer Profile Service
 export function createEmployerProfileService(api: ApiClient) {
   return {
@@ -149,3 +142,14 @@ export function createJobseekerProfileService(api: ApiClient) {
     },
   };
 }
+
+// Re-export existing services directly
+export { 
+  createAuthService,
+  createApplicationsService,
+  createChatService,
+  createNotificationsService,
+  createPaymentsService,
+  ApiError,
+  NetworkError,
+};
