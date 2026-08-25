@@ -88,6 +88,9 @@ export function createApiClient({
         if (timeoutController.signal.aborted && !options.signal?.aborted) {
           throw new ApiError("The server took too long to respond. Please try again.", 408);
         }
+        if (error instanceof TypeError) {
+          throw new NetworkError("Network error. Please check your internet connection.");
+        }
         throw error;
       } finally {
         clearTimeout(timeoutId);
