@@ -3,12 +3,6 @@
 import { useState, useRef } from "react";
 import { Modal } from "@repo/ui";
 
-interface SocialLink {
-  id: string;
-  label: string;
-  url: string;
-}
-
 interface EditResumesAndSocialsModalProps {
   isOpen: boolean;
   onClose: () => void;

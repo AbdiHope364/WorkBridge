@@ -17,7 +17,6 @@ export default function PaymentsPage() {
   const { user } = useAuth();
   const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {

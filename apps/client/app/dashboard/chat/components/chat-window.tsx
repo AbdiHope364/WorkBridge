@@ -7,7 +7,7 @@ import { useAuth } from '@/contexts/auth-context';
 interface Message {
   id: string;
   senderId: string;
-  content: string;
+  body: string;
   createdAt: string;
 }
 
@@ -36,7 +36,7 @@ export function ChatWindow({ conversationId }: { conversationId: string | null }
     loadMessages();
 
     // Subscribe to new messages
-    const unsubscribe = chatService.onMessage((message) => {
+    const unsubscribe = chatService.onMessage((message: any) => {
       if (message.conversationId === conversationId) {
         setMessages(prev => [...prev, message]);
       }
@@ -92,7 +92,7 @@ export function ChatWindow({ conversationId }: { conversationId: string | null }
                     : 'bg-gray-100 text-gray-900'
                 }`}
               >
-                <p>{message.content}</p>
+                <p>{message.body}</p>
                 <span className="text-xs opacity-75 mt-1 block">
                   {new Date(message.createdAt).toLocaleTimeString()}
                 </span>

@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Button } from "@repo/ui";
 import { useCurrentUser } from "../../hooks/use-current-user";
 import { JobseekerSidebar } from "./components/jobseeker-sidebar";
@@ -69,7 +68,6 @@ function ConversationCard({
 }
 
 export function MessagesPage() {
-  const router = useRouter();
   const { isLoading, isAuthenticated } = useCurrentUser();
   // const user = {
   //   fullName: "Mock User",

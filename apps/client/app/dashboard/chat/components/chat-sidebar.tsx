@@ -7,7 +7,8 @@ import Link from 'next/link';
 
 interface Conversation {
   id: string;
-  participants: string[];
+  participantIds: string[];
+  lastMessageAt?: string;
   lastMessage?: {
     content: string;
     createdAt: string;
@@ -78,7 +79,7 @@ export function ChatSidebar({
               }`}
             >
               <div className="font-medium">
-                {conv.participants.filter(p => p !== user?.id).join(', ')}
+                {conv.participantIds.filter(p => p !== user?.id).join(', ')}
               </div>
               {conv.lastMessage && (
                 <div className="text-sm text-gray-500 truncate">
