@@ -5,7 +5,7 @@ export interface User {
   email: string;
   role: UserRole;
   isEmailVerified: boolean;
-  fullName: "";
+  fullName: string;
   status: "active" | "inactive" | "suspended";
   createdAt: string;
   updatedAt: string;
