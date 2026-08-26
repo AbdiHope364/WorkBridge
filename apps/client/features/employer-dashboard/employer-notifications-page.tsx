@@ -348,7 +348,7 @@ function NotificationCard({
 // ─── Header ───────────────────────────────────────────────────────────────────
 
 function Header() {
-  const { badgeCounts } = useNotifications();
+  const { unreadCount } = useNotifications();
   const { employerProfile } = useProfile();
 
   if (!employerProfile) {
@@ -366,7 +366,7 @@ function Header() {
       "E");
   const avatarSrc = cloudinaryUrl(imageId);
 
-  const unread = badgeCounts?.data.totalUnread ?? 0;
+  const unread = unreadCount;
 
   return (
     <header className="flex h-[62px] items-center justify-between border-b border-[#d9d9df] bg-white px-6 shadow-[0_2px_5px_rgba(15,23,42,0.14)] md:px-10">
@@ -435,7 +435,7 @@ export function EmployerNotificationsPage() {
   const {
     isLoading,
     notifications,
-    badgeCounts,
+    unreadCount,
     markAsRead,
     markAllAsRead,
     deleteNotification,
@@ -443,7 +443,7 @@ export function EmployerNotificationsPage() {
   } = useNotifications();
 
   const groups = groupByDate(notifications);
-  const unread = badgeCounts?.data.totalUnread ?? 0;
+  const unread = unreadCount;
 
   return (
     <main className="min-h-screen bg-[#f7f7fb] text-black">

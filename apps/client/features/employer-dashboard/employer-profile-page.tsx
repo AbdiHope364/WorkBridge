@@ -12,10 +12,8 @@ import {
 } from "@repo/api-client";
 import { useProfile } from "@/contexts/profile-context";
 import { ReactNode, SVGProps, useState, useCallback } from "react";
-import { useAuth } from "@/contexts/auth-context";
 import Image from "next/image";
 import { api } from "../../lib/api";
-;
 import { useNotifications } from "@/contexts/notification-context";
 import { env } from "../../lib/env";
 
@@ -155,25 +153,6 @@ function LinkIcon(props: IconProps) {
   );
 }
 
-function DocumentIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
-      <path
-        d="M7 4h6l4 4v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M13 4v4h4"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 function Avatar({
   small = false,
   initials = "?",
@@ -233,9 +212,9 @@ function Field({
 
 function Header({ profile }: { profile: EmployerProfile }) {
   const isCompany = profile.employerType === "COMPANY_EMPLOYER";
-  const { badgeCounts } = useNotifications();
+  const { unreadCount } = useNotifications();
 
-  const unread = badgeCounts?.data.totalUnread ?? 0;
+  const unread = unreadCount;
 
   const imageId = isCompany
     ? (profile as CompanyProfile).companyLogoUrl?.publicId
@@ -823,6 +802,10 @@ function CompanyTab({
     website: profile.officialWebsite ?? "",
     description: profile.companyDescription ?? "",
     tagline: profile.tagline ?? "",
+    phone: profile.phoneNumber ?? "",
+    address: profile.address ?? "",
+    businessLicenseNumber: (profile as CompanyProfile).businessLicenseNumber ?? "",
+    nationalIdOrPassportNumber: (profile as CompanyProfile).nationalIdOrPassportNumber ?? "",
   });
 
   const [logoSrc, setLogoSrc] = useState(
@@ -905,6 +888,10 @@ function CompanyTab({
         officialWebsite: fields.website || undefined,
         companyDescription: fields.description || undefined,
         tagline: fields.tagline || undefined,
+        phoneNumber: fields.phone || undefined,
+        address: fields.address || undefined,
+        businessLicenseNumber: fields.businessLicenseNumber || undefined,
+        nationalIdOrPassportNumber: fields.nationalIdOrPassportNumber || undefined,
         headquarters: fields.hqCity
           ? {
               city: fields.hqCity,
@@ -1050,6 +1037,19 @@ function CompanyTab({
           onChange={(v) => patch("industry", v)}
         />
         <Field
+          label="Phone Number"
+          value={fields.phone}
+          editing={editing}
+          onChange={(v) => patch("phone", v)}
+        />
+        <Field
+          label="Address"
+          value={fields.address}
+          editing={editing}
+          onChange={(v) => patch("address", v)}
+          wide
+        />
+        <Field
           label="Tagline"
           value={fields.tagline}
           editing={editing}
@@ -1134,72 +1134,165 @@ function VerificationStep({
   );
 }
 
-function CompanyVerificationTab() {
+function CompanyVerificationTab({
+  profile,
+  editing,
+  onSave,
+}: {
+  profile: CompanyProfile;
+  editing: boolean;
+  onSave: (payload: UpdateCompanyProfileRequest) => Promise<void>;
+}) {
+  const [businessLicenseNumber, setBusinessLicenseNumber] = useState(
+    profile.businessLicenseNumber ?? "",
+  );
+  const [nationalIdOrPassportNumber, setNationalIdOrPassportNumber] = useState(
+    profile.nationalIdOrPassportNumber ?? "",
+  );
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      await onSave({
+        businessLicenseNumber: businessLicenseNumber || undefined,
+        nationalIdOrPassportNumber: nationalIdOrPassportNumber || undefined,
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <div className="px-6 pb-7 pt-4 sm:px-14">
       <div className="rounded-2xl border border-[#dde2eb] bg-white p-4">
         <div className="grid gap-3 sm:grid-cols-3">
-          <VerificationStep label="Submitted" active />
-          <VerificationStep label="Under review" active />
-          <VerificationStep label="Verified" active={false} />
+          <VerificationStep
+            label="Submitted"
+            active={!!(profile.businessLicenseNumber || profile.nationalIdOrPassportNumber)}
+          />
+          <VerificationStep
+            label="Under review"
+            active={profile.verificationStatus === "PENDING"}
+          />
+          <VerificationStep
+            label="Verified"
+            active={profile.verificationStatus === "VERIFIED"}
+          />
         </div>
       </div>
 
-      <div className="mt-6 grid gap-4 lg:grid-cols-3">
+      <div className="mt-6 grid gap-4 lg:grid-cols-2">
         <article className="rounded-2xl border border-[#dedfe6] bg-white p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#6a6b78]">
-                Business Licence
+                Business License
               </p>
               <p className="mt-2 text-sm text-[#1b293e]">
                 Official document issued by government authorities authorizing
                 your business operations.
               </p>
             </div>
-            <span className="rounded-full bg-[#dcf6e9] px-2.5 py-1 text-[10px] font-semibold text-[#1b7a58]">
-              VERIFIED
-            </span>
+            {profile.businessLicenseDocumentUrl?.url && (
+              <span className="rounded-full bg-[#dcf6e9] px-2.5 py-1 text-[10px] font-semibold text-[#1b7a58]">
+                UPLOADED
+              </span>
+            )}
           </div>
-          <p className="mt-4 text-sm text-[#0f9b88]">License_v3_final.pdf</p>
+          {editing && (
+            <div className="mt-4 space-y-3">
+              <label className="block">
+                <span className="text-xs font-semibold text-black">
+                  Business License Number <span className="text-red-500">*</span>
+                </span>
+                <input
+                  type="text"
+                  value={businessLicenseNumber}
+                  onChange={(e) => setBusinessLicenseNumber(e.target.value)}
+                  placeholder="e.g. BL-123456"
+                  className="mt-1 h-10 w-full rounded border border-[#c5c5c9] bg-white px-3 text-xs text-[#4b4b4b] outline-none focus:border-[#00aaa8] focus:ring-1 focus:ring-[#00aaa8]"
+                />
+              </label>
+              <label className="flex h-10 w-full cursor-pointer items-center justify-center rounded border border-[#c5c7cf] bg-white text-[11px] font-semibold text-[#172653] hover:bg-[#f5f5f5]">
+                {profile.businessLicenseDocumentUrl?.url
+                  ? "Replace License Document"
+                  : "Upload License Document"}
+                <input
+                  type="file"
+                  className="sr-only"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    await api.profiles.employer.uploadLogo(file);
+                    onSave({});
+                  }}
+                />
+              </label>
+            </div>
+          )}
         </article>
 
         <article className="rounded-2xl border border-[#dedfe6] bg-white p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#6a6b78]">
-                Tax Registration
+                National ID / Passport
               </p>
               <p className="mt-2 text-sm text-[#1b293e]">
-                Proof of your company&apos;s tax identification number and
-                registration status.
+                Upload a valid government-issued ID for verification.
               </p>
             </div>
-            <span className="rounded-full bg-[#f7f4e8] px-2.5 py-1 text-[10px] font-semibold text-[#7a6c2a]">
-              PENDING
-            </span>
+            {profile.nationalIdOrPassportDocumentUrl?.url && (
+              <span className="rounded-full bg-[#dcf6e9] px-2.5 py-1 text-[10px] font-semibold text-[#1b7a58]">
+                UPLOADED
+              </span>
+            )}
           </div>
-          <p className="mt-4 text-sm text-[#555]">Reviewing…</p>
-          <button className="mt-4 text-sm font-semibold text-[#00aaa8]">
-            View File
-          </button>
-        </article>
-
-        <article className="rounded-2xl border border-dashed border-[#9fa1a8] bg-[#f6f8fb] p-5 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-white text-[#172653]">
-            <DocumentIcon className="h-5 w-5" />
-          </div>
-          <p className="mt-4 text-base font-semibold text-black">
-            Company Registration
-          </p>
-          <p className="mt-2 text-[11px] leading-tight text-[#555]">
-            Article of incorporation or Certificate of Formation required.
-          </p>
-          <button className="mt-5 h-9 w-full rounded border border-[#c5c7cf] bg-white text-[11px] font-semibold text-[#172653]">
-            Upload Document
-          </button>
+          {editing && (
+            <div className="mt-4 space-y-3">
+              <label className="block">
+                <span className="text-xs font-semibold text-black">
+                  National ID / Passport Number <span className="text-red-500">*</span>
+                </span>
+                <input
+                  type="text"
+                  value={nationalIdOrPassportNumber}
+                  onChange={(e) => setNationalIdOrPassportNumber(e.target.value)}
+                  placeholder="e.g. ETH-123456789"
+                  className="mt-1 h-10 w-full rounded border border-[#c5c5c9] bg-white px-3 text-xs text-[#4b4b4b] outline-none focus:border-[#00aaa8] focus:ring-1 focus:ring-[#00aaa8]"
+                />
+              </label>
+              <label className="flex h-10 w-full cursor-pointer items-center justify-center rounded border border-[#c5c7cf] bg-white text-[11px] font-semibold text-[#172653] hover:bg-[#f5f5f5]">
+                {profile.nationalIdOrPassportDocumentUrl?.url
+                  ? "Replace ID Document"
+                  : "Upload ID Document"}
+                <input
+                  type="file"
+                  className="sr-only"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    await api.profiles.employer.uploadAvatar(file);
+                    onSave({});
+                  }}
+                />
+              </label>
+            </div>
+          )}
         </article>
       </div>
+
+      {editing && (
+        <button
+          type="button"
+          disabled={isSaving}
+          onClick={handleSave}
+          className="mt-6 h-10 w-full rounded bg-[#172653] text-lg font-semibold text-white cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {isSaving ? "Saving…" : "Save Verification Details"}
+        </button>
+      )}
 
       <div className="mt-6 rounded-2xl border border-[#1f7070] bg-[#e8f6f5] p-4 text-sm text-[#173d3b]">
         <strong className="block font-semibold">Company Verification</strong>
@@ -1220,13 +1313,11 @@ function IndividualProfile({
 }) {
   const [activeTab, setActiveTab] = useState<ProfileTab>("personal");
   const [editing, setEditing] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const { refreshProfile } = useProfile();
 
   const handleSave = useCallback(
     async (payload: UpdateIndividualEmployerProfileRequest) => {
-      setIsSaving(true);
       setSaveError(null);
       try {
         await api.profiles.employer.updateMyIndividualProfile(payload);
@@ -1234,8 +1325,6 @@ function IndividualProfile({
         setEditing(false);
       } catch (err) {
         setSaveError(err instanceof Error ? err.message : "Failed to save.");
-      } finally {
-        setIsSaving(false);
       }
     },
     [refreshProfile],
@@ -1321,7 +1410,13 @@ function CompanyProfileView({ profile }: { profile: CompanyProfile }) {
         isSaving={isSaving}
       />
     ),
-    verification: <CompanyVerificationTab />,
+    verification: (
+      <CompanyVerificationTab
+        profile={profile}
+        editing={editing}
+        onSave={handleSave}
+      />
+    ),
     security: <SecurityTab />,
   };
 

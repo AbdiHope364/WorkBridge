@@ -30,6 +30,10 @@ interface CompanyFormState {
   officialWebsite: string;
   companyDescription: string;
   tagline: string;
+  phoneNumber: string;
+  address: string;
+  businessLicenseNumber: string;
+  nationalIdOrPassportNumber: string;
   // Headquarters fields flattened for easy input binding
   hqCountry: string;
   hqRegion: string;
@@ -44,6 +48,9 @@ interface IndividualFormState {
   gender: string;
   dateOfBirth: string;
   bio: string;
+  address: string;
+  nationalIdNumber: string;
+  businessLicenseNumber: string;
   // Location fields flattened
   city: string;
   addressLine1: string;
@@ -58,6 +65,10 @@ const defaultCompanyState: CompanyFormState = {
   officialWebsite: "",
   companyDescription: "",
   tagline: "",
+  phoneNumber: "",
+  address: "",
+  businessLicenseNumber: "",
+  nationalIdOrPassportNumber: "",
   hqCountry: "",
   hqRegion: "",
   hqCity: "",
@@ -71,6 +82,9 @@ const defaultIndividualState: IndividualFormState = {
   gender: "",
   dateOfBirth: "",
   bio: "",
+  address: "",
+  nationalIdNumber: "",
+  businessLicenseNumber: "",
   city: "",
   addressLine1: "",
   addressLine2: "",
@@ -366,6 +380,35 @@ function CompanyOnboardingForm({
           onChange={(v) => onChange({ hqAddressLine: v })}
           placeholder="Street address"
         />
+        <EditableField
+          label="Phone Number"
+          required
+          value={fields.phoneNumber}
+          onChange={(v) => onChange({ phoneNumber: v })}
+          placeholder="+251-900-000-000"
+          type="tel"
+        />
+        <EditableField
+          label="Company Address"
+          value={fields.address}
+          onChange={(v) => onChange({ address: v })}
+          placeholder="Registered company address"
+          wide
+        />
+        <EditableField
+          label="Business License Number"
+          required
+          value={fields.businessLicenseNumber}
+          onChange={(v) => onChange({ businessLicenseNumber: v })}
+          placeholder="e.g. BL-123456"
+        />
+        <EditableField
+          label="National ID / Passport Number"
+          required
+          value={fields.nationalIdOrPassportNumber}
+          onChange={(v) => onChange({ nationalIdOrPassportNumber: v })}
+          placeholder="e.g. ETH-123456789"
+        />
       </div>
 
       <button
@@ -445,6 +488,26 @@ function IndividualOnboardingForm({
           placeholder="Apartment, suite, etc. (optional)"
         />
         <EditableField
+          label="Address"
+          value={fields.address}
+          onChange={(v) => onChange({ address: v })}
+          placeholder="Your full address"
+          wide
+        />
+        <EditableField
+          label="National ID / Passport Number"
+          required
+          value={fields.nationalIdNumber}
+          onChange={(v) => onChange({ nationalIdNumber: v })}
+          placeholder="e.g. ETH-123456789"
+        />
+        <EditableField
+          label="Business License Number"
+          value={fields.businessLicenseNumber}
+          onChange={(v) => onChange({ businessLicenseNumber: v })}
+          placeholder="e.g. BL-123456"
+        />
+        <EditableField
           label="Bio"
           value={fields.bio}
           onChange={(v) => onChange({ bio: v })}
@@ -508,6 +571,10 @@ function OnboardingShell() {
         officialWebsite: companyFields.officialWebsite || undefined,
         companyDescription: companyFields.companyDescription || undefined,
         tagline: companyFields.tagline || undefined,
+        phoneNumber: companyFields.phoneNumber || undefined,
+        address: companyFields.address || undefined,
+        businessLicenseNumber: companyFields.businessLicenseNumber || undefined,
+        nationalIdOrPassportNumber: companyFields.nationalIdOrPassportNumber || undefined,
         headquarters: companyFields.hqCountry ? headquarters : undefined,
       };
 
@@ -534,6 +601,9 @@ function OnboardingShell() {
           undefined,
         dateOfBirth: individualFields.dateOfBirth || undefined,
         bio: individualFields.bio || undefined,
+        address: individualFields.address || undefined,
+        nationalIdNumber: individualFields.nationalIdNumber || undefined,
+        businessLicenseNumber: individualFields.businessLicenseNumber || undefined,
         location: individualFields.city
           ? {
               city: individualFields.city,
@@ -604,7 +674,7 @@ function OnboardingShell() {
 }
 
 export function EmployerOnboardingPage() {
-  const { user, isLoading, isAuthenticated } = useAuth();
+  const { isLoading } = useAuth();
   const { employerProfile } = useProfile();
   const router = useRouter();
 

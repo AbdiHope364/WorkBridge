@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
+import { useProfile } from "@/contexts/profile-context";
 import Link from "next/link";
 import type { ReactNode, SVGProps } from "react";
 import { api } from "@/lib/api";
@@ -289,6 +290,7 @@ function SkillsField({
 export function EmployerCreateJobPage() {
   const router = useRouter();
   const { user, isAuthenticated, isLoading } = useAuth();
+  const { employerProfile } = useProfile();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoadingForm, setIsLoadingForm] = useState(true);
   const [skillInput, setSkillInput] = useState("");
@@ -355,6 +357,12 @@ export function EmployerCreateJobPage() {
       router.push("/");
     }
   }, [isLoading, user, router]);
+
+  useEffect(() => {
+    if (!isLoading && isAuthenticated && !employerProfile?.canPostJobs) {
+      router.replace("/dashboard/employer/profile?tab=verification");
+    }
+  }, [isLoading, isAuthenticated, employerProfile, router]);
 
   if (isLoading || isLoadingForm) {
     return <div>Loading...</div>;

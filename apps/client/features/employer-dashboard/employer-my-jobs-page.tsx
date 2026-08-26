@@ -9,7 +9,6 @@ import {
 } from "../jobseeker-dashboard/components/dashboard-icons";
 import { EmployerSidebar } from "./components/employer-sidebar";
 import { api } from "@/lib/api";
-import { useAuth } from "@/contexts/auth-context";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
@@ -182,7 +181,6 @@ function JobCard({ job }: { job: any }) {
 }
 
 export function EmployerMyJobsPage() {
-  const { user } = useAuth();
   const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
