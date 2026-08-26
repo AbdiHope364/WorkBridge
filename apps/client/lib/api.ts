@@ -32,12 +32,12 @@ const apiClient = createApiClient({
   baseUrl: env.NEXT_PUBLIC_API_URL,
   getAccessToken: () => {
     if (typeof window === "undefined") return undefined;
-    return localStorage.getItem("token") ?? undefined;
+    return localStorage.getItem("workbridge_token") ?? undefined;
   },
   onUnauthorized: () => {
     if (typeof window !== "undefined") {
-      localStorage.removeItem("token");
-      window.location.href = "/auth/login";
+      localStorage.removeItem("workbridge_token");
+      window.location.href = "/login";
     }
   },
 });

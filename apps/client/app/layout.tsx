@@ -1,6 +1,7 @@
 import { AuthProvider } from "@/contexts/auth-context";
 import { NotificationProvider } from "@/contexts/notification-context";
-import "./globals.css";  // Changed from @/app/globals.css to relative path
+import { ProfileProvider } from "@/contexts/profile-context";
+import "./globals.css";
 
 export default function RootLayout({
   children,
@@ -12,7 +13,9 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <NotificationProvider>
-            {children}
+            <ProfileProvider>
+              {children}
+            </ProfileProvider>
           </NotificationProvider>
         </AuthProvider>
       </body>

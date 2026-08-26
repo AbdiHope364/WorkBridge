@@ -1,19 +1,9 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 import { api } from "@/lib/api";
 import { useAuth } from "./auth-context";
-
-interface Notification {
-  _id?: string;
-  id?: string;
-  userId: string;
-  type: string;
-  title: string;
-  message: string;
-  read: boolean;
-  createdAt?: string;
-}
+import type { Notification } from "@repo/types";
 
 interface NotificationContextType {
   notifications: Notification[];
@@ -22,11 +12,13 @@ interface NotificationContextType {
   error: string | null;
   markAsRead: (id: string) => Promise<void>;
   markAllAsRead: () => Promise<void>;
+  deleteNotification: (id: string) => Promise<void>;
+  clearAll: () => Promise<void>;
   fetchNotifications: () => Promise<void>;
 }
 
 const NotificationContext = createContext<NotificationContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export function NotificationProvider({ children }: { children: ReactNode }) {
@@ -36,7 +28,6 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
   const fetchNotifications = async () => {
-    // Don't fetch if user is not authenticated
     if (!isAuthenticated) {
       setNotifications([]);
       setIsLoading(false);
@@ -46,19 +37,11 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     try {
       setIsLoading(true);
       setError(null);
-      const response = await api.notifications.getNotifications();
-      setNotifications(response?.notifications || response?.data || []);
+      const response = await api.notifications.getFeed();
+      setNotifications(response?.data ?? []);
     } catch (error) {
       console.error("Failed to fetch notifications:", error);
-      
-      // Check if it's an auth error
-      if (error instanceof Error && error.message.includes("Authorization")) {
-        // User is not authenticated - clear notifications
-        setNotifications([]);
-        setError("Please log in to view notifications");
-      } else {
-        setError("Failed to load notifications");
-      }
+      setError("Failed to load notifications");
     } finally {
       setIsLoading(false);
     }
@@ -66,14 +49,9 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
   const markAsRead = async (id: string) => {
     if (!isAuthenticated) return;
-    
     try {
-      await api.notifications.markAsRead(id);
-      setNotifications((prev) =>
-        prev.map((n) =>
-          n.id === id || n._id === id ? { ...n, read: true } : n
-        )
-      );
+      await api.notifications.markRead(id);
+      await fetchNotifications();
     } catch (error) {
       console.error("Failed to mark notification as read:", error);
     }
@@ -81,18 +59,35 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
   const markAllAsRead = async () => {
     if (!isAuthenticated) return;
-    
     try {
-      await api.notifications.markAllAsRead();
-      setNotifications((prev) =>
-        prev.map((n) => ({ ...n, read: true }))
-      );
+      await api.notifications.markAllRead();
+      await fetchNotifications();
     } catch (error) {
       console.error("Failed to mark all notifications as read:", error);
     }
   };
 
-  const unreadCount = notifications.filter((n) => !n.read).length;
+  const deleteNotification = async (id: string) => {
+    if (!isAuthenticated) return;
+    try {
+      await api.notifications.delete(id);
+      setNotifications((prev) => prev.filter((n) => n._id !== id));
+    } catch (error) {
+      console.error("Failed to delete notification:", error);
+    }
+  };
+
+  const clearAll = async () => {
+    if (!isAuthenticated) return;
+    try {
+      await api.notifications.clearAll();
+      setNotifications([]);
+    } catch (error) {
+      console.error("Failed to clear all notifications:", error);
+    }
+  };
+
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   useEffect(() => {
     fetchNotifications();
@@ -107,6 +102,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         error,
         markAsRead,
         markAllAsRead,
+        deleteNotification,
+        clearAll,
         fetchNotifications,
       }}
     >
@@ -118,7 +115,9 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 export function useNotifications() {
   const context = useContext(NotificationContext);
   if (!context) {
-    throw new Error("useNotifications must be used within a NotificationProvider");
+    throw new Error(
+      "useNotifications must be used within NotificationProvider",
+    );
   }
   return context;
 }

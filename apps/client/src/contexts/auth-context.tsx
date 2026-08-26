@@ -5,17 +5,10 @@ import {
   useContext,
   useState,
   useEffect,
-  ReactNode,
+  type ReactNode,
 } from "react";
 import { api, setAuthToken, clearAuthToken, getAuthToken } from "@/lib/api";
-
-interface User {
-  id: string;
-  email: string;
-  fullName: string;
-  role: "admin" | "employer" | "jobseeker";
-  avatar?: string;
-}
+import type { User } from "@repo/types/auth";
 
 interface AuthContextType {
   user: User | null;
@@ -43,7 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       const response = await api.auth.me();
-      setUser(response.user);
+      setUser(response);
     } catch (error) {
       console.error("Failed to refresh user:", error);
       if (error instanceof Error && 

@@ -3,33 +3,23 @@
 import { api } from './api';
 import { loadStripe } from '@stripe/stripe-js';
 
-// For Chapa (Ethiopia/Africa)
-interface ChapaPaymentResponse {
-  checkout_url: string;
-  transaction_id: string;
-}
+import type { PaymentIntent } from '@repo/types/payments';
 
-// For Stripe
-interface StripePaymentResponse {
-  clientSecret: string;
-  paymentIntentId: string;
+export interface PaymentItem {
+  id: string;
+  amount: number;
+  currency: string;
+  status: 'pending' | 'completed' | 'failed';
+  createdAt: string;
+  description?: string;
 }
 
 class PaymentService {
-  async initializeChapaPayment(applicationId: string): Promise<ChapaPaymentResponse> {
+  async initializeChapaPayment(applicationId: string): Promise<PaymentIntent> {
     return api.payments.createChapaCheckout(applicationId);
   }
 
-  async initializeStripePayment(amount: number, currency: string = 'usd') {
-    const response = await api.payments.createIntent({ amount, currency });
-    return response;
-  }
-
-  async confirmPayment(paymentIntentId: string) {
-    return api.payments.confirm({ paymentIntentId });
-  }
-
-  async getPaymentHistory(userId: string) {
+  async getPaymentHistory(_userId?: string): Promise<PaymentItem[]> {
     // This would use the payments API to get history
     // For now, return empty array or mock data
     return [];

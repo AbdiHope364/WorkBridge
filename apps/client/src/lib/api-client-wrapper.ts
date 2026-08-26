@@ -9,6 +9,8 @@ import {
   createJobsApi,
   createNotificationsService,
   createPaymentsService,
+  createEmployerProfileService,
+  createJobseekerProfileService,
   ApiError,
   NetworkError,
 } from "@repo/api-client";
@@ -95,54 +97,6 @@ export function createJobsService(api: ApiClient) {
   };
 }
 
-// Create Employer Profile Service
-export function createEmployerProfileService(api: ApiClient) {
-  return {
-    getByUser: async (userId: string) => {
-      return api.request(`/employer-profiles?userId=${userId}`);
-    },
-    update: async (data: any) => {
-      return api.request("/employer-profiles", {
-        method: "PUT",
-        body: data,
-      });
-    },
-    create: async (data: any) => {
-      return api.request("/employer-profiles", {
-        method: "POST",
-        body: data,
-      });
-    },
-    getCompany: async (companyId: string) => {
-      return api.request(`/employer-profiles/${companyId}`);
-    },
-  };
-}
-
-// Create Jobseeker Profile Service
-export function createJobseekerProfileService(api: ApiClient) {
-  return {
-    getByUser: async (userId: string) => {
-      return api.request(`/jobseeker-profiles?userId=${userId}`);
-    },
-    update: async (data: any) => {
-      return api.request("/jobseeker-profiles", {
-        method: "PUT",
-        body: data,
-      });
-    },
-    create: async (data: any) => {
-      return api.request("/jobseeker-profiles", {
-        method: "POST",
-        body: data,
-      });
-    },
-    getResume: async (userId: string) => {
-      return api.request(`/jobseeker-profiles/${userId}/resume`);
-    },
-  };
-}
-
 // Re-export existing services directly
 export { 
   createAuthService,
@@ -150,6 +104,8 @@ export {
   createChatService,
   createNotificationsService,
   createPaymentsService,
+  createEmployerProfileService,
+  createJobseekerProfileService,
   ApiError,
   NetworkError,
 };
