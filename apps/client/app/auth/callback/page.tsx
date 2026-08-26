@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { setAuthToken, setSessionCookie } from "@/lib/api";
 
 export default function AuthCallbackPage() {
   useEffect(() => {
@@ -14,7 +15,8 @@ export default function AuthCallbackPage() {
       return;
     }
 
-    localStorage.setItem("workbridge_token", token);
+    setAuthToken(token);
+    setSessionCookie();
 
     const role = params.get("role");
     const next = sessionStorage.getItem("google_auth_next");

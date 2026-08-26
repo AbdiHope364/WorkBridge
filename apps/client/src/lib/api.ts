@@ -19,16 +19,18 @@ import { env } from "../../lib/env";
 export function setSessionCookie() {
   if (typeof window === "undefined") return;
   document.cookie = "session=true; path=/; max-age=604800";
+  document.cookie = "workbridge_session=true; path=/; max-age=604800";
 }
 
 export function getSessionCookie() {
   if (typeof window === "undefined") return undefined;
-  return document.cookie.includes("session=true");
+  return document.cookie.includes("session=true") || document.cookie.includes("workbridge_session=true");
 }
 
 export function clearSessionCookie() {
   if (typeof window === "undefined") return;
   document.cookie = "session=; path=/; max-age=0";
+  document.cookie = "workbridge_session=; path=/; max-age=0";
 }
 
 // Token management functions
@@ -62,9 +64,20 @@ const apiClient = createApiClient({
       : undefined;
   },
   onUnauthorized: () => {
-    localStorage.removeItem("workbridge_token");
-    clearSessionCookie();
-    window.location.assign("/login");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("workbridge_token");
+      clearSessionCookie();
+      const path = window.location.pathname;
+      if (
+        !path.startsWith("/login") &&
+        !path.startsWith("/register") &&
+        !path.startsWith("/forgot-password") &&
+        !path.startsWith("/reset-password") &&
+        !path.startsWith("/auth")
+      ) {
+        window.location.assign("/login");
+      }
+    }
   },
 });
 

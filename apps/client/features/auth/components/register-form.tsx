@@ -10,7 +10,7 @@ import {
   CardDescription,
   Input,
 } from "@repo/ui";
-import { api, setSessionCookie } from "@/lib/api";
+import { api, setSessionCookie, setAuthToken } from "@/lib/api";
 import { registerSchema, type RegisterFormValues } from "../lib/auth-schemas";
 import type { RegisterRequest } from "@repo/types/auth";
 import { env } from "../../../lib/env";
@@ -103,7 +103,16 @@ export function RegisterForm({
     setTouched({ email: true, password: true, confirmPassword: true });
 
     const parsed = registerSchema.safeParse(form);
-    if (!parsed.success) return;
+    if (!parsed.success) {
+      const flat = parsed.error.flatten().fieldErrors;
+      const firstError =
+        flat.email?.[0] ||
+        flat.password?.[0] ||
+        flat.confirmPassword?.[0] ||
+        "Please fill in all required fields.";
+      setSubmitError(firstError);
+      return;
+    }
 
     setIsSubmitting(true);
 
@@ -119,7 +128,7 @@ export function RegisterForm({
         throw new Error("No access token returned from backend");
       }
 
-      localStorage.setItem("workbridge_token", result.token);
+      setAuthToken(result.token);
       setSessionCookie();
       await refreshUser();
 

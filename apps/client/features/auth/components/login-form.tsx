@@ -13,7 +13,7 @@ import {
 } from "@repo/ui";
 
 import { loginSchema, type LoginFormValues } from "../lib/auth-schemas";
-import { api, setSessionCookie } from "@/lib/api";
+import { api, setSessionCookie, setAuthToken } from "@/lib/api";
 import { useAuth } from "@/contexts/auth-context";
 import { env } from "../../../lib/env";
 
@@ -92,7 +92,12 @@ export function LoginForm() {
     setTouched({ email: true, password: true });
 
     const parsed = loginSchema.safeParse(form);
-    if (!parsed.success) return;
+    if (!parsed.success) {
+      const flat = parsed.error.flatten().fieldErrors;
+      const firstError = flat.email?.[0] || flat.password?.[0] || "Please enter your email and password.";
+      setSubmitError(firstError);
+      return;
+    }
 
     setIsSubmitting(true);
     try {
@@ -101,11 +106,15 @@ export function LoginForm() {
         throw new Error("No access token returned from backend");
       }
 
-      localStorage.setItem("workbridge_token", result.token);
+      setAuthToken(result.token);
       setSessionCookie();
       await refreshUser();
 
-      const redirectTo = searchParams.get("next") ?? "/dashboard";
+      const defaultRedirect =
+        result.user?.role === "employer"
+          ? "/dashboard/employer"
+          : "/dashboard/jobseeker";
+      const redirectTo = searchParams.get("next") ?? defaultRedirect;
       router.replace(redirectTo);
     } catch (error) {
       const message =
