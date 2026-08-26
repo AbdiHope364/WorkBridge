@@ -146,7 +146,7 @@ function StepList({
         <li key={s.step} className="relative flex gap-5 pb-7 last:pb-0">
           {i < steps.length - 1 && (
             <span
-              className={`absolute left-[19px] top-8 h-full w-px border-l border-dashed ${connectorColor}`}
+              className={`absolute left-4.75 top-8 h-full w-px border-l border-dashed ${connectorColor}`}
             />
           )}
           {/* Number bubble */}
@@ -174,7 +174,7 @@ function StepList({
 export function HowItWorksSection() {
   return (
     <section id="how-it-works" className="bg-slate-50 py-16 px-10 gap-4">
-      <div className="mx-auto max-w-[1300px] px-6">
+      <div className="mx-auto max-w-325 px-6">
         {/* Section label + heading */}
         <div className="text-center">
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600">
