@@ -11,5 +11,20 @@ export function createChatService(api: ApiClient) {
         `/chat/conversations/${conversationId}/messages`,
       );
     },
+    sendMessage(payload: { conversationId: string; content: string }) {
+      return api.request<ChatMessage>(
+        `/chat/conversations/${payload.conversationId}/messages`,
+        {
+          method: "POST",
+          body: { body: payload.content },
+        },
+      );
+    },
+    createConversation(payload: { participantId: string }) {
+      return api.request<Conversation>("/chat/conversations", {
+        method: "POST",
+        body: payload,
+      });
+    },
   };
 }

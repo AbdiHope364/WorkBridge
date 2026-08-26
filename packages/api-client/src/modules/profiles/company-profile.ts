@@ -36,10 +36,16 @@ export interface CompanyProfile {
   companySize?: CompanySize;
   foundedYear?: number;
   officialWebsite?: string;
+  phoneNumber?: string;
+  address?: string;
   headquarters?: Headquarters;
   socialLinks: SocialLink[];
   benefits: string[];
   companyCulture: string[];
+  businessLicenseNumber?: string;
+  businessLicenseDocumentUrl?: Avatar;
+  nationalIdOrPassportNumber?: string;
+  nationalIdOrPassportDocumentUrl?: Avatar;
   verificationStatus: VerificationStatus;
   verifiedAt?: string | null;
   totalJobsPosted: number;
@@ -48,6 +54,7 @@ export interface CompanyProfile {
   averageRating: number;
   totalReviews: number;
   isProfileCompleted: boolean;
+  canPostJobs: boolean;
   isPublicProfileVisible: boolean;
   profileCompletionPercentage: number;
   lastActiveAt?: string | null;
@@ -66,9 +73,15 @@ export interface UpdateCompanyProfileRequest {
   companySize?: CompanySize;
   foundedYear?: number;
   officialWebsite?: string;
+  phoneNumber?: string;
+  address?: string;
   headquarters?: Headquarters;
   socialLinks?: SocialLink[];
   benefits?: string[];
   companyCulture?: string[];
+  businessLicenseNumber?: string;
+  businessLicenseDocumentUrl?: Avatar;
+  nationalIdOrPassportNumber?: string;
+  nationalIdOrPassportDocumentUrl?: Avatar;
   isPublicProfileVisible?: boolean;
 }

@@ -28,7 +28,7 @@ export interface ApiClient {
   getAuthToken: () => string | null;
 }
 
-export function createApiClient(options: ApiClientOptions = {}): ApiClient {
+export function createApiClient(): ApiClient {
   let authToken: string | null = null;
 
   const setAuthToken = (token: string | null) => {
@@ -48,12 +48,12 @@ export function createApiClient(options: ApiClientOptions = {}): ApiClient {
   const getAuthToken = () => authToken;
 
   // Wrap all modules to include auth token
-  const wrapWithAuth = <T extends Record<string, any>>(module: T): T => {
-    const wrapped: any = {};
+  const wrapWithAuth = <T extends Record<string, unknown>>(module: T): T => {
+    const wrapped: Record<string, unknown> = {};
     for (const key in module) {
       const fn = module[key];
       if (typeof fn === 'function') {
-        wrapped[key] = async (...args: any[]) => {
+        wrapped[key] = async (...args: unknown[]) => {
           // Check if token exists for authenticated endpoints
           if (!authToken) {
             // For auth endpoints, allow without token
@@ -68,7 +68,7 @@ export function createApiClient(options: ApiClientOptions = {}): ApiClient {
         wrapped[key] = fn;
       }
     }
-    return wrapped;
+    return wrapped as T;
   };
 
   return {

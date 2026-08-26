@@ -1,14 +1,3 @@
-// HTTP Client with proper error handling
-
-interface RequestConfig {
-  url: string;
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-  data?: any;
-  headers?: Record<string, string>;
-  params?: Record<string, string>;
-  timeout?: number;
-}
-
 export interface ApiClientOptions {
   baseUrl: string;
   getAccessToken?: () => string | undefined | Promise<string | undefined>;
@@ -24,6 +13,7 @@ export interface RequestOptions extends Omit<RequestInit, "body"> {
 }
 
 export interface ApiClient {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   request<TResponse = any>(path: string, options?: RequestOptions): Promise<TResponse>;
 }
 
@@ -36,6 +26,7 @@ export function createApiClient({
   const normalizedBaseUrl = baseUrl.replace(/\/$/, "");
 
   return {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async request<TResponse = any>(path: string, options: RequestOptions = {}): Promise<TResponse> {
       const url = new URL(`${normalizedBaseUrl}${path}`);
 

@@ -16,6 +16,11 @@ export interface IndividualEmployerProfile {
   socialLinks: SocialLink[];
   verificationStatus: "UNVERIFIED" | "PENDING" | "VERIFIED" | "REJECTED";
   verifiedAt?: string | null;
+  nationalIdNumber?: string;
+  nationalIdDocumentUrl?: Avatar;
+  businessLicenseNumber?: string;
+  businessLicenseDocumentUrl?: Avatar;
+  address?: string;
   verificationRejectedReason?: string;
   verificationReviewedAt?: string | null;
   emergencyContactNumber?: string;
@@ -55,4 +60,9 @@ export interface UpdateIndividualEmployerProfileRequest {
   location?: Location;
   socialLinks?: SocialLink[];
   emergencyContactNumber?: string;
+  nationalIdNumber?: string;
+  nationalIdDocumentUrl?: Avatar;
+  businessLicenseNumber?: string;
+  businessLicenseDocumentUrl?: Avatar;
+  address?: string;
 }
