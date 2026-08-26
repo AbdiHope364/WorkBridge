@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -42,6 +42,17 @@ export function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { refreshUser } = useAuth();
+
+  useEffect(() => {
+    const error = searchParams.get("error");
+    if (error === "no_account") {
+      setSubmitError(
+        "No account found with this Google email. Please sign up first.",
+      );
+    } else if (error) {
+      setSubmitError("Google authentication failed. Please try again.");
+    }
+  }, [searchParams]);
 
   const fieldErrors = useMemo<Record<keyof LoginFormValues, string>>(() => {
     const parsed = loginSchema.safeParse(form);
@@ -106,9 +117,11 @@ export function LoginForm() {
   };
 
   const handleGoogleLogin = () => {
-    const next = searchParams.get("next");
+    const next = searchParams.get("next") || "/dashboard";
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("google_auth_next", next);
+    }
     const params = new URLSearchParams({ role: "jobseeker" });
-    if (next) params.set("next", next);
     window.location.href = `${env.NEXT_PUBLIC_API_URL}/auth/google?${params.toString()}`;
   };
 

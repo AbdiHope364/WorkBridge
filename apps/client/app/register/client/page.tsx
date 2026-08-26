@@ -10,7 +10,7 @@ export default function RegisterClientPage() {
           style={{ display: "flex", alignItems: "center" }}
           className="grid gap-10 lg:grid-cols-[0.95fr_0.9fr] align-middle justify-center"
         >
-          <section className="hidden rounded-[32px] border border-slate-200 bg-slate-950/5 p-10 text-white shadow-lg lg:block">
+          <section className="hidden rounded-4xl border border-slate-200 bg-slate-950/5 p-10 text-white shadow-lg lg:block">
             <div className="space-y-8">
               <div className="rounded-3xl bg-emerald-700 p-8 shadow-inner shadow-slate-900/5">
                 <p className="text-sm uppercase tracking-[0.24em] text-emerald-500">
@@ -48,7 +48,7 @@ export default function RegisterClientPage() {
             </div>
           </section>
           <section>
-            <Suspense fallback={<div className="flex items-center justify-center min-h-[200px]">Loading...</div>}>
+            <Suspense fallback={<div className="flex items-center justify-center min-h-50">Loading...</div>}>
               <RegisterForm
                 role="employer"
                 title="Create your employer account"

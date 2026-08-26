@@ -17,6 +17,7 @@ import {
 import { loginSchema, type LoginFormValues } from "../lib/auth-schemas";
 import { api, setSessionCookie, clearSessionCookie } from "@/lib/api";
 import { useAuth } from "@/context/auth-context";
+import { env } from "@/lib/env";
 
 export function LoginForm() {
   const router = useRouter();
@@ -153,6 +154,14 @@ export function LoginForm() {
     }
   };
 
+  const handleGoogleLogin = () => {
+    const next = searchParams.get("next") || "/";
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("google_auth_next", next);
+    }
+    window.location.href = `${env.apiBaseUrl}/auth/google`;
+  };
+
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-6">
       <CardHeader>
@@ -234,6 +243,9 @@ export function LoginForm() {
       <div className="grid gap-3">
         <Button type="submit" isLoading={isSubmitting}>
           Sign In
+        </Button>
+        <Button onClick={handleGoogleLogin} variant="outline" type="button">
+          Continue with Google
         </Button>
       </div>
     </form>

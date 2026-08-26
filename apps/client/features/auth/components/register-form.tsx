@@ -10,10 +10,11 @@ import {
   CardDescription,
   Input,
 } from "@repo/ui";
-import { api } from "../../../lib/api";
+import { api, setSessionCookie } from "@/lib/api";
 import { registerSchema, type RegisterFormValues } from "../lib/auth-schemas";
 import type { RegisterRequest } from "@repo/types/auth";
 import { env } from "../../../lib/env";
+import { useAuth } from "@/contexts/auth-context";
 
 interface RegisterFormProps {
   role: "jobseeker" | "employer";
@@ -32,6 +33,7 @@ export function RegisterForm({
 }: RegisterFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { refreshUser } = useAuth();
 
   const [form, setForm] = useState<RegisterFormValues>({
     email: "",
@@ -112,8 +114,19 @@ export function RegisterForm({
     };
 
     try {
-      await api.auth.register(payload);
-      router.push("/login");
+      const result = await api.auth.register(payload);
+      if (!result?.token) {
+        throw new Error("No access token returned from backend");
+      }
+
+      localStorage.setItem("workbridge_token", result.token);
+      setSessionCookie();
+      await refreshUser();
+
+      const defaultRedirect =
+        role === "jobseeker" ? "/dashboard/jobseeker" : "/dashboard/employer";
+      const redirectTo = searchParams.get("next") ?? defaultRedirect;
+      router.replace(redirectTo);
     } catch (error) {
       const message =
         error instanceof Error
@@ -126,9 +139,11 @@ export function RegisterForm({
   };
 
   const handleGoogleSignUp = () => {
-    const next = searchParams.get("next");
+    const next = searchParams.get("next") || "/dashboard";
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("google_auth_next", next);
+    }
     const params = new URLSearchParams({ role });
-    if (next) params.set("next", next);
     window.location.href = `${env.NEXT_PUBLIC_API_URL}/auth/google?${params.toString()}`;
   };
 
@@ -193,11 +208,9 @@ export function RegisterForm({
         <Button type="submit" isLoading={isSubmitting}>
           {buttonLabel}
         </Button>
-        {role === "jobseeker" && (
-          <Button onClick={handleGoogleSignUp} variant="outline" type="button">
-            Continue with Google
-          </Button>
-        )}
+        <Button onClick={handleGoogleSignUp} variant="outline" type="button">
+          Continue with Google
+        </Button>
       </div>
     </form>
   );
