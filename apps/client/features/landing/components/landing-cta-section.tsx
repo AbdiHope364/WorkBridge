@@ -1,6 +1,5 @@
 import { Button } from "@repo/ui/button";
 import { Container } from "@repo/ui/container";
-import { SectionHeader } from "@repo/ui/section-header";
 
 export function LandingCtaSection() {
   return (

@@ -1,8 +1,6 @@
 import { Badge } from "@repo/ui/badge";
-import { Button } from "@repo/ui/button";
 import { Card } from "@repo/ui/card";
 import { Container } from "@repo/ui/container";
-import { SectionHeader } from "@repo/ui/section-header";
 import Link from "next/link";
 
 const categories = [
