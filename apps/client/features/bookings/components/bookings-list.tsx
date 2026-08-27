@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { api } from "@/lib/api";
 import { Button } from "@repo/ui";
@@ -26,7 +26,7 @@ export function BookingsList({ role, onStatusChange }: BookingsListProps) {
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>("ALL");
 
-  const loadBookings = async () => {
+  const loadBookings = useCallback(async () => {
     try {
       setLoading(true);
       const res = await api.bookings.getBookings({
@@ -39,11 +39,11 @@ export function BookingsList({ role, onStatusChange }: BookingsListProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [role, filterStatus]);
 
   useEffect(() => {
     loadBookings();
-  }, [role, filterStatus]);
+  }, [loadBookings]);
 
   const handleUpdateStatus = async (bookingId: string, newStatus: BookingStatus) => {
     try {
