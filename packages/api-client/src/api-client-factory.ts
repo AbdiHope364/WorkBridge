@@ -5,6 +5,7 @@ import * as notificationsModule from "./modules/notifications";
 import * as applicationsModule from "./modules/applications";
 import * as chatModule from "./modules/chat";
 import * as paymentsModule from "./modules/payments";
+import * as bookingsModule from "./modules/bookings";
 import * as profilesModule from "./modules/profiles";
 import * as adminModule from "./modules/admin";
 
@@ -21,6 +22,7 @@ export interface ApiClient {
   applications: typeof applicationsModule;
   chat: typeof chatModule;
   payments: typeof paymentsModule;
+  bookings: typeof bookingsModule;
   profiles: typeof profilesModule;
   admin: typeof adminModule;
   setAuthToken: (token: string | null) => void;
@@ -78,6 +80,7 @@ export function createApiClient(): ApiClient {
     applications: wrapWithAuth(applicationsModule),
     chat: wrapWithAuth(chatModule),
     payments: wrapWithAuth(paymentsModule),
+    bookings: wrapWithAuth(bookingsModule),
     profiles: wrapWithAuth(profilesModule),
     admin: wrapWithAuth(adminModule),
     setAuthToken,

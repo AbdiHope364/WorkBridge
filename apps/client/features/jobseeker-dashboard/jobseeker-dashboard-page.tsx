@@ -10,6 +10,7 @@ import {
   SmallCheckIcon,
 } from "./components/dashboard-icons";
 import { JobseekerSidebar } from "./components/jobseeker-sidebar";
+import { BookingsList } from "../bookings/components/bookings-list";
 import { useAuth } from "@/contexts/auth-context";
 import { useProfile } from "@/contexts/profile-context";
 
@@ -199,6 +200,11 @@ export function JobseekerDashboardPage() {
                   </div>
                 </article>
               ))}
+            </div>
+
+            {/* Direct Service Bookings & Client Requests */}
+            <div className="mt-10">
+              <BookingsList role="worker" />
             </div>
 
             <div className="mt-10 grid gap-8 lg:grid-cols-2">

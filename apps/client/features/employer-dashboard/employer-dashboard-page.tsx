@@ -7,6 +7,7 @@ import {
   SearchJobIcon,
 } from "../jobseeker-dashboard/components/dashboard-icons";
 import { EmployerSidebar } from "./components/employer-sidebar";
+import { BookingsList } from "../bookings/components/bookings-list";
 import { useAuth } from "@/contexts/auth-context";
 import { useProfile } from "@/contexts/profile-context";
 import { api } from "@/lib/api";
@@ -221,6 +222,11 @@ export function EmployerDashboardPage() {
                 icon={Icons.Users}
                 colorClass="bg-emerald-50 text-emerald-600"
               />
+            </div>
+
+            {/* Direct Service Bookings */}
+            <div className="mt-12">
+              <BookingsList role="client" />
             </div>
 
             <div className="mt-12 grid gap-10 lg:grid-cols-3">

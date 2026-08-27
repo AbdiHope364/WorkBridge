@@ -32,7 +32,7 @@ export function HeroSection() {
                 Find Jobs
               </Link>
               <Link
-                href="/dashboard/employer"
+                href="/find-workers"
                 className="inline-flex items-center justify-center min-w-36 rounded-xl bg-slate-950 px-6 py-3 text-sm font-bold text-white transition hover:bg-slate-800"
               >
                 Hire Workers

@@ -10,6 +10,7 @@ import {
   createJobsService,
   createNotificationsService,
   createPaymentsService,
+  createBookingsService,
   ApiError,
   NetworkError,
 } from "./api-client-wrapper";
@@ -88,6 +89,7 @@ const applicationsService = createApplicationsService(apiClient);
 const chatService = createChatService(apiClient);
 const notificationsService = createNotificationsService(apiClient);
 const paymentsService = createPaymentsService(apiClient);
+const bookingsService = createBookingsService(apiClient);
 const employerProfileService = createEmployerProfileService(apiClient);
 const jobseekerProfileService = createJobseekerProfileService(apiClient);
 
@@ -99,6 +101,7 @@ export {
   chatService,
   notificationsService,
   paymentsService,
+  bookingsService,
   employerProfileService,
   jobseekerProfileService,
   apiClient,
@@ -113,6 +116,7 @@ export const api = {
   chat: chatService,
   notifications: notificationsService,
   payments: paymentsService,
+  bookings: bookingsService,
   employer: employerProfileService,
   jobseeker: jobseekerProfileService,
   profiles: {
@@ -130,6 +134,7 @@ export {
   createChatService,
   createNotificationsService,
   createPaymentsService,
+  createBookingsService,
   createEmployerProfileService,
   createJobseekerProfileService,
   ApiError,

@@ -2,211 +2,125 @@ import Link from "next/link";
 
 const categories = [
   {
-    name: "Technology",
-    description: "Software, data, IT support, and engineering roles",
+    name: "Electricians & Power",
+    description: "Residential rewiring, 3-phase panels, solar inverters & emergency repair",
+    badge: "High Demand",
+    badgeStyle: "bg-amber-100 text-amber-800",
+    openRoles: 540,
+    iconBg: "bg-amber-50 text-amber-600",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Plumbing & Sanitary",
+    description: "High-pressure leak repairs, PPR welding, drainage, water tanks & pumps",
+    badge: "Emergency Callouts",
+    badgeStyle: "bg-cyan-100 text-cyan-800",
+    openRoles: 420,
+    iconBg: "bg-cyan-50 text-cyan-600",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 4H9L8 4z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Carpentry & Woodwork",
+    description: "Custom kitchen cabinets, doors, partitions, roof trusses & hardwood furniture",
+    badge: "Popular",
+    badgeStyle: "bg-orange-100 text-orange-800",
+    openRoles: 380,
+    iconBg: "bg-orange-50 text-orange-600",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    ),
+  },
+  {
+    name: "HVAC & AC Systems",
+    description: "Air conditioning, central chillers, cold storage & compressor maintenance",
+    badge: "Trending",
+    badgeStyle: "bg-blue-100 text-blue-800",
+    openRoles: 290,
+    iconBg: "bg-blue-50 text-blue-600",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18m9-9H3m15.364 6.364l-12.728-12.728m12.728 0L6.364 18.364" />
+      </svg>
+    ),
+  },
+  {
+    name: "Masonry & Construction",
+    description: "Structural concrete, bricklaying, foundation work & site labor",
+    badge: "Top Rated",
+    badgeStyle: "bg-stone-100 text-stone-800",
+    openRoles: 610,
+    iconBg: "bg-stone-50 text-stone-600",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+        <rect x="3" y="3" width="18" height="18" rx="2" strokeWidth="2" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 9h18M3 15h18M9 3v6M15 3v6M6 9v6M12 9v6M18 9v6M9 15v6M15 15v6" />
+      </svg>
+    ),
+  },
+  {
+    name: "Painting & Finishing",
+    description: "Interior/exterior painting, waterproofing, plastering & textured stucco",
+    badge: "Entry Friendly",
+    badgeStyle: "bg-emerald-100 text-emerald-800",
+    openRoles: 315,
+    iconBg: "bg-emerald-50 text-emerald-600",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+      </svg>
+    ),
+  },
+  {
+    name: "Technology & Software",
+    description: "Software engineering, cloud infrastructure, web apps & IT support",
     badge: "Trending",
     badgeStyle: "bg-violet-100 text-violet-700",
     openRoles: 480,
     iconBg: "bg-violet-50 text-violet-600",
     icon: (
-      <svg
-        viewBox="0 0 20 20"
-        aria-hidden="true"
-        className="h-5 w-5"
-        fill="none"
-      >
-        <rect
-          x="2"
-          y="4"
-          width="16"
-          height="11"
-          rx="2"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-        <path
-          d="M7 18h6M10 15v3"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-        <path
-          d="M6 9l2 2-2 2M10 13h4"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+      <svg viewBox="0 0 20 20" aria-hidden="true" className="h-5 w-5" fill="none">
+        <rect x="2" y="4" width="16" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M7 18h6M10 15v3M6 9l2 2-2 2M10 13h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
   {
-    name: "Marketing & Sales",
-    description: "Digital marketing, brand strategy, and growth roles",
-    badge: "High Demand",
-    badgeStyle: "bg-sky-100 text-sky-700",
-    openRoles: 310,
-    iconBg: "bg-sky-50 text-sky-600",
-    icon: (
-      <svg
-        viewBox="0 0 20 20"
-        aria-hidden="true"
-        className="h-5 w-5"
-        fill="none"
-      >
-        <path
-          d="M3 14l4-4 3 3 4-5 3 2"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <circle
-          cx="17"
-          cy="10"
-          r="1.5"
-          stroke="currentColor"
-          strokeWidth="1.2"
-        />
-      </svg>
-    ),
-  },
-  {
-    name: "Healthcare",
-    description: "Nursing, clinical support, and wellness positions",
-    badge: "320 open roles",
-    badgeStyle: "bg-rose-100 text-rose-700",
-    openRoles: 320,
-    iconBg: "bg-rose-50 text-rose-600",
-    icon: (
-      <svg
-        viewBox="0 0 20 20"
-        aria-hidden="true"
-        className="h-5 w-5"
-        fill="none"
-      >
-        <path
-          d="M10 4v12M4 10h12"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-        />
-        <rect
-          x="3"
-          y="3"
-          width="14"
-          height="14"
-          rx="3"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-      </svg>
-    ),
-  },
-  {
-    name: "Creative & Design",
-    description: "Graphic design, UX, video, and content creation",
-    badge: "Trending",
-    badgeStyle: "bg-amber-100 text-amber-700",
-    openRoles: 195,
-    iconBg: "bg-amber-50 text-amber-600",
-    icon: (
-      <svg
-        viewBox="0 0 20 20"
-        aria-hidden="true"
-        className="h-5 w-5"
-        fill="none"
-      >
-        <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5" />
-        <circle
-          cx="10"
-          cy="10"
-          r="2.5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-        <path
-          d="M10 3v2M10 15v2M3 10h2M15 10h2"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    name: "Cleaning Services",
-    description: "Homes, offices, and commercial cleaning jobs",
+    name: "Cleaning & Maintenance",
+    description: "Residential deep cleaning, office sanitization, post-construction cleanup",
     badge: "Entry Friendly",
     badgeStyle: "bg-teal-100 text-teal-700",
     openRoles: 260,
     iconBg: "bg-teal-50 text-teal-600",
     icon: (
-      <svg
-        viewBox="0 0 20 20"
-        aria-hidden="true"
-        className="h-5 w-5"
-        fill="none"
-      >
-        <path
-          d="M5 16c2-4 4-7 8-9"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-        <path
-          d="M13 7c0 2-1.5 3.5-3 4"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
+      <svg viewBox="0 0 20 20" aria-hidden="true" className="h-5 w-5" fill="none">
+        <path d="M5 16c2-4 4-7 8-9M13 7c0 2-1.5 3.5-3 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
         <circle cx="14" cy="6" r="2" stroke="currentColor" strokeWidth="1.5" />
       </svg>
     ),
   },
   {
     name: "Delivery & Logistics",
-    description: "Last-mile delivery, courier, and supply chain roles",
+    description: "Last-mile transport, material haulage, courier and cargo distribution",
     badge: "High Demand",
     badgeStyle: "bg-orange-100 text-orange-700",
     openRoles: 410,
     iconBg: "bg-orange-50 text-orange-600",
     icon: (
-      <svg
-        viewBox="0 0 20 20"
-        aria-hidden="true"
-        className="h-5 w-5"
-        fill="none"
-      >
-        <rect
-          x="1"
-          y="6"
-          width="12"
-          height="8"
-          rx="1.5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-        <path
-          d="M13 9h3l2 3v2h-5V9Z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-        <circle
-          cx="5"
-          cy="16"
-          r="1.5"
-          stroke="currentColor"
-          strokeWidth="1.3"
-        />
-        <circle
-          cx="15"
-          cy="16"
-          r="1.5"
-          stroke="currentColor"
-          strokeWidth="1.3"
-        />
+      <svg viewBox="0 0 20 20" aria-hidden="true" className="h-5 w-5" fill="none">
+        <rect x="1" y="6" width="12" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M13 9h3l2 3v2h-5V9Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+        <circle cx="5" cy="16" r="1.5" stroke="currentColor" strokeWidth="1.3" />
+        <circle cx="15" cy="16" r="1.5" stroke="currentColor" strokeWidth="1.3" />
       </svg>
     ),
   },
@@ -220,20 +134,20 @@ export function TopCategoriesSection() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600">
-              Explore by Category
+              Explore by Physical & Technical Trades
             </p>
             <h2 className="mt-1.5 text-[28px] font-black tracking-tight text-slate-950 sm:text-[34px]">
-              Top Categories
+              Top Skilled Trade & Technical Categories
             </h2>
             <p className="mt-1.5 text-[14px] text-slate-500">
-              Browse the most active job categories in Ethiopia right now.
+              Hire verified electricians, plumbers, carpenters, HVAC technicians and skilled labor across Ethiopia.
             </p>
           </div>
           <Link
-            href="/categories"
+            href="/find-workers"
             className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-5 text-[13px] font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
           >
-            All categories
+            Find all trade workers
             <svg
               className="h-4 w-4"
               viewBox="0 0 16 16"
@@ -256,7 +170,7 @@ export function TopCategoriesSection() {
           {categories.map((cat) => (
             <Link
               key={cat.name}
-              href={`/jobs?category=${encodeURIComponent(cat.name)}`}
+              href={`/find-workers?category=${encodeURIComponent(cat.name)}`}
               className="group flex flex-col gap-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:border-emerald-200 hover:shadow-md"
             >
               {/* Icon + badge row */}
@@ -286,10 +200,10 @@ export function TopCategoriesSection() {
               {/* Footer */}
               <div className="mt-auto flex items-center justify-between pt-3 border-t border-slate-100">
                 <span className="text-[12px] font-semibold text-slate-400">
-                  {cat.openRoles} open roles
+                  {cat.openRoles} available specialists
                 </span>
                 <span className="inline-flex items-center gap-1 text-[12px] font-semibold text-emerald-600 opacity-0 transition group-hover:opacity-100">
-                  Browse
+                  Book Service
                   <svg
                     className="h-3.5 w-3.5"
                     viewBox="0 0 16 16"
