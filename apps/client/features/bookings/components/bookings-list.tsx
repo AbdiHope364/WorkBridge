@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { api } from "@/lib/api";
 import { Button } from "@repo/ui";
 import type { Booking, BookingStatus } from "@repo/types/bookings";
@@ -181,15 +182,29 @@ export function BookingsList({ role, onStatusChange }: BookingsListProps) {
                     )}
                   </div>
 
-                  {/* Contact row */}
-                  {(b.clientPhone || b.workerPhone) && (
-                    <div className="mt-3 text-xs text-slate-500 font-medium">
-                      📞 Contact Phone:{" "}
-                      <span className="font-bold text-slate-800">
-                        {isWorker ? b.clientPhone || "Available upon accept" : b.workerPhone || "+251 911 000 000"}
-                      </span>
+                  {/* Contact & Coordination row */}
+                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs">
+                    <div className="flex items-center gap-3">
+                      {(isWorker ? b.clientPhone : b.workerPhone) && (
+                        <a
+                          href={`tel:${isWorker ? b.clientPhone : b.workerPhone}`}
+                          className="inline-flex items-center gap-1.5 font-bold text-emerald-700 hover:text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100 transition"
+                        >
+                          📞 Call {isWorker ? "Client" : "Technician"} ({isWorker ? b.clientPhone : b.workerPhone})
+                        </a>
+                      )}
+                      <Link
+                        href={isWorker ? `/dashboard/messages` : `/dashboard/employer/messages`}
+                        className="inline-flex items-center gap-1.5 font-bold text-slate-700 hover:text-slate-900 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 transition"
+                      >
+                        💬 Send Message
+                      </Link>
                     </div>
-                  )}
+
+                    <span className="text-[11px] font-semibold text-slate-400">
+                      Payment: <strong className="text-slate-700">Chapa Escrow ({b.paymentStatus || "HELD_IN_ESCROW"})</strong>
+                    </span>
+                  </div>
                 </div>
 
                 {/* Action Buttons */}
@@ -251,8 +266,8 @@ export function BookingsList({ role, onStatusChange }: BookingsListProps) {
                   )}
 
                   {b.status === "COMPLETED" && (
-                    <span className="text-xs font-bold text-purple-700">
-                      ✓ Service Completed
+                    <span className="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1 rounded-full border border-purple-200">
+                      ✓ Service Completed & Verified
                     </span>
                   )}
                 </div>

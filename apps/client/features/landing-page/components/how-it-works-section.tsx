@@ -1,242 +1,210 @@
+"use client";
 
-const seekerSteps = [
+import { useState } from "react";
+
+const clientBookingSteps = [
   {
     step: "01",
-    heading: "Create Your Profile",
-    body: "Add your experience, skills, and resume in minutes",
+    heading: "Find a Verified Specialist",
+    body: "Browse certified electricians, plumbers, carpenters, and technical trades by location & rating.",
   },
   {
     step: "02",
-    heading: "Discover Jobs",
-    body: "Browse verified listings by category, location, or skill set",
+    heading: "Book with Service Details",
+    body: "Specify your site address, scheduled time, budget offer, and urgency (Emergency / Same-day).",
   },
   {
     step: "03",
-    heading: "Apply Instantly",
-    body: "View job details and apply with your saved profile",
+    heading: "Worker Accepts & Arrives",
+    body: "The technician receives an instant notification, confirms your request, and arrives on-site.",
   },
   {
     step: "04",
-    heading: "Get Hired",
-    body: "Track applications and chat directly with employers",
+    heading: "Inspect & Release Payment",
+    body: "Review the completed job and release payment securely via Chapa with 100% escrow protection.",
+  },
+];
+
+const workerSteps = [
+  {
+    step: "01",
+    heading: "Create Your Trade Profile",
+    body: "Highlight your trade certifications, tools, experience, hourly rate, and service areas.",
+  },
+  {
+    step: "02",
+    heading: "Receive Direct Booking Alerts",
+    body: "Get instant push notifications and client requests whenever clients in your area need your trade.",
+  },
+  {
+    step: "03",
+    heading: "Accept Jobs & Start Work",
+    body: "Review client details, accept bookings with one tap, and coordinate directly on-site.",
+  },
+  {
+    step: "04",
+    heading: "Guaranteed Prompt Payouts",
+    body: "Receive secure escrow payouts directly to your Telebirr, CBE, or bank account upon completion.",
   },
 ];
 
 const employerSteps = [
   {
     step: "01",
-    heading: "Create a Company Profile",
-    body: "Add your company info and get verified on the platform",
+    heading: "Post Project or Permanent Role",
+    body: "Define the job description, required technical certifications, and compensation package.",
   },
   {
     step: "02",
-    heading: "Post a Job",
-    body: "Define the role, salary range, and requirements",
+    heading: "Review Qualified Applicants",
+    body: "Filter verified talent with background checks, past client reviews, and verified portfolios.",
   },
   {
     step: "03",
-    heading: "Review Applicants",
-    body: "Filter candidates by skills, experience, and fit",
+    heading: "Interview & Hire Fast",
+    body: "Message candidates directly, issue job offers, and onboard your team seamlessly.",
   },
   {
     step: "04",
-    heading: "Hire & Manage",
-    body: "Message, hire, and track your new team members",
+    heading: "Manage Staffing & Contracts",
+    body: "Track timesheets, project milestones, and contract disbursements all in one dashboard.",
   },
 ];
 
-const benefits = [
+const trustPillars = [
   {
-    label: "Smart Job Matching",
-    icon: (
-      <svg
-        viewBox="0 0 20 20"
-        className="h-5 w-5"
-        fill="none"
-        aria-hidden="true"
-      >
-        <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5" />
-        <path
-          d="M7 10l2 2 4-4"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
+    title: "100% Escrow Protection",
+    desc: "Funds are securely held in escrow and only released once you inspect and approve the job.",
+    icon: "🛡️",
   },
   {
-    label: "Real-Time Messaging",
-    icon: (
-      <svg
-        viewBox="0 0 20 20"
-        className="h-5 w-5"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M3 4h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6l-4 3V5a1 1 0 0 1 1-1Z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
+    title: "Verified Trade Licenses",
+    desc: "Technicians and trade specialists undergo credential, identity, and background checks.",
+    icon: "📜",
   },
   {
-    label: "Verified Companies",
-    icon: (
-      <svg
-        viewBox="0 0 20 20"
-        className="h-5 w-5"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M10 2l1.8 5.5H17l-4.6 3.3 1.8 5.5L10 13l-4.2 3.3 1.8-5.5L3 7.5h5.2L10 2Z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
+    title: "Instant Live Notifications",
+    desc: "Workers and clients receive automated alerts for booking requests, acceptances, and status updates.",
+    icon: "⚡",
   },
   {
-    label: "Secure Hiring Process",
-    icon: (
-      <svg
-        viewBox="0 0 20 20"
-        className="h-5 w-5"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M10 2l6 2.5v5c0 3.5-2.5 6-6 7.5C7.5 15.5 4 13 4 9.5v-5L10 2Z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M7.5 10l2 2 3-3"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
+    title: "Fast Emergency Callouts",
+    desc: "Urgent power outages, burst pipes, and critical breakdowns can be booked for immediate dispatch.",
+    icon: "🚨",
   },
 ];
-
-function StepList({
-  steps,
-  dark,
-}: {
-  steps: typeof seekerSteps;
-  dark?: boolean;
-}) {
-  const numberColor = dark ? "text-emerald-400" : "text-emerald-600";
-  const headingColor = dark ? "text-white" : "text-slate-950";
-  const bodyColor = dark ? "text-slate-400" : "text-slate-500";
-  const connectorColor = dark ? "border-slate-700" : "border-slate-200";
-
-  return (
-    <ol className="relative mt-8 space-y-0">
-      {steps.map((s, i) => (
-        <li key={s.step} className="relative flex gap-5 pb-7 last:pb-0">
-          {/* Connector line */}
-          {i < steps.length - 1 && (
-            <span
-              className={`absolute left-[19px] top-8 h-full w-px border-l border-dashed ${connectorColor}`}
-            />
-          )}
-          {/* Number bubble */}
-          <span
-            className={`relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
-              dark ? "bg-slate-800" : "bg-slate-100"
-            } text-[12px] font-black tabular-nums ${numberColor}`}
-          >
-            {s.step}
-          </span>
-          <div className="pt-1.5">
-            <h4 className={`text-[14px] font-bold ${headingColor}`}>
-              {s.heading}
-            </h4>
-            <p className={`mt-0.5 text-[13px] leading-snug ${bodyColor}`}>
-              {s.body}
-            </p>
-          </div>
-        </li>
-      ))}
-    </ol>
-  );
-}
 
 export function HowItWorksSection() {
+  const [activeTab, setActiveTab] = useState<"client" | "worker" | "employer">("client");
+
+  const currentSteps =
+    activeTab === "client"
+      ? clientBookingSteps
+      : activeTab === "worker"
+        ? workerSteps
+        : employerSteps;
+
   return (
-    <section id="how-it-works" className="bg-slate-50 py-16">
+    <section id="how-it-works" className="bg-slate-50 py-20 border-t border-slate-100">
       <div className="mx-auto max-w-[1300px] px-6">
-        {/* Section label + heading */}
-        <div className="text-center">
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600">
-            How it works
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-xs font-black uppercase tracking-[0.25em] text-emerald-600">
+            Simple & Transparent Process
           </p>
-          <h2 className="mt-2 text-[28px] font-black tracking-tight text-slate-950 sm:text-[34px]">
-            Up and running in four steps
+          <h2 className="mt-2 text-3xl sm:text-4xl font-black tracking-tight text-slate-950">
+            How WorkBridge Works
           </h2>
-          <p className="mx-auto mt-2 max-w-lg text-[14px] text-slate-500">
-            Whether you're hiring or job hunting, getting started takes minutes.
+          <p className="mt-3 text-sm sm:text-base text-slate-600">
+            Whether you need emergency home repairs, want to grow your trade business, or hire top company talent.
           </p>
         </div>
 
-        {/* Two-panel steps */}
-        <div className="mt-12 grid gap-4 lg:grid-cols-2">
-          {/* Seeker panel — light */}
-          <div className="rounded-2xl border border-slate-100 bg-white p-8 shadow-sm">
-            <span className="inline-block rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-emerald-700">
-              For Job Seekers
-            </span>
-            <p className="mt-2 text-[20px] font-black text-slate-950">
-              Find work that fits your life
-            </p>
-            <StepList steps={seekerSteps} />
-          </div>
-
-          {/* Employer panel — dark */}
-          <div className="rounded-2xl bg-slate-950 p-8">
-            <span className="inline-block rounded-full bg-slate-800 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-slate-400">
-              For Employers
-            </span>
-            <p className="mt-2 text-[20px] font-black text-white">
-              Hire the right person, faster
-            </p>
-            <StepList steps={employerSteps} dark />
+        {/* Audience Selector Tabs */}
+        <div className="mt-10 flex justify-center">
+          <div className="inline-flex rounded-2xl bg-white p-1.5 border border-slate-200 shadow-sm">
+            <button
+              onClick={() => setActiveTab("client")}
+              className={`rounded-xl px-5 py-2.5 text-xs sm:text-sm font-bold transition ${
+                activeTab === "client"
+                  ? "bg-emerald-600 text-white shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              🛠️ Book a Trade Service (Client)
+            </button>
+            <button
+              onClick={() => setActiveTab("worker")}
+              className={`rounded-xl px-5 py-2.5 text-xs sm:text-sm font-bold transition ${
+                activeTab === "worker"
+                  ? "bg-emerald-600 text-white shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              👷 Join as Worker / Specialist
+            </button>
+            <button
+              onClick={() => setActiveTab("employer")}
+              className={`rounded-xl px-5 py-2.5 text-xs sm:text-sm font-bold transition ${
+                activeTab === "employer"
+                  ? "bg-emerald-600 text-white shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              🏢 Corporate Hiring (Employer)
+            </button>
           </div>
         </div>
 
-        {/* Why choose us — full-width banner */}
-        <div className="mt-6 flex flex-col gap-8 rounded-2xl bg-[#1b2855] px-8 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-14">
-          <div className="shrink-0">
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-400">
-              Why Workbridge
+        {/* Steps Grid */}
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {currentSteps.map((s) => (
+            <div
+              key={s.step}
+              className="relative flex flex-col justify-between rounded-3xl border border-slate-100 bg-white p-6 shadow-sm hover:border-emerald-200 hover:shadow-md transition group"
+            >
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-sm font-black text-emerald-700 group-hover:bg-emerald-600 group-hover:text-white transition">
+                    {s.step}
+                  </span>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                    Step {s.step}
+                  </span>
+                </div>
+                <h3 className="mt-4 text-base font-black text-slate-950 group-hover:text-emerald-700 transition">
+                  {s.heading}
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-600">
+                  {s.body}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Trust & Guarantee Banner */}
+        <div className="mt-16 rounded-3xl bg-slate-950 p-8 sm:p-12 text-white shadow-xl">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 pb-8 border-b border-slate-800">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.25em] text-emerald-400">
+                WorkBridge Guarantee
+              </p>
+              <h3 className="mt-2 text-2xl sm:text-3xl font-black text-white">
+                Built for Safety, Reliability & Trust
+              </h3>
+            </div>
+            <p className="max-w-md text-xs sm:text-sm text-slate-400">
+              Every direct booking and contract on WorkBridge is backed by verified credentials and payment dispute resolution.
             </p>
-            <h3 className="mt-1.5 text-[22px] font-black leading-snug text-white sm:text-[26px]">
-              Built for trust,
-              <br />
-              designed for speed.
-            </h3>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:gap-6">
-            {benefits.map((b) => (
-              <div key={b.label} className="flex items-start gap-3">
-                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/10 text-emerald-400">
-                  {b.icon}
-                </span>
-                <span className="pt-1.5 text-[13px] font-semibold leading-snug text-white">
-                  {b.label}
-                </span>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {trustPillars.map((p) => (
+              <div key={p.title} className="flex flex-col rounded-2xl bg-slate-900/80 p-5 border border-slate-800">
+                <span className="text-2xl mb-3">{p.icon}</span>
+                <h4 className="text-sm font-bold text-white">{p.title}</h4>
+                <p className="mt-1.5 text-xs text-slate-400 leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
