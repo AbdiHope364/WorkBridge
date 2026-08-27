@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { api } from "@/lib/api";
 import { Button, Input } from "@repo/ui";
 import type { TradeCategory } from "@repo/types/bookings";
@@ -126,10 +127,12 @@ export function BookWorkerModal({
           <div className="flex items-center gap-3">
             <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-emerald-50">
               {worker.avatar ? (
-                <img
+                <Image
                   src={worker.avatar}
                   alt={worker.name}
-                  className="h-full w-full object-cover"
+                  fill
+                  unoptimized
+                  className="object-cover"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center font-bold text-emerald-700">
@@ -334,3 +337,4 @@ export function BookWorkerModal({
     </div>
   );
 }
+

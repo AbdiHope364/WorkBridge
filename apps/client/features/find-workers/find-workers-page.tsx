@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import { LandingHeader } from "../landing-page/components/landing-header";
 import { BookWorkerModal } from "../bookings/components/book-worker-modal";
@@ -390,7 +391,13 @@ export function FindWorkersPage() {
                       <div className="flex items-center gap-3">
                         <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
                           {worker.avatar ? (
-                            <img src={worker.avatar} alt={worker.name} className="h-full w-full object-cover" />
+                            <Image
+                              src={worker.avatar}
+                              alt={worker.name}
+                              fill
+                              unoptimized
+                              className="object-cover"
+                            />
                           ) : (
                             <div className="flex h-full w-full items-center justify-center font-bold text-slate-700 text-lg">
                               {worker.name.charAt(0)}

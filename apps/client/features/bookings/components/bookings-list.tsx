@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { api } from "@/lib/api";
 import { Button } from "@repo/ui";
 import type { Booking, BookingStatus } from "@repo/types/bookings";
@@ -122,17 +123,17 @@ export function BookingsList({ role, onStatusChange }: BookingsListProps) {
                   {/* Top info row */}
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="h-11 w-11 shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+                      <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
                         {isWorker ? (
                           b.clientAvatar ? (
-                            <img src={b.clientAvatar} alt={b.clientName} className="h-full w-full object-cover" />
+                            <Image src={b.clientAvatar} alt={b.clientName} fill unoptimized className="object-cover" />
                           ) : (
                             <div className="flex h-full w-full items-center justify-center font-bold text-slate-700">
                               {b.clientName.charAt(0)}
                             </div>
                           )
                         ) : b.workerAvatar ? (
-                          <img src={b.workerAvatar} alt={b.workerName} className="h-full w-full object-cover" />
+                          <Image src={b.workerAvatar} alt={b.workerName} fill unoptimized className="object-cover" />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center font-bold text-emerald-700">
                             {b.workerName.charAt(0)}
@@ -263,3 +264,4 @@ export function BookingsList({ role, onStatusChange }: BookingsListProps) {
     </div>
   );
 }
+

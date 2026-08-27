@@ -65,3 +65,4 @@ export interface UpdateBookingStatusDto {
   status: BookingStatus;
   notes?: string;
 }
+
