@@ -234,6 +234,32 @@ function VerifiedIcon() {
   );
 }
 
+interface DatabaseUser {
+  id?: string;
+  name?: string;
+  fullName?: string;
+  avatar?: string;
+  verified?: boolean;
+  isEmailVerified?: boolean;
+  ratings?: Array<{ id: string; score: number }>;
+  profile?: {
+    headline?: string;
+    trade?: string;
+    category?: string;
+    location?: string;
+    hourlyRate?: number;
+    currency?: string;
+    isEmergencyAvailable?: boolean;
+  };
+}
+
+interface UsersApiResponse {
+  users?: DatabaseUser[];
+  data?: {
+    users?: DatabaseUser[];
+  };
+}
+
 export function FindWorkersPage() {
   const [dbWorkers, setDbWorkers] = useState<Professional[]>([]);
   const [loadingWorkers, setLoadingWorkers] = useState(true);
@@ -246,10 +272,10 @@ export function FindWorkersPage() {
     const fetchLiveWorkers = async () => {
       try {
         setLoadingWorkers(true);
-        const res = (await api.client.request("/users?role=worker")) as any;
+        const res = await api.client.request<UsersApiResponse>("/users?role=worker");
         const rawList = res?.users || res?.data?.users || [];
         if (Array.isArray(rawList) && rawList.length > 0) {
-          const mapped: Professional[] = rawList.map((u: any, idx: number) => {
+          const mapped: Professional[] = rawList.map((u: DatabaseUser, idx: number) => {
             const headline = u.profile?.headline || u.profile?.trade || "Skilled Specialist";
             const trade = u.profile?.trade || (headline.includes("Electrician") ? "Electrician" : headline.includes("Plumber") ? "Plumber" : "Specialist");
             const category = u.profile?.trade ? `${u.profile.trade}s` : "Electricians";

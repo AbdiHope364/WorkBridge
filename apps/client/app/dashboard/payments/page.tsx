@@ -31,6 +31,21 @@ interface EscrowBooking {
   locationNeighborhood?: string;
 }
 
+interface PaymentHistoryResponse {
+  payments?: PaymentItem[];
+  data?: {
+    payments?: PaymentItem[];
+  };
+}
+
+interface BookingsResponse {
+  bookings?: EscrowBooking[];
+}
+
+interface UserWithPhone {
+  phone?: string;
+}
+
 const paymentMethods = [
   {
     id: "Telebirr",
@@ -126,7 +141,7 @@ export default function PaymentsPage() {
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
   const [depositAmount, setDepositAmount] = useState("1500");
   const [selectedMethod, setSelectedMethod] = useState("Telebirr");
-  const [phoneNumber, setPhoneNumber] = useState((user as any)?.phone || "+251 911 000 000");
+  const [phoneNumber, setPhoneNumber] = useState((user as UserWithPhone | null)?.phone || "+251 911 000 000");
   const [isProcessingDeposit, setIsProcessingDeposit] = useState(false);
   const [depositSuccess, setDepositSuccess] = useState(false);
 
@@ -140,7 +155,7 @@ export default function PaymentsPage() {
     setLoading(true);
     try {
       // 1. Load payment history
-      const payRes = (await api.client.request<{ payments: PaymentItem[] }>("/payments/history")) as any;
+      const payRes = await api.client.request<PaymentHistoryResponse>("/payments/history");
       const historyList = payRes?.payments || payRes?.data?.payments || [];
       setPayments(
         historyList.length > 0
@@ -182,7 +197,7 @@ export default function PaymentsPage() {
       );
 
       // 2. Load bookings for escrow tab
-      const bookRes = (await api.bookings.getBookings()) as any;
+      const bookRes = (await api.bookings.getBookings()) as BookingsResponse;
       setBookings(bookRes?.bookings || []);
     } catch (err) {
       console.error("Failed to load payment data:", err);
