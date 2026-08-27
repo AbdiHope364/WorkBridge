@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { Modal } from "@repo/ui";
 
 interface EditProfileImageModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentImage?: string;
-  onSave?: (file: File) => void;
+  onSave?: (file: File) => void | Promise<void>;
 }
 
 export function EditProfileImageModal({
@@ -18,6 +19,7 @@ export function EditProfileImageModal({
 }: EditProfileImageModalProps) {
   const [preview, setPreview] = useState<string | null>(currentImage || null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,16 +34,28 @@ export function EditProfileImageModal({
     }
   };
 
-  const handleSave = () => {
-    if (selectedFile) {
-      onSave?.(selectedFile);
+  const handleSave = async () => {
+    if (!selectedFile) return;
+
+    setIsUploading(true);
+    try {
+      if (onSave) {
+        await onSave(selectedFile);
+      }
+      onClose();
+    } catch (error) {
+      console.error("Failed to save image:", error);
+    } finally {
+      setIsUploading(false);
     }
-    onClose();
   };
 
   const handleRemove = () => {
     setPreview(null);
     setSelectedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (
@@ -58,12 +72,14 @@ export function EditProfileImageModal({
 
         {/* Preview Circle */}
         <div className="flex justify-center">
-          <div className="relative w-48 h-48 rounded-full border-2 border-slate-300 bg-slate-50 flex items-center justify-center">
+          <div className="relative w-48 h-48 rounded-full border-2 border-slate-300 bg-slate-50 flex items-center justify-center overflow-hidden">
             {preview ? (
-              <img
+              <Image
                 src={preview}
                 alt="Profile preview"
-                className="w-full h-full rounded-full object-cover"
+                fill
+                unoptimized
+                className="rounded-full object-cover"
               />
             ) : (
               <svg
@@ -146,10 +162,10 @@ export function EditProfileImageModal({
           )}
           <button
             onClick={handleSave}
-            disabled={!selectedFile}
+            disabled={!selectedFile || isUploading}
             className="px-6 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 rounded-md transition"
           >
-            Save
+            {isUploading ? "Saving..." : "Save"}
           </button>
         </div>
       </div>
