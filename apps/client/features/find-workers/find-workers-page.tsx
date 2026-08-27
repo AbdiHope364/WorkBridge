@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { api } from "@/lib/api";
 import { LandingHeader } from "../landing-page/components/landing-header";
 import { BookWorkerModal } from "../bookings/components/book-worker-modal";
 
@@ -234,15 +235,62 @@ function VerifiedIcon() {
 }
 
 export function FindWorkersPage() {
+  const [dbWorkers, setDbWorkers] = useState<Professional[]>([]);
+  const [loadingWorkers, setLoadingWorkers] = useState(true);
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("All Workers");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [selectedWorkerForBooking, setSelectedWorkerForBooking] = useState<Professional | null>(null);
 
+  useEffect(() => {
+    const fetchLiveWorkers = async () => {
+      try {
+        setLoadingWorkers(true);
+        const res = (await api.client.request("/users?role=worker")) as any;
+        const rawList = res?.users || res?.data?.users || [];
+        if (Array.isArray(rawList) && rawList.length > 0) {
+          const mapped: Professional[] = rawList.map((u: any, idx: number) => {
+            const headline = u.profile?.headline || u.profile?.trade || "Skilled Specialist";
+            const trade = u.profile?.trade || (headline.includes("Electrician") ? "Electrician" : headline.includes("Plumber") ? "Plumber" : "Specialist");
+            const category = u.profile?.trade ? `${u.profile.trade}s` : "Electricians";
+            return {
+              id: u.id || `w_${idx}`,
+              name: u.fullName || u.name || "Specialist Worker",
+              role: headline,
+              trade,
+              category,
+              location: u.profile?.location || "Addis Ababa",
+              rating: 4.9,
+              reviews: u.ratings?.length || 18,
+              hourlyRate: u.profile?.hourlyRate || 350,
+              currency: u.profile?.currency || "ETB",
+              nearby: true,
+              verified: Boolean(u.verified ?? u.isEmailVerified ?? true),
+              isEmergencyAvailable: Boolean(u.profile?.isEmergencyAvailable ?? true),
+              avatar: u.avatar || undefined,
+            };
+          });
+          setDbWorkers(mapped);
+        } else {
+          setDbWorkers(professionals);
+        }
+      } catch (err) {
+        console.error("Failed to load workers from database:", err);
+        setDbWorkers(professionals);
+      } finally {
+        setLoadingWorkers(false);
+      }
+    };
+
+    fetchLiveWorkers();
+  }, []);
+
+  const activeWorkerList = dbWorkers.length > 0 ? dbWorkers : professionals;
+
   const filteredProfessionals = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    return professionals.filter((professional) => {
+    return activeWorkerList.filter((professional) => {
       const matchesQuery =
         normalizedQuery.length === 0 ||
         professional.name.toLowerCase().includes(normalizedQuery) ||
@@ -263,7 +311,7 @@ export function FindWorkersPage() {
 
       return matchesQuery && matchesFilter && matchesCategory;
     });
-  }, [activeCategory, activeFilter, query]);
+  }, [activeCategory, activeFilter, activeWorkerList, query]);
 
   return (
     <main className="min-h-screen bg-[#f7f8fd] text-[#111827]">
@@ -379,9 +427,14 @@ export function FindWorkersPage() {
             </h2>
           </div>
 
-          <div className="mt-4 grid gap-4 sm:grid-cols-1 md:grid-cols-2">
-            {filteredProfessionals.length > 0 ? (
-              filteredProfessionals.map((worker) => (
+          {loadingWorkers ? (
+            <div className="flex items-center justify-center py-16">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#00a99d] border-t-transparent" />
+            </div>
+          ) : (
+            <div className="mt-4 grid gap-4 sm:grid-cols-1 md:grid-cols-2">
+              {filteredProfessionals.length > 0 ? (
+                filteredProfessionals.map((worker) => (
                 <article
                   key={worker.id}
                   className="flex flex-col justify-between rounded-3xl border border-[#dfe7ea] bg-white p-5 shadow-sm hover:border-[#00a99d] hover:shadow-md transition"
@@ -462,6 +515,7 @@ export function FindWorkersPage() {
               </div>
             )}
           </div>
+          )}
         </div>
       </section>
 
