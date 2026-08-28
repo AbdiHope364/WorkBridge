@@ -6,11 +6,10 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
 import { useProfile } from "@/contexts/profile-context";
 import { JobseekerDashboardPage } from "@/features/jobseeker-dashboard/jobseeker-dashboard-page";
-import OnboardingPage from "../../onboarding/page";
 
 export default function JobseekerDashboardRoute() {
   const { isAuthenticated, isLoading } = useAuth();
-  const { jobseekerProfile, isLoading: profileLoading } = useProfile();
+  const { isLoading: profileLoading } = useProfile();
   const router = useRouter();
 
   useEffect(() => {
@@ -29,10 +28,6 @@ export default function JobseekerDashboardRoute() {
 
   if (!isAuthenticated) {
     return null;
-  }
-
-  if (!jobseekerProfile) {
-    return <OnboardingPage />;
   }
 
   return <JobseekerDashboardPage />;

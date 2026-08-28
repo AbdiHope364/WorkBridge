@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import {
   Button,
   CardContent,
@@ -30,7 +30,6 @@ export function RegisterForm({
   subtitle,
   buttonLabel,
 }: RegisterFormProps) {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const { refreshUser } = useAuth();
 
@@ -134,7 +133,7 @@ export function RegisterForm({
       const defaultRedirect =
         role === "jobseeker" ? "/dashboard/jobseeker" : "/dashboard/employer";
       const redirectTo = searchParams.get("next") ?? defaultRedirect;
-      router.replace(redirectTo);
+      window.location.href = redirectTo;
     } catch (error) {
       const message =
         error instanceof Error
