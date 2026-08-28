@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-// @ts-ignore: side-effect CSS import handled by Next.js
 import "./globals.css";
 import { AuthProvider } from "@/context/auth-context";
 

@@ -151,8 +151,7 @@ export function RegisterForm({
     if (typeof window !== "undefined") {
       sessionStorage.setItem("google_auth_next", next);
     }
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
-    window.location.href = `${apiUrl}/auth/google?role=${encodeURIComponent(role)}`;
+    window.location.href = `/api/auth/google?role=${encodeURIComponent(role)}`;
   };
 
   return (

@@ -1,5 +1,4 @@
 "use client";
-// @ts-ignore: side-effect CSS import handled by Next.js
 import "../globals.css";
 import { Sidebar } from "@/components/sidebar";
 import { LoaderCircle } from "lucide-react";
