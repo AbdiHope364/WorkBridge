@@ -82,7 +82,7 @@ export function StartJourneySection() {
             One platform. Two journeys.
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-[15px] leading-relaxed text-slate-500">
-            Whether you're searching for your next role or scaling a team,
+            Whether you&apos;re searching for your next role or scaling a team,
             Workbridge is built for both sides of the table.
           </p>
         </div>

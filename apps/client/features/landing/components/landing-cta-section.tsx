@@ -11,7 +11,7 @@ export function LandingCtaSection() {
           </h3>
 
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-gray-500">
-            Whether you're looking for a job or searching for talent, you can
+            Whether you&apos;re looking for a job or searching for talent, you can
             get started in just a few steps. Create your profile, explore
             opportunities, and connect with the right people faster.
           </p>

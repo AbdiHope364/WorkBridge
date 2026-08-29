@@ -231,7 +231,7 @@ export default function ReportDetailPage() {
             Report not found
           </h2>
           <p className="text-sm text-slate-500 mt-1">
-            The report you're looking for doesn't exist.
+            The report you&apos;re looking for doesn&apos;t exist.
           </p>
           <button
             onClick={() => router.back()}

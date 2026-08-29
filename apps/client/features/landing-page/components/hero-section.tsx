@@ -42,7 +42,7 @@ export function HeroSection() {
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50/80 px-3.5 py-1 text-xs font-bold text-emerald-800 shadow-sm mb-4">
               <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              Ethiopia's Leading Skilled Trade & Talent Network
+              Ethiopia&apos;s Leading Skilled Trade &amp; Talent Network
             </div>
 
             <h1 className="max-w-160 text-[36px] font-black leading-[1.14] tracking-[-0.03em] text-slate-950 sm:text-[44px] lg:text-[48px]">

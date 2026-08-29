@@ -184,7 +184,7 @@ export function HowItWorksSection() {
             Up and running in four steps
           </h2>
           <p className="mx-auto mt-2 max-w-lg text-[14px] text-slate-500">
-            Whether you're hiring or job hunting, getting started takes minutes.
+            Whether you&apos;re hiring or job hunting, getting started takes minutes.
           </p>
         </div>
 
