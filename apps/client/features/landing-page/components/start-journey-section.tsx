@@ -1,4 +1,4 @@
-import { Button } from "@repo/ui/button";
+import Link from "next/link";
 
 const seekerSteps = [
   {
@@ -103,9 +103,12 @@ export function StartJourneySection() {
                 application — all in one place.
               </p>
               <StepList steps={seekerSteps} accent="white" />
-              <Button className="mt-10 h-11 w-full rounded-xl bg-emerald-500 text-[14px] font-bold text-white hover:bg-emerald-400 sm:w-auto sm:px-8">
+              <Link
+                href="/jobs"
+                className="mt-10 inline-flex h-11 w-full items-center justify-center rounded-xl bg-emerald-500 text-[14px] font-bold text-white hover:bg-emerald-400 sm:w-auto sm:px-8"
+              >
                 Browse Jobs
-              </Button>
+              </Link>
             </div>
           </div>
 
@@ -123,9 +126,12 @@ export function StartJourneySection() {
                 candidates who are ready to move.
               </p>
               <StepList steps={employerSteps} accent="emerald" />
-              <Button className="mt-10 h-11 w-full rounded-xl bg-slate-950 text-[14px] font-bold text-white hover:bg-slate-800 sm:w-auto sm:px-8">
+              <Link
+                href="/dashboard/employer"
+                className="mt-10 inline-flex h-11 w-full items-center justify-center rounded-xl bg-slate-950 text-[14px] font-bold text-white hover:bg-slate-800 sm:w-auto sm:px-8"
+              >
                 Post a Job
-              </Button>
+              </Link>
             </div>
           </div>
         </div>

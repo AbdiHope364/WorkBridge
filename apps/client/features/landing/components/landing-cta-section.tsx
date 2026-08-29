@@ -1,4 +1,4 @@
-import { Button } from "@repo/ui/button";
+import Link from "next/link";
 import { Container } from "@repo/ui/container";
 
 export function LandingCtaSection() {
@@ -17,16 +17,19 @@ export function LandingCtaSection() {
           </p>
 
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-            <Button size="lg">Find Jobs</Button>
+            <Link
+              href="/jobs"
+              className="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-8 py-3.5 text-base font-bold text-white transition hover:bg-emerald-700 shadow-md"
+            >
+              Find Jobs
+            </Link>
 
-            <Button
-              size="lg"
-              variant="outline"
-              className="text-white bg-[#1b2855]"
-              style={{ background: "#1b2855" }}
+            <Link
+              href="/find-workers"
+              className="inline-flex items-center justify-center rounded-xl bg-[#1b2855] px-8 py-3.5 text-base font-bold text-white transition hover:bg-[#141e40] shadow-md"
             >
               Hire Talent
-            </Button>
+            </Link>
           </div>
         </div>
       </Container>

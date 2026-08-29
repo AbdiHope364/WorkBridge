@@ -1,5 +1,5 @@
 import { ArrowRight, Briefcase, Building2, CheckCircle2 } from "lucide-react";
-import { Button } from "@repo/ui/button";
+import Link from "next/link";
 import { Card } from "@repo/ui/card";
 import { Container } from "@repo/ui/container";
 import { SectionHeader } from "@repo/ui/section-header";
@@ -80,10 +80,13 @@ function JourneyCard({
           ))}
         </ol>
 
-        <Button className="mt-8 gap-2">
+        <Link
+          href={cta === "Explore Jobs" ? "/jobs" : "/dashboard/employer"}
+          className="mt-8 inline-flex items-center justify-center rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white transition hover:bg-emerald-700 gap-2 shadow-sm"
+        >
           {cta}
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </Button>
+        </Link>
       </div>
     </Card>
   );

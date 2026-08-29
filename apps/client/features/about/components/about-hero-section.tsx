@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Button } from "@repo/ui/button";
+import Link from "next/link";
 import { Container } from "@repo/ui/container";
 
 const stats = [
@@ -82,9 +82,12 @@ export function AboutHeroSection() {
                 </div>
               ))}
             </div>
-            <Button size="sm" variant="secondary" className="mt-7 bg-[#02081d]">
+            <Link
+              href="/jobs"
+              className="mt-7 inline-flex items-center justify-center rounded-lg bg-[#02081d] px-5 py-2 text-sm font-bold text-white transition hover:bg-slate-800"
+            >
               Find Jobs Now
-            </Button>
+            </Link>
           </div>
         </div>
       </Container>
