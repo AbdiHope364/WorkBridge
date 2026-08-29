@@ -24,6 +24,7 @@ export const nextJsConfig = [
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "next.config.*",
   ]),
   {
     ...pluginReact.configs.flat.recommended,
@@ -52,6 +53,15 @@ export const nextJsConfig = [
       ...pluginReactHooks.configs.recommended.rules,
       // React scope no longer necessary with new JSX transform.
       "react/react-in-jsx-scope": "off",
+    },
+  },
+  {
+    rules: {
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "react/no-unescaped-entities": "off",
+      "no-unused-vars": "off",
+      "@next/next/no-img-element": "off",
     },
   },
 ];

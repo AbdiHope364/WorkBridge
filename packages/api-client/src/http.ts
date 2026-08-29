@@ -13,7 +13,6 @@ export interface RequestOptions extends Omit<RequestInit, "body"> {
 }
 
 export interface ApiClient {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   request<TResponse = any>(path: string, options?: RequestOptions): Promise<TResponse>;
 }
 
@@ -26,7 +25,6 @@ export function createApiClient({
   const normalizedBaseUrl = baseUrl.replace(/\/$/, "");
 
   return {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async request<TResponse = any>(path: string, options: RequestOptions = {}): Promise<TResponse> {
       const url = new URL(`${normalizedBaseUrl}${path}`);
 

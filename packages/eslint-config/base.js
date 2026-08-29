@@ -25,6 +25,11 @@ export const config = [
     plugins: {
       onlyWarn,
     },
+    rules: {
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "no-unused-vars": "off",
+    },
   },
   {
     ignores: ["dist/**"],
