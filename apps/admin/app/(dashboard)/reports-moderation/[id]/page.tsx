@@ -1,4 +1,4 @@
-// app/reports-moderation/[id]/page.tsx
+// app/reports-moderation/[id]/page.tsx - Moderation detail view
 "use client";
 
 import React, { useState, useEffect } from "react";
