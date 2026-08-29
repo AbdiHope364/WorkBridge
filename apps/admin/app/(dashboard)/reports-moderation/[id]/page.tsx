@@ -1,4 +1,3 @@
-/* eslint-disable */
 // app/reports-moderation/[id]/page.tsx
 "use client";
 
