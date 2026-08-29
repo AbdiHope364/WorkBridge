@@ -11,7 +11,6 @@ import {
   Building2,
   Globe,
   Briefcase,
-  Calendar,
   CheckCircle2,
   Clock,
   ExternalLink,
