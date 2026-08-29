@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect, useCallback, useMemo } from "react";
@@ -41,6 +40,10 @@ interface PaymentHistoryResponse {
 
 interface BookingsResponse {
   bookings?: EscrowBooking[];
+}
+
+interface UserWithPhone {
+  phone?: string;
 }
 
 const paymentMethods = [
@@ -138,7 +141,7 @@ export default function PaymentsPage() {
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
   const [depositAmount, setDepositAmount] = useState("1500");
   const [selectedMethod, setSelectedMethod] = useState("Telebirr");
-  const [phoneNumber, setPhoneNumber] = useState("+251 911 000 000");
+  const [phoneNumber, setPhoneNumber] = useState((user as UserWithPhone | null)?.phone || "+251 911 000 000");
   const [isProcessingDeposit, setIsProcessingDeposit] = useState(false);
   const [depositSuccess, setDepositSuccess] = useState(false);
 
@@ -152,8 +155,7 @@ export default function PaymentsPage() {
     setLoading(true);
     try {
       // 1. Load payment history
-      const query = user?.id ? `?userId=${encodeURIComponent(user.id)}` : "";
-      const payRes = (await api.client.request<PaymentHistoryResponse>(`/payments/history${query}`)) as PaymentHistoryResponse;
+      const payRes = (await api.client.request<PaymentHistoryResponse>("/payments/history")) as PaymentHistoryResponse;
       const historyList = payRes?.payments || payRes?.data?.payments || [];
       setPayments(
         historyList.length > 0
@@ -782,7 +784,7 @@ export default function PaymentsPage() {
                 </div>
                 <div className="flex justify-between py-2 border-b border-slate-100">
                   <span className="text-slate-500">Service Description</span>
-                  <span className="font-bold text-slate-900 text-right max-w-[200px]">{selectedReceipt.description}</span>
+                  <span className="font-bold text-slate-900 text-right max-w-50">{selectedReceipt.description}</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-slate-100">
                   <span className="text-slate-500">Payment Method</span>
