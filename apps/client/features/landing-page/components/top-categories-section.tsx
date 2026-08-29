@@ -129,7 +129,7 @@ const categories = [
 export function TopCategoriesSection() {
   return (
     <section className="bg-white py-16">
-      <div className="mx-auto max-w-[1300px] px-6">
+      <div className="mx-auto max-w-325 px-6">
         {/* Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>

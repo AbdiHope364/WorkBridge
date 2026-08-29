@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { useMemo, useState, useEffect } from "react";
-import { api } from "@/lib/api";
+import { useMemo, useState } from "react";
 import { LandingHeader } from "../landing-page/components/landing-header";
 import { BookWorkerModal } from "../bookings/components/book-worker-modal";
 
@@ -234,89 +232,16 @@ function VerifiedIcon() {
   );
 }
 
-interface DatabaseUser {
-  id?: string;
-  name?: string;
-  fullName?: string;
-  avatar?: string;
-  verified?: boolean;
-  isEmailVerified?: boolean;
-  ratings?: Array<{ id: string; score: number }>;
-  profile?: {
-    headline?: string;
-    trade?: string;
-    category?: string;
-    location?: string;
-    hourlyRate?: number;
-    currency?: string;
-    isEmergencyAvailable?: boolean;
-  };
-}
-
-interface UsersApiResponse {
-  users?: DatabaseUser[];
-  data?: {
-    users?: DatabaseUser[];
-  };
-}
-
 export function FindWorkersPage() {
-  const [dbWorkers, setDbWorkers] = useState<Professional[]>([]);
-  const [loadingWorkers, setLoadingWorkers] = useState(true);
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("All Workers");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [selectedWorkerForBooking, setSelectedWorkerForBooking] = useState<Professional | null>(null);
 
-  useEffect(() => {
-    const fetchLiveWorkers = async () => {
-      try {
-        setLoadingWorkers(true);
-        const res = await api.client.request<UsersApiResponse>("/users?role=worker");
-        const rawList = res?.users || res?.data?.users || [];
-        if (Array.isArray(rawList) && rawList.length > 0) {
-          const mapped: Professional[] = rawList.map((u: DatabaseUser, idx: number) => {
-            const headline = u.profile?.headline || u.profile?.trade || "Skilled Specialist";
-            const trade = u.profile?.trade || (headline.includes("Electrician") ? "Electrician" : headline.includes("Plumber") ? "Plumber" : "Specialist");
-            const category = u.profile?.trade ? `${u.profile.trade}s` : "Electricians";
-            return {
-              id: u.id || `w_${idx}`,
-              name: u.fullName || u.name || "Specialist Worker",
-              role: headline,
-              trade,
-              category,
-              location: u.profile?.location || "Addis Ababa",
-              rating: 4.9,
-              reviews: u.ratings?.length || 18,
-              hourlyRate: u.profile?.hourlyRate || 350,
-              currency: u.profile?.currency || "ETB",
-              nearby: true,
-              verified: Boolean(u.verified ?? u.isEmailVerified ?? true),
-              isEmergencyAvailable: Boolean(u.profile?.isEmergencyAvailable ?? true),
-              avatar: u.avatar || undefined,
-            };
-          });
-          setDbWorkers(mapped);
-        } else {
-          setDbWorkers(professionals);
-        }
-      } catch (err) {
-        console.error("Failed to load workers from database:", err);
-        setDbWorkers(professionals);
-      } finally {
-        setLoadingWorkers(false);
-      }
-    };
-
-    fetchLiveWorkers();
-  }, []);
-
-  const activeWorkerList = dbWorkers.length > 0 ? dbWorkers : professionals;
-
   const filteredProfessionals = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    return activeWorkerList.filter((professional) => {
+    return professionals.filter((professional) => {
       const matchesQuery =
         normalizedQuery.length === 0 ||
         professional.name.toLowerCase().includes(normalizedQuery) ||
@@ -337,13 +262,13 @@ export function FindWorkersPage() {
 
       return matchesQuery && matchesFilter && matchesCategory;
     });
-  }, [activeCategory, activeFilter, activeWorkerList, query]);
+  }, [activeCategory, activeFilter, query]);
 
   return (
     <main className="min-h-screen bg-[#f7f8fd] text-[#111827]">
       <LandingHeader />
 
-      <section className="min-h-[760px] w-full px-4 sm:px-8 py-10 max-w-7xl mx-auto">
+      <section className="min-h-190 w-full px-4 sm:px-8 py-10 max-w-7xl mx-auto">
         <div className="w-full">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
@@ -453,14 +378,9 @@ export function FindWorkersPage() {
             </h2>
           </div>
 
-          {loadingWorkers ? (
-            <div className="flex items-center justify-center py-16">
-              <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#00a99d] border-t-transparent" />
-            </div>
-          ) : (
-            <div className="mt-4 grid gap-4 sm:grid-cols-1 md:grid-cols-2">
-              {filteredProfessionals.length > 0 ? (
-                filteredProfessionals.map((worker) => (
+          <div className="mt-4 grid gap-4 sm:grid-cols-1 md:grid-cols-2">
+            {filteredProfessionals.length > 0 ? (
+              filteredProfessionals.map((worker) => (
                 <article
                   key={worker.id}
                   className="flex flex-col justify-between rounded-3xl border border-[#dfe7ea] bg-white p-5 shadow-sm hover:border-[#00a99d] hover:shadow-md transition"
@@ -470,13 +390,7 @@ export function FindWorkersPage() {
                       <div className="flex items-center gap-3">
                         <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
                           {worker.avatar ? (
-                            <Image
-                              src={worker.avatar}
-                              alt={worker.name}
-                              fill
-                              unoptimized
-                              className="object-cover"
-                            />
+                            <img src={worker.avatar} alt={worker.name} className="h-full w-full object-cover" />
                           ) : (
                             <div className="flex h-full w-full items-center justify-center font-bold text-slate-700 text-lg">
                               {worker.name.charAt(0)}
@@ -541,7 +455,6 @@ export function FindWorkersPage() {
               </div>
             )}
           </div>
-          )}
         </div>
       </section>
 

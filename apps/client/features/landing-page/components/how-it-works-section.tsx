@@ -106,7 +106,7 @@ export function HowItWorksSection() {
 
   return (
     <section id="how-it-works" className="bg-slate-50 py-20 border-t border-slate-100">
-      <div className="mx-auto max-w-[1300px] px-6">
+      <div className="mx-auto max-w-325 px-6">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto">
           <p className="text-xs font-black uppercase tracking-[0.25em] text-emerald-600">
