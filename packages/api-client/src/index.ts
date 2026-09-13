@@ -10,5 +10,6 @@ export * from "./modules/jobs";
 export * from "./modules/notifications";
 export * from "./modules/payments";
 export * from "./modules/bookings";
+export * from "./modules/reviews";
 export * from "./modules/profiles";
 export * from "./modules/profiles/index";

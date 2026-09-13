@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Button } from "@repo/ui/button";
 
 const seekerSteps = [
   {
@@ -72,7 +72,7 @@ function StepList({
 export function StartJourneySection() {
   return (
     <section id="how-it-works" className="w-full">
-      <div className="mx-auto max-w-[1400px]">
+      <div className="mx-auto max-w-350">
         {/* Section label */}
         <div className="px-6 pb-10 pt-16 text-center">
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600">
@@ -91,7 +91,7 @@ export function StartJourneySection() {
         <div className="grid lg:grid-cols-2">
           {/* Left — Job Seeker (dark) */}
           <div className="bg-slate-950 px-10 py-14 sm:px-16">
-            <div className="mx-auto max-w-[480px]">
+            <div className="mx-auto max-w-120">
               <span className="inline-block rounded-full bg-slate-800 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-slate-400">
                 For job seekers
               </span>
@@ -103,18 +103,15 @@ export function StartJourneySection() {
                 application — all in one place.
               </p>
               <StepList steps={seekerSteps} accent="white" />
-              <Link
-                href="/jobs"
-                className="mt-10 inline-flex h-11 w-full items-center justify-center rounded-xl bg-emerald-500 text-[14px] font-bold text-white hover:bg-emerald-400 sm:w-auto sm:px-8"
-              >
+              <Button className="mt-10 h-11 w-full rounded-xl bg-emerald-500 text-[14px] font-bold text-white hover:bg-emerald-400 sm:w-auto sm:px-8">
                 Browse Jobs
-              </Link>
+              </Button>
             </div>
           </div>
 
           {/* Right — Employer (light) */}
           <div className="bg-slate-50 px-10 py-14 sm:px-16">
-            <div className="mx-auto max-w-[480px]">
+            <div className="mx-auto max-w-120">
               <span className="inline-block rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-emerald-700">
                 For employers
               </span>
@@ -126,12 +123,9 @@ export function StartJourneySection() {
                 candidates who are ready to move.
               </p>
               <StepList steps={employerSteps} accent="emerald" />
-              <Link
-                href="/dashboard/employer"
-                className="mt-10 inline-flex h-11 w-full items-center justify-center rounded-xl bg-slate-950 text-[14px] font-bold text-white hover:bg-slate-800 sm:w-auto sm:px-8"
-              >
+              <Button className="mt-10 h-11 w-full rounded-xl bg-slate-950 text-[14px] font-bold text-white hover:bg-slate-800 sm:w-auto sm:px-8">
                 Post a Job
-              </Link>
+              </Button>
             </div>
           </div>
         </div>

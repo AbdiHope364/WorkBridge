@@ -54,8 +54,20 @@ export function ForgotPasswordForm() {
     setIsSubmitting(true);
 
     try {
-      await new Promise((resolve) => window.setTimeout(resolve, 400));
-      router.push("/verify-email");
+      const response = await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: form.email }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Unable to send reset link.");
+      }
+      if (data.resetUrl) {
+        router.push(data.resetUrl);
+      } else {
+        router.push("/login?message=Reset link sent");
+      }
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Unable to send reset link.";

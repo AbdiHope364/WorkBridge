@@ -1,4 +1,4 @@
-// app/reports-moderation/[id]/page.tsx - Moderation detail view
+// app/reports-moderation/[id]/page.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -13,11 +13,15 @@ import {
   XCircle,
   Clock,
   AlertTriangle,
+  Calendar,
   Mail,
+  Building2,
   FileText,
   MoreVertical,
   Ban,
+  Shield,
   Trash2,
+  MessageCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -183,6 +187,7 @@ export default function ReportDetailPage() {
   const router = useRouter();
   const [report, setReport] = useState<Report | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedAction, setSelectedAction] = useState<string | null>(null);
 
   useEffect(() => {
     // In production, fetch from API
@@ -244,6 +249,7 @@ export default function ReportDetailPage() {
   const priorityColor = priorityColors[report.priority];
 
   const handleAction = (action: string) => {
+    setSelectedAction(action);
     console.log(`Performing action: ${action} on report ${report.id}`);
 
     // Update status locally
@@ -254,6 +260,8 @@ export default function ReportDetailPage() {
     } else if (action === "escalate") {
       setReport({ ...report, status: "Action Required" });
     }
+
+    setSelectedAction(null);
   };
 
   return (
@@ -495,7 +503,7 @@ export default function ReportDetailPage() {
             </div>
 
             {/* Quick Stats */}
-            <div className="bg-gradient-to-br from-[#4100F2] to-[#2B00A1] rounded-xl p-6 text-white">
+            <div className="bg-linear-to-br from-[#4100F2] to-[#2B00A1] rounded-xl p-6 text-white">
               <p className="text-xs font-black text-white/80 uppercase tracking-wider mb-2">
                 Report Summary
               </p>

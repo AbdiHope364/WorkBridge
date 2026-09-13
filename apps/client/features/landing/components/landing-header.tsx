@@ -9,6 +9,7 @@ const navLinks = [
   { href: "/", label: "Home", icon: <Home className="h-4 w-4" /> },
   { href: "/jobs", label: "Find Jobs", icon: <Briefcase className="h-4 w-4" /> },
   { href: "/find-workers", label: "Find Workers", icon: <Users className="h-4 w-4" /> },
+  { href: "/pricing", label: "Pricing", icon: <Sparkles className="h-4 w-4" /> },
   { href: "/#how-it-works", label: "How it works", icon: <HelpCircle className="h-4 w-4" /> },
   { href: "/contact-us", label: "Help", icon: <Mail className="h-4 w-4" /> },
 ];

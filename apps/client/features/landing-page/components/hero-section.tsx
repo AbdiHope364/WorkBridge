@@ -36,7 +36,7 @@ export function HeroSection() {
   };
 
   return (
-    <section id="find-jobs" className="bg-gradient-to-b from-slate-50 to-white pb-0 pt-12 sm:pt-16">
+    <section id="find-jobs" className="bg-linear-to-b from-slate-50 to-white pb-0 pt-12 sm:pt-16">
       <Container size="xl" className="w-full">
         <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div>

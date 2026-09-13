@@ -4,16 +4,7 @@ import { useEffect, useState } from 'react';
 import { chatService } from '@/lib/chat-service';
 import { useAuth } from '@/contexts/auth-context';
 import Link from 'next/link';
-
-interface Conversation {
-  id: string;
-  participantIds: string[];
-  lastMessageAt?: string;
-  lastMessage?: {
-    content: string;
-    createdAt: string;
-  };
-}
+import type { Conversation } from '@repo/types';
 
 export function ChatSidebar({
   onSelectConversation,
@@ -83,7 +74,7 @@ export function ChatSidebar({
               </div>
               {conv.lastMessage && (
                 <div className="text-sm text-gray-500 truncate">
-                  {conv.lastMessage.content}
+                  {typeof conv.lastMessage === 'string' ? conv.lastMessage : conv.lastMessage.content}
                 </div>
               )}
             </button>
