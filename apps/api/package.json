@@ -1,16 +1,29 @@
 {
   "name": "api",
   "version": "1.0.0",
+  "type": "module",
+  "private": true,
   "scripts": {
-    "dev": "json-server --watch db.json --port 3001"
-  },
-  "devDependencies": {
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
-    "json-server": "^0.17.4"
+    "start": "node src/index.js",
+    "dev": "node src/index.js",
+    "seed": "node src/data/seed.js",
+    "seed:reset": "node src/data/seed.js --force"
   },
   "dependencies": {
-    "socket.io": "^4.8.3",
-    "stripe": "^22.4.0"
+    "express": "^4.22.2",
+    "mongoose": "^7.5.0",
+    "mongodb": "^6.10.0",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "morgan": "^1.10.0",
+    "helmet": "^7.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^8.2.1",
+    "amqplib": "^0.10.3",
+    "http-proxy-middleware": "^2.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
