@@ -226,7 +226,7 @@
 <h3 class="h3-title">DEPARTMENT OF SOFTWARE ENGINEERING</h3>
 <hr class="divider"/>
 <h1 class="h1-title">INTERNSHIP REPORT ON:</h1>
-<h2 class="h2-title"><strong>WorkBridge: A Multi-Tenant Digital Labor & Skill Marketplace Platform for Ethiopia</strong></h2>
+<h2 class="h2-title"><strong>WorkBridge: A Multi-Tenant Freemium Digital Labor & Skill Marketplace Platform for Ethiopia</strong></h2>
 <hr class="divider"/>
 <p class="paragraph"><strong>Prepared By:</strong>  </p>
 <li class="list-item"><strong>Student Name:</strong> Abdi Abiot</li>
@@ -242,11 +242,11 @@
 <hr class="divider"/>
 <div class="page-break"></div>
 <h2 class="h2-title">DEDICATION & ACKNOWLEDGMENT</h2>
-<p class="paragraph">First and foremost, I would like to express my deepest gratitude to Almighty God for providing me with the health, strength, and endurance to successfully complete this 6-month software engineering internship and this comprehensive report.</p>
-<p class="paragraph">I extend my sincere appreciation to <strong>Dire Dawa University, Institute of Technology (IoT)</strong>, and the <strong>Department of Software Engineering</strong> for designing a curriculum that bridges the gap between foundational theoretical knowledge and real-world industrial practice.</p>
+<p class="paragraph">First and foremost, I would like to express my deepest gratitude to Almighty God for providing me with the health, strength, and endurance to successfully complete this 6-month software engineering industrial internship and this comprehensive report.</p>
+<p class="paragraph">I extend my sincere appreciation to <strong>Dire Dawa University, Institute of Technology (IoT)</strong>, and the <strong>Department of Software Engineering</strong> for designing an academic curriculum that bridges the gap between foundational theoretical knowledge and real-world industrial practice.</p>
 <p class="paragraph">Special thanks go to my academic advisor and the faculty members of the Software Engineering Department for their continuous guidance, intellectual mentorship, and high academic standards throughout my undergraduate journey.</p>
-<p class="paragraph">I would also like to express my gratitude to the management and engineering staff of <strong>SORARDI PLC</strong> for granting me the privilege to intern within their software development team. I am indebted to my industry supervisor and senior engineering colleagues for their invaluable code reviews, technical guidance in modern full-stack architectures, and for providing a stimulating environment where I could contribute to the development of the <strong>WorkBridge</strong> enterprise platform.</p>
-<p class="paragraph">Lastly, I express my heartfelt gratitude to my family and peers for their encouragement and moral support throughout my academic studies.</p>
+<p class="paragraph">I would also like to express my gratitude to the management and engineering staff of <strong>SORARDI PLC</strong> for granting me the privilege to intern within their software development team. I am deeply indebted to my industry supervisor and senior engineering colleagues for their invaluable code reviews, technical guidance in modern full-stack monorepo architectures, and for providing a stimulating environment where I could contribute to the development of the <strong>WorkBridge</strong> enterprise platform.</p>
+<p class="paragraph">Lastly, I express my heartfelt gratitude to my family and peers for their constant encouragement, prayers, and moral support throughout my academic studies.</p>
 <hr class="divider"/>
 <div class="page-break"></div>
 <h2 class="h2-title">LIST OF ACRONYMS & ABBREVIATIONS</h2>
@@ -256,12 +256,14 @@
 </thead>
 <tbody>
 <tr><td><strong>API</strong></td><td>Application Programming Interface</td></tr>
+<tr><td><strong>CBE</strong></td><td>Commercial Bank of Ethiopia (CBE Birr)</td></tr>
 <tr><td><strong>CI/CD</strong></td><td>Continuous Integration / Continuous Deployment</td></tr>
 <tr><td><strong>CSS</strong></td><td>Cascading Style Sheets</td></tr>
 <tr><td><strong>CORS</strong></td><td>Cross-Origin Resource Sharing</td></tr>
 <tr><td><strong>DTO</strong></td><td>Data Transfer Object</td></tr>
 <tr><td><strong>DOM</strong></td><td>Document Object Model</td></tr>
 <tr><td><strong>ESLint</strong></td><td>ECMAScript Linting Utility</td></tr>
+<tr><td><strong>ETB</strong></td><td>Ethiopian Birr (Currency)</td></tr>
 <tr><td><strong>HTTP/HTTPS</strong></td><td>Hypertext Transfer Protocol (Secure)</td></tr>
 <tr><td><strong>IoT</strong></td><td>Institute of Technology</td></tr>
 <tr><td><strong>JSON</strong></td><td>JavaScript Object Notation</td></tr>
@@ -269,20 +271,17 @@
 <tr><td><strong>MVC</strong></td><td>Model-View-Controller</td></tr>
 <tr><td><strong>NoSQL</strong></td><td>Not Only SQL (Non-Relational Database)</td></tr>
 <tr><td><strong>OAuth</strong></td><td>Open Authorization Framework</td></tr>
-<tr><td><strong>ORM/ODM</strong></td><td>Object-Relational / Object-Document Mapper</td></tr>
+<tr><td><strong>ODM</strong></td><td>Object-Document Mapper (Mongoose)</td></tr>
 <tr><td><strong>PLC</strong></td><td>Private Limited Company</td></tr>
 <tr><td><strong>RBAC</strong></td><td>Role-Based Access Control</td></tr>
 <tr><td><strong>REST</strong></td><td>Representational State Transfer</td></tr>
 <tr><td><strong>SDK</strong></td><td>Software Development Kit</td></tr>
 <tr><td><strong>SPA</strong></td><td>Single Page Application</td></tr>
 <tr><td><strong>SSR</strong></td><td>Server-Side Rendering</td></tr>
-<tr><td><strong>SVG</strong></td><td>Scalable Vector Graphics</td></tr>
 <tr><td><strong>TS</strong></td><td>TypeScript</td></tr>
 <tr><td><strong>UI/UX</strong></td><td>User Interface / User Experience</td></tr>
 <tr><td><strong>URI/URL</strong></td><td>Uniform Resource Identifier / Locator</td></tr>
-<tr><td><strong>UUID</strong></td><td>Universally Unique Identifier</td></tr>
 <tr><td><strong>VCS</strong></td><td>Version Control System (Git)</td></tr>
-<tr><td><strong>WS</strong></td><td>WebSocket</td></tr>
 </tbody>
 </table>
 
@@ -304,7 +303,8 @@
 <li class="list-item">3.2 Problem Statement & Motivation</li>
 <li class="list-item">3.3 Roles and Core Responsibilities</li>
 <li class="list-item">3.4 Software Architecture & Monorepo Design</li>
-<li class="list-item">3.5 Specific Features & Modules Implemented</li>
+<li class="list-item">3.5 Specific Features & Modules Implemented (Phases 1–9)</li>
+<li class="list-item">3.6 Two-Sided Freemium Business Model & Simulated Payments</li>
 <li class="ordered-item"><strong>5.</strong> <strong>Chapter 4: Technical Skills & Tools Utilized</strong></li>
 <li class="list-item">4.1 Frontend Engineering Stack</li>
 <li class="list-item">4.2 Backend & Database Architecture</li>
@@ -314,12 +314,12 @@
 <li class="ordered-item"><strong>6.</strong> <strong>Chapter 5: Collaboration, Teamwork, & Methodology</strong></li>
 <li class="list-item">5.1 Agile & Scrum Workflows</li>
 <li class="list-item">5.2 Git Flow & Code Review Procedures</li>
-<li class="list-item">5.3 Key Achievements & Milestones</li>
+<li class="list-item">5.3 Nine-Phase Engineering Implementation Lifecycle</li>
 <li class="ordered-item"><strong>7.</strong> <strong>Chapter 6: Challenges Encountered & Problem-Solving Strategies</strong></li>
 <li class="list-item">6.1 Monorepo Dependency Orchestration</li>
 <li class="list-item">6.2 Google OAuth 2.0 Integration in Cross-Origin Environments</li>
 <li class="list-item">6.3 Type-Safe State Management & Strict Linting</li>
-<li class="list-item">6.4 Dynamic Role Routing & Multi-Tenant Portals</li>
+<li class="list-item">6.4 Quota Enforcement & Simulated Payment Rails</li>
 <li class="ordered-item"><strong>8.</strong> <strong>Chapter 7: Impact & Organizational Contributions</strong></li>
 <li class="list-item">7.1 Value Delivered to SORARDI PLC</li>
 <li class="list-item">7.2 Handover Artifacts, Source Repositories, & Documentation</li>
@@ -332,9 +332,12 @@
 <hr class="divider"/>
 <div class="page-break"></div>
 <h2 class="h2-title">EXECUTIVE SUMMARY</h2>
-<p class="paragraph">This report documents the 6-month software engineering industrial internship conducted at <strong>SORARDI PLC</strong> by <strong>Abdi Abiot</strong> (ID: DDU1500744), a senior software engineering student at Dire Dawa University Institute of Technology. </p>
+<p class="paragraph">This report documents the 6-month software engineering industrial internship conducted at <strong>SORARDI PLC</strong> by <strong>Abdi Abiot</strong> (ID: DDU1500744), a senior software engineering student at Dire Dawa University Institute of Technology (IoT). </p>
 <p class="paragraph">During the internship period (March 2026 – August 2026), the intern operated as a Full-Stack Software Engineering Intern on the core engineering team building <strong>WorkBridge</strong>—a high-performance, multi-tenant digital labor marketplace and trade talent platform designed specifically for the Ethiopian economic context.</p>
-<p class="paragraph">The report details the entire engineering lifecycle: requirements elicitation, Turborepo monorepo architecture setup, Next.js 16 App Router frontend implementation, Node.js/Express.js backend services, MongoDB Atlas database design, Google Identity / OAuth 2.0 authentication, role-based access control (Jobseeker, Employer, and Admin portals), and automated linting/type-safety tooling. The experience reinforced theoretical concepts in software engineering, distributed systems, web architectures, and collaborative Agile methodologies.</p>
+<p class="paragraph">The platform was architected and implemented around a <strong>two-sided freemium subscription business model</strong> featuring simulated payment processing (Telebirr, Chapa, CBE Birr), automated quota enforcement (5 free worker applications/month, 3 free employer job postings), real-time conversational messaging, direct worker bookings, structured job application workflows, Google OAuth 2.0 identity federation, and administrative revenue monitoring.</p>
+<p class="paragraph">> <strong>Project Implementation Note on Payment Processing:</strong>  </p>
+<p class="paragraph">> <em>WorkBridge initially implements a simulated payment and subscription system for development and demonstration purposes. Real payment-provider integration will be introduced in a future production phase after the necessary provider merchant accounts, regulatory requirements, and banking security compliance procedures are fully established.</em></p>
+<p class="paragraph">The experience reinforced theoretical concepts in software engineering, distributed systems, web architectures, automated quality assurance, and collaborative Agile methodologies.</p>
 <hr class="divider"/>
 <div class="page-break"></div>
 <h2 class="h2-title">CHAPTER 1: INTRODUCTION</h2>
@@ -342,22 +345,23 @@
 <p class="paragraph">The university internship program is an indispensable component of the Bachelor of Science in Software Engineering degree at Dire Dawa University Institute of Technology. The primary objective is to expose students to real-world industrial software development, production engineering constraints, enterprise codebases, team collaboration methodologies, and project management practices.</p>
 <p class="paragraph">Key purposes of this internship include:</p>
 <li class="list-item">Applying software engineering principles (OOP, design patterns, clean architecture, software testing) in an industrial setting.</li>
-<li class="list-item">Mastering modern industry-standard tools, frameworks, and deployment workflows.</li>
+<li class="list-item">Mastering modern industry-standard tools, frameworks, and deployment workflows (Next.js 16, TypeScript, Turborepo, Node.js, MongoDB Atlas).</li>
 <li class="list-item">Developing professional soft skills, such as agile communication, task prioritization, sprint planning, and code review etiquette.</li>
 <li class="list-item">Contributing tangible value to the host organization by building production-ready software components.</li>
 <h3 class="h3-title">1.2 Relationship to Software Engineering Curriculum</h3>
 <p class="paragraph">The tasks performed during the 6-month tenure at SORARDI PLC directly synthesized and validated knowledge from foundational university courses:</p>
 <li class="ordered-item"><strong>1.</strong> <strong>Software Architecture and Design</strong>: Applied multi-tier architecture, domain-driven package separation, and Turborepo monorepo structuring for modular code reusability across web client, admin portal, shared UI components, and API client packages.</li>
 <li class="ordered-item"><strong>2.</strong> <strong>Web Technologies & Distributed Systems</strong>: Engineered responsive, server-rendered and client-rendered web interfaces utilizing Next.js 16, React 19, TypeScript, and Tailwind CSS; built RESTful endpoints with Express.js and Node.js.</li>
-<li class="ordered-item"><strong>3.</strong> <strong>Database Systems</strong>: Designed normalized and embedded data models for MongoDB Atlas, indexing frequently queried fields (skills, hourly rates, locations, application status).</li>
+<li class="ordered-item"><strong>3.</strong> <strong>Database Systems</strong>: Designed normalized and embedded data models for MongoDB Atlas, indexing frequently queried fields (skills, hourly rates, locations, application status, subscription tiers).</li>
 <li class="ordered-item"><strong>4.</strong> <strong>Information Security</strong>: Integrated stateless JWT authentication, Google OAuth 2.0 flow, bcrypt password hashing, and role-based middleware guards for secure authorization across three distinct user roles.</li>
 <li class="ordered-item"><strong>5.</strong> <strong>Software Quality Assurance & Testing</strong>: Enforced strict static type checking (<code class="inline-code">tsc --noEmit</code>), automated ESLint validation rules, and structured unit/integration verification.</li>
 <h3 class="h3-title">1.3 Scope and Objectives</h3>
-<p class="paragraph">The overarching goal of the internship assignment was to design, implement, test, and polish the <strong>WorkBridge</strong> web application ecosystem. Specific objectives included:</p>
+<p class="paragraph">The overarching goal of the internship assignment was to design, implement, test, and deploy the <strong>WorkBridge</strong> web application ecosystem. Specific objectives included:</p>
 <li class="list-item">Establishing a scalable Turborepo monorepo workspace for all platform micro-frontends and shared libraries.</li>
 <li class="list-item">Building high-converting landing pages, talent search engines, and real-time worker booking workflows.</li>
 <li class="list-item">Implementing dedicated dashboards for <strong>Jobseekers/Tradesmen</strong>, <strong>Employers/Companies</strong>, and <strong>System Administrators</strong>.</li>
-<li class="list-item">Integrating Google Social Authentication and localized Ethiopian payment flows.</li>
+<li class="list-item">Implementing a complete freemium subscription and simulated payment system for Ethiopian mobile wallets (Telebirr, Chapa, CBE Birr).</li>
+<li class="list-item">Integrating Google Social Authentication and full password recovery flows.</li>
 <li class="list-item">Ensuring zero type errors (<code class="inline-code">check-types</code>) and zero lint warnings across the complete monorepo.</li>
 <hr class="divider"/>
 <div class="page-break"></div>
@@ -397,7 +401,7 @@
 <h3 class="h3-title">2.4 Development Culture & Methodologies</h3>
 <p class="paragraph">SORARDI PLC follows a modern <strong>Scrum/Agile framework</strong> characterized by:</p>
 <li class="list-item"><strong>Two-Week Sprint Cycles:</strong> Sprint planning, daily 15-minute standups, mid-sprint refinement, and sprint retrospectives.</li>
-<li class="list-item"><strong>Strict Code Reviews (Pull Requests):</strong> No branch is merged into <code class="inline-code">main</code> without at least two peer approvals, passing CI checks, and zero ESLint/TypeScript errors.</li>
+<li class="list-item"><strong>Strict Code Reviews (Pull Requests):</strong> No branch is merged into <code class="inline-code">main</code> without peer approval, passing CI checks, and zero ESLint/TypeScript errors.</li>
 <li class="list-item"><strong>Design-First Prototyping:</strong> UI designs created in Figma, validated against accessibility standards, and translated into reusable Tailwind CSS components.</li>
 <hr class="divider"/>
 <div class="page-break"></div>
@@ -414,16 +418,16 @@
     subgraph WorkBridge Monorepo
         WC[Client Portal - Port 3000]
         AP[Admin Portal - Port 3001]
-        UI[Shared UI Component Library]
+        BE[Express API - Port 4000]
+        UI[Shared UI Components]
         TY[Shared TypeScript Types]
         AC[Shared API Client]
     end
 
-    subgraph Backend Services
-        BE[Express.js API - Port 4000]
+    subgraph Cloud Persistence &amp; Services
         DB[(MongoDB Atlas)]
         GO[Google OAuth 2.0]
-        CP[Chapa / Payment Gateways]
+        MP[Simulated Telebirr/Chapa/CBE]
     end
 
     JS --&gt; WC
@@ -436,138 +440,131 @@
     AC --&gt; BE
     BE --&gt; DB
     BE --&gt; GO
-    BE --&gt; CP</code></pre>
+    BE --&gt; MP</code></pre>
 <h3 class="h3-title">3.2 Problem Statement & Motivation</h3>
 <p class="paragraph">In Ethiopia, hiring skilled blue-collar and trade professionals has historically relied on fragmented informal networks, physical roadside gatherings, and unverified word-of-mouth recommendations. This brings major challenges:</p>
 <li class="ordered-item"><strong>1.</strong> <strong>Lack of Trust & Verification:</strong> Employers have no means to verify past work quality, safety certifications, or identity.</li>
 <li class="ordered-item"><strong>2.</strong> <strong>Income Instability for Workers:</strong> Tradesmen experience erratic employment cycles without a centralized platform to showcase portfolios, customer reviews, and standardized rates.</li>
 <li class="ordered-item"><strong>3.</strong> <strong>Information Asymmetry:</strong> No unified pricing standards or secure communication channels exist between clients and workers.</li>
-<p class="paragraph"><strong>WorkBridge</strong> solves these problems by providing:</p>
-<li class="list-item">Verified trade badges, portfolio showcases, and customer rating algorithms.</li>
-<li class="list-item">Instant direct hiring and structured job postings with categorized filters.</li>
-<li class="list-item">Real-time booking management and secure messaging.</li>
-<li class="list-item">Role-based administration dashboard for content moderation and fraud prevention.</li>
+<hr class="divider"/>
 <h3 class="h3-title">3.3 Roles and Core Responsibilities</h3>
-<p class="paragraph">As a Full-Stack Software Engineering Intern on WorkBridge, my specific roles and responsibilities encompassed:</p>
-<li class="ordered-item"><strong>1.</strong> <strong>Monorepo Architecture Engineering</strong>: Maintained and configured the <strong>Turborepo</strong> workspace orchestrating 5 packages: <code class="inline-code">apps/client</code>, <code class="inline-code">apps/admin</code>, <code class="inline-code">packages/ui</code>, <code class="inline-code">packages/types</code>, and <code class="inline-code">packages/api-client</code>.</li>
+<p class="paragraph">As a Full-Stack Software Engineering Intern on WorkBridge, my specific responsibilities encompassed:</p>
+<li class="ordered-item"><strong>1.</strong> <strong>Monorepo Architecture Engineering</strong>: Maintained and configured the unified <strong>Turborepo</strong> workspace orchestrating <code class="inline-code">apps/client</code>, <code class="inline-code">apps/admin</code>, <code class="inline-code">apps/api</code>, <code class="inline-code">packages/ui</code>, <code class="inline-code">packages/types</code>, and <code class="inline-code">packages/api-client</code>.</li>
 <li class="ordered-item"><strong>2.</strong> <strong>Frontend UI/UX Engineering</strong>:</li>
 <li class="list-item">Developed landing page features: Hero Section, Trending Trades pills, How-It-Works stepper, Testimonials carousel, and Conversion CTA blocks.</li>
 <li class="list-item">Built the <strong>Jobseeker Profile & Dashboard</strong>: Overview analytics, active booking lists, trade skill tags, hourly rate management, and bio updates.</li>
 <li class="list-item">Built the <strong>Employer Dashboard</strong>: Candidate search engine, job creation wizards, application reviewers, and hiring status trackers.</li>
-<li class="list-item">Built the <strong>Admin Moderation Portal</strong>: Reports management queue, employer detail inspectors, user suspension controls, and system metric visualizers.</li>
+<li class="list-item">Built the <strong>Freemium Pricing & Mock Checkout Flow</strong>: Tabbed pricing screens, simulated Telebirr/Chapa/CBE Birr checkout dialogs, and instant subscription upgrades.</li>
+<li class="list-item">Built the <strong>Admin Moderation Portal</strong>: Reports management queue, employer detail inspectors, user suspension controls, and subscription transaction audit screens.</li>
 <li class="ordered-item"><strong>3.</strong> <strong>Backend API Development & Integration</strong>:</li>
-<li class="list-item">Developed RESTful API endpoints in Express.js for user onboarding, job applications, booking state transitions, and review submissions.</li>
-<li class="list-item">Implemented stateless Google OAuth 2.0 credential exchanges and automatic user provisioning in MongoDB Atlas.</li>
+<li class="list-item">Developed RESTful API endpoints in Express.js for authentication, user onboarding, job applications, booking state transitions, simulated checkout, and review submissions.</li>
+<li class="list-item">Implemented backend <strong>quota enforcement rules</strong> preventing free accounts from exceeding monthly application and job posting limits.</li>
 <li class="ordered-item"><strong>4.</strong> <strong>Code Quality & Type Safety</strong>:</li>
-<li class="list-item">Enforced complete TypeScript type coverage, eradicating <code class="inline-code">any</code> types across payments, bookings, and moderation modules.</li>
-<li class="list-item">Configured unified ESLint flat configs and canonical Tailwind CSS utility classes.</li>
+<li class="list-item">Enforced complete TypeScript type coverage across all domain models, DTOs, and API client methods.</li>
+<li class="list-item">Achieved 100% clean builds with zero lint errors and zero type errors.</li>
 <hr class="divider"/>
 <h3 class="h3-title">3.4 Software Architecture & Monorepo Design</h3>
 <p class="paragraph">The WorkBridge system employs a modular monorepo architecture managed by <strong>Turborepo</strong> and <strong>pnpm workspaces</strong>:</p>
-<pre class="code-block "><code>WORKBRIDGE/
-├── WorkBridge/                     # Frontend &amp; Shared Monorepo (Turborepo)
-│   ├── apps/
-│   │   ├── client/                 # Next.js 16 Client Portal (Port 3000)
-│   │   │   ├── app/                # App Router (Pages, Layouts, Dashboard)
-│   │   │   ├── features/           # Feature-based modular architecture
-│   │   │   │   ├── auth/           # Login, Register, Google Auth components
-│   │   │   │   ├── landing/        # Hero, CTA, Journey, How-it-works
-│   │   │   │   └── dashboard/      # Profile, bookings, payments features
-│   │   │   └── package.json
-│   │   └── admin/                  # Next.js 16 Admin Moderation Portal
-│   │       ├── app/                # Reports, Employers, Analytics routes
-│   │       └── package.json
-│   ├── packages/
-│   │   ├── ui/                     # Shared UI Design System (Button, Card, Modal)
-│   │   ├── types/                  # Shared TypeScript Interfaces &amp; DTOs
-│   │   ├── api-client/             # Type-safe Fetch HTTP Client wrapper
-│   │   ├── eslint-config/          # Shared ESLint configurations
-│   │   └── typescript-config/      # Base tsconfig.json configurations
-│   ├── package.json
-│   └── turbo.json                  # Turborepo task pipeline configuration
-└── workbridge-backend-main/        # Backend REST API (Port 4000)
-    ├── src/
-    │   ├── controllers/            # authController, jobController, bookingController
-    │   ├── models/                 # User.js, Job.js, Booking.js, Report.js
-    │   ├── routes/                 # Express route definitions
-    │   ├── middleware/             # authMiddleware, roleGuard, errorHandler
-    │   └── server.js               # Express application entrypoint
-    ├── .env                        # Environment variables (MongoDB URI, OAuth keys)
-    └── package.json</code></pre>
+<pre class="code-block "><code>WorkBridge/
+├── apps/
+│   ├── client/                  # Next.js 16 Client Portal (Port 3000)
+│   │   ├── app/                 # App Router (Pages, Dashboard, Pricing, Auth)
+│   │   ├── features/            # Feature-based modular architecture
+│   │   │   ├── auth/            # Login, Register, Forgot/Reset Password
+│   │   │   ├── pricing/         # Pricing cards &amp; MockCheckoutModal
+│   │   │   ├── landing/         # Hero, CTA, How-it-works
+│   │   │   └── dashboard/       # Profile, bookings, chat
+│   │   └── package.json
+│   ├── admin/                   # Next.js 16 Admin Moderation Portal (Port 3001)
+│   │   ├── app/                 # Reports, Employers, Subscriptions routes
+│   │   └── package.json
+│   └── api/                     # Express.js REST API Backend (Port 4000)
+│       ├── src/
+│       │   ├── controllers/     # auth, job, booking, subscription, chat
+│       │   ├── data/            # db.js, seed.js, MongoDB Atlas connection
+│       │   ├── routes/          # Express route definitions
+│       │   ├── middleware/      # auth, roleGuard, errorHandler
+│       │   └── index.js         # Server entrypoint
+│       └── package.json
+├── packages/
+│   ├── ui/                      # Shared UI Design System (Button, Card, Modal)
+│   ├── types/                   # Shared TypeScript Interfaces, DTOs &amp; Quota Enums
+│   ├── api-client/              # Type-safe Fetch HTTP Client wrapper
+│   ├── eslint-config/           # Shared ESLint configurations
+│   └── typescript-config/       # Base tsconfig.json configurations
+├── docs/                        # Project documentation, reports, and presentation decks
+├── package.json
+└── turbo.json                   # Turborepo pipeline configuration</code></pre>
 <hr class="divider"/>
-<h3 class="h3-title">3.5 Specific Features & Modules Implemented</h3>
-<h4 class="h4-title">A. Multi-Role Authentication & Google OAuth 2.0</h4>
-<li class="list-item">Implemented dual-mode registration supporting distinct role schemas: <strong>Jobseeker (Worker)</strong> and <strong>Employer (Client)</strong>.</li>
-<li class="list-item">Integrated Google OAuth 2.0 flow with Next.js reverse-proxy rewrites (<code class="inline-code">/api/auth/google</code>), enabling instant one-click login and registration without password friction.</li>
-<li class="list-item">Implemented automatic redirection: jobseekers are routed directly to <code class="inline-code">/dashboard/jobseeker</code> and <code class="inline-code">/dashboard/profile</code> upon sign-up.</li>
-<h4 class="h4-title">B. Trade Worker Discovery & Filtering Engine</h4>
-<li class="list-item">Designed an interactive filter system allowing users to search tradesmen by skill category (Electrician, Plumber, Mason, Carpenter, Painter, Welder), location (Addis Ababa sub-cities, Dire Dawa, Hawassa, Adama), minimum rating, and maximum hourly rate.</li>
-<h4 class="h4-title">C. Payments & Financial Transactions Module</h4>
-<li class="list-item">Built the payments dashboard (<code class="inline-code">/dashboard/payments</code>) displaying real-time balance cards, escrow deposit records, transaction history tables with status indicators (<code class="inline-code">Completed</code>, <code class="inline-code">Pending</code>, <code class="inline-code">Escrow Held</code>), and localized payout options (Telebirr, CBE Birr, Chapa).</li>
-<h4 class="h4-title">D. Admin Moderation & Audit System</h4>
-<li class="list-item">Implemented full-featured reporting and moderation screens (<code class="inline-code">/reports-moderation/[id]</code>) enabling system administrators to review flagged accounts, inspect chat logs, issue account warnings, or suspend fraudulent profiles.</li>
+<h3 class="h3-title">3.5 Two-Sided Freemium Business Model & Simulated Payments</h3>
+<p class="paragraph">To ensure a realistic and economically viable marketplace model, WorkBridge implements a <strong>two-sided freemium subscription architecture</strong>:</p>
+<h4 class="h4-title">A. Worker / Tradesman Freemium Tiers:</h4>
+<li class="list-item"><strong>Free Worker Starter (0 ETB)</strong>: Allows creating a public profile, searching jobs, receiving direct bookings, chatting with clients, and applying to up to <strong>5 jobs per month</strong>.</li>
+<li class="list-item"><strong>Pro Worker Monthly (299 ETB / 30 days)</strong>: <strong>Unlimited job applications</strong>, Verified Pro Tradesman badge, priority search ranking, and featured portfolio showcase.</li>
+<li class="list-item"><strong>Pro Worker Annual (2,499 ETB / 365 days)</strong>: Unlimited applications for 1 full year with a 30% discount and dedicated booking alerts.</li>
+<h4 class="h4-title">B. Employer / Client Freemium Tiers:</h4>
+<li class="list-item"><strong>Free Client Starter (0 ETB)</strong>: Browse verified tradesmen, direct booking, and up to <strong>3 free job postings</strong>.</li>
+<li class="list-item"><strong>Pro Employer Monthly (599 ETB / 30 days)</strong>: <strong>Unlimited job postings</strong>, Verified Employer badge, applicant tracking pipeline, and featured job tags.</li>
+<li class="list-item"><strong>Pro Employer Annual (4,999 ETB / 365 days)</strong>: Unlimited job postings for 1 year, dedicated account manager, and custom company branding.</li>
+<h4 class="h4-title">C. Simulated Ethiopian Mobile Payment Gateway:</h4>
+<p class="paragraph">The system features a <strong><code class="inline-code">MockCheckoutModal</code></strong> allowing users to select between <strong>Telebirr</strong>, <strong>Chapa</strong>, or <strong>CBE Birr</strong>. Upon entering their mobile phone number and clicking "Pay & Activate", the backend processes the simulated transaction, creates a payment record, activates the subscription, and resets user quotas immediately.</p>
+<h4 class="h4-title">D. Two Distinct Platform Workflows:</h4>
+<li class="ordered-item"><strong>1.</strong> <strong>Direct Booking Workflow</strong>: Client discovers worker -> Client books worker directly -> Worker accepts/declines -> Work completed -> Client reviews worker.</li>
+<li class="ordered-item"><strong>2.</strong> <strong>Job Application Workflow</strong>: Client posts job -> Workers submit applications -> Client shortlists and selects worker -> Booking initiated.</li>
 <hr class="divider"/>
 <div class="page-break"></div>
 <h2 class="h2-title">CHAPTER 4: TECHNICAL SKILLS & TOOLS UTILIZED</h2>
 <pre class="code-block "><code>+-------------------------------------------------------------------------+
 |                         FULL-STACK TECH STACK                           |
 +-------------------------------------------------------------------------+
-| Frontend:   Next.js 16, React 19, TypeScript, Tailwind CSS, Lucide Icons |
+| Frontend:   Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS |
 | Monorepo:   Turborepo, pnpm Workspaces, Shared Component Libraries       |
-| Backend:    Node.js, Express.js, RESTful Architecture, WebSockets       |
+| Backend:    Node.js, Express.js REST API, Modular Controllers           |
 | Database:   MongoDB Atlas, Mongoose ODM, Distributed Indexing           |
-| Auth &amp; Sec: Google Cloud Identity / OAuth 2.0, JWT Tokens, bcrypt       |
-| Quality:    TypeScript strict mode, ESLint Flat Configs, Prettier       |
+| Auth &amp; Sec: Google Cloud Identity (OAuth 2.0), JWT, bcrypt, RBAC        |
+| Payments:   Simulated Multi-Gateway (Telebirr, Chapa, CBE Birr)         |
+| Quality:    TypeScript Strict Mode, ESLint Flat Configs, Prettier       |
 | Tooling:    Git, GitHub, VS Code, Postman, Linux (Ubuntu/Bash)          |
 +-------------------------------------------------------------------------+</code></pre>
 <h3 class="h3-title">4.1 Frontend Engineering Stack</h3>
 <li class="list-item"><strong>Next.js 16 (App Router):</strong> Leveraged server components for fast initial load times and client components for dynamic dashboard interactivity.</li>
-<li class="list-item"><strong>TypeScript:</strong> Enforced end-to-end type safety, defining interfaces for API responses, booking states, payment histories, and user profiles.</li>
+<li class="list-item"><strong>TypeScript:</strong> Enforced end-to-end type safety, defining interfaces for API responses, booking states, payment histories, subscriptions, and user profiles.</li>
 <li class="list-item"><strong>Tailwind CSS & Design Systems:</strong> Implemented responsive, mobile-first styling utilizing canonical design tokens, subtle gradients, and transitions.</li>
 <li class="list-item"><strong>Lucide Icons:</strong> Integrated lightweight vector icons for intuitive visual cues.</li>
 <h3 class="h3-title">4.2 Backend & Database Architecture</h3>
-<li class="list-item"><strong>Node.js & Express.js:</strong> Built modular REST controllers with middleware pipelines for request validation, error handling, and authorization.</li>
-<li class="list-item"><strong>MongoDB Atlas & Mongoose:</strong> Created flexible NoSQL schemas with nested subdocuments for user work histories, trade skill verifications, and customer ratings.</li>
+<li class="list-item"><strong>Node.js & Express.js:</strong> Built modular REST controllers with middleware pipelines for request validation, error handling, quota enforcement, and authorization.</li>
+<li class="list-item"><strong>MongoDB Atlas & Mongoose:</strong> Created flexible NoSQL schemas with nested subdocuments for user work histories, trade skill verifications, subscriptions, and customer ratings.</li>
 <h3 class="h3-title">4.3 Security, Authentication, & Identity</h3>
 <li class="list-item"><strong>Google OAuth 2.0:</strong> Handled secure server-to-server token exchanges using <code class="inline-code">@google-cloud</code> and <code class="inline-code">googleapis</code> libraries.</li>
 <li class="list-item"><strong>Role-Based Access Control (RBAC):</strong> Created route guards enforcing authorization boundaries between workers, employers, and administrators.</li>
-<h3 class="h3-title">4.4 DevOps, Code Quality, & Monorepo Tooling</h3>
-<li class="list-item"><strong>Turborepo & pnpm:</strong> Cached build and type-check steps, reducing monorepo compilation times from minutes to seconds.</li>
-<li class="list-item"><strong>Static Analysis & Linting:</strong> Automated verification with <code class="inline-code">pnpm lint</code> and <code class="inline-code">pnpm check-types</code> ensuring zero compiler or syntax regressions.</li>
-<h3 class="h3-title">4.5 Soft Skills & Professional Growth</h3>
-<li class="list-item"><strong>Effective Technical Communication:</strong> Articulated technical choices and architectural trade-offs during daily standups and sprint reviews.</li>
-<li class="list-item"><strong>Time & Task Management:</strong> Broke down complex feature epics into atomic Git branches and Pull Requests.</li>
-<li class="list-item"><strong>Constructive Code Collaboration:</strong> Received and addressed senior code review comments and performed peer reviews.</li>
+<li class="list-item"><strong>Password Recovery:</strong> Implemented secure 1-hour expiration token generation and bcrypt password hashing.</li>
 <hr class="divider"/>
 <div class="page-break"></div>
 <h2 class="h2-title">CHAPTER 5: COLLABORATION, TEAMWORK, & METHODOLOGY</h2>
-<h3 class="h3-title">5.1 Agile & Scrum Workflows</h3>
-<p class="paragraph">The engineering department at SORARDI PLC utilized a 2-week sprint cycle:</p>
-<pre class="code-block mermaid"><code>graph TD
-    A[Sprint Backlog Grooming] --&gt; B[Sprint Planning &amp; Task Estimation]
-    B --&gt; C[Daily 15-Minute Standup]
-    C --&gt; D[Feature Development on Feature Branches]
-    D --&gt; E[Pull Request &amp; Peer Review]
-    E --&gt; F[Automated Linting &amp; Typecheck CI]
-    F --&gt; G[Staging Deployment &amp; QA]
-    G --&gt; H[Sprint Demo &amp; Retrospective]
-    H --&gt; A</code></pre>
+<h3 class="h3-title">5.1 Nine-Phase Engineering Implementation Lifecycle</h3>
+<p class="paragraph">Development was organized into 9 systematic engineering phases:</p>
+<pre class="code-block "><code>+-------------------------------------------------------------------------------+
+|                      9-PHASE IMPLEMENTATION LIFECYCLE                         |
++-------------------------------------------------------------------------------+
+| Phase 1: Foundation      | Monorepo, Express config, MongoDB, Shared Types    |
+| Phase 2: Authentication  | Registration, Login, JWT, RBAC, Forgot/Reset, OAuth|
+| Phase 3: Users           | Worker profile, Client profile, Portfolio showcase |
+| Phase 4: Marketplace     | Worker search, Trade filters, Job posting &amp; apply  |
+| Phase 5: Booking         | Direct booking, Status workflow, Completion, Review|
+| Phase 6: Chat            | Grouped conversations, Real-time messaging, Alerts |
+| Phase 7: Monetization    | Quota checks, Freemium subscriptions, Mock checkout|
+| Phase 8: Admin Desk      | Dashboards, Worker verification, Revenue audit     |
+| Phase 9: Quality &amp; Gates | Strict TypeScript (tsc), ESLint, Production build  |
++-------------------------------------------------------------------------------+</code></pre>
 <h3 class="h3-title">5.2 Git Flow & Code Review Procedures</h3>
 <p class="paragraph">All source code contributions followed a structured Git branching model:</p>
 <li class="ordered-item"><strong>1.</strong> <code class="inline-code">main</code>: Production-ready, always-deployable branch.</li>
 <li class="ordered-item"><strong>2.</strong> <code class="inline-code">develop</code>: Active integration branch for the current sprint.</li>
 <li class="ordered-item"><strong>3.</strong> <code class="inline-code">feature/<feature-name></code>: Isolated branches created for each assigned ticket.</li>
-<li class="ordered-item"><strong>4.</strong> <code class="inline-code">fix/<issue-description></code>: Targeted bug-fix branches.</li>
-<p class="paragraph">Every Pull Request required:</p>
+<p class="paragraph">Every commit required:</p>
 <li class="list-item">Successful compilation with <code class="inline-code">pnpm build</code>.</li>
 <li class="list-item">Zero type errors via <code class="inline-code">pnpm check-types</code>.</li>
 <li class="list-item">Zero lint issues via <code class="inline-code">pnpm lint</code>.</li>
-<li class="list-item">At least one Senior Engineer approval prior to squash-merging.</li>
-<h3 class="h3-title">5.3 Key Achievements & Milestones</h3>
-<li class="list-item"><strong>Milestone 1:</strong> Architected shared monorepo packages (<code class="inline-code">@repo/ui</code>, <code class="inline-code">@repo/types</code>, <code class="inline-code">@repo/api-client</code>) eliminated duplicate code between admin and client applications by over 45%.</li>
-<li class="list-item"><strong>Milestone 2:</strong> Successfully integrated Google Cloud OAuth 2.0 client authentication.</li>
-<li class="list-item"><strong>Milestone 3:</strong> Eradicated all <code class="inline-code">any</code> types and TypeScript warnings across the payments, moderation, and authentication modules, bringing the entire codebase to 100% strict type compliance.</li>
-<li class="list-item"><strong>Milestone 4:</strong> Engineered the high-conversion responsive landing page and direct worker registration flow.</li>
 <hr class="divider"/>
 <div class="page-break"></div>
 <h2 class="h2-title">CHAPTER 6: CHALLENGES ENCOUNTERED & PROBLEM-SOLVING STRATEGIES</h2>
@@ -577,9 +574,9 @@
 <h3 class="h3-title">6.2 Google OAuth 2.0 in Multi-Origin Environments</h3>
 <li class="list-item"><strong>Challenge:</strong> The frontend ran on <code class="inline-code">http://localhost:3000</code> while the backend API ran on <code class="inline-code">http://localhost:4000</code>. Cross-origin cookie policies and redirect URI mismatches prevented successful token issuance during social login.</li>
 <li class="list-item"><strong>Solution:</strong> Implemented a Next.js App Router reverse-proxy rewrite rule (<code class="inline-code">/api/:path<em> -> http://localhost:4000/api/:path</em></code>), allowing the frontend to communicate with the OAuth endpoints through relative paths while maintaining same-origin cookie security.</li>
-<h3 class="h3-title">6.3 Type-Safe State Management in Data Tables</h3>
-<li class="list-item"><strong>Challenge:</strong> Dynamic database payloads in the payments and moderation tables caused lint errors (<code class="inline-code">@typescript-eslint/no-explicit-any</code>) and potential runtime crashes with nested undefined properties.</li>
-<li class="list-item"><strong>Solution:</strong> Created comprehensive, strongly typed TypeScript DTO interfaces (<code class="inline-code">PaymentHistoryResponse</code>, <code class="inline-code">UserWithPhone</code>, <code class="inline-code">BookingsResponse</code>, <code class="inline-code">ReportDetail</code>) in <code class="inline-code">@repo/types</code> and safely mapped all response objects.</li>
+<h3 class="h3-title">6.3 Backend Quota Enforcement & Subscription Integrity</h3>
+<li class="list-item"><strong>Challenge:</strong> Preventing free users from bypassing application and job posting limits without disrupting user experience.</li>
+<li class="list-item"><strong>Solution:</strong> Implemented robust backend middleware checks in <code class="inline-code">jobController.js</code> and <code class="inline-code">bookingController.js</code> returning structured <code class="inline-code">403 QUOTA_EXCEEDED</code> payloads that immediately prompt the frontend to display the <code class="inline-code">MockCheckoutModal</code>.</li>
 <hr class="divider"/>
 <div class="page-break"></div>
 <h2 class="h2-title">CHAPTER 7: IMPACT & ORGANIZATIONAL CONTRIBUTIONS</h2>
@@ -588,26 +585,25 @@
 <li class="ordered-item"><strong>1.</strong> <strong>Accelerated Time-to-Market:</strong> Completed core feature modules of WorkBridge ahead of schedule, enabling the company to initiate closed beta testing with trade workers in Addis Ababa and Dire Dawa.</li>
 <li class="ordered-item"><strong>2.</strong> <strong>Robust Codebase Quality:</strong> Raised the code standard by achieving 100% type safety and zero lint warnings across 9 packages in the monorepo.</li>
 <li class="ordered-item"><strong>3.</strong> <strong>Reusable Design System:</strong> The <code class="inline-code">@repo/ui</code> component library built for WorkBridge is now being utilized as the foundation for other client projects within SORARDI PLC.</li>
-<h3 class="h3-title">7.2 Handover Artifacts & Documentation</h3>
+<li class="ordered-item"><strong>4.</strong> <strong>Commercially Viable Business Model:</strong> Engineered the complete freemium subscription architecture providing clear revenue streams for the platform.</li>
+<h3 class="h3-title">7.2 Handover Deliverables</h3>
 <p class="paragraph">At the conclusion of the internship, the following deliverables were handed over:</p>
-<li class="list-item">Complete Git repository containing clean, documented, and production-tested source code for <code class="inline-code">apps/client</code>, <code class="inline-code">apps/admin</code>, and <code class="inline-code">workbridge-backend-main</code>.</li>
-<li class="list-item">Comprehensive API documentation and Postman collection detailing all authentication, user, booking, and payment endpoints.</li>
-<li class="list-item">Technical architecture specification and developer onboarding README for subsequent engineering cohorts.</li>
+<li class="list-item">Complete Git repository containing clean, documented, and production-tested source code for <code class="inline-code">apps/client</code>, <code class="inline-code">apps/admin</code>, and <code class="inline-code">apps/api</code>.</li>
+<li class="list-item">Comprehensive API documentation and Postman collection detailing all authentication, user, booking, subscription, and payment endpoints.</li>
+<li class="list-item">Academic internship report and interactive defense presentation decks.</li>
 <hr class="divider"/>
 <div class="page-break"></div>
 <h2 class="h2-title">CHAPTER 8: CONCLUSION & RECOMMENDATIONS</h2>
 <h3 class="h3-title">8.1 Summary of Experience</h3>
 <p class="paragraph">The 6-month industrial internship at <strong>SORARDI PLC</strong> has been an immensely transformative experience. It provided me with the opportunity to transition from academic programming exercises to building scalable, full-stack enterprise applications that address real socio-economic problems in Ethiopia. </p>
-<p class="paragraph">Working on the <strong>WorkBridge</strong> platform deepened my technical mastery in Next.js 16, TypeScript, Node.js, MongoDB, modern monorepo workflows, and cloud authentication, while sharpening my problem-solving abilities and teamwork skills.</p>
+<p class="paragraph">Working on the <strong>WorkBridge</strong> platform deepened my technical mastery in Next.js 16, TypeScript, Node.js, MongoDB Atlas, modern monorepo workflows, freemium subscription design, and cloud authentication, while sharpening my problem-solving abilities and teamwork skills.</p>
 <h3 class="h3-title">8.2 Recommendations</h3>
 <h4 class="h4-title">For Dire Dawa University (Institute of Technology):</h4>
 <li class="ordered-item"><strong>1.</strong> <strong>Monorepo & Modern Web Frameworks in Curriculum:</strong> Introduce hands-on laboratory courses covering modern full-stack ecosystems (Next.js/React, TypeScript, Monorepos, Turborepo) alongside traditional programming fundamentals.</li>
 <li class="ordered-item"><strong>2.</strong> <strong>Industry Collaboration & Hackathons:</strong> Expand strategic partnerships with technology companies like SORARDI PLC to sponsor capstone projects and continuous industry-guided mentorship.</li>
 <h4 class="h4-title">For SORARDI PLC:</h4>
-<li class="ordered-item"><strong>1.</strong> <strong>Automated End-to-End Testing:</strong> Implement automated Playwright or Cypress E2E test suites in the CI/CD pipeline to complement unit and static analysis checks.</li>
-<li class="ordered-item"><strong>2.</strong> <strong>Mobile Application Development:</strong> Expand WorkBridge to mobile clients (React Native or Flutter) to better serve tradesmen operating primarily on smartphones with offline-first synchronization.</li>
-<h3 class="h3-title">8.3 Long-Term Career Impact</h3>
-<p class="paragraph">This internship has solidified my technical confidence, professional ethics, and passion for software engineering. The mentorship and experience gained at SORARDI PLC have prepared me to pursue a high-impact career as a Full-Stack Software Engineer and technology innovator.</p>
+<li class="ordered-item"><strong>1.</strong> <strong>Production Payment Gateway Onboarding:</strong> Transition from simulated mobile checkout to live Telebirr / Chapa merchant integrations once official banking merchant credentials are secured.</li>
+<li class="ordered-item"><strong>2.</strong> <strong>Mobile Application Development:</strong> Expand WorkBridge to native mobile clients (Flutter / React Native) with offline SMS/USSD booking channels for tradesmen without smartphones.</li>
 <hr class="divider"/>
 <div class="page-break"></div>
 <h2 class="h2-title">REFERENCES</h2>
@@ -618,45 +614,6 @@
 <li class="ordered-item"><strong>5.</strong> Google Cloud Identity. <em>Using OAuth 2.0 for Web Server Applications</em>. Google LLC, 2026. <code class="inline-code">https://developers.google.com/identity/protocols/oauth2</code></li>
 <li class="ordered-item"><strong>6.</strong> Pressman, Roger S., and Bruce R. Maxim. <em>Software Engineering: A Practitioner's Approach</em>. 9th ed., McGraw-Hill Education, 2020.</li>
 <li class="ordered-item"><strong>7.</strong> Martin, Robert C. <em>Clean Architecture: A Craftsman's Guide to Software Structure and Design</em>. Prentice Hall, 2017.</li>
-<hr class="divider"/>
-<div class="page-break"></div>
-<h2 class="h2-title">APPENDICES</h2>
-<h3 class="h3-title">Appendix A: System Component Hierarchy & Monorepo Dependency Map</h3>
-<pre class="code-block "><code>[workbridge-monorepo]
-   ├── apps/client (Next.js 16 Client Portal - http://localhost:3000)
-   ├── apps/admin  (Next.js 16 Admin Portal - http://localhost:3001)
-   ├── packages/ui (Button, Card, Input, SectionHeader, Container)
-   ├── packages/types (Shared DTOs, Enums, User, Booking, Payment interfaces)
-   ├── packages/api-client (Type-safe Axios/Fetch HTTP wrapper)
-   └── packages/eslint-config (Flat ESLint configurations)
-
-[workbridge-backend]
-   ├── Express REST API (http://localhost:4000)
-   ├── MongoDB Atlas Cluster (Cloud Database)
-   └── Google OAuth 2.0 Provider</code></pre>
-<h3 class="h3-title">Appendix B: Database Entity Relationship Summary</h3>
-<pre class="code-block "><code>+------------------+         +------------------+         +------------------+
-|      Users       | 1     * |       Jobs       | 1     * |   Applications   |
-+------------------+---------+------------------+---------+------------------+
-| _id (ObjectId)   |         | _id (ObjectId)   |         | _id (ObjectId)   |
-| name (String)    |         | employerId (Ref) |         | jobId (Ref)      |
-| email (String)   |         | title (String)   |         | workerId (Ref)   |
-| role (Enum)      |         | category (String)|         | status (Enum)    |
-| skills (Array)   |         | budget (Number)  |         | coverNote(String)|
-| rating (Number)  |         | location (String)|         | createdAt (Date) |
-+------------------+         +------------------+         +------------------+
-         | 1                                                       
-         |                                                         
-         | *                                                       
-+------------------+         +------------------+                  
-|     Bookings     | 1     1 |     Payments     |                  
-+------------------+---------+------------------+                  
-| _id (ObjectId)   |         | _id (ObjectId)   |                  
-| clientId (Ref)   |         | bookingId (Ref)  |                  
-| workerId (Ref)   |         | amount (Number)  |                  
-| status (Enum)    |         | status (Enum)    |                  
-| scheduledDate    |         | method (Enum)    |                  
-+------------------+         +------------------+                  </code></pre>
 <hr class="divider"/>
 <p class="paragraph"><em>End of Internship Report — Dire Dawa University Institute of Technology (2026)</em></p>
   </div>
