@@ -17,7 +17,7 @@
 - **Student Name:** Abdi Abiot  
 - **Student ID:** DDU1500744  
 - **Host Organization:** SORARDI PLC  
-- **Internship Duration:** March 2026 – August 2026 (6 Months)  
+- **Internship Duration:** May 2026 – September 2026 (4 Months)  
 - **Academic Advisor:** Department Internship Coordinator  
 - **Industry Supervisor:** Lead Software Architect, SORARDI PLC  
 
@@ -108,7 +108,7 @@
   - Utilizes 100% open-source software and managed cloud tiers (MongoDB Atlas, Google Cloud API free tier).
   - Generates platform sustainability through low-fee premium employer postings and verified badges.
 - **4. Schedule Feasibility:**
-  - Successfully executed in 12 two-week Agile sprints over the 6-month internship period (March–August 2026).
+  - Successfully executed in 8 two-week Agile sprints over the 4-month internship period (March–August 2026).
 
 ---
 

@@ -335,7 +335,7 @@
       <section class="slide title-slide" id="slide-1">
         <div class="slide-badge">PART TWO: IMPLEMENTATION DEFENSE</div>
         <h1 class="main-title">WorkBridge</h1>
-        <p class="main-subtitle">A Multi-Tenant Digital Labor & Skill Marketplace Platform for Ethiopia</p>
+        <p class="main-subtitle">A Multi-Tenant Freemium Digital Labor & Skill Marketplace Platform for Ethiopia</p>
         <div class="title-meta-grid">
           
             <div class="meta-item">
@@ -390,7 +390,7 @@
             </div>
           
             <div class="agenda-card">
-              <span class="agenda-text">4. Scope and Limitations</span>
+              <span class="agenda-text">4. Scope & Limitations (Simulated Payments Note)</span>
             </div>
           
             <div class="agenda-card">
@@ -402,7 +402,7 @@
             </div>
           
             <div class="agenda-card">
-              <span class="agenda-text">7. Development Methodology & Architecture</span>
+              <span class="agenda-text">7. Development Methodology (9-Phase Lifecycle)</span>
             </div>
           
             <div class="agenda-card">
@@ -433,7 +433,7 @@
         
           <div class="point-card">
             <h3 class="point-heading">Ethiopian Labor Landscape</h3>
-            <p class="point-desc">Ethiopia has a growing blue-collar workforce, yet over 65% of trade services (electrical, plumbing, masonry, carpentry) operate informally without digital tools.</p>
+            <p class="point-desc">Ethiopia has a rapidly expanding skilled trade workforce, yet over 65% of blue-collar transactions (electrical, plumbing, masonry, carpentry) operate informally.</p>
           </div>
         
           <div class="point-card">
@@ -443,7 +443,7 @@
         
           <div class="point-card">
             <h3 class="point-heading">Strategic Engineering Goals</h3>
-            <p class="point-desc">Deliver transparent pricing, verified worker profiles, seamless booking lifecycles, and escrow-backed financial accountability.</p>
+            <p class="point-desc">Provide transparent pricing, verified worker profiles, direct booking lifecycles, and a sustainable two-sided freemium business model.</p>
           </div>
         
       </div>
@@ -471,8 +471,8 @@
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Pricing Disparities & Payment Friction</h3>
-            <p class="point-desc">Arbitrary pricing models with absence of standardized hourly wage benchmarks or digital escrow security.</p>
+            <h3 class="point-heading">Pricing Disparities & Transaction Gaps</h3>
+            <p class="point-desc">Arbitrary pricing models with absence of standardized hourly wage benchmarks or digital booking histories.</p>
           </div>
         
       </div>
@@ -500,8 +500,8 @@
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Identity & Type Safety</h3>
-            <p class="point-desc">Integrate Google OAuth 2.0 and JWT auth with 100% strict TypeScript type coverage and zero compiler errors.</p>
+            <h3 class="point-heading">Freemium Monetization & Security</h3>
+            <p class="point-desc">Implement automated quota enforcement, simulated Ethiopian mobile payments (Telebirr, Chapa, CBE Birr), Google OAuth 2.0, and strict TypeScript type safety.</p>
           </div>
         
       </div>
@@ -520,17 +520,17 @@
         
           <div class="point-card">
             <h3 class="point-heading">System Scope (Functional)</h3>
-            <p class="point-desc">Multi-role auth, trade worker search engine, interactive job board, booking lifecycle, payments dashboard, and admin moderation queue.</p>
+            <p class="point-desc">Multi-role auth, trade worker search engine, interactive job board, direct bookings, conversational live chat, and admin moderation desk.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Platform Limitations</h3>
-            <p class="point-desc">Web-first responsive application requiring active internet connectivity (offline SMS/USSD channels scheduled for Phase 2).</p>
+            <h3 class="point-heading">Simulated Payments Note</h3>
+            <p class="point-desc">WorkBridge initially implements a simulated payment and subscription system for demonstration purposes before live production banking integration.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Geographical Focus</h3>
-            <p class="point-desc">Initial rollout optimized for urban hubs: Addis Ababa, Dire Dawa, Hawassa, and Adama.</p>
+            <h3 class="point-heading">Geographical Focus & Web-First</h3>
+            <p class="point-desc">Initial rollout optimized for urban hubs (Addis Ababa, Dire Dawa, Hawassa, Adama) with native mobile apps planned for Phase 2.</p>
           </div>
         
       </div>
@@ -549,7 +549,7 @@
         
           <div class="point-card">
             <h3 class="point-heading">Functional Requirements (FR)</h3>
-            <p class="point-desc">Role-based signup/login, trade profile management, job posting wizard, candidate screening, booking management, and report auditing.</p>
+            <p class="point-desc">Role-based auth, trade profile management, job posting wizard, candidate screening, direct booking workflows, and subscription checkout.</p>
           </div>
         
           <div class="point-card">
@@ -601,23 +601,23 @@
     <section class="slide content-slide" id="slide-9">
       <div class="slide-header">
         <div class="slide-badge">SECTION 7: METHODOLOGY</div>
-        <h2 class="slide-title">Development Methodology & Architecture</h2>
+        <h2 class="slide-title">9-Phase Engineering Methodology</h2>
       </div>
       <div class="points-grid">
         
           <div class="point-card">
-            <h3 class="point-heading">Agile Scrum Process</h3>
-            <p class="point-desc">2-week sprint cycles, daily 15-minute standups, sprint reviews, and Git Flow branching (main, develop, feature/*).</p>
+            <h3 class="point-heading">Phases 1–3: Foundation, Auth & Users</h3>
+            <p class="point-desc">Monorepo configuration, Express API & MongoDB Atlas, JWT & Google OAuth 2.0, Forgot/Reset password, Worker & Client profiles.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Turborepo Monorepo Stack</h3>
-            <p class="point-desc">apps/client (Port 3000), apps/admin (Port 3001), shared packages (@repo/ui, @repo/types, @repo/api-client), and backend (Port 4000).</p>
+            <h3 class="point-heading">Phases 4–6: Marketplace, Booking & Chat</h3>
+            <p class="point-desc">Worker discovery & filters, job posting & apply, direct booking state transitions, reviews/ratings, and conversational live messaging.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Technology Matrix</h3>
-            <p class="point-desc">Next.js 16, React 19, TypeScript, Tailwind CSS, Node.js, Express.js REST API, MongoDB Atlas, Google OAuth 2.0.</p>
+            <h3 class="point-heading">Phases 7–9: Monetization, Admin & Quality</h3>
+            <p class="point-desc">Freemium quotas (5 worker / 3 employer), simulated Telebirr/Chapa/CBE payments, Admin revenue monitoring, 100% strict TypeScript types & ESLint.</p>
           </div>
         
       </div>
@@ -636,7 +636,7 @@
         
           <div class="point-card">
             <h3 class="point-heading">Delivered Applications</h3>
-            <p class="point-desc">Live, responsive Client Portal (Jobseeker/Employer) and Admin Portal backed by robust RESTful Express services.</p>
+            <p class="point-desc">Live, responsive Client Portal (Jobseeker/Employer), Admin Portal, and Express REST API backend in a unified monorepo.</p>
           </div>
         
           <div class="point-card">
@@ -646,7 +646,7 @@
         
           <div class="point-card">
             <h3 class="point-heading">Organizational Deliverables</h3>
-            <p class="point-desc">Handed over complete source code repositories, reusable @repo/ui design system, and comprehensive Postman API documentation.</p>
+            <p class="point-desc">Handed over complete source code repository, reusable @repo/ui design system, and comprehensive Postman API documentation.</p>
           </div>
         
       </div>
@@ -675,7 +675,7 @@
         
           <div class="point-card">
             <h3 class="point-heading">Platform Future Roadmap</h3>
-            <p class="point-desc">Develop cross-platform mobile clients (Flutter/React Native) and introduce USSD/SMS offline booking channels.</p>
+            <p class="point-desc">Transition simulated payments to live production banking integrations, build native mobile apps (Flutter), and introduce USSD booking.</p>
           </div>
         
       </div>

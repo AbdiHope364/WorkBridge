@@ -10,7 +10,7 @@
 - **Project Name:** WorkBridge — Labor & Tradesman Marketplace Platform
 - **Presenter:** Abdi Abiot (ID: DDU1500744)
 - **Host Company:** SORARDI PLC
-- **Internship Period:** March 2026 – August 2026 (6 Months)
+- **Internship Period:** May 2026 – September 2026 (4 Months)
 - **Academic Advisor:** Department Internship Coordinator
 - **Industry Mentor:** Lead Software Architect, SORARDI PLC
 
@@ -141,7 +141,7 @@
 ---
 
 ### Slide 14: Conclusion & Recommendations
-- **Summary:** The 6-month internship at SORARDI PLC successfully transformed university software engineering principles into an enterprise-grade digital labor marketplace.
+- **Summary:** The 4-month internship at SORARDI PLC successfully transformed university software engineering principles into an enterprise-grade digital labor marketplace.
 - **Recommendations for University:** Incorporate modern monorepo and TypeScript workflows into practical lab coursework.
 - **Future Work for WorkBridge:** Develop mobile companion applications (React Native / Flutter) and offline-first USSD/SMS booking channels.
 

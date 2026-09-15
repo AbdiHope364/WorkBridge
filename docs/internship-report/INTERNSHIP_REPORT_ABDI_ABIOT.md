@@ -22,7 +22,7 @@
 - **Host Organization:** SORARDI PLC, Addis Ababa & Dire Dawa, Ethiopia
 - **Industry Supervisor:** Mr. Dawit Tesfaye (Lead Software Architect, SORARDI PLC)
 - **Academic Advisor:** Mr. Fikadu (Lecturer, Department of Software Engineering, DDU-IoT)
-- **Internship Duration:** 7 Months (February 15, 2026 – September 15, 2026)
+- **Internship Duration:** 4 Months (May 15, 2026 – September 15, 2026)
 - **Date of Submission:** 10/01/2018 E.C. (September 20, 2026 G.C.)
 - **Date of Defense / Presentation:** 12/01/2018 E.C. (September 22, 2026 G.C.)
 
@@ -30,7 +30,7 @@
 
 ## DECLARATION
 
-I, **Abdi Abiot**, hereby declare that this internship report entitled **"Software Engineering Internship Report: WorkBridge Platform Development and Supporting Software Systems at SORARDI PLC"** is my original work developed during my 7-month industrial internship from February 15, 2026, to September 15, 2026, at SORARDI PLC. 
+I, **Abdi Abiot**, hereby declare that this internship report entitled **"Software Engineering Internship Report: WorkBridge Platform Development and Supporting Software Systems at SORARDI PLC"** is my original work developed during my 4-month industrial internship from May 15, 2026, to September 15, 2026, at SORARDI PLC. 
 
 This report presents authentic technical contributions, design decisions, implementation details, testing results, and professional experiences acquired under the joint supervision of **Mr. Dawit Tesfaye** (Industry Supervisor at SORARDI PLC) and **Mr. Fikadu** (Academic Advisor at Dire Dawa University). All external sources, libraries, frameworks, and literature utilized during this tenure have been duly cited and acknowledged.
 
@@ -43,7 +43,7 @@ This report presents authentic technical contributions, design decisions, implem
 ## APPROVAL & CERTIFICATION
 
 ### 1. Industry Supervisor Approval
-This is to certify that **Abdi Abiot** (ID: DDU1500744) has successfully completed his 7-month industrial internship at **SORARDI PLC**. As Lead Software Architect and his direct supervisor, I have reviewed his technical performance, project deliverables on the **WorkBridge** platform and supporting software systems, and this final internship report. The work described herein meets industry standards and accurately reflects his contributions.
+This is to certify that **Abdi Abiot** (ID: DDU1500744) has successfully completed his 4-month industrial internship at **SORARDI PLC**. As Lead Software Architect and his direct supervisor, I have reviewed his technical performance, project deliverables on the **WorkBridge** platform and supporting software systems, and this final internship report. The work described herein meets industry standards and accurately reflects his contributions.
 
 - **Industry Supervisor:** Mr. Dawit Tesfaye (Lead Software Architect, SORARDI PLC)  
 - **Signature:** ___________________________  
@@ -61,7 +61,7 @@ This is to certify that this internship report has been submitted to the Departm
 
 ## ACKNOWLEDGMENT
 
-First and foremost, I would like to express my deepest gratitude to the Almighty for granting me health, wisdom, strength, and perseverance throughout my academic journey and the demanding 7-month industrial internship period.
+First and foremost, I would like to express my deepest gratitude to the Almighty for granting me health, wisdom, strength, and perseverance throughout my academic journey and the demanding 4-month industrial internship period.
 
 I extend my heartfelt appreciation and sincere gratitude to the management and engineering leadership of **SORARDI PLC** for providing me with the opportunity to join their software engineering team. Special and profound thanks go to my industry supervisor, **Mr. Dawit Tesfaye** (Lead Software Architect at SORARDI PLC), whose technical mentorship, thorough code reviews, architectural insights, and encouragement were instrumental in transforming my academic knowledge into enterprise-grade engineering practice. I also thank my senior colleagues and team members at SORARDI PLC for their collaborative spirit and guidance across modern full-stack development, agile ceremonies, and distributed systems.
 
@@ -115,7 +115,7 @@ Finally, I am eternally indebted to my family and classmates for their unconditi
 
 ## EXECUTIVE SUMMARY
 
-This report documents the 7-month software engineering industrial internship completed by **Abdi Abiot** (Student ID: DDU1500744) at **SORARDI PLC** in partial fulfillment of the requirements for the Degree of Bachelor of Science in Software Engineering at Dire Dawa Institute of Technology, Dire Dawa University. The internship spanned from February 15, 2026, to September 15, 2026 (corresponding to 10/01/2018 E.C. academic submission).
+This report documents the 4-month software engineering industrial internship completed by **Abdi Abiot** (Student ID: DDU1500744) at **SORARDI PLC** in partial fulfillment of the requirements for the Degree of Bachelor of Science in Software Engineering at Dire Dawa Institute of Technology, Dire Dawa University. The internship spanned from May 15, 2026, to September 15, 2026 (corresponding to 10/01/2018 E.C. academic submission).
 
 The primary focus of the internship was the engineering, architectural design, full-stack implementation, and quality verification of **WorkBridge**, a modern, cloud-native digital marketplace tailored to the Ethiopian labor economy. In Ethiopia, skilled tradesmen (electricians, plumbers, carpenters, masons, mechanics, painters) and clients (homeowners, business managers, construction contractors) suffer from severe market friction caused by informal commission brokers (*Delalas*), opaque pricing, lack of identity and skills verification, and manual search processes. WorkBridge resolves these systemic challenges by providing an open, digital labor marketplace featuring multi-role authentication, trade portfolio showcases, structured job postings, on-demand service bookings, bidirectional rating reviews, and an administrative moderation portal.
 
@@ -125,7 +125,7 @@ The platform is engineered using a scalable **Turborepo monorepo architecture** 
 
 In addition to WorkBridge, secondary internship contributions included frontend and API module engineering on supporting client projects at SORARDI PLC: **LuckyEthio / Ethioluck**, a **Restaurant Contactless QR Menu System**, and the **AxumMarket** e-commerce portal. All deliverables were subjected to rigorous verification gates, achieving 100% pass rates on TypeScript static type checking (`pnpm check-types`) and ESLint validation (`pnpm lint`).
 
-This comprehensive report details the organizational environment, problem analysis, architectural designs, implementation methodologies, testing strategies, technical challenges overcome, and professional growth attained during the 7-month internship.
+This comprehensive report details the organizational environment, problem analysis, architectural designs, implementation methodologies, testing strategies, technical challenges overcome, and professional growth attained during the 4-month internship.
 
 ---
 
@@ -262,7 +262,7 @@ This comprehensive report details the organizational environment, problem analys
 ## LIST OF TABLES
 
 - **Table 2.1:** SORARDI PLC Company Profile Summary
-- **Table 3.1:** 7-Month Internship Timeline & Agile Sprint Distribution
+- **Table 3.1:** 4-Month Internship Timeline & Agile Sprint Distribution
 - **Table 4.1:** WorkBridge Functional Requirements Matrix
 - **Table 4.2:** Non-Functional Requirements Specifications
 - **Table 4.3:** Freemium Quota & Subscription Tier Definitions
@@ -276,9 +276,9 @@ This comprehensive report details the organizational environment, problem analys
 # CHAPTER 1: INTRODUCTION
 
 ## 1.1 Background of the Internship
-The industrial internship program is a core capstone requirement established by the **Department of Software Engineering**, **Dire Dawa Institute of Technology (DDU-IoT)**, **Dire Dawa University**. Designed to bridge the gap between theoretical classroom learning and practical software engineering, the 7-month industrial internship places senior software engineering students into dynamic technology firms. 
+The industrial internship program is a core capstone requirement established by the **Department of Software Engineering**, **Dire Dawa Institute of Technology (DDU-IoT)**, **Dire Dawa University**. Designed to bridge the gap between theoretical classroom learning and practical software engineering, the 4-month industrial internship places senior software engineering students into dynamic technology firms. 
 
-From **February 15, 2026, to September 15, 2026**, I was hosted by **SORARDI PLC**, an innovative Ethiopian software development and technology consulting firm. During this 7-month tenure, I served as a Full-Stack Software Engineering Intern embedded within the core product development team.
+From **May 15, 2026, to September 15, 2026**, I was hosted by **SORARDI PLC**, an innovative Ethiopian software development and technology consulting firm. During this 4-month tenure, I served as a Full-Stack Software Engineering Intern embedded within the core product development team.
 
 ## 1.2 Purpose and Significance of the Internship
 The primary purpose of the internship is to immerse students into enterprise software development environments where they apply software engineering methodologies, modern architectural patterns, automated quality gates, and collaborative practices. 
@@ -305,7 +305,7 @@ The significance of this experience includes:
 - Fulfill the graduation requirements of the Bachelor of Science in Software Engineering at Dire Dawa University.
 
 ## 1.4 Scope and Boundaries of the Work
-The scope of work accomplished during the 7-month internship encompassed:
+The scope of work accomplished during the 4-month internship encompassed:
 - **Primary Project (WorkBridge):** End-to-end architecture, API design, database schemas, frontend interfaces, quota middleware, mock checkout modals, and admin portal.
 - **Supporting Projects:** Contributing to UI components, REST APIs, and database integration for **LuckyEthio / Ethioluck**, **Restaurant Contactless QR Menu**, and **AxumMarket**.
 - **Boundaries & Disclaimers:** WorkBridge integrates a **simulated/mock payment processing architecture**. No actual financial transactions or live bank integrations were deployed to production during this academic phase. Real payment provider APIs (Telebirr B2C/C2B, Chapa live keys, CBE Birr merchant gateway) represent the future production roadmap.
@@ -420,17 +420,14 @@ During my internship, I adhered strictly to professional engineering ethics:
 # CHAPTER 3: INTERNSHIP ACTIVITIES & PROJECT PORTFOLIO
 
 ## 3.1 Overview of Internship Activities
-Throughout the 7-month internship (February 15, 2026 – September 15, 2026), my activities progressed through structured phases spanning orientation, requirements analysis, system architecture, frontend and backend development, testing, and documentation.
+Throughout the 4-month internship (May 15, 2026 – September 15, 2026), my activities progressed through structured phases spanning orientation, requirements analysis, system architecture, frontend and backend development, testing, and documentation.
 
 ```text
 =======================================================================================================
-MONTH 1 (Feb-Mar): Orientation, Tooling, Agile Training & WorkBridge Requirements Analysis
-MONTH 2 (Mar-Apr): Monorepo Architecture Setup, Shared Packages (@repo/types, @repo/ui) & Auth Engine
-MONTH 3 (Apr-May): WorkBridge Core Marketplace: Worker Discovery, Profiles & Client Job Postings
-MONTH 4 (May-Jun): Direct Booking Subsystem, Status Lifecycle, Review Ratings & Messaging Architecture
-MONTH 5 (Jun-Jul): Freemium Monetization: Quota Middleware, Subscriptions & Mock Digital Payments
-MONTH 6 (Jul-Aug): Admin Portal (Moderation, Verification, Analytics) & Secondary Client Projects
-MONTH 7 (Aug-Sep): Full System Integration, Quality Gate Verification, Performance Tuning & Final Report
+MONTH 1 (May-Jun): Orientation, Tooling, Monorepo Scaffolding (@repo/types, @repo/ui) & Auth Engine
+MONTH 2 (Jun-Jul): WorkBridge Marketplace: Worker Discovery, Profiles, Job Board & Direct Booking Subsystem
+MONTH 3 (Jul-Aug): Freemium Monetization: Quota Middleware, Subscriptions & Multi-Channel Mock Payments
+MONTH 4 (Aug-Sep): Admin Moderation Portal, Supporting Projects, Quality Gate Verification & Final Report
 =======================================================================================================
 ```
 
@@ -994,7 +991,7 @@ I consolidated disparate backend and frontend codebases into a clean, single-rep
 # CHAPTER 12: CONCLUSION & RECOMMENDATIONS
 
 ## 12.1 Conclusion
-The 7-month software engineering industrial internship at **SORARDI PLC** has been a transformative experience. It enabled me to transition from academic programming exercises to architecting enterprise-grade, scalable full-stack applications. Through the **WorkBridge** platform, I demonstrated how modern software engineering can resolve acute socio-economic challenges in Ethiopia by connecting skilled tradesmen with clients through transparent, secure, and accessible digital workflows.
+The 4-month software engineering industrial internship at **SORARDI PLC** has been a transformative experience. It enabled me to transition from academic programming exercises to architecting enterprise-grade, scalable full-stack applications. Through the **WorkBridge** platform, I demonstrated how modern software engineering can resolve acute socio-economic challenges in Ethiopia by connecting skilled tradesmen with clients through transparent, secure, and accessible digital workflows.
 
 ## 12.2 System Limitations & Technical Boundaries
 - **Payment Processing:** Currently operates via a **simulated/mock checkout engine**. Live production deployment requires formal commercial agreements, merchant accounts, and API credentials from Telebirr (Ethio Telecom), Commercial Bank of Ethiopia (CBE Birr), and Chapa Financial Technologies.
