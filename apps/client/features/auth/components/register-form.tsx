@@ -153,7 +153,11 @@ export function RegisterForm({
     }
   };
 
-  const handleGoogleSignUp = () => {
+  const handleGoogleSignUp = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     setIsGoogleModalOpen(true);
   };
 

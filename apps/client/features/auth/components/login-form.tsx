@@ -126,7 +126,11 @@ export function LoginForm() {
     }
   };
 
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     setIsGoogleModalOpen(true);
   };
 

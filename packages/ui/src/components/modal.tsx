@@ -1,6 +1,7 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 export interface ModalProps {
   isOpen: boolean;
@@ -19,6 +20,12 @@ export function Modal({
   size = "md",
   closeButton = true,
 }: ModalProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
@@ -35,7 +42,7 @@ export function Modal({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!mounted || !isOpen) return null;
 
   const sizeClasses = {
     sm: "max-w-sm",
@@ -44,15 +51,15 @@ export function Modal({
     xl: "max-w-xl",
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
       <div
         className="fixed inset-0"
         onClick={onClose}
         aria-hidden="true"
       />
       <div
-        className={`relative z-10 w-full ${sizeClasses[size]} rounded-3xl bg-white shadow-2xl border border-slate-100 overflow-hidden animate-in zoom-in-95 duration-200`}
+        className={`relative z-10 w-full ${sizeClasses[size]} rounded-3xl bg-white shadow-2xl border border-slate-100 overflow-hidden`}
         role="dialog"
         aria-modal="true"
       >
@@ -67,7 +74,7 @@ export function Modal({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
+                className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition cursor-pointer"
                 aria-label="Close modal"
               >
                 <svg
@@ -89,6 +96,7 @@ export function Modal({
         )}
         <div className="px-6 py-4 max-h-[85vh] overflow-y-auto">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
