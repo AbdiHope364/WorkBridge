@@ -1,13 +1,13 @@
 "use client";
 
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useEffect } from "react";
 
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
   children: ReactNode;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
   closeButton?: boolean;
 }
 
@@ -19,38 +19,55 @@ export function Modal({
   size = "md",
   closeButton = true,
 }: ModalProps) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
     if (isOpen) {
-      dialogRef.current?.showModal();
-    } else {
-      dialogRef.current?.close();
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
     }
-  }, [isOpen]);
+    return () => {
+      document.body.style.overflow = "unset";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
 
   const sizeClasses = {
     sm: "max-w-sm",
     md: "max-w-md",
     lg: "max-w-lg",
+    xl: "max-w-xl",
   };
 
   return (
-    <dialog
-      ref={dialogRef}
-      onCancel={onClose}
-      className="backdrop:bg-black/50 rounded-lg shadow-lg"
-    >
-      <div className={`${sizeClasses[size]} w-full`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+      <div
+        className="fixed inset-0"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <div
+        className={`relative z-10 w-full ${sizeClasses[size]} rounded-3xl bg-white shadow-2xl border border-slate-100 overflow-hidden animate-in zoom-in-95 duration-200`}
+        role="dialog"
+        aria-modal="true"
+      >
         {(title || closeButton) && (
-          <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
-            {title && (
-              <h2 className="text-lg font-semibold text-slate-950">{title}</h2>
+          <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+            {title ? (
+              <h2 className="text-lg font-bold text-slate-900">{title}</h2>
+            ) : (
+              <div />
             )}
             {closeButton && (
               <button
+                type="button"
                 onClick={onClose}
-                className="ml-auto text-slate-500 hover:text-slate-700"
+                className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
                 aria-label="Close modal"
               >
                 <svg
@@ -70,8 +87,8 @@ export function Modal({
             )}
           </div>
         )}
-        <div className="px-6 py-4">{children}</div>
+        <div className="px-6 py-4 max-h-[85vh] overflow-y-auto">{children}</div>
       </div>
-    </dialog>
+    </div>
   );
 }
