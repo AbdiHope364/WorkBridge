@@ -125,6 +125,23 @@ export default function PricingPage() {
               )}
             </div>
           ) : null}
+
+          {/* 0% Commission Guarantee Card */}
+          <div className="mt-8 max-w-2xl mx-auto bg-gradient-to-r from-emerald-900 to-slate-900 text-white p-5 rounded-2xl shadow-lg flex items-center justify-between gap-4 border border-emerald-500/30 text-left">
+            <div>
+              <div className="flex items-center gap-1.5 text-emerald-400 font-bold text-xs uppercase tracking-wider mb-1">
+                <Shield className="w-4 h-4" /> 100% Direct Settlement Model
+              </div>
+              <h3 className="text-base font-bold text-white">0% Platform Fee on Trade Wages</h3>
+              <p className="text-slate-300 text-xs mt-0.5 leading-relaxed">
+                WorkBridge takes zero commission from tradesmen earnings. Clients pay workers directly upon job completion. Subscriptions only cover platform listing and application quotas.
+              </p>
+            </div>
+            <div className="shrink-0 bg-emerald-500/20 border border-emerald-400/40 px-3.5 py-2 rounded-xl text-center">
+              <span className="block text-2xl font-black text-emerald-400">0%</span>
+              <span className="text-[9px] text-slate-300 uppercase font-bold tracking-wider">Commission</span>
+            </div>
+          </div>
         </div>
 
         {/* Pricing Cards Grid */}
@@ -249,13 +266,15 @@ export default function PricingPage() {
         </div>
 
         {/* FAQ & Safe Demo Note */}
-        <div className="mt-20 max-w-3xl mx-auto bg-white p-8 rounded-3xl border border-slate-200 text-center">
-          <h4 className="text-lg font-bold text-slate-900 mb-2">
-            Simulated Ethiopian Payment Processing
+        <div className="mt-16 max-w-3xl mx-auto bg-white p-8 rounded-3xl border border-slate-200 text-center space-y-3">
+          <h4 className="text-lg font-bold text-slate-900">
+            Simulated Ethiopian Payment Gateway & Platform Model
           </h4>
           <p className="text-sm text-slate-600 leading-relaxed">
-            WorkBridge uses a simulated sandbox gateway replicating <strong>Telebirr, Chapa, and CBE Birr</strong>.
-            During this prototype phase, test checkout runs instantly without deducting actual bank funds, immediately activating your full Pro subscription!
+            WorkBridge operates on a <strong>pure subscription access model</strong>. We charge <strong>0% commission</strong> on client-worker trade service transactions. Clients pay workers directly upon service inspection (Cash or Telebirr P2P).
+          </p>
+          <p className="text-xs text-slate-500 leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
+            <strong>Prototype Demo Notice:</strong> Platform subscription upgrades (Telebirr, CBE Birr, Chapa) run on a sandbox simulation engine for educational and evaluation purposes, granting instant Pro access without real monetary charges.
           </p>
         </div>
       </Container>

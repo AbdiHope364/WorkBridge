@@ -84,10 +84,10 @@ export function MockCheckoutModal({
           </div>
 
           {/* Demo Notice Banner */}
-          <div className="bg-amber-50 border border-amber-200 p-3 rounded-2xl flex items-start gap-2.5 text-xs text-amber-900">
+          <div className="bg-amber-50 border border-amber-200 p-3.5 rounded-2xl flex items-start gap-2.5 text-xs text-amber-950">
             <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <div>
-              <strong>Demo/Simulation Mode:</strong> No real money will be charged. This simulates Ethiopian mobile payment rails (Telebirr / Chapa / CBE Birr).
+              <strong>Simulated Access Subscription:</strong> Unlocks unlimited platform listing/application quotas. WorkBridge charges <strong>0% fee</strong> on client-worker service earnings (settled directly).
             </div>
           </div>
 

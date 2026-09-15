@@ -316,13 +316,18 @@ export function BookWorkerModal({
                   rows={3}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Explain what needs to be repaired, installed, or constructed. Mention any special tools or materials required on-site..."
                   className="w-full rounded-2xl border border-slate-200 p-3.5 text-sm text-slate-900 shadow-sm focus:border-emerald-500 focus:outline-none"
                   required
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+              {/* Direct Settlement Notice */}
+              <div className="rounded-xl bg-emerald-50/90 border border-emerald-200 p-3 text-xs text-emerald-900 flex items-start gap-2.5">
+                <span className="font-bold shrink-0 mt-0.5">💡 Direct Settlement:</span>
+                <span>Clients pay tradesmen directly upon job completion (Cash / Telebirr P2P). WorkBridge charges <strong>0% commission</strong> on service wages.</span>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-2 border-t border-slate-100">
                 <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
                   Cancel
                 </Button>

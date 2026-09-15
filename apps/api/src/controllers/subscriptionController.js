@@ -18,6 +18,7 @@ export const DEFAULT_PLANS = [
       'Search all open job postings',
       'Apply to up to 5 jobs per month',
       'Receive direct booking requests',
+      '0% platform commission on all service wages',
       'Direct chat with clients',
     ],
   },
@@ -35,6 +36,7 @@ export const DEFAULT_PLANS = [
     isPopular: true,
     features: [
       'Unlimited job applications',
+      '0% commission (Keep 100% of service earnings)',
       'Verified Pro Tradesman badge',
       'Priority search ranking in worker discovery',
       'Direct client messaging & booking',
