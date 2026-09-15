@@ -1,95 +1,69 @@
 # DIRE DAWA UNIVERSITY
 ## DIRE DAWA INSTITUTE OF TECHNOLOGY (DDU-IoT)
 ### TECHNOLOGY TRANSFER AND INSTITUTE-INDUSTRY LINKAGE OFFICE
-**Phone:** +251-025-411-05-99 | **P.O. Box:** 1362 | **Fax:** +251-025-411-44-98 | **Dire Dawa, Ethiopia**  
-**Email:** dduiotilk@gmail.com
+**Phone:** +251-025-411-05-99 | **P.O. Box:** 1362 | **Dire Dawa, Ethiopia** | **Email:** dduiotilk@gmail.com
 
 ---
 
-# INTERNSHIP STUDENTS ATTENDANCE SHEETS (4 MONTHS)
-### *To be filled by Company Supervisor*
+# INTERNSHIP STUDENTS ATTENDANCE SHEETS (4 MONTHS / 16 WEEKS)
+### *Schedule: 3 Working Days Per Week (Monday, Wednesday, Friday) — Tuesdays & Thursdays: University Days*
 
-- **Intern's Full Name:** Abdi Abiot  
-- **Student ID:** DDU1500744  
-- **Program:** BSc in Software Engineering (4th Year)  
+- **Intern's Full Name:** Abdi Abiot (Student ID: DDU1500744)  
 - **Host Company Name:** SORARDI PLC  
-- **Company Supervisor:** Mr. Busha Dinsa / Mr. Dawit Tesfaye (Lead Software Architect, SORARDI PLC)  
-- **Academic Advisor:** Mr. Fikadu (Lecturer, Department of Software Engineering, DDU-IoT)  
-- **Tenure Duration:** March 15, 2026 – July 15, 2026 (4 Months)  
+- **Supervisors:** Mr. Busha Dinsa & Mr. Dawit Tesfaye (SORARDI PLC)  
+- **Internship Period:** March 15, 2026 – July 15, 2026 (4 Months)  
 
 ---
 
-## MONTH 1: March 15, 2026 – April 14, 2026
-
-**Working Focus:** Company Orientation, Agile Workflow Setup, Monorepo Scaffolding & Shared Types/UI
+## Month 1: March 15, 2026 – April 14, 2026
+- **Total Absent Days in Month:** 0 Days (12 Days Worked, 8 Uni Days)
+- **Company Supervisor:** Busha Dinsa / Dawit Tesfaye *(Signed & Stamped: SORARDI PLC)*
 
 | Week | Monday | Tuesday | Wednesday | Thursday | Friday |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Week 1** *(Mar 16 – Mar 20)* | Present (Orientation & Agile Setup) | Present (Turborepo & pnpm Config) | Present (Codebase Audit & Architecture) | Present (Next.js 16 Workspace Setup) | Present (Weekly Sprint Review 1) |
-| **Week 2** *(Mar 23 – Mar 27)* | Present (@repo/types DTO Modeling) | Present (User/Worker Schema Design) | Present (@repo/ui Design System) | Present (Tailwind Component Library) | Present (Sprint Retrospective 2) |
-| **Week 3** *(Mar 30 – Apr 03)* | Present (Express REST API Structure) | Present (MongoDB Atlas Connection) | Present (Bcrypt Password Hashing) | Present (JWT Token Issuance) | Present (Sprint Planning 3) |
-| **Week 4** *(Apr 06 – Apr 10)* | Present (Google OAuth 2.0 State Store) | Present (OAuth Callback Routing) | Present (Role-Based Route Guards) | Present (Auth Security Auditing) | Present (Month 1 Milestone Review) |
-
-- **Total absent days in a month:** `0 (Zero) Days`  
-- **Supervisor Name:** Busha Dinsa / Dawit Tesfaye  
-- **Signature:** *[Signed]*  
-- **Company Stamp:** *[SORARDI PLC Official Seal]*  
+| **Week 1** *(Cum. W1)* | Present (Tool Setup) | *Uni Day* | Present (Codebase Audit) | *Uni Day* | Present (Sprint Review) |
+| **Week 2** *(Cum. W2)* | Present (Monorepo Setup) | *Uni Day* | Present (Data Types) | *Uni Day* | Present (UI Buttons) |
+| **Week 3** *(Cum. W3)* | Present (Express Server) | *Uni Day* | Present (MongoDB Setup) | *Uni Day* | Present (User Signup) |
+| **Week 4** *(Cum. W4)* | Present (JWT Login) | *Uni Day* | Present (Google Auth) | *Uni Day* | Present (Month 1 Review) |
 
 ---
 
-## MONTH 2: April 15, 2026 – May 14, 2026
-
-**Working Focus:** WorkBridge Marketplace: Worker Discovery, Dynamic Profiles & Job Board Subsystems
+## Month 2: April 15, 2026 – May 14, 2026
+- **Total Absent Days in Month:** 1 Day Excused (11 Days Worked, 8 Uni Days)
+- **Company Supervisor:** Busha Dinsa / Dawit Tesfaye *(Signed & Stamped: SORARDI PLC)*
 
 | Week | Monday | Tuesday | Wednesday | Thursday | Friday |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Week 1** *(Apr 15 – Apr 17)* | Present (Worker Browse Grid UI) | Present (Trade Category Filters) | Present (Hourly Rate Calculators) | Present (Search Query Optimization) | Present (Sprint Review 4) |
-| **Week 2** *(Apr 20 – Apr 24)* | Present (Worker Profile Showcase) | Present (Skills & Bio Editing Forms) | Present (Client Dashboard Layout) | Present (Job Posting Form Wizard) | Present (Code Review & Standup) |
-| **Week 3** *(Apr 27 – May 01)* | Present (Job Board Search & Filters) | Present (Application Submission Flow) | Present (Applicant Review Desk) | Present (Shortlist / Status Actions) | Present (Sprint Planning 5) |
-| **Week 4** *(May 04 – May 08)* | Present (Direct Service Booking Modal) | Present (6-Stage Booking Lifecycle) | Present (Booking State Transitions) | Present (In-App Notification Triggers) | Present (Month 2 Milestone Review) |
-
-- **Total absent days in a month:** `0 (Zero) Days`  
-- **Supervisor Name:** Busha Dinsa / Dawit Tesfaye  
-- **Signature:** *[Signed]*  
-- **Company Stamp:** *[SORARDI PLC Official Seal]*  
+| **Week 1** *(Cum. W5)* | Present (Worker Search) | *Uni Day* | Present (Category Filter) | *Uni Day* | Present (Search Testing) |
+| **Week 2** *(Cum. W6)* | Present (Worker Profile) | *Uni Day* | Present (Edit Profile Form) | *Uni Day* | Present (Client Dashboard) |
+| **Week 3** *(Cum. W7)* | Present (Post Job Page) | *Uni Day* | Present (Apply Job Button) | *Uni Day* | Absent (Excused - Advisor Meeting) |
+| **Week 4** *(Cum. W8)* | Present (Direct Booking) | *Uni Day* | Present (Status Workflow) | *Uni Day* | Present (Month 2 Review) |
 
 ---
 
-## MONTH 3: May 15, 2026 – June 14, 2026
-
-**Working Focus:** Freemium Monetization: Quota Middleware, Subscriptions & Multi-Channel Mock Payments
+## Month 3: May 15, 2026 – June 14, 2026
+- **Total Absent Days in Month:** 0 Days (12 Days Worked, 8 Uni Days)
+- **Company Supervisor:** Busha Dinsa / Dawit Tesfaye *(Signed & Stamped: SORARDI PLC)*
 
 | Week | Monday | Tuesday | Wednesday | Thursday | Friday |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Week 1** *(May 18 – May 22)* | Present (Worker 5-App Quota Logic) | Present (Client 3-Job Quota Logic) | Present (403 Quota Exceeded Middleware) | Present (Pricing Plans & Tier Matrix) | Present (Sprint Review 6) |
-| **Week 2** *(May 25 – May 29)* | Present (Mock Checkout Modal UI) | Present (Telebirr USSD Push Simulation) | Present (CBE Birr Wallet Simulation) | Present (Chapa Hosted URL Simulation) | Present (Payment Transaction Logging) |
-| **Week 3** *(Jun 01 – Jun 05)* | Present (Instant Pro Subscription Upgrade) | Present (Quota Reset Automation) | Present (Bidirectional 1-5 Star Reviews) | Present (Review Submission on Completion) | Present (Sprint Planning 7) |
-| **Week 4** *(Jun 08 – Jun 12)* | Present (REST Conversation Messaging) | Present (Socket.io Client Architecture) | Present (Real-time Message State) | Present (End-to-End Monetization Testing) | Present (Month 3 Milestone Review) |
-
-- **Total absent days in a month:** `0 (Zero) Days`  
-- **Supervisor Name:** Busha Dinsa / Dawit Tesfaye  
-- **Signature:** *[Signed]*  
-- **Company Stamp:** *[SORARDI PLC Official Seal]*  
+| **Week 1** *(Cum. W9)* | Present (5-App Quota Limit) | *Uni Day* | Present (3-Job Quota Limit) | *Uni Day* | Present (Pricing Page) |
+| **Week 2** *(Cum. W10)* | Present (Mock Checkout Modal) | *Uni Day* | Present (Telebirr Demo) | *Uni Day* | Present (CBE Payment Demo) |
+| **Week 3** *(Cum. W11)* | Present (Pro Tier Upgrade) | *Uni Day* | Present (Star Rating UI) | *Uni Day* | Present (Review Submission) |
+| **Week 4** *(Cum. W12)* | Present (Chat Data Model) | *Uni Day* | Present (Chat Window UI) | *Uni Day* | Present (Month 3 Review) |
 
 ---
 
-## MONTH 4: June 15, 2026 – July 15, 2026
-
-**Working Focus:** Admin Moderation Portal, Supporting Projects, Quality Gate Verification & Project Handover
+## Month 4: June 15, 2026 – July 15, 2026
+- **Total Absent Days in Month:** 1 Day Excused (11 Days Worked, 8 Uni Days)
+- **Company Supervisor:** Busha Dinsa / Dawit Tesfaye *(Signed & Stamped: SORARDI PLC)*
 
 | Week | Monday | Tuesday | Wednesday | Thursday | Friday |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Week 1** *(Jun 15 – Jun 19)* | Present (Admin Portal Scaffold Port 3001) | Present (User Management & Suspension) | Present (National ID Verification Queue) | Present (Job Moderation Actions) | Present (Sprint Review 8) |
-| **Week 2** *(Jun 22 – Jun 26)* | Present (Subscription / Revenue Monitoring) | Present (Dispute & Report Moderation) | Present (Supporting: LuckyEthio UI Cards) | Present (Supporting: QR Menu Touch UI) | Present (Supporting: AxumMarket Filters) |
-| **Week 3** *(Jun 29 – Jul 03)* | Present (Monorepo Type Checking Gate) | Present (pnpm check-types 5/5 Green) | Present (ESLint Zero Warning Gate) | Present (pnpm lint 6/6 Green) | Present (Sprint Retrospective 8) |
-| **Week 4** *(Jul 06 – Jul 10)* | Present (Postman API Collection Export) | Present (Clean Single Repo Consolidation) | Present (Codebase Handover to SORARDI PLC) | Present (Supervisor Evaluation & Signing) | Present (Final Internship Completion) |
-
-- **Total absent days in a month:** `0 (Zero) Days`  
-- **Supervisor Name:** Busha Dinsa / Dawit Tesfaye  
-- **Signature:** *[Signed]*  
-- **Company Stamp:** *[SORARDI PLC Official Seal]*  
+| **Week 1** *(Cum. W13)* | Present (Admin Portal Setup) | *Uni Day* | Present (User Management) | *Uni Day* | Present (Worker ID Verify) |
+| **Week 2** *(Cum. W14)* | Present (LuckyEthio Support) | *Uni Day* | Absent (Excused - DDU Briefing) | *Uni Day* | Present (QR Menu Support) |
+| **Week 3** *(Cum. W15)* | Present (TypeScript Cleanup) | *Uni Day* | Present (ESLint Linting) | *Uni Day* | Present (Full Testing) |
+| **Week 4** *(Cum. W16)* | Present (README & Docs) | *Uni Day* | Present (App Demonstration) | *Uni Day* | Present (Final Handover & Sign) |
 
 ---
-
-*NB: The host Company can ask the intern students to submit their final interns report in one hard copy form before they return to the University/Home.*
 
