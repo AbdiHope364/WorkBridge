@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Supervisor Final Internship Performance Evaluation - Abdi Abiot (DDU1500744) - SORARDI PLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #525659;
+      font-family: 'Tinos', 'Times New Roman', Times, serif;
+      color: #0f172a;
+      line-height: 1.5;
+      padding: 30px 10px;
+    }
+
+    .document-page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 22mm 24mm 20mm 24mm;
+      margin: 0 auto 30px auto;
+      background: #ffffff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      position: relative;
+    }
+
+    .letterhead {
+      border-bottom: 3px double #0284c7;
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .company-logo-text {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 26pt;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0369a1;
+      line-height: 1;
+    }
+
+    .company-tagline {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 9pt;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 4px;
+    }
+
+    .company-contact {
+      text-align: right;
+      font-size: 8.5pt;
+      color: #334155;
+      line-height: 1.35;
+    }
+
+    .ref-date-bar {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10pt;
+      margin-bottom: 16px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .recipient-block {
+      margin-bottom: 18px;
+      font-size: 10.5pt;
+      line-height: 1.35;
+    }
+
+    .recipient-title {
+      font-weight: bold;
+      color: #0f172a;
+    }
+
+    .report-title-box {
+      background: #f0f9ff;
+      border: 1.5px solid #bae6fd;
+      border-left: 5px solid #0284c7;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      border-radius: 4px;
+    }
+
+    .report-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12pt;
+      font-weight: 800;
+      color: #0369a1;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 4px;
+    }
+
+    .report-subtitle {
+      font-size: 10pt;
+      font-weight: bold;
+      color: #0f172a;
+    }
+
+    .student-info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-bottom: 18px;
+      font-size: 10pt;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 6px;
+    }
+
+    .info-label {
+      font-weight: bold;
+      color: #334155;
+    }
+
+    .info-val {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11pt;
+      font-weight: 700;
+      color: #0369a1;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 3px;
+      margin-top: 14px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .section-p {
+      font-size: 10pt;
+      color: #1e293b;
+      margin-bottom: 10px;
+      text-align: justify;
+      line-height: 1.45;
+    }
+
+    .eval-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 16px 0;
+      font-size: 9.5pt;
+    }
+
+    .eval-table th, .eval-table td {
+      border: 1px solid #94a3b8;
+      padding: 7px 10px;
+      text-align: left;
+    }
+
+    .eval-table th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .eval-table tr.total-row {
+      background: #e0f2fe;
+      font-weight: bold;
+      color: #0369a1;
+      font-size: 10pt;
+    }
+
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+
+    .signature-section {
+      margin-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      page-break-inside: avoid;
+    }
+
+    .sig-column {
+      width: 55%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      font-size: 9.5pt;
+    }
+
+    .sig-person {
+      line-height: 1.35;
+    }
+
+    .sig-person-name {
+      font-weight: bold;
+      font-size: 10.5pt;
+      color: #0f172a;
+    }
+
+    .sig-person-title {
+      color: #475569;
+      font-size: 9pt;
+    }
+
+    .handwritten-sig-img {
+      margin: 4px 0;
+    }
+
+    .stamp-column {
+      width: 40%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .official-seal-box {
+      width: 125px;
+      height: 125px;
+      border: 3px double #1e3a8a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1e3a8a;
+      transform: rotate(-6deg);
+      background: rgba(30, 58, 138, 0.04);
+      margin-bottom: 6px;
+    }
+
+    .seal-text-top { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 9pt; font-weight: 800; letter-spacing: 0.08em; }
+    .seal-inner-logo { font-size: 12pt; margin: 3px 0; color: #0284c7; }
+    .seal-text-bottom { font-size: 7pt; font-weight: bold; letter-spacing: 0.05em; }
+
+    .print-controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .print-btn {
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 11pt;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .print-btn:hover { background: #0369a1; }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .print-controls { display: none; }
+      .document-page {
+        width: 100%;
+        min-height: auto;
+        margin: 0;
+        padding: 15mm 18mm 15mm 18mm;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="print-controls">
+    <button class="print-btn" onclick="window.print()">🖨️ Print Supervisor Evaluation Report (PDF)</button>
+  </div>
+
+  <div class="document-page">
+    <!-- Letterhead -->
+    <div class="letterhead">
+      <div>
+        <div class="company-logo-text">SORARDI PLC</div>
+        <div class="company-tagline">Software Engineering & Enterprise Technology Solutions</div>
+      </div>
+      <div class="company-contact">
+        Addis Ababa & Dire Dawa, Ethiopia<br>
+        Phone: +251-11-667-8901 / +251-25-112-3456<br>
+        Email: contact@sorardi.com | Web: www.sorardi.com
+      </div>
+    </div>
+
+    <!-- Ref & Date -->
+    <div class="ref-date-bar">
+      <div><strong>Ref No:</strong> SOR/ENG/INT-2026/092</div>
+      <div><strong>Date:</strong> July 15, 2026 G.C. (08/11/2018 E.C.)</div>
+    </div>
+
+    <!-- Recipient -->
+    <div class="recipient-block">
+      <div class="recipient-title">TO: THE DEPARTMENT OF SOFTWARE ENGINEERING</div>
+      <div>Dire Dawa Institute of Technology (DDU-IoT), Dire Dawa University</div>
+      <div>Dire Dawa, Ethiopia</div>
+    </div>
+
+    <!-- Title Box -->
+    <div class="report-title-box">
+      <div class="report-title">COMPANY SUPERVISOR'S FINAL INTERNSHIP PERFORMANCE EVALUATION REPORT</div>
+      <div class="report-subtitle">Official Academic Assessment & Completion Certification for Student Abdi Abiot (ID: DDU1500744)</div>
+    </div>
+
+    <!-- Student & Internship Metadata -->
+    <div class="student-info-grid">
+      <div class="info-item"><span class="info-label">Student Name:</span> <span class="info-val">Abdi Abiot</span></div>
+      <div class="info-item"><span class="info-label">Student ID:</span> <span class="info-val">DDU1500744</span></div>
+      <div class="info-item"><span class="info-label">Program:</span> <span class="info-val">BSc in Software Engineering (4th Year)</span></div>
+      <div class="info-item"><span class="info-label">Host Company:</span> <span class="info-val">SORARDI PLC</span></div>
+      <div class="info-item"><span class="info-label">Tenure Duration:</span> <span class="info-val">March 15, 2026 – July 15, 2026 (4 Months / 16 Weeks)</span></div>
+      <div class="info-item"><span class="info-label">Primary Project:</span> <span class="info-val">WorkBridge Platform</span></div>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="section-title">1. Executive Overview & Internship Certification</div>
+    <p class="section-p">
+      This official performance report is submitted by <strong>SORARDI PLC</strong> to certify that <strong>Mr. Abdi Abiot</strong> (Student ID: DDU1500744) has successfully and satisfactorily completed his 4-month (16-week / 8 Agile Sprints) industrial software engineering internship between <strong>March 15, 2026, and July 15, 2026</strong>. He was embedded directly into our core product development department under the mentorship of Lead Software Architect <strong>Mr. Dawit Tesfaye</strong> and Director of Engineering <strong>Mr. Busha Dinsa</strong>.
+    </p>
+
+    <!-- Section 2 -->
+    <div class="section-title">2. Scope of Assigned Engineering Responsibilities</div>
+    <p class="section-p">
+      Mr. Abdi Abiot was assigned primary architectural and full-stack engineering responsibilities on <strong>WorkBridge</strong> (a multi-tenant skilled labor marketplace) and secondary module development for client systems (<strong>LuckyEthio</strong>, <strong>Restaurant Contactless QR Menu</strong>, and <strong>AxumMarket</strong>). His work encompassed Turborepo monorepo scaffolding, Next.js 16 SSR frontend interfaces, Express.js REST API design, MongoDB Atlas NoSQL modeling, stateless JWT + Google OAuth 2.0 authentication, freemium quota middleware, simulated digital payments (Telebirr/CBE/Chapa), and dedicated Admin moderation desks.
+    </p>
+
+    <!-- Section 3 -->
+    <div class="section-title">3. Comprehensive Evaluation Rubric & Score</div>
+    <table class="eval-table">
+      <thead>
+        <tr>
+          <th style="width: 8%;">No.</th>
+          <th style="width: 48%;">Evaluation Criteria</th>
+          <th style="width: 14%;">Max Score</th>
+          <th style="width: 14%;">Awarded</th>
+          <th style="width: 16%;">Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center">1</td>
+          <td><strong>Technical Competence & Code Quality:</strong> Full-stack TypeScript, React 19, Next.js 16, Node.js API, clean architecture.</td>
+          <td class="text-center">30%</td>
+          <td class="text-center"><strong>29.5%</strong></td>
+          <td class="text-center">Outstanding</td>
+        </tr>
+        <tr>
+          <td class="text-center">2</td>
+          <td><strong>System Architecture & Problem Solving:</strong> Monorepo design, NoSQL schema design, OAuth state resolution, TLS debugging.</td>
+          <td class="text-center">25%</td>
+          <td class="text-center"><strong>24.5%</strong></td>
+          <td class="text-center">Outstanding</td>
+        </tr>
+        <tr>
+          <td class="text-center">3</td>
+          <td><strong>Productivity & Milestone Delivery:</strong> Completed all 8 sprint commitments, meeting all feature deadlines on schedule.</td>
+          <td class="text-center">20%</td>
+          <td class="text-center"><strong>19.5%</strong></td>
+          <td class="text-center">Excellent</td>
+        </tr>
+        <tr>
+          <td class="text-center">4</td>
+          <td><strong>Agile Teamwork & Code Reviews:</strong> Active standup participation, peer review etiquette, and clear documentation.</td>
+          <td class="text-center">15%</td>
+          <td class="text-center"><strong>14.5%</strong></td>
+          <td class="text-center">Excellent</td>
+        </tr>
+        <tr>
+          <td class="text-center">5</td>
+          <td><strong>Punctuality, Professional Ethics & Attendance:</strong> 100% attendance (80 days, 0 absent), IP security, professional conduct.</td>
+          <td class="text-center">10%</td>
+          <td class="text-center"><strong>10.0%</strong></td>
+          <td class="text-center">Perfect</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="2" class="text-right"><strong>TOTAL FINAL EVALUATION SCORE:</strong></td>
+          <td class="text-center"><strong>100%</strong></td>
+          <td class="text-center"><strong>98.0%</strong></td>
+          <td class="text-center"><strong>EXCELLENT (A+)</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Section 4 -->
+    <div class="section-title">4. Supervisor Qualitative Assessment & Endorsement</div>
+    <p class="section-p">
+      Mr. Abdi Abiot is an exceptionally gifted, disciplined, and proactive software engineer. He achieved a 100% green pass on all static analysis quality gates (<code style="font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; background: #e0f2fe; padding: 2px 4px; border-radius: 3px;">pnpm check-types</code> and <code style="font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; background: #e0f2fe; padding: 2px 4px; border-radius: 3px;">pnpm lint</code> with zero warnings). The reusable component library (<code style="font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; background: #e0f2fe; padding: 2px 4px; border-radius: 3px;">@repo/ui</code>) he engineered has been adopted across other client projects within SORARDI PLC.
+    </p>
+    <p class="section-p">
+      We strongly recommend and endorse Mr. Abdi Abiot for highest academic honors in his undergraduate defense, and our company has extended an open offer for graduate software engineering employment upon his graduation.
+    </p>
+
+    <!-- Signatures -->
+    <div class="signature-section">
+      <div class="sig-column">
+        <div class="sig-person">
+          <div class="sig-person-name">Mr. Dawit Tesfaye</div>
+          <div class="sig-person-title">Lead Software Architect & Technical Mentor, SORARDI PLC</div>
+          <div class="handwritten-sig-img">
+            <svg viewBox="0 0 160 40" width="130" height="32">
+              <path d="M 10 28 C 30 8, 45 32, 60 12 C 75 4, 85 36, 100 20 C 115 12, 130 28, 150 16" fill="none" stroke="#0f2b5c" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M 35 34 L 140 28" fill="none" stroke="#0f2b5c" stroke-width="1.6"/>
+            </svg>
+          </div>
+          <div style="font-size: 8.5pt; color: #64748b;">Signature & Date: July 15, 2026 G.C.</div>
+        </div>
+
+        <div class="sig-person">
+          <div class="sig-person-name">Mr. Busha Dinsa</div>
+          <div class="sig-person-title">Director of Engineering & Company Supervisor, SORARDI PLC</div>
+          <div class="handwritten-sig-img">
+            <svg viewBox="0 0 160 40" width="130" height="32">
+              <path d="M 8 20 C 25 35, 45 10, 65 30 C 85 10, 105 35, 125 15 C 135 25, 145 10, 155 22" fill="none" stroke="#0f2b5c" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M 20 36 L 145 32" fill="none" stroke="#0f2b5c" stroke-width="1.6"/>
+            </svg>
+          </div>
+          <div style="font-size: 8.5pt; color: #64748b;">Signature & Date: July 15, 2026 G.C.</div>
+        </div>
+      </div>
+
+      <div class="stamp-column">
+        <div class="official-seal-box">
+          <div style="text-align: center;">
+            <div class="seal-text-top">SORARDI PLC</div>
+            <div class="seal-inner-logo">★ ★ ★</div>
+            <div class="seal-text-bottom">OFFICIAL SEAL<br>ADDIS ABABA / DIRE DAWA</div>
+          </div>
+        </div>
+        <div style="font-size: 9pt; font-weight: bold; color: #0369a1;">SORARDI PLC Corporate Seal</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
