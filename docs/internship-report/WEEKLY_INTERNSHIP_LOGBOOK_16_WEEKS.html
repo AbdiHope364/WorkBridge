@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>16-Week Industrial Internship Logbook - Abdi Abiot (DDU1500744) - SORARDI PLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Tinos:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-main: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-serif: 'Tinos', serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .logbook-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .logbook-header {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 32px 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .uni-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 100px;
+      color: #38bdf8;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .header-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .header-subtitle {
+      font-size: 1.1rem;
+      color: #38bdf8;
+      margin-bottom: 20px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .meta-item {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .meta-item strong {
+      color: #ffffff;
+    }
+
+    .week-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .week-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .week-title-badge {
+      background: #0284c7;
+      color: #ffffff;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    .week-meta {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .week-dates {
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .week-main-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+
+    .daily-table-container {
+      overflow-x: auto;
+      margin-bottom: 16px;
+    }
+
+    .daily-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .daily-table th {
+      background: rgba(15, 23, 42, 0.8);
+      color: #38bdf8;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .daily-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+      vertical-align: top;
+    }
+
+    .daily-table tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .badge-present {
+      display: inline-block;
+      padding: 2px 8px;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .week-footer {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .week-skills {
+      max-width: 60%;
+    }
+
+    .week-skills strong {
+      color: #38bdf8;
+    }
+
+    .week-sign strong {
+      color: #ffffff;
+    }
+
+    .print-controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+    }
+
+    .print-btn {
+      background: #0284c7;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    @media print {
+      body { background: white; color: black; padding: 0; }
+      .logbook-header, .week-card { background: white; border: 1px solid #ccc; color: black; box-shadow: none; page-break-inside: avoid; }
+      .header-title, .week-main-title { color: #0284c7; }
+      .header-subtitle { color: #0369a1; }
+      .daily-table th { background: #f1f5f9; color: #0284c7; }
+      .daily-table td { color: #1e293b; border-color: #e2e8f0; }
+      .print-controls { display: none; }
+      .badge-present { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+      .meta-item strong, .week-sign strong { color: black; }
+    }
+  </style>
+</head>
+<body>
+  <div class="print-controls">
+    <button class="print-btn" onclick="window.print()">🖨️ Print 16-Week Logbook (PDF)</button>
+  </div>
+
+  <div class="logbook-container">
+    <div class="logbook-header">
+      <div class="uni-badge">Dire Dawa University — Institute of Technology (DDU-IoT)</div>
+      <h1 class="header-title">16-Week Industrial Internship Master Logbook</h1>
+      <h2 class="header-subtitle">Host Organization: SORARDI PLC | Project: WorkBridge Platform</h2>
+      <div class="meta-grid">
+        <div class="meta-item"><strong>Student:</strong> Abdi Abiot (DDU1500744)</div>
+        <div class="meta-item"><strong>Department:</strong> Software Engineering (4th Year)</div>
+        <div class="meta-item"><strong>Supervisor:</strong> Mr. Busha Dinsa / Mr. Dawit Tesfaye</div>
+        <div class="meta-item"><strong>Duration:</strong> March 15, 2026 – July 15, 2026 (16 Weeks)</div>
+      </div>
+    </div>
+
+    
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 1</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 March 16 – March 20, 2026</span>
+          <span class="week-month">(Month 1)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Orientation, Tooling, Agile Workflow Setup & Workspace Initial Audit</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Company onboarding at SORARDI PLC, team introduction, and development environment setup.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Node.js v22, pnpm, Git, VS Code, and MongoDB Compass tooling installation and configuration.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Analysis of WorkBridge marketplace requirements and existing informal Ethiopian labor market friction.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Sprint 1 planning with Lead Software Architect Mr. Dawit Tesfaye; task breakdown and story points.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Initial codebase audit, Git repository initialization, and Weekly Sprint Review 1.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> Agile Scrum, Git workflow, requirements analysis, toolchain configuration.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 2</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 March 23 – March 27, 2026</span>
+          <span class="week-month">(Month 1)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Turborepo Monorepo Architecture & Shared Packages (@repo/types, @repo/ui)</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Scaffolding Turborepo monorepo with pnpm workspaces for apps/client, apps/admin, and apps/api.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Designing centralized Data Transfer Objects (DTOs) and TypeScript interfaces in packages/types.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Implementing User, WorkerProfile, Job, and Booking schema interfaces with 100% strict typing.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Building reusable design system components in packages/ui (Button, Card, Input, Modal, Badge).</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Tailwind CSS configuration, cross-package linking verification, and Sprint Retrospective 2.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> Monorepo architecture, Turborepo, pnpm workspaces, TypeScript DTOs, Tailwind design systems.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 3</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 March 30 – April 03, 2026</span>
+          <span class="week-month">(Month 1)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Express.js REST API Scaffolding, MongoDB Atlas Cluster & Bcrypt Hashing</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Structuring Express.js backend (ESM) in apps/api with modular routes, controllers, and middleware.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Configuring MongoDB Atlas cloud replica set connection, retry options, and diagnostic logging.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Implementing user registration endpoint with Bcrypt password hashing (10 salt rounds).</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Implementing login endpoint with credential validation and sanitization of sensitive data.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Database collection seed scripts and automated testing for authentication endpoints.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> Express.js REST API, MongoDB Atlas, Mongoose ODM, Bcrypt password hashing, seed data.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 4</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 April 06 – April 10, 2026</span>
+          <span class="week-month">(Month 1)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Stateless JWT Issuance, Google OAuth 2.0 Integration & Role-Based Access Control</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Implementing stateless JWT token generation (HMAC-SHA256) and Bearer token verification middleware.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Architecting Role-Based Access Control (RBAC) middleware for jobseeker, employer, and admin roles.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Integrating Google OAuth 2.0 authentication with in-memory state store for user role preservation.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Developing password recovery endpoints (forgot-password and time-limited reset-password tokens).</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Security review with industry supervisor, Month 1 milestone sign-off, and Sprint 2 demo.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> JWT tokens, Google OAuth 2.0, RBAC authorization, password reset cryptography, API security.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 5</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 April 15 – April 17, 2026</span>
+          <span class="week-month">(Month 2)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Skilled Worker Discovery, Trade Category Grid & Search Optimization</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Building Next.js 16 App Router worker discovery interface (apps/client/app/browse-workers).</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Implementing multi-category trade filters (Electricians, Plumbers, Masons, Carpenters, Painters).</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Developing location-based filtering (Addis Ababa, Dire Dawa, Hawassa) and hourly rate filters.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Optimizing MongoDB query filters with regex search indexing and pagination support.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Frontend state synchronization and weekly standup review.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> Next.js 16 App Router, React Server Components, MongoDB indexing, complex UI filtering.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 6</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 April 20 – April 24, 2026</span>
+          <span class="week-month">(Month 2)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Worker Profile Showcase, Skills/Bio Dynamic Forms & Client Dashboard</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Designing comprehensive tradesman profile view showcasing trade skills, hourly rate, and badges.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Implementing dynamic profile editing forms with instant image preview and skill tag additions.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Developing client overview dashboard (apps/client/app/dashboard/employer) with metric cards.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Building jobseeker overview dashboard (apps/client/app/dashboard/jobseeker) with application stats.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Code review with senior frontend developer and peer testing across desktop/mobile viewports.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> Dynamic form handling, client dashboard design, profile data modeling, responsive UX.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 7</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 April 27 – May 01, 2026</span>
+          <span class="week-month">(Month 2)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Job Board Posting Wizard, Multi-Category Filtering & Candidate Application Flow</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Creating structured job posting wizard in client dashboard (title, budget, category, requirements).</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Building public job board (apps/client/app/jobs) with category pills and search inputs.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Implementing worker job application flow with modal confirmation and resume/bio snapshotting.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Developing client applicant review desk with shortlist, accept, and decline action buttons.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Sprint 5 review, database seeding for sample job postings across Ethiopian cities, and retrospective.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> Job board architecture, applicant tracking workflows, database relational references.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 8</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 May 04 – May 08, 2026</span>
+          <span class="week-month">(Month 2)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Direct Service Booking Subsystem, 6-Stage Lifecycle & Notification Triggers</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Engineering direct service booking modal allowing clients to hire tradesmen on demand.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Implementing backend booking controller with fields: address, urgency, scheduledDate, offeredPrice.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Implementing 6-stage booking lifecycle: PENDING → ACCEPTED / DECLINED → IN_PROGRESS → COMPLETED.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Developing automated in-app notification triggers on booking state changes in collections.notifications.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Month 2 milestone presentation to SORARDI PLC engineering department and supervisor sign-off.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> State machine design, direct booking workflows, event-driven notification pipelines.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 9</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 May 18 – May 22, 2026</span>
+          <span class="week-month">(Month 3)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Freemium Quota Middleware (5-App Worker / 3-Job Client) & 403 Error Handling</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Analyzing two-sided marketplace business models and defining freemium quota rules.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Implementing server-side quota enforcement in jobController.js for client job postings (Limit: 3).</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Implementing worker application quota checks (Limit: 5 free applications per month).</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Developing structured 403 QUOTA_EXCEEDED error payloads with current usage and upgrade prompts.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Connecting frontend quota warning banners and upgrade triggers on /pricing page.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> Marketplace economics, backend middleware, quota enforcement, error handling design.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 10</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 May 25 – May 29, 2026</span>
+          <span class="week-month">(Month 3)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Simulated Multi-Channel Payments (Telebirr USSD, CBE Birr Wallet, Chapa Checkout)</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Designing interactive MockCheckoutModal component supporting Ethiopian payment channels.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Implementing simulated Telebirr USSD push flow with mobile number input and PIN mock prompt.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Implementing simulated CBE Birr wallet authorization and bank transfer slip verification flow.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Developing Chapa hosted checkout URL simulator with redirection and mock callback verification.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Recording simulated transactions in collections.payments with timestamp, method, and status.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> Fintech simulation, modal state machines, payment gateway architecture, transaction logging.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 11</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 June 01 – June 05, 2026</span>
+          <span class="week-month">(Month 3)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Instant Pro Subscription Activation, Quota Reset Engine & Bidirectional Reviews</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Developing subscription activation logic in subscriptionController.js updating user tiers to Pro.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Implementing automated quota resets upon active Pro subscription detection.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Building bidirectional 1–5 star rating and written review submission upon service completion.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Calculating aggregate worker rating metrics and verified review display on public profiles.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Sprint 7 review and full-flow validation of booking completion followed by client review.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> Subscription management, rating calculations, review integrity, aggregate MongoDB queries.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 12</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 June 08 – June 12, 2026</span>
+          <span class="week-month">(Month 3)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">In-App Messaging Architecture, REST Conversation Endpoints & Socket.io Client Setup</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Designing conversational messaging data model in collections.messages with participant arrays.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Implementing REST API endpoints (/api/chat/conversations and /api/chat/conversations/:id/messages).</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Developing ChatService client architecture supporting Socket.io real-time events with REST fallback.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Building responsive chat sidebar and message bubble window UI (apps/client/app/dashboard/chat).</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Month 3 milestone review with industry supervisor and performance benchmarking.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> Real-time communication design, REST messaging, Socket.io client setup, optimistic UI updates.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 13</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 June 15 – June 19, 2026</span>
+          <span class="week-month">(Month 4)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Admin Moderation Portal (Port 3001), User Management & National ID Verification</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Scaffolding dedicated Admin Portal in apps/admin using Next.js 16 with separate port 3001.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Building administrative user management table with search, role filters, and account suspension.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Implementing worker identity verification queue for reviewing national ID and trade certificates.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Developing job post moderation desk allowing admins to approve, flag, or remove fraudulent listings.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Testing role-based admin route guards and dashboard KPI metric cards.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> Administrative software engineering, KYC verification queues, moderation workflows.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 14</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 June 22 – June 26, 2026</span>
+          <span class="week-month">(Month 4)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Subscription/Revenue Tracking, Dispute Handling & Supporting Projects</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Developing admin subscription tracking dashboard monitoring mock revenue and plan distribution.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Implementing dispute resolution desk for mediating client-worker booking disagreements.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Contributing to supporting project LuckyEthio: building responsive UI lottery item cards.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Contributing to supporting project Restaurant QR Menu: touch-optimized category menu components.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Contributing to supporting project AxumMarket: optimizing multi-vendor product filter aggregations.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> Analytics dashboards, dispute management, multi-project full-stack contributions.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 15</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 June 29 – July 03, 2026</span>
+          <span class="week-month">(Month 4)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Monorepo Static Type Checking (pnpm check-types) & ESLint Zero-Warning Gate</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Executing full monorepo type checking with tsc --noEmit; identifying and fixing typing discrepancies.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Configuring ESLint 9 Flat Configs across all packages to eliminate unused variables and any types.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Achieving 100% green pass on pnpm check-types (5/5 packages green) and pnpm lint (6/6 packages green).</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Optimizing Next.js 16 production build bundles (pnpm build) and verifying server-side rendering.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Sprint 8 retrospective, automated test suite verification, and code freeze.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> TypeScript static analysis, ESLint flat config, build optimization, production readiness.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div class="week-title-badge">WEEK 16</div>
+        <div class="week-meta">
+          <span class="week-dates">📅 July 06 – July 10, 2026</span>
+          <span class="week-month">(Month 4)</span>
+        </div>
+      </div>
+      <h3 class="week-main-title">Postman API Documentation, Single Repo Consolidation & Final Handover to SORARDI PLC</h3>
+
+      <div class="daily-table-container">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Day</th>
+              <th style="width: 70%;">Engineering Activities & Tasks Accomplished</th>
+              <th style="width: 15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>Exporting Postman REST API collections and documenting all 14 endpoints with request/response schemas.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tuesday</strong></td>
+              <td>Consolidating client, admin, and backend codebases into a clean single Git repository.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>Removing deprecated dump files and drafting root documentation (README.md, setup guides).</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Thursday</strong></td>
+              <td>Formal software demonstration and deliverables handover to Lead Software Architect Mr. Dawit Tesfaye.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td>Supervisor evaluation, attendance sheet signing with SORARDI PLC stamp, and internship completion.</td>
+              <td><span class="badge-present">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="week-footer">
+        <div class="week-skills"><strong>Competencies & Skills Utilized:</strong> API documentation, Postman collections, software handover, technical communication.</div>
+        <div class="week-sign"><strong>Supervisor Verification:</strong> <u>Busha Dinsa / Dawit Tesfaye</u> (Signed & Stamped)</div>
+      </div>
+    </div>
+    
+  </div>
+</body>
+</html>

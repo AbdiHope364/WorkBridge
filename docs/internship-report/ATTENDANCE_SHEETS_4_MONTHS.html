@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Internship Students Attendance Sheets (4 Months) - Abdi Abiot (DDU1500744) - SORARDI PLC</title>
+  <title>Internship Students Attendance Sheets (16 Weeks / 4 Months) - Abdi Abiot (DDU1500744) - SORARDI PLC</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -44,32 +44,12 @@
       margin-bottom: 6px;
     }
 
-    .header-left {
-      width: 40%;
-      text-align: left;
-    }
+    .header-left { width: 40%; text-align: left; }
+    .header-center { width: 20%; text-align: center; }
+    .header-right { width: 40%; text-align: right; }
 
-    .header-center {
-      width: 20%;
-      text-align: center;
-    }
-
-    .header-right {
-      width: 40%;
-      text-align: right;
-    }
-
-    .amharic-header {
-      font-size: 11pt;
-      font-weight: bold;
-      line-height: 1.25;
-    }
-
-    .english-header {
-      font-size: 10pt;
-      font-weight: bold;
-      line-height: 1.25;
-    }
+    .amharic-header { font-size: 11pt; font-weight: bold; line-height: 1.25; }
+    .english-header { font-size: 10pt; font-weight: bold; line-height: 1.25; }
 
     .contact-bar {
       display: flex;
@@ -80,67 +60,20 @@
       text-align: center;
     }
 
-    .sub-label {
-      font-size: 7.5pt;
-      font-style: italic;
-    }
+    .sub-label { font-size: 7.5pt; font-style: italic; }
+    .email-line { font-size: 8.5pt; font-style: italic; margin-top: 3px; margin-bottom: 12px; }
 
-    .email-line {
-      font-size: 8.5pt;
-      font-style: italic;
-      margin-top: 3px;
-      margin-bottom: 12px;
-    }
+    .sheet-title-container { text-align: center; margin: 10px 0 16px 0; }
+    .sheet-title { font-size: 14pt; font-weight: bold; text-transform: capitalize; letter-spacing: 0.02em; }
+    .sheet-subtitle { font-size: 11pt; font-weight: bold; margin-top: 4px; }
 
-    .sheet-title-container {
-      text-align: center;
-      margin: 10px 0 16px 0;
-    }
+    .info-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 11pt; }
+    .info-left, .info-right, .info-full { display: flex; align-items: baseline; gap: 6px; }
+    .field-label { font-weight: bold; }
+    .company-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: bold; color: #000000; font-size: 11.5pt; }
 
-    .sheet-title {
-      font-size: 14pt;
-      font-weight: bold;
-      text-transform: capitalize;
-      letter-spacing: 0.02em;
-    }
-
-    .sheet-subtitle {
-      font-size: 11pt;
-      font-weight: bold;
-      margin-top: 4px;
-    }
-
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 12px;
-      font-size: 11pt;
-    }
-
-    .info-left, .info-right, .info-full {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-    }
-
-    .field-label {
-      font-weight: bold;
-    }
-
-    .company-name {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: bold;
-      color: #000000;
-      font-size: 11.5pt;
-    }
-
-    .month-row {
-      margin-bottom: 16px;
-    }
-
-    .month-value {
-      font-weight: bold;
-    }
+    .month-row { margin-bottom: 16px; }
+    .month-value { font-weight: bold; }
 
     .attendance-table {
       width: 100%;
@@ -162,15 +95,8 @@
       font-size: 10.5pt;
     }
 
-    .col-week {
-      width: 16%;
-      text-align: center;
-    }
-
-    .col-day {
-      width: 16.8%;
-      text-align: center;
-    }
+    .col-week { width: 16%; text-align: center; }
+    .col-day { width: 16.8%; text-align: center; }
 
     .cell-week {
       text-align: center;
@@ -178,27 +104,22 @@
       background-color: #fafafa;
     }
 
-    .week-dates {
-      font-size: 8pt;
-      color: #333333;
-      font-weight: normal;
-      margin-top: 3px;
+    .cum-week-badge {
+      font-size: 7.5pt;
+      background: #e2e8f0;
+      border-radius: 4px;
+      padding: 1px 4px;
+      display: inline-block;
+      margin: 2px 0;
+      font-weight: 600;
+      color: #0f172a;
     }
 
-    .cell-day {
-      text-align: center;
-      font-size: 8.8pt;
-      line-height: 1.25;
-    }
+    .week-dates { font-size: 8pt; color: #333333; font-weight: normal; }
+    .cell-day { text-align: center; font-size: 8.8pt; line-height: 1.25; }
 
-    .absence-row {
-      margin: 14px 0 20px 0;
-      font-size: 11pt;
-    }
-
-    .absence-value {
-      font-weight: bold;
-    }
+    .absence-row { margin: 14px 0 20px 0; font-size: 11pt; }
+    .absence-value { font-weight: bold; }
 
     .signature-block {
       display: flex;
@@ -209,29 +130,10 @@
       padding-top: 10px;
     }
 
-    .sig-left {
-      width: 55%;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .sig-field {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      font-size: 11pt;
-    }
-
-    .supervisor-name {
-      font-weight: bold;
-      font-size: 11.5pt;
-    }
-
-    .handwritten-sig {
-      display: inline-block;
-      margin-left: 10px;
-    }
+    .sig-left { width: 55%; display: flex; flex-direction: column; gap: 16px; }
+    .sig-field { display: flex; align-items: baseline; gap: 8px; font-size: 11pt; }
+    .supervisor-name { font-weight: bold; font-size: 11.5pt; }
+    .handwritten-sig { display: inline-block; margin-left: 10px; }
 
     .sig-right {
       width: 40%;
@@ -255,22 +157,9 @@
       margin-bottom: 6px;
     }
 
-    .seal-outer {
-      text-align: center;
-      font-size: 8pt;
-      font-weight: bold;
-      letter-spacing: 0.05em;
-    }
-
-    .seal-inner-logo {
-      font-size: 11pt;
-      margin: 3px 0;
-    }
-
-    .stamp-label {
-      font-size: 10pt;
-      font-weight: bold;
-    }
+    .seal-outer { text-align: center; font-size: 8pt; font-weight: bold; letter-spacing: 0.05em; }
+    .seal-inner-logo { font-size: 11pt; margin: 3px 0; }
+    .stamp-label { font-size: 10pt; font-weight: bold; }
 
     .nb-footer {
       font-size: 9.5pt;
@@ -279,13 +168,7 @@
       padding-top: 8px;
     }
 
-    .print-controls {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-    }
-
+    .print-controls { position: fixed; top: 20px; right: 20px; z-index: 1000; }
     .print-btn {
       background: #0284c7;
       color: #ffffff;
@@ -300,21 +183,11 @@
       align-items: center;
       gap: 8px;
     }
-
-    .print-btn:hover {
-      background: #0369a1;
-    }
+    .print-btn:hover { background: #0369a1; }
 
     @media print {
-      body {
-        background-color: #ffffff;
-        padding: 0;
-      }
-
-      .print-controls {
-        display: none;
-      }
-
+      body { background-color: #ffffff; padding: 0; }
+      .print-controls { display: none; }
       .page-container {
         width: 100%;
         min-height: auto;
@@ -324,16 +197,13 @@
         box-shadow: none;
         page-break-after: always;
       }
-
-      .page-break {
-        page-break-before: always;
-      }
+      .page-break { page-break-before: always; }
     }
   </style>
 </head>
 <body>
   <div class="print-controls">
-    <button class="print-btn" onclick="window.print()">🖨️ Print 4-Month Attendance Sheets (PDF)</button>
+    <button class="print-btn" onclick="window.print()">🖨️ Print 16-Week Attendance Sheets (PDF)</button>
   </div>
 
   
@@ -409,6 +279,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 1</strong>
+                <div class="cum-week-badge">Cum. Week 1</div>
                 <div class="week-dates">Mar 16 – Mar 20</div>
               </td>
               <td class="cell-day">Present (Orientation & Agile Setup)</td>
@@ -421,6 +292,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 2</strong>
+                <div class="cum-week-badge">Cum. Week 2</div>
                 <div class="week-dates">Mar 23 – Mar 27</div>
               </td>
               <td class="cell-day">Present (@repo/types DTO Modeling)</td>
@@ -433,6 +305,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 3</strong>
+                <div class="cum-week-badge">Cum. Week 3</div>
                 <div class="week-dates">Mar 30 – Apr 03</div>
               </td>
               <td class="cell-day">Present (Express REST API Structure)</td>
@@ -445,6 +318,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 4</strong>
+                <div class="cum-week-badge">Cum. Week 4</div>
                 <div class="week-dates">Apr 06 – Apr 10</div>
               </td>
               <td class="cell-day">Present (Google OAuth 2.0 State Store)</td>
@@ -574,6 +448,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 1</strong>
+                <div class="cum-week-badge">Cum. Week 5</div>
                 <div class="week-dates">Apr 15 – Apr 17</div>
               </td>
               <td class="cell-day">Present (Worker Browse Grid UI)</td>
@@ -586,6 +461,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 2</strong>
+                <div class="cum-week-badge">Cum. Week 6</div>
                 <div class="week-dates">Apr 20 – Apr 24</div>
               </td>
               <td class="cell-day">Present (Worker Profile Showcase)</td>
@@ -598,6 +474,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 3</strong>
+                <div class="cum-week-badge">Cum. Week 7</div>
                 <div class="week-dates">Apr 27 – May 01</div>
               </td>
               <td class="cell-day">Present (Job Board Search & Filters)</td>
@@ -610,6 +487,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 4</strong>
+                <div class="cum-week-badge">Cum. Week 8</div>
                 <div class="week-dates">May 04 – May 08</div>
               </td>
               <td class="cell-day">Present (Direct Service Booking Modal)</td>
@@ -739,6 +617,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 1</strong>
+                <div class="cum-week-badge">Cum. Week 9</div>
                 <div class="week-dates">May 18 – May 22</div>
               </td>
               <td class="cell-day">Present (Worker 5-App Quota Logic)</td>
@@ -751,6 +630,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 2</strong>
+                <div class="cum-week-badge">Cum. Week 10</div>
                 <div class="week-dates">May 25 – May 29</div>
               </td>
               <td class="cell-day">Present (Mock Checkout Modal UI)</td>
@@ -763,6 +643,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 3</strong>
+                <div class="cum-week-badge">Cum. Week 11</div>
                 <div class="week-dates">Jun 01 – Jun 05</div>
               </td>
               <td class="cell-day">Present (Instant Pro Subscription Upgrade)</td>
@@ -775,6 +656,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 4</strong>
+                <div class="cum-week-badge">Cum. Week 12</div>
                 <div class="week-dates">Jun 08 – Jun 12</div>
               </td>
               <td class="cell-day">Present (REST Conversation Messaging)</td>
@@ -904,6 +786,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 1</strong>
+                <div class="cum-week-badge">Cum. Week 13</div>
                 <div class="week-dates">Jun 15 – Jun 19</div>
               </td>
               <td class="cell-day">Present (Admin Portal Scaffold Port 3001)</td>
@@ -916,6 +799,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 2</strong>
+                <div class="cum-week-badge">Cum. Week 14</div>
                 <div class="week-dates">Jun 22 – Jun 26</div>
               </td>
               <td class="cell-day">Present (Subscription / Revenue Monitoring)</td>
@@ -928,6 +812,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 3</strong>
+                <div class="cum-week-badge">Cum. Week 15</div>
                 <div class="week-dates">Jun 29 – Jul 03</div>
               </td>
               <td class="cell-day">Present (Monorepo Type Checking Gate)</td>
@@ -940,6 +825,7 @@
             <tr>
               <td class="cell-week">
                 <strong>Week 4</strong>
+                <div class="cum-week-badge">Cum. Week 16</div>
                 <div class="week-dates">Jul 06 – Jul 10</div>
               </td>
               <td class="cell-day">Present (Postman API Collection Export)</td>
