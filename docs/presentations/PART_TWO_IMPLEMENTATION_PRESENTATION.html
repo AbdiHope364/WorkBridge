@@ -3,196 +3,212 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Part Two: Implementation Defense Presentation - Abdi Abiot</title>
+  <title>WorkBridge System Implementation Defense - Abdi Abiot (DDU1500744)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
-
     :root {
-      --primary: #04865a;
-      --primary-dark: #036342;
-      --primary-light: #e6f7f0;
-      --navy: #0b1528;
-      --navy-light: #16243d;
-      --slate-50: #f8fafc;
-      --slate-100: #f1f5f9;
-      --slate-300: #cbd5e1;
-      --slate-600: #475569;
-      --slate-900: #0f172a;
+      --bg: #0b0f19;
+      --surface: #111827;
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --primary: #0284c7;
+      --primary-light: #38bdf8;
+      --accent: #f59e0b;
+      --accent-light: #fbbf24;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-border: rgba(0, 0, 0, 0.1);
+      --primary: #0284c7;
+      --primary-light: #0369a1;
+      --accent: #d97706;
+      --accent-light: #b45309;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --card-bg: rgba(241, 245, 249, 0.9);
+      --card-border: rgba(0, 0, 0, 0.1);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      user-select: none;
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-      background-color: #060c18;
-      color: #ffffff;
-      min-height: 100vh;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* Controls Bar */
-    .controls-bar {
-      position: fixed;
-      top: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(15, 23, 42, 0.9);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 8px 18px;
-      border-radius: 30px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      z-index: 100;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    .btn-ctrl {
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: white;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
-    }
-
-    .btn-ctrl:hover {
-      background: var(--primary);
-      transform: scale(1.05);
-    }
-
-    .slide-indicator {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--slate-300);
-      min-width: 90px;
-      text-align: center;
-    }
-
-    /* Presentation Wrapper */
     .presentation-container {
       width: 100vw;
-      max-width: 1200px;
-      aspect-ratio: 16 / 9;
-      background: var(--navy);
-      border-radius: 16px;
+      height: 100vh;
       position: relative;
-      overflow: hidden;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
-      margin: 60px auto 20px auto;
+      background: radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.15) 0%, transparent 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* Individual Slide */
     .slide {
-      display: none;
-      width: 100%;
-      height: 100%;
-      padding: 50px 70px;
+      position: absolute;
+      width: 92vw;
+      max-width: 1400px;
+      height: 86vh;
+      max-height: 850px;
+      aspect-ratio: 16 / 9;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 24px;
+      padding: 48px 56px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.96) translateY(20px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
       flex-direction: column;
       justify-content: space-between;
-      animation: fadeIn 0.3s ease-in-out;
-      position: relative;
-      background: radial-gradient(circle at 90% 10%, rgba(4, 134, 90, 0.15) 0%, transparent 60%),
-                  radial-gradient(circle at 10% 90%, rgba(30, 58, 138, 0.2) 0%, transparent 60%);
+      backdrop-filter: blur(20px);
     }
 
     .slide.active {
-      display: flex;
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1) translateY(0);
+      z-index: 10;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Slide Components */
     .slide-badge {
-      display: inline-block;
-      background: rgba(4, 134, 90, 0.2);
-      color: #34d399;
-      border: 1px solid rgba(52, 211, 153, 0.3);
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 100px;
+      color: var(--primary-light);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       margin-bottom: 12px;
+      width: fit-content;
+    }
+
+    .slide-header {
+      margin-bottom: 20px;
     }
 
     .slide-title {
-      font-size: 32px;
-      font-weight: 900;
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--text);
       letter-spacing: -0.02em;
-      color: #ffffff;
+      line-height: 1.2;
     }
 
     .main-title {
-      font-size: 48px;
-      font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      background: linear-gradient(135deg, #ffffff 40%, #34d399 100%);
+      font-size: 3.4rem;
+      font-weight: 800;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #ffffff 30%, var(--primary-light) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+    }
+
+    [data-theme="light"] .main-title {
+      background: linear-gradient(135deg, #0f172a 30%, #0284c7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .main-subtitle {
-      font-size: 18px;
-      color: #94a3b8;
-      font-weight: 600;
+      font-size: 1.25rem;
+      color: var(--text-muted);
       max-width: 800px;
-      margin-bottom: 30px;
+      line-height: 1.5;
+      margin-bottom: 28px;
     }
 
     .title-meta-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 16px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 24px;
-      border-radius: 12px;
-      backdrop-filter: blur(8px);
+      margin-top: 10px;
     }
 
     .meta-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 14px 18px;
       display: flex;
       flex-direction: column;
+      gap: 4px;
     }
 
     .meta-label {
-      font-size: 11px;
-      color: #64748b;
-      font-weight: 800;
+      font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 600;
     }
 
     .meta-value {
-      font-size: 15px;
-      color: #f1f5f9;
-      font-weight: 700;
-      margin-top: 2px;
+      font-size: 0.96rem;
+      color: var(--text);
+      font-weight: 600;
     }
 
-    /* Content Slide Point Cards */
+    .agenda-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px 20px;
+      margin: auto 0;
+    }
+
+    .agenda-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.94rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+
+    .agenda-card:hover {
+      border-color: var(--primary-light);
+    }
+
+    .agenda-icon {
+      font-size: 1.1rem;
+    }
+
     .points-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -201,146 +217,116 @@
     }
 
     .point-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
       padding: 24px;
       display: flex;
       flex-direction: column;
-      transition: all 0.2s;
+      gap: 12px;
+      transition: transform 0.2s, border-color 0.2s;
     }
 
     .point-card:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(52, 211, 153, 0.4);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      border-color: rgba(56, 189, 248, 0.4);
     }
 
     .point-heading {
-      font-size: 17px;
-      font-weight: 800;
-      color: #34d399;
-      margin-bottom: 10px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary-light);
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .point-heading::before {
-      content: '';
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background: #34d399;
-      border-radius: 50%;
-    }
-
     .point-desc {
-      font-size: 13.5px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
       line-height: 1.6;
-      color: #cbd5e1;
     }
 
-    /* Agenda Grid */
-    .agenda-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin: auto 0;
-    }
-
-    .agenda-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 14px 18px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #e2e8f0;
-      display: flex;
-      align-items: center;
-    }
-
-    /* Slide Footer */
     .slide-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding-top: 18px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      font-size: 11px;
-      font-weight: 700;
-      color: #64748b;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      border-top: 1px solid var(--surface-border);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
     }
 
-    /* Print / PDF Mode */
-    @media print {
-      body {
-        background: white;
-        color: black;
-      }
-      .controls-bar {
-        display: none;
-      }
-      .presentation-container {
-        max-width: 100%;
-        box-shadow: none;
-        margin: 0;
-        border-radius: 0;
-        background: white;
-      }
-      .slide {
-        display: flex !important;
-        page-break-after: always;
-        break-after: page;
-        height: 100vh;
-        background: white;
-        color: #0f172a;
-        padding: 40px;
-      }
-      .slide-title, .main-title {
-        color: #0f172a !important;
-        -webkit-text-fill-color: #0f172a !important;
-      }
-      .point-card, .title-meta-grid, .agenda-card {
-        background: #f8fafc;
-        border-color: #cbd5e1;
-        color: #1e293b;
-      }
-      .point-desc, .meta-value {
-        color: #334155 !important;
-      }
-      .point-heading {
-        color: #04865a !important;
-      }
+    .nav-controls {
+      position: fixed;
+      bottom: 24px;
+      right: 32px;
+      display: flex;
+      gap: 10px;
+      z-index: 100;
+    }
+
+    .nav-btn {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    [data-theme="light"] .nav-btn {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      color: #0f172a;
+    }
+
+    .nav-btn:hover {
+      background: var(--primary);
+      color: white;
+      transform: scale(1.08);
+    }
+
+    .theme-toggle-btn {
+      position: fixed;
+      top: 24px;
+      right: 32px;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
   </style>
 </head>
 <body>
-
-  <!-- Controls Bar -->
-  <div class="controls-bar">
-    <button class="btn-ctrl" onclick="prevSlide()">◀ Prev</button>
-    <div class="slide-indicator" id="slide-indicator">Slide 1 / 12</div>
-    <button class="btn-ctrl" onclick="nextSlide()">Next ▶</button>
-    <button class="btn-ctrl" onclick="toggleFullScreen()">⛶ Fullscreen (F)</button>
-    <button class="btn-ctrl" onclick="window.print()">🖨️ PDF / Print</button>
-  </div>
-
-  <!-- Slides Container -->
-  <div class="presentation-container" id="presentation">
+  <div class="presentation-container">
+    <button class="theme-toggle-btn" id="theme-btn">🌓 Theme</button>
     
       <section class="slide title-slide" id="slide-1">
-        <div class="slide-badge">PART TWO: IMPLEMENTATION DEFENSE</div>
+        <div class="slide-badge">PART TWO: SYSTEM IMPLEMENTATION DEFENSE</div>
         <h1 class="main-title">WorkBridge</h1>
         <p class="main-subtitle">A Multi-Tenant Freemium Digital Labor & Skill Marketplace Platform for Ethiopia</p>
         <div class="title-meta-grid">
           
             <div class="meta-item">
               <span class="meta-label">Institution</span>
-              <strong class="meta-value">Dire Dawa University — Institute of Technology (IoT)</strong>
+              <strong class="meta-value">Dire Dawa University — Institute of Technology (DDU-IoT)</strong>
             </div>
           
             <div class="meta-item">
@@ -359,8 +345,18 @@
             </div>
           
             <div class="meta-item">
+              <span class="meta-label">Industry Supervisor</span>
+              <strong class="meta-value">Mr. Dawit Tesfaye (Lead Software Architect)</strong>
+            </div>
+          
+            <div class="meta-item">
+              <span class="meta-label">Academic Advisor</span>
+              <strong class="meta-value">Mr. Fikadu (Lecturer, DDU-IoT)</strong>
+            </div>
+          
+            <div class="meta-item">
               <span class="meta-label">Internship Period</span>
-              <strong class="meta-value">March 2026 – August 2026 (6 Months)</strong>
+              <strong class="meta-value">May 15, 2026 – September 15, 2026 (4 Months)</strong>
             </div>
           
         </div>
@@ -378,317 +374,332 @@
         <div class="agenda-grid">
           
             <div class="agenda-card">
-              <span class="agenda-text">1. Introduction (Context & Scope)</span>
+              <div class="agenda-icon">📁</div>
+              <span class="agenda-text">1. Cover Page & Project Title</span>
             </div>
           
             <div class="agenda-card">
-              <span class="agenda-text">2. Problem Statement (Ethiopian Labor Market)</span>
+              <div class="agenda-icon">📁</div>
+              <span class="agenda-text">2. Presentation Contents</span>
             </div>
           
             <div class="agenda-card">
-              <span class="agenda-text">3. Project Objectives (General & Specific)</span>
+              <div class="agenda-icon">📁</div>
+              <span class="agenda-text">3. Introduction (Context & Background)</span>
             </div>
           
             <div class="agenda-card">
-              <span class="agenda-text">4. Scope & Limitations (Simulated Payments Note)</span>
+              <div class="agenda-icon">📁</div>
+              <span class="agenda-text">4. Problem Statement (Market Inefficiencies)</span>
             </div>
           
             <div class="agenda-card">
-              <span class="agenda-text">5. System Specification (FR & NFR)</span>
+              <div class="agenda-icon">📁</div>
+              <span class="agenda-text">5. Project Objectives (General & Specific)</span>
             </div>
           
             <div class="agenda-card">
-              <span class="agenda-text">6. Project Feasibility Analysis</span>
+              <div class="agenda-icon">📁</div>
+              <span class="agenda-text">6. Scope and Limitations (Boundaries & Disclaimers)</span>
             </div>
           
             <div class="agenda-card">
-              <span class="agenda-text">7. Development Methodology (9-Phase Lifecycle)</span>
+              <div class="agenda-icon">📁</div>
+              <span class="agenda-text">7. System Specification (FR & NFR)</span>
             </div>
           
             <div class="agenda-card">
-              <span class="agenda-text">8. Results and Implementation Outcomes</span>
+              <div class="agenda-icon">📁</div>
+              <span class="agenda-text">8. Project Feasibility Analysis (Technical, Operational, Economic)</span>
             </div>
           
             <div class="agenda-card">
-              <span class="agenda-text">9. Conclusion and Recommendations</span>
+              <div class="agenda-icon">📁</div>
+              <span class="agenda-text">9. Development Methodology & Monorepo Architecture</span>
             </div>
           
             <div class="agenda-card">
-              <span class="agenda-text">10. Questions & Discussion (Q&A)</span>
+              <div class="agenda-icon">📁</div>
+              <span class="agenda-text">10. Results and Implementation Outcomes (Quality Gates)</span>
+            </div>
+          
+            <div class="agenda-card">
+              <div class="agenda-icon">📁</div>
+              <span class="agenda-text">11. Conclusion and Recommendations (Roadmap & Q&A)</span>
             </div>
           
         </div>
         <div class="slide-footer">
-          <span>Part Two: Implementation Defense — Abdi Abiot</span>
+          <span>Dire Dawa University — Institute of Technology</span>
           <span>Slide 2 / 12</span>
         </div>
       </section>
 
     <section class="slide content-slide" id="slide-3">
       <div class="slide-header">
-        <div class="slide-badge">SECTION 1: INTRODUCTION</div>
-        <h2 class="slide-title">Introduction & Context</h2>
+        <div class="slide-badge">SECTION 3: INTRODUCTION</div>
+        <h2 class="slide-title">3. Introduction & Context</h2>
       </div>
       <div class="points-grid">
         
           <div class="point-card">
-            <h3 class="point-heading">Ethiopian Labor Landscape</h3>
-            <p class="point-desc">Ethiopia has a rapidly expanding skilled trade workforce, yet over 65% of blue-collar transactions (electrical, plumbing, masonry, carpentry) operate informally.</p>
+            <h3 class="point-heading">Ethiopian Skilled Labor Dynamics</h3>
+            <p class="point-desc">Ethiopia has a rapidly expanding urban population and construction/repair trade sector, yet over 65% of blue-collar transactions (electrical, plumbing, masonry, carpentry) operate through fragmented, informal channels.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">The WorkBridge Vision</h3>
-            <p class="point-desc">An enterprise-grade, multi-tenant digital marketplace connecting certified tradesmen directly with households, enterprises, and hiring organizations.</p>
+            <h3 class="point-heading">The WorkBridge Platform</h3>
+            <p class="point-desc">An enterprise-grade, cloud-native digital marketplace connecting certified skilled workers directly with households, property managers, and hiring enterprises across Ethiopian cities.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Strategic Engineering Goals</h3>
-            <p class="point-desc">Provide transparent pricing, verified worker profiles, direct booking lifecycles, and a sustainable two-sided freemium business model.</p>
+            <h3 class="point-heading">Core Strategic Purpose</h3>
+            <p class="point-desc">Standardize trade skill discovery, hiring, in-app communication, and financial accountability through a sustainable two-sided freemium monetization model.</p>
           </div>
         
       </div>
       <div class="slide-footer">
-        <span>Part Two: Implementation Defense — WorkBridge</span>
+        <span>WorkBridge Defense — Abdi Abiot (DDU1500744)</span>
         <span>Slide 3 / 12</span>
       </div>
     </section>
 
     <section class="slide content-slide" id="slide-4">
       <div class="slide-header">
-        <div class="slide-badge">SECTION 2: PROBLEM STATEMENT</div>
-        <h2 class="slide-title">Problem Statement</h2>
+        <div class="slide-badge">SECTION 4: PROBLEM STATEMENT</div>
+        <h2 class="slide-title">4. Problem Statement</h2>
       </div>
       <div class="points-grid">
         
           <div class="point-card">
-            <h3 class="point-heading">Fragmented Discovery</h3>
-            <p class="point-desc">Tradesmen gather at physical roadside junctions, leading to unpredictable day-to-day work and wasted productive time.</p>
+            <h3 class="point-heading">Informal Commission Brokers (Delalas)</h3>
+            <p class="point-desc">Clients and tradesmen rely on street brokers who charge arbitrary, high commission fees (20–30%) from both parties without providing any work quality guarantee.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Verification & Trust Deficit</h3>
-            <p class="point-desc">Employers cannot verify past work quality, safety standards, identity records, or customer ratings before hiring.</p>
+            <h3 class="point-heading">Identity & Verification Deficit</h3>
+            <p class="point-desc">Hiring clients have no centralized mechanism to verify national identity, vocational certifications (TVET), past work history, or client satisfaction.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Pricing Disparities & Transaction Gaps</h3>
-            <p class="point-desc">Arbitrary pricing models with absence of standardized hourly wage benchmarks or digital booking histories.</p>
+            <h3 class="point-heading">Opaque Pricing & Inefficient Discovery</h3>
+            <p class="point-desc">Workers lack digital portfolios and congregate at physical roadside junctions, while clients spend hours searching during emergency repair needs.</p>
           </div>
         
       </div>
       <div class="slide-footer">
-        <span>Part Two: Implementation Defense — WorkBridge</span>
+        <span>WorkBridge Defense — Abdi Abiot (DDU1500744)</span>
         <span>Slide 4 / 12</span>
       </div>
     </section>
 
     <section class="slide content-slide" id="slide-5">
       <div class="slide-header">
-        <div class="slide-badge">SECTION 3: PROJECT OBJECTIVES</div>
-        <h2 class="slide-title">Project Objectives</h2>
+        <div class="slide-badge">SECTION 5: PROJECT OBJECTIVE</div>
+        <h2 class="slide-title">5. Project Objectives</h2>
       </div>
       <div class="points-grid">
         
           <div class="point-card">
             <h3 class="point-heading">General Objective</h3>
-            <p class="point-desc">Design, implement, test, and deploy a secure, high-performance digital labor marketplace platform tailored for Ethiopia.</p>
+            <p class="point-desc">To design, implement, test, and validate a secure, high-performance digital labor marketplace platform tailored for the Ethiopian socio-economic context.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Monorepo & Portal Architecture</h3>
-            <p class="point-desc">Architect a unified Turborepo workspace serving Jobseeker, Employer, and Admin portals with shared design systems.</p>
+            <h3 class="point-heading">Turborepo Monorepo Architecture</h3>
+            <p class="point-desc">Architect a modular multi-package monorepo containing a Next.js 16 client marketplace, Next.js 16 admin portal, Express.js REST API, and shared TypeScript libraries.</p>
           </div>
         
           <div class="point-card">
             <h3 class="point-heading">Freemium Monetization & Security</h3>
-            <p class="point-desc">Implement automated quota enforcement, simulated Ethiopian mobile payments (Telebirr, Chapa, CBE Birr), Google OAuth 2.0, and strict TypeScript type safety.</p>
+            <p class="point-desc">Implement server-side quota enforcement (5 worker applications / 3 client job posts), simulated Ethiopian mobile payments (Telebirr, CBE Birr, Chapa), stateless JWT + Google OAuth 2.0, and 100% type safety.</p>
           </div>
         
       </div>
       <div class="slide-footer">
-        <span>Part Two: Implementation Defense — WorkBridge</span>
+        <span>WorkBridge Defense — Abdi Abiot (DDU1500744)</span>
         <span>Slide 5 / 12</span>
       </div>
     </section>
 
     <section class="slide content-slide" id="slide-6">
       <div class="slide-header">
-        <div class="slide-badge">SECTION 4: SCOPE & LIMITATIONS</div>
-        <h2 class="slide-title">Scope and Limitations</h2>
+        <div class="slide-badge">SECTION 6: SCOPE & LIMITATION</div>
+        <h2 class="slide-title">6. Scope and Limitations</h2>
       </div>
       <div class="points-grid">
         
           <div class="point-card">
-            <h3 class="point-heading">System Scope (Functional)</h3>
-            <p class="point-desc">Multi-role auth, trade worker search engine, interactive job board, direct bookings, conversational live chat, and admin moderation desk.</p>
+            <h3 class="point-heading">Functional Scope</h3>
+            <p class="point-desc">Multi-role auth (Worker/Client/Admin), worker search engine, job posting board, applicant screening, direct service bookings with 6-stage lifecycle, and admin moderation.</p>
           </div>
         
           <div class="point-card">
             <h3 class="point-heading">Simulated Payments Note</h3>
-            <p class="point-desc">WorkBridge initially implements a simulated payment and subscription system for demonstration purposes before live production banking integration.</p>
+            <p class="point-desc">WorkBridge initially implements a simulated payment and subscription system for academic demonstration. Real payment-provider APIs (Telebirr, Chapa, CBE) are scheduled for future production deployment.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Geographical Focus & Web-First</h3>
-            <p class="point-desc">Initial rollout optimized for urban hubs (Addis Ababa, Dire Dawa, Hawassa, Adama) with native mobile apps planned for Phase 2.</p>
+            <h3 class="point-heading">Geographical & Platform Boundaries</h3>
+            <p class="point-desc">Web-first responsive application optimized for mobile browsers; initial rollout targeted for Addis Ababa and Dire Dawa; native mobile apps (Flutter) planned for Phase 2.</p>
           </div>
         
       </div>
       <div class="slide-footer">
-        <span>Part Two: Implementation Defense — WorkBridge</span>
+        <span>WorkBridge Defense — Abdi Abiot (DDU1500744)</span>
         <span>Slide 6 / 12</span>
       </div>
     </section>
 
     <section class="slide content-slide" id="slide-7">
       <div class="slide-header">
-        <div class="slide-badge">SECTION 5: SPECIFICATION</div>
-        <h2 class="slide-title">System Specification (FR & NFR)</h2>
+        <div class="slide-badge">SECTION 7: SPECIFICATION</div>
+        <h2 class="slide-title">7. System Specification (FR & NFR)</h2>
       </div>
       <div class="points-grid">
         
           <div class="point-card">
             <h3 class="point-heading">Functional Requirements (FR)</h3>
-            <p class="point-desc">Role-based auth, trade profile management, job posting wizard, candidate screening, direct booking workflows, and subscription checkout.</p>
+            <p class="point-desc">Role-based authentication, tradesman profile management, job posting wizard, candidate screening, direct booking workflows, star rating reviews, and freemium quota checks.</p>
           </div>
         
           <div class="point-card">
             <h3 class="point-heading">Performance & Scalability (NFR)</h3>
-            <p class="point-desc">Sub-second page rendering using Next.js 16 SSR, MongoDB Atlas distributed indexing, and Turbo build caching.</p>
+            <p class="point-desc">Sub-1.5s initial page loads powered by Next.js 16 SSR, indexed MongoDB Atlas collections for sub-100ms query responses, and Turborepo parallel build caching.</p>
           </div>
         
           <div class="point-card">
             <h3 class="point-heading">Security & Maintainability (NFR)</h3>
-            <p class="point-desc">Role-Based Access Control (RBAC), bcrypt hashing, HTTP-only JWTs, modular @repo/ui components, and shared @repo/types DTOs.</p>
+            <p class="point-desc">Bcrypt password hashing (10 salt rounds), stateless JWT with RBAC middleware, Helmet security headers, CORS origin guards, and 100% strict TypeScript type coverage.</p>
           </div>
         
       </div>
       <div class="slide-footer">
-        <span>Part Two: Implementation Defense — WorkBridge</span>
+        <span>WorkBridge Defense — Abdi Abiot (DDU1500744)</span>
         <span>Slide 7 / 12</span>
       </div>
     </section>
 
     <section class="slide content-slide" id="slide-8">
       <div class="slide-header">
-        <div class="slide-badge">SECTION 6: FEASIBILITY</div>
-        <h2 class="slide-title">Project Feasibility Analysis</h2>
+        <div class="slide-badge">SECTION 8: PROJECT FEASIBILITY</div>
+        <h2 class="slide-title">8. Project Feasibility Analysis</h2>
       </div>
       <div class="points-grid">
         
           <div class="point-card">
             <h3 class="point-heading">Technical Feasibility</h3>
-            <p class="point-desc">Mature tech stack (Next.js 16, TypeScript, Node.js, Express, MongoDB Atlas) enabling high reliability and rapid cloud scaling.</p>
+            <p class="point-desc">Engineered using mature, modern technologies (Next.js 16, TypeScript, Node.js, Express, MongoDB Atlas, Turborepo) ensuring high concurrency and cloud scalability.</p>
           </div>
         
           <div class="point-card">
             <h3 class="point-heading">Operational Feasibility</h3>
-            <p class="point-desc">Intuitive, mobile-first responsive UI requiring minimal digital literacy for tradesmen and employers across Ethiopia.</p>
+            <p class="point-desc">Intuitive, mobile-first responsive UI built with Tailwind CSS, requiring minimal digital literacy for tradesmen and homeowners across Ethiopia.</p>
           </div>
         
           <div class="point-card">
             <h3 class="point-heading">Economic & Schedule Feasibility</h3>
-            <p class="point-desc">100% open-source software stack completed on time across 12 Agile sprints (March–August 2026) within budget.</p>
+            <p class="point-desc">100% open-source software stack completed on time across 8 two-week sprints over the 4-month internship period (May–September 2026) within budget.</p>
           </div>
         
       </div>
       <div class="slide-footer">
-        <span>Part Two: Implementation Defense — WorkBridge</span>
+        <span>WorkBridge Defense — Abdi Abiot (DDU1500744)</span>
         <span>Slide 8 / 12</span>
       </div>
     </section>
 
     <section class="slide content-slide" id="slide-9">
       <div class="slide-header">
-        <div class="slide-badge">SECTION 7: METHODOLOGY</div>
-        <h2 class="slide-title">9-Phase Engineering Methodology</h2>
+        <div class="slide-badge">SECTION 9: METHODOLOGY</div>
+        <h2 class="slide-title">9. Development Methodology & Architecture</h2>
       </div>
       <div class="points-grid">
         
           <div class="point-card">
-            <h3 class="point-heading">Phases 1–3: Foundation, Auth & Users</h3>
-            <p class="point-desc">Monorepo configuration, Express API & MongoDB Atlas, JWT & Google OAuth 2.0, Forgot/Reset password, Worker & Client profiles.</p>
+            <h3 class="point-heading">Agile Scrum Process</h3>
+            <p class="point-desc">Executed in 8 two-week sprint cycles with daily standups, backlog grooming, sprint reviews, and strict Git flow branching (main, develop, feature/*).</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Phases 4–6: Marketplace, Booking & Chat</h3>
-            <p class="point-desc">Worker discovery & filters, job posting & apply, direct booking state transitions, reviews/ratings, and conversational live messaging.</p>
+            <h3 class="point-heading">Monorepo Component Decomposition</h3>
+            <p class="point-desc">apps/client (Port 3000), apps/admin (Port 3001), apps/api (Port 4000), @repo/types (Shared DTOs), @repo/ui (Tailwind Design System), and @repo/api-client (Typed SDK).</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Phases 7–9: Monetization, Admin & Quality</h3>
-            <p class="point-desc">Freemium quotas (5 worker / 3 employer), simulated Telebirr/Chapa/CBE payments, Admin revenue monitoring, 100% strict TypeScript types & ESLint.</p>
+            <h3 class="point-heading">9-Phase Engineering Lifecycle</h3>
+            <p class="point-desc">Foundation → Authentication → Profiles → Marketplace → Booking → Chat → Freemium Monetization → Admin Moderation → Quality Gate Verification.</p>
           </div>
         
       </div>
       <div class="slide-footer">
-        <span>Part Two: Implementation Defense — WorkBridge</span>
+        <span>WorkBridge Defense — Abdi Abiot (DDU1500744)</span>
         <span>Slide 9 / 12</span>
       </div>
     </section>
 
     <section class="slide content-slide" id="slide-10">
       <div class="slide-header">
-        <div class="slide-badge">SECTION 8: RESULTS</div>
-        <h2 class="slide-title">Results and Implementation Outcomes</h2>
+        <div class="slide-badge">SECTION 10: RESULT & OUTCOMES</div>
+        <h2 class="slide-title">10. Results and Implementation Outcomes</h2>
       </div>
       <div class="points-grid">
         
           <div class="point-card">
-            <h3 class="point-heading">Delivered Applications</h3>
-            <p class="point-desc">Live, responsive Client Portal (Jobseeker/Employer), Admin Portal, and Express REST API backend in a unified monorepo.</p>
+            <h3 class="point-heading">Delivered Full-Stack Applications</h3>
+            <p class="point-desc">Fully functional Client Marketplace (Worker/Client), Admin Moderation Portal, and Express REST API backend integrated into a clean single monorepo.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Verified Quality Metrics</h3>
-            <p class="point-desc">pnpm check-types passed (5/5 packages green), pnpm lint passed (0 warnings), and Next.js production builds fully optimized.</p>
+            <h3 class="point-heading">Automated Quality Gate Verification</h3>
+            <p class="point-desc">pnpm check-types passed (5/5 packages green, 0 errors), pnpm lint passed (6/6 packages green, 0 warnings), and Next.js production builds fully verified.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Organizational Deliverables</h3>
-            <p class="point-desc">Handed over complete source code repository, reusable @repo/ui design system, and comprehensive Postman API documentation.</p>
+            <h3 class="point-heading">Organizational Deliverables for SORARDI PLC</h3>
+            <p class="point-desc">Production-ready WorkBridge codebase, reusable @repo/ui component library, Postman API collections, and complete academic defense documentation.</p>
           </div>
         
       </div>
       <div class="slide-footer">
-        <span>Part Two: Implementation Defense — WorkBridge</span>
+        <span>WorkBridge Defense — Abdi Abiot (DDU1500744)</span>
         <span>Slide 10 / 12</span>
       </div>
     </section>
 
     <section class="slide content-slide" id="slide-11">
       <div class="slide-header">
-        <div class="slide-badge">SECTION 9: CONCLUSION</div>
-        <h2 class="slide-title">Conclusion and Recommendations</h2>
+        <div class="slide-badge">SECTION 11: CONCLUSION & RECOMMENDATIONS</div>
+        <h2 class="slide-title">11. Conclusion and Recommendations</h2>
       </div>
       <div class="points-grid">
         
           <div class="point-card">
             <h3 class="point-heading">Conclusion</h3>
-            <p class="point-desc">WorkBridge successfully validates the transformative power of modern full-stack monorepos in solving structural labor inefficiencies.</p>
+            <p class="point-desc">The 4-month internship at SORARDI PLC successfully demonstrated how modern full-stack web engineering can eliminate informal labor market friction and empower Ethiopian tradesmen.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Academic Recommendation</h3>
-            <p class="point-desc">Integrate modern monorepo architectures and strict TypeScript workflows into undergraduate university software engineering labs.</p>
+            <h3 class="point-heading">Academic Recommendations for DDU-IoT</h3>
+            <p class="point-desc">Incorporate monorepo build tools (Turborepo) and strict TypeScript type-checking gates into undergraduate software engineering laboratory courses.</p>
           </div>
         
           <div class="point-card">
-            <h3 class="point-heading">Platform Future Roadmap</h3>
-            <p class="point-desc">Transition simulated payments to live production banking integrations, build native mobile apps (Flutter), and introduce USSD booking.</p>
+            <h3 class="point-heading">Future Production Roadmap for WorkBridge</h3>
+            <p class="point-desc">Integrate live Telebirr, CBE Birr, and Chapa merchant APIs, connect with Ethiopian National ID (Fayda) for identity checks, and develop Flutter native mobile apps.</p>
           </div>
         
       </div>
       <div class="slide-footer">
-        <span>Part Two: Implementation Defense — WorkBridge</span>
+        <span>WorkBridge Defense — Abdi Abiot (DDU1500744)</span>
         <span>Slide 11 / 12</span>
       </div>
     </section>
 
       <section class="slide thankyou-slide" id="slide-12">
-        <div class="slide-badge">SECTION 10: Q&A</div>
+        <div class="slide-badge">QUESTIONS & DISCUSSION</div>
         <h1 class="main-title">Questions & Discussion</h1>
-        <p class="main-subtitle">Thank you for your attention, guidance, and evaluation.</p>
+        <p class="main-subtitle">Thank you for your time, mentorship, and academic evaluation.</p>
         <div class="title-meta-grid">
           
             <div class="meta-item">
@@ -698,7 +709,7 @@
           
             <div class="meta-item">
               <span class="meta-label">Department</span>
-              <strong class="meta-value">Software Engineering, Dire Dawa University IoT</strong>
+              <strong class="meta-value">Department of Software Engineering, DDU-IoT</strong>
             </div>
           
             <div class="meta-item">
@@ -711,12 +722,22 @@
               <strong class="meta-value">WorkBridge Platform</strong>
             </div>
           
+            <div class="meta-item">
+              <span class="meta-label">Internship Duration</span>
+              <strong class="meta-value">May 15, 2026 – September 15, 2026 (4 Months)</strong>
+            </div>
+          
         </div>
         <div class="slide-footer">
-          <span>Dire Dawa University IoT & SORARDI PLC</span>
+          <span>Dire Dawa University & SORARDI PLC</span>
           <span>Slide 12 / 12</span>
         </div>
       </section>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prev-btn" title="Previous Slide (Left Arrow)">←</button>
+      <button class="nav-btn" id="next-btn" title="Next Slide (Right Arrow / Space)">→</button>
+      <button class="nav-btn" id="fullscreen-btn" title="Fullscreen (F)">⛶</button>
+    </div>
   </div>
 
   <script>
@@ -724,56 +745,62 @@
     const totalSlides = 12;
 
     function showSlide(n) {
-      if (n < 1) n = 1;
-      if (n > totalSlides) n = totalSlides;
-      currentSlide = n;
-
-      document.querySelectorAll('.slide').forEach((slide, idx) => {
-        if (idx + 1 === currentSlide) {
-          slide.classList.add('active');
-        } else {
-          slide.classList.remove('active');
-        }
-      });
-
-      document.getElementById('slide-indicator').innerText = 'Slide ' + currentSlide + ' / ' + totalSlides;
+      document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById('slide-' + n);
+      if (target) {
+        target.classList.add('active');
+        currentSlide = n;
+      }
     }
 
     function nextSlide() {
-      showSlide(currentSlide + 1);
+      if (currentSlide < totalSlides) {
+        showSlide(currentSlide + 1);
+      }
     }
 
     function prevSlide() {
-      showSlide(currentSlide - 1);
-    }
-
-    function toggleFullScreen() {
-      const elem = document.getElementById('presentation');
-      if (!document.fullscreenElement) {
-        if (elem.requestFullscreen) {
-          elem.requestFullscreen();
-        }
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        }
+      if (currentSlide > 1) {
+        showSlide(currentSlide - 1);
       }
     }
 
-    // Keyboard Navigation
-    window.addEventListener('keydown', (e) => {
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+
+    document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
         nextSlide();
       } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
         prevSlide();
       } else if (e.key === 'f' || e.key === 'F') {
-        toggleFullScreen();
-      } else if (e.key === 'Home') {
-        showSlide(1);
-      } else if (e.key === 'End') {
-        showSlide(totalSlides);
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+      } else if (e.key === 't' || e.key === 'T') {
+        toggleTheme();
       }
     });
+
+    document.getElementById('fullscreen-btn').addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+
+    document.getElementById('theme-btn').addEventListener('click', toggleTheme);
 
     // Initialize first slide
     showSlide(1);
