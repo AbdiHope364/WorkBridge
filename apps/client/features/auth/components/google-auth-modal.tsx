@@ -199,6 +199,19 @@ export function GoogleAuthModal({
             >
               <UserPlus className="w-3.5 h-3.5" /> Use another Google account
             </button>
+
+            {/* Real Google Cloud OAuth Redirect Option */}
+            <div className="pt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  window.location.href = `/api/auth/google?role=${defaultRole}`;
+                }}
+                className="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition"
+              >
+                <span>🌐</span> Continue via Official Google Accounts Window
+              </button>
+            </div>
           </div>
         ) : (
           <form onSubmit={handleCustomSubmit} className="space-y-4">
