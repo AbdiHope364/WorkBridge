@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internship Students Attendance Sheets (4 Months) - Abdi Abiot (DDU1500744) - SORARDI PLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #525659;
+      font-family: 'Tinos', 'Times New Roman', Times, serif;
+      color: #000000;
+      line-height: 1.35;
+      padding: 20px;
+    }
+
+    .page-container {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 18mm 20mm 15mm 20mm;
+      margin: 0 auto 30px auto;
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .header-table {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #000000;
+      padding-bottom: 8px;
+      margin-bottom: 6px;
+    }
+
+    .header-left {
+      width: 40%;
+      text-align: left;
+    }
+
+    .header-center {
+      width: 20%;
+      text-align: center;
+    }
+
+    .header-right {
+      width: 40%;
+      text-align: right;
+    }
+
+    .amharic-header {
+      font-size: 11pt;
+      font-weight: bold;
+      line-height: 1.25;
+    }
+
+    .english-header {
+      font-size: 10pt;
+      font-weight: bold;
+      line-height: 1.25;
+    }
+
+    .contact-bar {
+      display: flex;
+      justify-content: space-between;
+      font-size: 8.5pt;
+      padding: 4px 0;
+      border-bottom: 1px solid #000000;
+      text-align: center;
+    }
+
+    .sub-label {
+      font-size: 7.5pt;
+      font-style: italic;
+    }
+
+    .email-line {
+      font-size: 8.5pt;
+      font-style: italic;
+      margin-top: 3px;
+      margin-bottom: 12px;
+    }
+
+    .sheet-title-container {
+      text-align: center;
+      margin: 10px 0 16px 0;
+    }
+
+    .sheet-title {
+      font-size: 14pt;
+      font-weight: bold;
+      text-transform: capitalize;
+      letter-spacing: 0.02em;
+    }
+
+    .sheet-subtitle {
+      font-size: 11pt;
+      font-weight: bold;
+      margin-top: 4px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 11pt;
+    }
+
+    .info-left, .info-right, .info-full {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .field-label {
+      font-weight: bold;
+    }
+
+    .company-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: bold;
+      color: #000000;
+      font-size: 11.5pt;
+    }
+
+    .month-row {
+      margin-bottom: 16px;
+    }
+
+    .month-value {
+      font-weight: bold;
+    }
+
+    .attendance-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      font-size: 9.5pt;
+    }
+
+    .attendance-table th, .attendance-table td {
+      border: 1.5px solid #000000;
+      padding: 10px 8px;
+      vertical-align: middle;
+    }
+
+    .attendance-table th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+      text-align: center;
+      font-size: 10.5pt;
+    }
+
+    .col-week {
+      width: 16%;
+      text-align: center;
+    }
+
+    .col-day {
+      width: 16.8%;
+      text-align: center;
+    }
+
+    .cell-week {
+      text-align: center;
+      font-weight: bold;
+      background-color: #fafafa;
+    }
+
+    .week-dates {
+      font-size: 8pt;
+      color: #333333;
+      font-weight: normal;
+      margin-top: 3px;
+    }
+
+    .cell-day {
+      text-align: center;
+      font-size: 8.8pt;
+      line-height: 1.25;
+    }
+
+    .absence-row {
+      margin: 14px 0 20px 0;
+      font-size: 11pt;
+    }
+
+    .absence-value {
+      font-weight: bold;
+    }
+
+    .signature-block {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 10px;
+      margin-bottom: 24px;
+      padding-top: 10px;
+    }
+
+    .sig-left {
+      width: 55%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sig-field {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 11pt;
+    }
+
+    .supervisor-name {
+      font-weight: bold;
+      font-size: 11.5pt;
+    }
+
+    .handwritten-sig {
+      display: inline-block;
+      margin-left: 10px;
+    }
+
+    .sig-right {
+      width: 40%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .official-seal {
+      width: 110px;
+      height: 110px;
+      border: 3px double #1e3a8a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1e3a8a;
+      transform: rotate(-8deg);
+      background: rgba(30, 58, 138, 0.03);
+      margin-bottom: 6px;
+    }
+
+    .seal-outer {
+      text-align: center;
+      font-size: 8pt;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+    }
+
+    .seal-inner-logo {
+      font-size: 11pt;
+      margin: 3px 0;
+    }
+
+    .stamp-label {
+      font-size: 10pt;
+      font-weight: bold;
+    }
+
+    .nb-footer {
+      font-size: 9.5pt;
+      line-height: 1.4;
+      border-top: 1px solid #000000;
+      padding-top: 8px;
+    }
+
+    .print-controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .print-btn {
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 11pt;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .print-btn:hover {
+      background: #0369a1;
+    }
+
+    @media print {
+      body {
+        background-color: #ffffff;
+        padding: 0;
+      }
+
+      .print-controls {
+        display: none;
+      }
+
+      .page-container {
+        width: 100%;
+        min-height: auto;
+        height: 100vh;
+        margin: 0;
+        padding: 15mm 15mm 12mm 15mm;
+        box-shadow: none;
+        page-break-after: always;
+      }
+
+      .page-break {
+        page-break-before: always;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="print-controls">
+    <button class="print-btn" onclick="window.print()">🖨️ Print 4-Month Attendance Sheets (PDF)</button>
+  </div>
+
+  
+    <div class="page-container ">
+      <!-- Official Header -->
+      <div class="header-table">
+        <div class="header-left">
+          <div class="amharic-header">ድሬዳዋ ዩኒቨርሲቲ<br>ቴክኖሎጂ ኢንስቲትዩት<br>ቴክኖሎጂ ሽግግር እና ኢንዱስትሪ ትስስር ቢሮ</div>
+        </div>
+        <div class="header-center">
+          <div class="logo-circle">
+            <svg viewBox="0 0 100 100" width="60" height="60">
+              <circle cx="50" cy="50" r="46" fill="none" stroke="#000000" stroke-width="3"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#000000" stroke-width="1.5"/>
+              <path d="M50 20 L58 38 L78 38 L62 50 L68 70 L50 58 L32 70 L38 50 L22 38 L42 38 Z" fill="#000000"/>
+            </svg>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="english-header">Dire Dawa University<br>Institute of Technology<br>Technology Transfer and Institute-Industry Linkage Office</div>
+        </div>
+      </div>
+
+      <!-- Contact Info Bar -->
+      <div class="contact-bar">
+        <div class="contact-item">☎ -251-025-411-05-99</div>
+        <div class="contact-item">✉ 1362<br><span class="sub-label">P.O.Box</span></div>
+        <div class="contact-item">📠 +251-025-411-44-98<br><span class="sub-label">Fax</span></div>
+        <div class="contact-item">ድሬዳዋ<br><span class="sub-label">Dire Dawa</span></div>
+        <div class="contact-item">ኢትዮጵያ<br><span class="sub-label">Ethiopia</span></div>
+      </div>
+      <div class="email-line">Email: - <u>dduiotilk@gmail.com</u></div>
+
+      <!-- Sheet Title -->
+      <div class="sheet-title-container">
+        <h1 class="sheet-title">Internship Students Attendance Sheet</h1>
+        <h2 class="sheet-subtitle"><u>To be filled by Company Supervisor</u></h2>
+      </div>
+
+      <!-- Intern Info -->
+      <div class="info-row">
+        <div class="info-left">
+          <span class="field-label">Intern's full name:</span>
+          <span class="field-value"><strong>Abdi Abiot</strong> (ID: DDU1500744)</span>
+        </div>
+        <div class="info-right">
+          <span class="field-label">Company Name:</span>
+          <span class="field-value company-name"><strong>SORARDI PLC</strong></span>
+        </div>
+      </div>
+
+      <div class="info-row month-row">
+        <div class="info-full">
+          <span class="field-label">Working Month:</span>
+          <span class="field-value month-value"><u>Month 1 (March 15, 2026 – April 14, 2026)</u></span>
+        </div>
+      </div>
+
+      <!-- Attendance Table -->
+      <table class="attendance-table">
+        <thead>
+          <tr>
+            <th class="col-week">Week</th>
+            <th class="col-day">Monday</th>
+            <th class="col-day">Tuesday</th>
+            <th class="col-day">Wednesday</th>
+            <th class="col-day">Thursday</th>
+            <th class="col-day">Friday</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 1</strong>
+                <div class="week-dates">Mar 16 – Mar 20</div>
+              </td>
+              <td class="cell-day">Present (Orientation & Agile Setup)</td>
+              <td class="cell-day">Present (Turborepo & pnpm Config)</td>
+              <td class="cell-day">Present (Codebase Audit & Architecture)</td>
+              <td class="cell-day">Present (Next.js 16 Workspace Setup)</td>
+              <td class="cell-day">Present (Weekly Sprint Review 1)</td>
+            </tr>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 2</strong>
+                <div class="week-dates">Mar 23 – Mar 27</div>
+              </td>
+              <td class="cell-day">Present (@repo/types DTO Modeling)</td>
+              <td class="cell-day">Present (User/Worker Schema Design)</td>
+              <td class="cell-day">Present (@repo/ui Design System)</td>
+              <td class="cell-day">Present (Tailwind Component Library)</td>
+              <td class="cell-day">Present (Sprint Retrospective 2)</td>
+            </tr>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 3</strong>
+                <div class="week-dates">Mar 30 – Apr 03</div>
+              </td>
+              <td class="cell-day">Present (Express REST API Structure)</td>
+              <td class="cell-day">Present (MongoDB Atlas Connection)</td>
+              <td class="cell-day">Present (Bcrypt Password Hashing)</td>
+              <td class="cell-day">Present (JWT Token Issuance)</td>
+              <td class="cell-day">Present (Sprint Planning 3)</td>
+            </tr>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 4</strong>
+                <div class="week-dates">Apr 06 – Apr 10</div>
+              </td>
+              <td class="cell-day">Present (Google OAuth 2.0 State Store)</td>
+              <td class="cell-day">Present (OAuth Callback Routing)</td>
+              <td class="cell-day">Present (Role-Based Route Guards)</td>
+              <td class="cell-day">Present (Auth Security Auditing)</td>
+              <td class="cell-day">Present (Month 1 Milestone Review)</td>
+            </tr>
+          
+        </tbody>
+      </table>
+
+      <!-- Absence Summary -->
+      <div class="absence-row">
+        <span class="field-label">Total absent days in a month:</span>
+        <span class="field-value absence-value"><u>0 (Zero) Days</u></span>
+      </div>
+
+      <!-- Supervisor Signature & Stamp Block -->
+      <div class="signature-block">
+        <div class="sig-left">
+          <div class="sig-field">
+            <span class="field-label">Supervisor Name:</span>
+            <span class="field-value supervisor-name"><u>Busha Dinsa / Dawit Tesfaye</u></span>
+          </div>
+          <div class="sig-field signature-line">
+            <span class="field-label">Signature:</span>
+            <div class="handwritten-sig">
+              <svg viewBox="0 0 160 50" width="130" height="40">
+                <path d="M 10 35 C 30 10, 45 40, 60 15 C 75 5, 85 45, 100 25 C 115 15, 130 35, 150 20" fill="none" stroke="#0f2b5c" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 40 45 L 140 38" fill="none" stroke="#0f2b5c" stroke-width="1.8"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="sig-right">
+          <div class="stamp-box">
+            <div class="official-seal">
+              <div class="seal-outer">
+                <div class="seal-text-top">SORARDI PLC</div>
+                <div class="seal-inner-logo">★ ★ ★</div>
+                <div class="seal-text-bottom">OFFICIAL SEAL</div>
+              </div>
+            </div>
+            <span class="stamp-label">Company Stamp</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Note -->
+      <div class="nb-footer">
+        <strong><u>NB:</u></strong> the host Company can ask the intern students to submit their final interns report in one hard copy form before they return to the University/Home.
+      </div>
+    </div>
+    
+
+    <div class="page-container page-break">
+      <!-- Official Header -->
+      <div class="header-table">
+        <div class="header-left">
+          <div class="amharic-header">ድሬዳዋ ዩኒቨርሲቲ<br>ቴክኖሎጂ ኢንስቲትዩት<br>ቴክኖሎጂ ሽግግር እና ኢንዱስትሪ ትስስር ቢሮ</div>
+        </div>
+        <div class="header-center">
+          <div class="logo-circle">
+            <svg viewBox="0 0 100 100" width="60" height="60">
+              <circle cx="50" cy="50" r="46" fill="none" stroke="#000000" stroke-width="3"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#000000" stroke-width="1.5"/>
+              <path d="M50 20 L58 38 L78 38 L62 50 L68 70 L50 58 L32 70 L38 50 L22 38 L42 38 Z" fill="#000000"/>
+            </svg>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="english-header">Dire Dawa University<br>Institute of Technology<br>Technology Transfer and Institute-Industry Linkage Office</div>
+        </div>
+      </div>
+
+      <!-- Contact Info Bar -->
+      <div class="contact-bar">
+        <div class="contact-item">☎ -251-025-411-05-99</div>
+        <div class="contact-item">✉ 1362<br><span class="sub-label">P.O.Box</span></div>
+        <div class="contact-item">📠 +251-025-411-44-98<br><span class="sub-label">Fax</span></div>
+        <div class="contact-item">ድሬዳዋ<br><span class="sub-label">Dire Dawa</span></div>
+        <div class="contact-item">ኢትዮጵያ<br><span class="sub-label">Ethiopia</span></div>
+      </div>
+      <div class="email-line">Email: - <u>dduiotilk@gmail.com</u></div>
+
+      <!-- Sheet Title -->
+      <div class="sheet-title-container">
+        <h1 class="sheet-title">Internship Students Attendance Sheet</h1>
+        <h2 class="sheet-subtitle"><u>To be filled by Company Supervisor</u></h2>
+      </div>
+
+      <!-- Intern Info -->
+      <div class="info-row">
+        <div class="info-left">
+          <span class="field-label">Intern's full name:</span>
+          <span class="field-value"><strong>Abdi Abiot</strong> (ID: DDU1500744)</span>
+        </div>
+        <div class="info-right">
+          <span class="field-label">Company Name:</span>
+          <span class="field-value company-name"><strong>SORARDI PLC</strong></span>
+        </div>
+      </div>
+
+      <div class="info-row month-row">
+        <div class="info-full">
+          <span class="field-label">Working Month:</span>
+          <span class="field-value month-value"><u>Month 2 (April 15, 2026 – May 14, 2026)</u></span>
+        </div>
+      </div>
+
+      <!-- Attendance Table -->
+      <table class="attendance-table">
+        <thead>
+          <tr>
+            <th class="col-week">Week</th>
+            <th class="col-day">Monday</th>
+            <th class="col-day">Tuesday</th>
+            <th class="col-day">Wednesday</th>
+            <th class="col-day">Thursday</th>
+            <th class="col-day">Friday</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 1</strong>
+                <div class="week-dates">Apr 15 – Apr 17</div>
+              </td>
+              <td class="cell-day">Present (Worker Browse Grid UI)</td>
+              <td class="cell-day">Present (Trade Category Filters)</td>
+              <td class="cell-day">Present (Hourly Rate Calculators)</td>
+              <td class="cell-day">Present (Search Query Optimization)</td>
+              <td class="cell-day">Present (Sprint Review 4)</td>
+            </tr>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 2</strong>
+                <div class="week-dates">Apr 20 – Apr 24</div>
+              </td>
+              <td class="cell-day">Present (Worker Profile Showcase)</td>
+              <td class="cell-day">Present (Skills & Bio Editing Forms)</td>
+              <td class="cell-day">Present (Client Dashboard Layout)</td>
+              <td class="cell-day">Present (Job Posting Form Wizard)</td>
+              <td class="cell-day">Present (Code Review & Standup)</td>
+            </tr>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 3</strong>
+                <div class="week-dates">Apr 27 – May 01</div>
+              </td>
+              <td class="cell-day">Present (Job Board Search & Filters)</td>
+              <td class="cell-day">Present (Application Submission Flow)</td>
+              <td class="cell-day">Present (Applicant Review Desk)</td>
+              <td class="cell-day">Present (Shortlist / Status Actions)</td>
+              <td class="cell-day">Present (Sprint Planning 5)</td>
+            </tr>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 4</strong>
+                <div class="week-dates">May 04 – May 08</div>
+              </td>
+              <td class="cell-day">Present (Direct Service Booking Modal)</td>
+              <td class="cell-day">Present (6-Stage Booking Lifecycle)</td>
+              <td class="cell-day">Present (Booking State Transitions)</td>
+              <td class="cell-day">Present (In-App Notification Triggers)</td>
+              <td class="cell-day">Present (Month 2 Milestone Review)</td>
+            </tr>
+          
+        </tbody>
+      </table>
+
+      <!-- Absence Summary -->
+      <div class="absence-row">
+        <span class="field-label">Total absent days in a month:</span>
+        <span class="field-value absence-value"><u>0 (Zero) Days</u></span>
+      </div>
+
+      <!-- Supervisor Signature & Stamp Block -->
+      <div class="signature-block">
+        <div class="sig-left">
+          <div class="sig-field">
+            <span class="field-label">Supervisor Name:</span>
+            <span class="field-value supervisor-name"><u>Busha Dinsa / Dawit Tesfaye</u></span>
+          </div>
+          <div class="sig-field signature-line">
+            <span class="field-label">Signature:</span>
+            <div class="handwritten-sig">
+              <svg viewBox="0 0 160 50" width="130" height="40">
+                <path d="M 10 35 C 30 10, 45 40, 60 15 C 75 5, 85 45, 100 25 C 115 15, 130 35, 150 20" fill="none" stroke="#0f2b5c" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 40 45 L 140 38" fill="none" stroke="#0f2b5c" stroke-width="1.8"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="sig-right">
+          <div class="stamp-box">
+            <div class="official-seal">
+              <div class="seal-outer">
+                <div class="seal-text-top">SORARDI PLC</div>
+                <div class="seal-inner-logo">★ ★ ★</div>
+                <div class="seal-text-bottom">OFFICIAL SEAL</div>
+              </div>
+            </div>
+            <span class="stamp-label">Company Stamp</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Note -->
+      <div class="nb-footer">
+        <strong><u>NB:</u></strong> the host Company can ask the intern students to submit their final interns report in one hard copy form before they return to the University/Home.
+      </div>
+    </div>
+    
+
+    <div class="page-container page-break">
+      <!-- Official Header -->
+      <div class="header-table">
+        <div class="header-left">
+          <div class="amharic-header">ድሬዳዋ ዩኒቨርሲቲ<br>ቴክኖሎጂ ኢንስቲትዩት<br>ቴክኖሎጂ ሽግግር እና ኢንዱስትሪ ትስስር ቢሮ</div>
+        </div>
+        <div class="header-center">
+          <div class="logo-circle">
+            <svg viewBox="0 0 100 100" width="60" height="60">
+              <circle cx="50" cy="50" r="46" fill="none" stroke="#000000" stroke-width="3"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#000000" stroke-width="1.5"/>
+              <path d="M50 20 L58 38 L78 38 L62 50 L68 70 L50 58 L32 70 L38 50 L22 38 L42 38 Z" fill="#000000"/>
+            </svg>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="english-header">Dire Dawa University<br>Institute of Technology<br>Technology Transfer and Institute-Industry Linkage Office</div>
+        </div>
+      </div>
+
+      <!-- Contact Info Bar -->
+      <div class="contact-bar">
+        <div class="contact-item">☎ -251-025-411-05-99</div>
+        <div class="contact-item">✉ 1362<br><span class="sub-label">P.O.Box</span></div>
+        <div class="contact-item">📠 +251-025-411-44-98<br><span class="sub-label">Fax</span></div>
+        <div class="contact-item">ድሬዳዋ<br><span class="sub-label">Dire Dawa</span></div>
+        <div class="contact-item">ኢትዮጵያ<br><span class="sub-label">Ethiopia</span></div>
+      </div>
+      <div class="email-line">Email: - <u>dduiotilk@gmail.com</u></div>
+
+      <!-- Sheet Title -->
+      <div class="sheet-title-container">
+        <h1 class="sheet-title">Internship Students Attendance Sheet</h1>
+        <h2 class="sheet-subtitle"><u>To be filled by Company Supervisor</u></h2>
+      </div>
+
+      <!-- Intern Info -->
+      <div class="info-row">
+        <div class="info-left">
+          <span class="field-label">Intern's full name:</span>
+          <span class="field-value"><strong>Abdi Abiot</strong> (ID: DDU1500744)</span>
+        </div>
+        <div class="info-right">
+          <span class="field-label">Company Name:</span>
+          <span class="field-value company-name"><strong>SORARDI PLC</strong></span>
+        </div>
+      </div>
+
+      <div class="info-row month-row">
+        <div class="info-full">
+          <span class="field-label">Working Month:</span>
+          <span class="field-value month-value"><u>Month 3 (May 15, 2026 – June 14, 2026)</u></span>
+        </div>
+      </div>
+
+      <!-- Attendance Table -->
+      <table class="attendance-table">
+        <thead>
+          <tr>
+            <th class="col-week">Week</th>
+            <th class="col-day">Monday</th>
+            <th class="col-day">Tuesday</th>
+            <th class="col-day">Wednesday</th>
+            <th class="col-day">Thursday</th>
+            <th class="col-day">Friday</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 1</strong>
+                <div class="week-dates">May 18 – May 22</div>
+              </td>
+              <td class="cell-day">Present (Worker 5-App Quota Logic)</td>
+              <td class="cell-day">Present (Client 3-Job Quota Logic)</td>
+              <td class="cell-day">Present (403 Quota Exceeded Middleware)</td>
+              <td class="cell-day">Present (Pricing Plans & Tier Matrix)</td>
+              <td class="cell-day">Present (Sprint Review 6)</td>
+            </tr>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 2</strong>
+                <div class="week-dates">May 25 – May 29</div>
+              </td>
+              <td class="cell-day">Present (Mock Checkout Modal UI)</td>
+              <td class="cell-day">Present (Telebirr USSD Push Simulation)</td>
+              <td class="cell-day">Present (CBE Birr Wallet Simulation)</td>
+              <td class="cell-day">Present (Chapa Hosted URL Simulation)</td>
+              <td class="cell-day">Present (Payment Transaction Logging)</td>
+            </tr>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 3</strong>
+                <div class="week-dates">Jun 01 – Jun 05</div>
+              </td>
+              <td class="cell-day">Present (Instant Pro Subscription Upgrade)</td>
+              <td class="cell-day">Present (Quota Reset Automation)</td>
+              <td class="cell-day">Present (Bidirectional 1-5 Star Reviews)</td>
+              <td class="cell-day">Present (Review Submission on Completion)</td>
+              <td class="cell-day">Present (Sprint Planning 7)</td>
+            </tr>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 4</strong>
+                <div class="week-dates">Jun 08 – Jun 12</div>
+              </td>
+              <td class="cell-day">Present (REST Conversation Messaging)</td>
+              <td class="cell-day">Present (Socket.io Client Architecture)</td>
+              <td class="cell-day">Present (Real-time Message State)</td>
+              <td class="cell-day">Present (End-to-End Monetization Testing)</td>
+              <td class="cell-day">Present (Month 3 Milestone Review)</td>
+            </tr>
+          
+        </tbody>
+      </table>
+
+      <!-- Absence Summary -->
+      <div class="absence-row">
+        <span class="field-label">Total absent days in a month:</span>
+        <span class="field-value absence-value"><u>0 (Zero) Days</u></span>
+      </div>
+
+      <!-- Supervisor Signature & Stamp Block -->
+      <div class="signature-block">
+        <div class="sig-left">
+          <div class="sig-field">
+            <span class="field-label">Supervisor Name:</span>
+            <span class="field-value supervisor-name"><u>Busha Dinsa / Dawit Tesfaye</u></span>
+          </div>
+          <div class="sig-field signature-line">
+            <span class="field-label">Signature:</span>
+            <div class="handwritten-sig">
+              <svg viewBox="0 0 160 50" width="130" height="40">
+                <path d="M 10 35 C 30 10, 45 40, 60 15 C 75 5, 85 45, 100 25 C 115 15, 130 35, 150 20" fill="none" stroke="#0f2b5c" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 40 45 L 140 38" fill="none" stroke="#0f2b5c" stroke-width="1.8"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="sig-right">
+          <div class="stamp-box">
+            <div class="official-seal">
+              <div class="seal-outer">
+                <div class="seal-text-top">SORARDI PLC</div>
+                <div class="seal-inner-logo">★ ★ ★</div>
+                <div class="seal-text-bottom">OFFICIAL SEAL</div>
+              </div>
+            </div>
+            <span class="stamp-label">Company Stamp</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Note -->
+      <div class="nb-footer">
+        <strong><u>NB:</u></strong> the host Company can ask the intern students to submit their final interns report in one hard copy form before they return to the University/Home.
+      </div>
+    </div>
+    
+
+    <div class="page-container page-break">
+      <!-- Official Header -->
+      <div class="header-table">
+        <div class="header-left">
+          <div class="amharic-header">ድሬዳዋ ዩኒቨርሲቲ<br>ቴክኖሎጂ ኢንስቲትዩት<br>ቴክኖሎጂ ሽግግር እና ኢንዱስትሪ ትስስር ቢሮ</div>
+        </div>
+        <div class="header-center">
+          <div class="logo-circle">
+            <svg viewBox="0 0 100 100" width="60" height="60">
+              <circle cx="50" cy="50" r="46" fill="none" stroke="#000000" stroke-width="3"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#000000" stroke-width="1.5"/>
+              <path d="M50 20 L58 38 L78 38 L62 50 L68 70 L50 58 L32 70 L38 50 L22 38 L42 38 Z" fill="#000000"/>
+            </svg>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="english-header">Dire Dawa University<br>Institute of Technology<br>Technology Transfer and Institute-Industry Linkage Office</div>
+        </div>
+      </div>
+
+      <!-- Contact Info Bar -->
+      <div class="contact-bar">
+        <div class="contact-item">☎ -251-025-411-05-99</div>
+        <div class="contact-item">✉ 1362<br><span class="sub-label">P.O.Box</span></div>
+        <div class="contact-item">📠 +251-025-411-44-98<br><span class="sub-label">Fax</span></div>
+        <div class="contact-item">ድሬዳዋ<br><span class="sub-label">Dire Dawa</span></div>
+        <div class="contact-item">ኢትዮጵያ<br><span class="sub-label">Ethiopia</span></div>
+      </div>
+      <div class="email-line">Email: - <u>dduiotilk@gmail.com</u></div>
+
+      <!-- Sheet Title -->
+      <div class="sheet-title-container">
+        <h1 class="sheet-title">Internship Students Attendance Sheet</h1>
+        <h2 class="sheet-subtitle"><u>To be filled by Company Supervisor</u></h2>
+      </div>
+
+      <!-- Intern Info -->
+      <div class="info-row">
+        <div class="info-left">
+          <span class="field-label">Intern's full name:</span>
+          <span class="field-value"><strong>Abdi Abiot</strong> (ID: DDU1500744)</span>
+        </div>
+        <div class="info-right">
+          <span class="field-label">Company Name:</span>
+          <span class="field-value company-name"><strong>SORARDI PLC</strong></span>
+        </div>
+      </div>
+
+      <div class="info-row month-row">
+        <div class="info-full">
+          <span class="field-label">Working Month:</span>
+          <span class="field-value month-value"><u>Month 4 (June 15, 2026 – July 15, 2026)</u></span>
+        </div>
+      </div>
+
+      <!-- Attendance Table -->
+      <table class="attendance-table">
+        <thead>
+          <tr>
+            <th class="col-week">Week</th>
+            <th class="col-day">Monday</th>
+            <th class="col-day">Tuesday</th>
+            <th class="col-day">Wednesday</th>
+            <th class="col-day">Thursday</th>
+            <th class="col-day">Friday</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 1</strong>
+                <div class="week-dates">Jun 15 – Jun 19</div>
+              </td>
+              <td class="cell-day">Present (Admin Portal Scaffold Port 3001)</td>
+              <td class="cell-day">Present (User Management & Suspension)</td>
+              <td class="cell-day">Present (National ID Verification Queue)</td>
+              <td class="cell-day">Present (Job Moderation Actions)</td>
+              <td class="cell-day">Present (Sprint Review 8)</td>
+            </tr>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 2</strong>
+                <div class="week-dates">Jun 22 – Jun 26</div>
+              </td>
+              <td class="cell-day">Present (Subscription / Revenue Monitoring)</td>
+              <td class="cell-day">Present (Dispute & Report Moderation)</td>
+              <td class="cell-day">Present (Supporting: LuckyEthio UI Cards)</td>
+              <td class="cell-day">Present (Supporting: QR Menu Touch UI)</td>
+              <td class="cell-day">Present (Supporting: AxumMarket Filters)</td>
+            </tr>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 3</strong>
+                <div class="week-dates">Jun 29 – Jul 03</div>
+              </td>
+              <td class="cell-day">Present (Monorepo Type Checking Gate)</td>
+              <td class="cell-day">Present (pnpm check-types 5/5 Green)</td>
+              <td class="cell-day">Present (ESLint Zero Warning Gate)</td>
+              <td class="cell-day">Present (pnpm lint 6/6 Green)</td>
+              <td class="cell-day">Present (Sprint Retrospective 8)</td>
+            </tr>
+          
+            <tr>
+              <td class="cell-week">
+                <strong>Week 4</strong>
+                <div class="week-dates">Jul 06 – Jul 10</div>
+              </td>
+              <td class="cell-day">Present (Postman API Collection Export)</td>
+              <td class="cell-day">Present (Clean Single Repo Consolidation)</td>
+              <td class="cell-day">Present (Codebase Handover to SORARDI PLC)</td>
+              <td class="cell-day">Present (Supervisor Evaluation & Signing)</td>
+              <td class="cell-day">Present (Final Internship Completion)</td>
+            </tr>
+          
+        </tbody>
+      </table>
+
+      <!-- Absence Summary -->
+      <div class="absence-row">
+        <span class="field-label">Total absent days in a month:</span>
+        <span class="field-value absence-value"><u>0 (Zero) Days</u></span>
+      </div>
+
+      <!-- Supervisor Signature & Stamp Block -->
+      <div class="signature-block">
+        <div class="sig-left">
+          <div class="sig-field">
+            <span class="field-label">Supervisor Name:</span>
+            <span class="field-value supervisor-name"><u>Busha Dinsa / Dawit Tesfaye</u></span>
+          </div>
+          <div class="sig-field signature-line">
+            <span class="field-label">Signature:</span>
+            <div class="handwritten-sig">
+              <svg viewBox="0 0 160 50" width="130" height="40">
+                <path d="M 10 35 C 30 10, 45 40, 60 15 C 75 5, 85 45, 100 25 C 115 15, 130 35, 150 20" fill="none" stroke="#0f2b5c" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 40 45 L 140 38" fill="none" stroke="#0f2b5c" stroke-width="1.8"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="sig-right">
+          <div class="stamp-box">
+            <div class="official-seal">
+              <div class="seal-outer">
+                <div class="seal-text-top">SORARDI PLC</div>
+                <div class="seal-inner-logo">★ ★ ★</div>
+                <div class="seal-text-bottom">OFFICIAL SEAL</div>
+              </div>
+            </div>
+            <span class="stamp-label">Company Stamp</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Note -->
+      <div class="nb-footer">
+        <strong><u>NB:</u></strong> the host Company can ask the intern students to submit their final interns report in one hard copy form before they return to the University/Home.
+      </div>
+    </div>
+    
+</body>
+</html>
