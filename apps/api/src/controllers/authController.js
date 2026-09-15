@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { collections } from '../data/db.js';
 import { signToken } from '../utils/token.js';
+import { sendOtpEmail } from '../utils/emailService.js';
 
 const normalizeRole = (role) => {
   if (role === 'jobseeker') return 'worker';
@@ -146,13 +147,12 @@ export const forgotPassword = async (req, res) => {
       }
     );
 
-    console.log(`\n========================================`);
-    console.log(`📧 [EMAIL SIMULATOR - FORGOT PASSWORD OTP]`);
-    console.log(`To: ${user.email} (${user.fullName || user.name || 'User'})`);
-    console.log(`Subject: Your WorkBridge Password Reset Code`);
-    console.log(`Your 6-Digit OTP Code is: 👉 [ ${otp} ] 👈`);
-    console.log(`Valid for 10 minutes. (Token: ${resetToken})`);
-    console.log(`========================================\n`);
+    // Send OTP Email (via Resend, Brevo, or Simulator)
+    await sendOtpEmail({
+      to: user.email,
+      name: user.fullName || user.name || 'User',
+      otp,
+    });
 
     return res.json({
       message: 'A 6-digit verification code has been sent to your email.',
