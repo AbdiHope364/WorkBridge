@@ -22,7 +22,7 @@
 - **Host Organization:** SORARDI PLC, Addis Ababa & Dire Dawa, Ethiopia
 - **Industry Supervisor:** Mr. Dawit Tesfaye (Lead Software Architect, SORARDI PLC)
 - **Academic Advisor:** Mr. Fikadu (Lecturer, Department of Software Engineering, DDU-IoT)
-- **Internship Duration:** 4 Months (May 15, 2026 – September 15, 2026)
+- **Internship Duration:** 4 Months (March 15, 2026 – July 15, 2026)
 - **Date of Submission:** 10/01/2018 E.C. (September 20, 2026 G.C.)
 - **Date of Defense / Presentation:** 12/01/2018 E.C. (September 22, 2026 G.C.)
 
@@ -30,7 +30,7 @@
 
 ## DECLARATION
 
-I, **Abdi Abiot**, hereby declare that this internship report entitled **"Software Engineering Internship Report: WorkBridge Platform Development and Supporting Software Systems at SORARDI PLC"** is my original work developed during my 4-month industrial internship from May 15, 2026, to September 15, 2026, at SORARDI PLC. 
+I, **Abdi Abiot**, hereby declare that this internship report entitled **"Software Engineering Internship Report: WorkBridge Platform Development and Supporting Software Systems at SORARDI PLC"** is my original work developed during my 4-month industrial internship from March 15, 2026, to July 15, 2026, at SORARDI PLC. 
 
 This report presents authentic technical contributions, design decisions, implementation details, testing results, and professional experiences acquired under the joint supervision of **Mr. Dawit Tesfaye** (Industry Supervisor at SORARDI PLC) and **Mr. Fikadu** (Academic Advisor at Dire Dawa University). All external sources, libraries, frameworks, and literature utilized during this tenure have been duly cited and acknowledged.
 
@@ -115,7 +115,7 @@ Finally, I am eternally indebted to my family and classmates for their unconditi
 
 ## EXECUTIVE SUMMARY
 
-This report documents the 4-month software engineering industrial internship completed by **Abdi Abiot** (Student ID: DDU1500744) at **SORARDI PLC** in partial fulfillment of the requirements for the Degree of Bachelor of Science in Software Engineering at Dire Dawa Institute of Technology, Dire Dawa University. The internship spanned from May 15, 2026, to September 15, 2026 (corresponding to 10/01/2018 E.C. academic submission).
+This report documents the 4-month software engineering industrial internship completed by **Abdi Abiot** (Student ID: DDU1500744) at **SORARDI PLC** in partial fulfillment of the requirements for the Degree of Bachelor of Science in Software Engineering at Dire Dawa Institute of Technology, Dire Dawa University. The internship spanned from March 15, 2026, to July 15, 2026 (corresponding to 10/01/2018 E.C. academic submission).
 
 The primary focus of the internship was the engineering, architectural design, full-stack implementation, and quality verification of **WorkBridge**, a modern, cloud-native digital marketplace tailored to the Ethiopian labor economy. In Ethiopia, skilled tradesmen (electricians, plumbers, carpenters, masons, mechanics, painters) and clients (homeowners, business managers, construction contractors) suffer from severe market friction caused by informal commission brokers (*Delalas*), opaque pricing, lack of identity and skills verification, and manual search processes. WorkBridge resolves these systemic challenges by providing an open, digital labor marketplace featuring multi-role authentication, trade portfolio showcases, structured job postings, on-demand service bookings, bidirectional rating reviews, and an administrative moderation portal.
 
@@ -278,7 +278,7 @@ This comprehensive report details the organizational environment, problem analys
 ## 1.1 Background of the Internship
 The industrial internship program is a core capstone requirement established by the **Department of Software Engineering**, **Dire Dawa Institute of Technology (DDU-IoT)**, **Dire Dawa University**. Designed to bridge the gap between theoretical classroom learning and practical software engineering, the 4-month industrial internship places senior software engineering students into dynamic technology firms. 
 
-From **May 15, 2026, to September 15, 2026**, I was hosted by **SORARDI PLC**, an innovative Ethiopian software development and technology consulting firm. During this 4-month tenure, I served as a Full-Stack Software Engineering Intern embedded within the core product development team.
+From **March 15, 2026, to July 15, 2026**, I was hosted by **SORARDI PLC**, an innovative Ethiopian software development and technology consulting firm. During this 4-month tenure, I served as a Full-Stack Software Engineering Intern embedded within the core product development team.
 
 ## 1.2 Purpose and Significance of the Internship
 The primary purpose of the internship is to immerse students into enterprise software development environments where they apply software engineering methodologies, modern architectural patterns, automated quality gates, and collaborative practices. 
@@ -420,14 +420,15 @@ During my internship, I adhered strictly to professional engineering ethics:
 # CHAPTER 3: INTERNSHIP ACTIVITIES & PROJECT PORTFOLIO
 
 ## 3.1 Overview of Internship Activities
-Throughout the 4-month internship (May 15, 2026 – September 15, 2026), my activities progressed through structured phases spanning orientation, requirements analysis, system architecture, frontend and backend development, testing, and documentation.
+Throughout the 4-month internship (March 15, 2026 – July 15, 2026), my activities progressed through structured phases spanning orientation, requirements analysis, system architecture, frontend and backend development, testing, and documentation.
 
 ```text
 =======================================================================================================
-MONTH 1 (May-Jun): Orientation, Tooling, Monorepo Scaffolding (@repo/types, @repo/ui) & Auth Engine
-MONTH 2 (Jun-Jul): WorkBridge Marketplace: Worker Discovery, Profiles, Job Board & Direct Booking Subsystem
-MONTH 3 (Jul-Aug): Freemium Monetization: Quota Middleware, Subscriptions & Multi-Channel Mock Payments
-MONTH 4 (Aug-Sep): Admin Moderation Portal, Supporting Projects, Quality Gate Verification & Final Report
+MONTH 1 (Mar–Apr): Orientation, Tooling, Monorepo Scaffolding (@repo/types, @repo/ui) & Auth Engine
+MONTH 2 (Apr–May): WorkBridge Marketplace: Worker Discovery, Profiles, Job Board & Direct Booking Subsystem
+MONTH 3 (May–Jun): Freemium Monetization: Quota Middleware, Subscriptions & Multi-Channel Mock Payments
+MONTH 4 (Jun–Jul): Admin Moderation Portal, Supporting Projects & Final Deliverables Handover to SORARDI PLC
+POST-TENURE (Jul–Sep): Academic Documentation, Defense Presentation Slide Decks & Quality Gate Verification
 =======================================================================================================
 ```
 

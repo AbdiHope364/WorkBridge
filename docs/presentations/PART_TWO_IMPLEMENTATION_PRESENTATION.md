@@ -18,7 +18,7 @@
 - **Host Organization:** SORARDI PLC
 - **Industry Supervisor:** Mr. Dawit Tesfaye (Lead Software Architect, SORARDI PLC)
 - **Academic Advisor:** Mr. Fikadu (Department of Software Engineering, DDU-IoT)
-- **Internship Duration:** May 15, 2026 – September 15, 2026 (4 Months / 8 Sprints)
+- **Internship Duration:** March 15, 2026 – July 15, 2026 (4 Months / 8 Sprints)
 
 ---
 
@@ -93,7 +93,7 @@
 - **Operational Feasibility:**
   - Intuitive, mobile-first responsive UI built with Tailwind CSS, requiring minimal digital literacy for tradesmen and homeowners across Ethiopia.
 - **Economic & Schedule Feasibility:**
-  - 100% open-source software stack completed on time across 8 two-week sprints over the 4-month internship period (May–September 2026) within budget.
+  - 100% open-source software stack completed on time across 8 two-week sprints over the 4-month internship period (March–July 2026) within budget.
 
 ---
 
@@ -132,4 +132,4 @@
 - **Department:** Department of Software Engineering, Dire Dawa Institute of Technology (DDU-IoT)
 - **Host Organization:** SORARDI PLC
 - **Project Title:** WorkBridge Platform
-- **Duration:** May 15, 2026 – September 15, 2026 (4 Months)
+- **Duration:** March 15, 2026 – July 15, 2026 (4 Months)

@@ -10,7 +10,7 @@
 - **Project Name:** WorkBridge — Labor & Tradesman Marketplace Platform
 - **Presenter:** Abdi Abiot (ID: DDU1500744)
 - **Host Company:** SORARDI PLC
-- **Internship Period:** May 2026 – September 2026 (4 Months)
+- **Internship Period:** March 2026 – July 2026 (4 Months)
 - **Academic Advisor:** Department Internship Coordinator
 - **Industry Mentor:** Lead Software Architect, SORARDI PLC
 
