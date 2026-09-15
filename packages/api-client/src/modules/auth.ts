@@ -31,13 +31,19 @@ export function createAuthService(api: ApiClient) {
       return api.request<void>("/auth/logout", { method: "POST" });
     },
     forgotPassword(payload: { email: string }) {
-      return api.request<void>("/auth/forgot-password", {
+      return api.request<{ message: string; email?: string; otp?: string; resetToken?: string; resetUrl?: string }>("/auth/forgot-password", {
         method: "POST",
         body: payload,
       });
     },
-    resetPassword(payload: { token: string; password: string }) {
-      return api.request<void>("/auth/reset-password", {
+    verifyOtp(payload: { email: string; otp: string }) {
+      return api.request<{ success: boolean; message: string; resetToken?: string }>("/auth/verify-otp", {
+        method: "POST",
+        body: payload,
+      });
+    },
+    resetPassword(payload: { token?: string; email?: string; otp?: string; newPassword?: string; password?: string }) {
+      return api.request<{ message: string }>("/auth/reset-password", {
         method: "POST",
         body: payload,
       });

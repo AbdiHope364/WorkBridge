@@ -116,29 +116,50 @@ export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
-      return res.status(400).json({ error: 'Email is required.' });
+      return res.status(400).json({ error: 'Email address is required.' });
     }
 
     const cleanEmail = String(email).trim().toLowerCase();
     const user = await collections.users.findOne({ email: { $regex: new RegExp(`^${cleanEmail.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') } });
 
     if (!user) {
-      return res.status(200).json({ message: 'If this email exists, a reset link has been sent.' });
+      // Return ambiguous message for security, but return simulation code in dev if needed
+      return res.status(200).json({
+        message: 'If an account exists with this email, a 6-digit verification code has been sent.',
+        email: cleanEmail,
+      });
     }
 
+    // Generate 6-digit numeric OTP (e.g., 584920)
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const resetToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    const resetExpires = new Date(Date.now() + 60 * 60 * 1000).toISOString(); // 1 hour
+    const resetExpires = new Date(Date.now() + 10 * 60 * 1000).toISOString(); // 10 minutes expiry
 
     await collections.users.updateOne(
       { id: user.id },
-      { $set: { resetPasswordToken: resetToken, resetPasswordExpires: resetExpires } }
+      {
+        $set: {
+          resetPasswordOtp: otp,
+          resetPasswordToken: resetToken,
+          resetPasswordExpires: resetExpires,
+        },
+      }
     );
 
-    console.log(`[Auth] Password reset token generated for ${user.email}: ${resetToken}`);
+    console.log(`\n========================================`);
+    console.log(`📧 [EMAIL SIMULATOR - FORGOT PASSWORD OTP]`);
+    console.log(`To: ${user.email} (${user.fullName || user.name || 'User'})`);
+    console.log(`Subject: Your WorkBridge Password Reset Code`);
+    console.log(`Your 6-Digit OTP Code is: 👉 [ ${otp} ] 👈`);
+    console.log(`Valid for 10 minutes. (Token: ${resetToken})`);
+    console.log(`========================================\n`);
+
     return res.json({
-      message: 'Password reset instructions have been sent to your email.',
-      resetToken, // Available for development/testing
-      resetUrl: `/reset-password/${resetToken}`
+      message: 'A 6-digit verification code has been sent to your email.',
+      email: cleanEmail,
+      otp, // Provided for easy development / demo testing
+      resetToken,
+      resetUrl: `/reset-password/${resetToken}`,
     });
   } catch (error) {
     console.error('forgotPassword error:', error);
@@ -146,33 +167,89 @@ export const forgotPassword = async (req, res) => {
   }
 };
 
-export const resetPassword = async (req, res) => {
+export const verifyOtp = async (req, res) => {
   try {
-    const { token, password, newPassword } = req.body;
-    const targetPassword = newPassword || password;
-
-    if (!token || !targetPassword) {
-      return res.status(400).json({ error: 'Reset token and new password are required.' });
+    const { email, otp } = req.body;
+    if (!email || !otp) {
+      return res.status(400).json({ error: 'Email and 6-digit OTP code are required.' });
     }
 
+    const cleanEmail = String(email).trim().toLowerCase();
+    const cleanOtp = String(otp).trim();
+
     const user = await collections.users.findOne({
-      resetPasswordToken: token,
-      resetPasswordExpires: { $gt: new Date().toISOString() }
+      email: { $regex: new RegExp(`^${cleanEmail.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') },
+      resetPasswordOtp: cleanOtp,
+      resetPasswordExpires: { $gt: new Date().toISOString() },
     });
 
     if (!user) {
-      return res.status(400).json({ error: 'Invalid or expired password reset token.' });
+      return res.status(400).json({ error: 'Invalid or expired 6-digit verification code.' });
+    }
+
+    return res.json({
+      success: true,
+      message: 'OTP verified successfully.',
+      resetToken: user.resetPasswordToken,
+      email: user.email,
+    });
+  } catch (error) {
+    console.error('verifyOtp error:', error);
+    return res.status(500).json({ error: 'Failed to verify code.' });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const { token, email, otp, password, newPassword } = req.body;
+    const targetPassword = newPassword || password;
+
+    if (!targetPassword || targetPassword.length < 6) {
+      return res.status(400).json({ error: 'Password must be at least 6 characters long.' });
+    }
+
+    let user = null;
+
+    if (token) {
+      user = await collections.users.findOne({
+        resetPasswordToken: token,
+        resetPasswordExpires: { $gt: new Date().toISOString() },
+      });
+    } else if (email && otp) {
+      const cleanEmail = String(email).trim().toLowerCase();
+      const cleanOtp = String(otp).trim();
+      user = await collections.users.findOne({
+        email: { $regex: new RegExp(`^${cleanEmail.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') },
+        resetPasswordOtp: cleanOtp,
+        resetPasswordExpires: { $gt: new Date().toISOString() },
+      });
+    }
+
+    if (!user) {
+      return res.status(400).json({ error: 'Invalid or expired password reset session.' });
     }
 
     await collections.users.updateOne(
       { id: user.id },
       {
-        $set: { passwordHash: bcrypt.hashSync(targetPassword, 10), updatedAt: new Date().toISOString() },
-        $unset: { resetPasswordToken: '', resetPasswordExpires: '' }
+        $set: {
+          passwordHash: bcrypt.hashSync(targetPassword, 10),
+          updatedAt: new Date().toISOString(),
+        },
+        $unset: {
+          resetPasswordOtp: '',
+          resetPasswordToken: '',
+          resetPasswordExpires: '',
+        },
       }
     );
 
-    return res.json({ message: 'Password updated successfully. You can now log in.' });
+    console.log(`[Auth] Password successfully reset for user ${user.email}`);
+
+    return res.json({
+      success: true,
+      message: 'Password updated successfully. You can now log in with your new password.',
+    });
   } catch (error) {
     console.error('resetPassword error:', error);
     return res.status(500).json({ error: 'Failed to reset password.' });

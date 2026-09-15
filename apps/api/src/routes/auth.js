@@ -3,6 +3,7 @@ import {
   login,
   register,
   forgotPassword,
+  verifyOtp,
   resetPassword,
   verifyEmail,
   getMe,
@@ -26,6 +27,7 @@ router.get('/google/failure', (req, res) => {
 });
 router.post('/logout', protect, logout);
 router.post('/forgot-password', forgotPassword);
+router.post('/verify-otp', verifyOtp);
 router.post('/reset-password', resetPassword);
 router.post('/verify-email', verifyEmail);
 router.post('/resend-verification', resendVerification);

@@ -22,7 +22,7 @@ interface RegisterFormProps {
   buttonLabel: string;
 }
 
-type FormField = "email" | "password" | "confirmPassword";
+type FormField = "fullName" | "email" | "password" | "confirmPassword";
 
 export function RegisterForm({
   role,
@@ -34,6 +34,7 @@ export function RegisterForm({
   const { refreshUser } = useAuth();
 
   const [form, setForm] = useState<RegisterFormValues>({
+    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -41,11 +42,13 @@ export function RegisterForm({
   });
 
   const [dirty, setDirty] = useState<Record<FormField, boolean>>({
+    fullName: false,
     email: false,
     password: false,
     confirmPassword: false,
   });
   const [touched, setTouched] = useState<Record<FormField, boolean>>({
+    fullName: false,
     email: false,
     password: false,
     confirmPassword: false,
@@ -56,9 +59,10 @@ export function RegisterForm({
 
   const fieldErrors = useMemo<Record<FormField, string>>(() => {
     const parsed = registerSchema.safeParse(form);
-    if (parsed.success) return { email: "", password: "", confirmPassword: "" };
+    if (parsed.success) return { fullName: "", email: "", password: "", confirmPassword: "" };
     const flat = parsed.error.flatten().fieldErrors;
     return {
+      fullName: flat.fullName?.[0] ?? "",
       email: flat.email?.[0] ?? "",
       password: flat.password?.[0] ?? "",
       confirmPassword: flat.confirmPassword?.[0] ?? "",
@@ -98,12 +102,13 @@ export function RegisterForm({
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitError(null);
-    setTouched({ email: true, password: true, confirmPassword: true });
+    setTouched({ fullName: true, email: true, password: true, confirmPassword: true });
 
     const parsed = registerSchema.safeParse(form);
     if (!parsed.success) {
       const flat = parsed.error.flatten().fieldErrors;
       const firstError =
+        flat.fullName?.[0] ||
         flat.email?.[0] ||
         flat.password?.[0] ||
         flat.confirmPassword?.[0] ||
@@ -115,6 +120,7 @@ export function RegisterForm({
     setIsSubmitting(true);
 
     const payload: RegisterRequest = {
+      fullName: form.fullName?.trim() || undefined,
       email: form.email,
       password: form.password,
       role,
@@ -163,7 +169,19 @@ export function RegisterForm({
 
         <CardContent className="space-y-3">
           <Input
-            label="Work email"
+            label={role === "jobseeker" ? "Your Full Name / Trade Name" : "Your Full Name / Company Contact"}
+            name="fullName"
+            type="text"
+            autoComplete="name"
+            value={form.fullName ?? ""}
+            onChange={(e) => handleChange("fullName", e.target.value)}
+            onBlur={() => handleBlur("fullName")}
+            error={visibleError("fullName")}
+            isValid={isFieldValid("fullName")}
+            placeholder={role === "jobseeker" ? "e.g. Dawit Bekele (Electrician)" : "e.g. Sara Haile"}
+          />
+          <Input
+            label="Email address"
             name="email"
             type="email"
             autoComplete="email"
@@ -172,7 +190,7 @@ export function RegisterForm({
             onBlur={() => handleBlur("email")}
             error={visibleError("email")}
             isValid={isFieldValid("email")}
-            placeholder="name@company.com"
+            placeholder="name@example.com"
           />
           <Input
             label="Password"
@@ -184,7 +202,7 @@ export function RegisterForm({
             onBlur={() => handleBlur("password")}
             error={visibleError("password")}
             isValid={isFieldValid("password")}
-            placeholder="Create a password"
+            placeholder="Create a password (min. 8 characters)"
           />
           <Input
             label="Confirm password"

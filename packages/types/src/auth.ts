@@ -40,9 +40,17 @@ export interface ForgotPasswordRequest {
   email: string;
 }
 
+export interface VerifyOtpRequest {
+  email: string;
+  otp: string;
+}
+
 export interface ResetPasswordRequest {
-  token: string;
+  email?: string;
+  otp?: string;
+  token?: string;
   newPassword: string;
+  password?: string;
 }
 
 export interface VerifyEmailRequest {
