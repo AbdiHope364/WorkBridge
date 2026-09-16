@@ -5,9 +5,9 @@ import { Container } from "@repo/ui/container";
 
 export function LandingCtaSection() {
   return (
-    <section className="bg-white py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+    <section className="bg-white py-6 sm:py-10 md:py-12 px-4 sm:px-6 lg:px-8">
       <Container size="sm" className="max-w-4xl mx-auto">
-        <div className="rounded-3xl bg-slate-900 px-6 py-10 sm:px-12 sm:py-14 text-center text-white relative overflow-hidden shadow-xl">
+        <div className="rounded-3xl bg-slate-900 px-6 py-8 sm:px-12 sm:py-10 text-center text-white relative overflow-hidden shadow-xl">
           {/* Subtle gradient decorations */}
           <div className="absolute -top-24 -left-24 h-48 w-48 rounded-full bg-emerald-500/20 blur-3xl pointer-events-none" />
           <div className="absolute -bottom-24 -right-24 h-48 w-48 rounded-full bg-blue-500/20 blur-3xl pointer-events-none" />
@@ -21,7 +21,7 @@ export function LandingCtaSection() {
               Whether you&apos;re looking for a job or searching for verified trade talent, you can get started in just a few steps. Connect with the right people faster.
             </p>
 
-            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+            <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
               <Link
                 href="/jobs"
                 className="inline-flex w-full sm:w-auto items-center justify-center rounded-xl bg-emerald-600 hover:bg-emerald-700 px-7 py-3.5 text-sm sm:text-base font-bold text-white transition shadow-md active:scale-95"

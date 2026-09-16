@@ -104,7 +104,7 @@ export function StartJourneySection() {
   return (
     <section
       id="find-workers"
-      className="relative overflow-hidden bg-slate-50 py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8"
+      className="relative overflow-hidden bg-slate-50 py-8 sm:py-12 md:py-14 px-4 sm:px-6 lg:px-8"
     >
       {/* Background Blurs */}
       <div className="absolute left-0 top-0 h-64 sm:h-80 w-64 sm:w-80 rounded-full bg-emerald-100/30 blur-3xl pointer-events-none" />
@@ -116,7 +116,7 @@ export function StartJourneySection() {
           description="Whether you're searching for your next opportunity or hiring exceptional talent, WorkBridge helps you achieve your goals with a fast, secure, and reliable hiring experience."
         />
 
-        <div className="mt-8 sm:mt-12 md:mt-14 grid gap-6 sm:gap-8 lg:grid-cols-2">
+        <div className="mt-6 sm:mt-8 grid gap-6 sm:gap-8 lg:grid-cols-2">
           <JourneyCard
             badge="For Job Seekers"
             badgeColor="bg-emerald-50 text-emerald-700"

@@ -288,7 +288,7 @@ export function RecentJobsSection() {
   }, [fetchRecentJobs]);
 
   return (
-    <section className="bg-slate-50 py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+    <section className="bg-slate-50 py-8 sm:py-12 md:py-14 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -329,7 +329,7 @@ export function RecentJobsSection() {
         ) : jobs.length === 0 ? (
           <EmptyState />
         ) : (
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {jobs.map((job, index) => (
               <JobCard key={job._id || job.id || index} job={job} index={index} />
             ))}

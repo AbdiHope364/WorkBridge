@@ -61,7 +61,7 @@ const categories = [
 
 export function TopCategoriesSection() {
   return (
-    <section className="bg-white py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+    <section className="bg-white py-8 sm:py-12 md:py-14 px-4 sm:px-6 lg:px-8">
       <Container size="xl" className="max-w-6xl mx-auto">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -85,7 +85,7 @@ export function TopCategoriesSection() {
           </Link>
         </div>
 
-        <div className="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {categories.map((category) => {
             const IconComponent = category.icon;
             return (

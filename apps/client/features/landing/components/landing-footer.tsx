@@ -42,9 +42,9 @@ const footerColumns = [
 export function LandingFooter() {
   return (
     <footer id="help" className="bg-[#101b3b] text-white border-t border-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         {/* 2 in a row on mobile, 4 on tablet, 5 on desktop */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-8 sm:gap-8 lg:gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-6 sm:gap-8 lg:gap-10">
           {/* Brand & Contacts - Full width on mobile/tablet, 1 col on desktop */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1 space-y-4 pb-4 sm:pb-0 border-b border-slate-800/80 sm:border-none">
             <Link href="/" className="inline-block">
@@ -93,7 +93,7 @@ export function LandingFooter() {
         </div>
 
         {/* Bottom copyright */}
-        <div className="mt-10 sm:mt-12 pt-6 border-t border-slate-800 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="mt-8 sm:mt-10 pt-6 border-t border-slate-800 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p>© {new Date().getFullYear()} WorkBridge Ethiopia. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <Link href="/about-us" className="hover:text-slate-200 transition">

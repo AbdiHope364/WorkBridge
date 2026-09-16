@@ -175,7 +175,7 @@ function StepList({
 
 export function HowItWorksSection() {
   return (
-    <section id="how-it-works" className="bg-slate-50 py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+    <section id="how-it-works" className="bg-slate-50 py-8 sm:py-12 md:py-14 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         {/* Section label + heading */}
         <div className="text-center max-w-2xl mx-auto">
@@ -191,7 +191,7 @@ export function HowItWorksSection() {
         </div>
 
         {/* Two-panel steps */}
-        <div className="mt-8 sm:mt-12 grid gap-6 sm:gap-8 lg:grid-cols-2">
+        <div className="mt-6 sm:mt-8 grid gap-6 sm:gap-8 lg:grid-cols-2">
           {/* Seeker panel — light */}
           <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-5 sm:p-7 md:p-8 shadow-xs">
             <span className="inline-block rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-emerald-700">
@@ -216,7 +216,7 @@ export function HowItWorksSection() {
         </div>
 
         {/* Why choose us — full-width banner */}
-        <div className="mt-8 sm:mt-10 flex flex-col gap-6 sm:gap-8 rounded-2xl sm:rounded-3xl bg-[#1b2855] p-6 sm:p-10 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mt-6 sm:mt-8 flex flex-col gap-6 sm:gap-8 rounded-2xl sm:rounded-3xl bg-[#1b2855] p-6 sm:p-10 lg:flex-row lg:items-center lg:justify-between">
           <div className="shrink-0 max-w-sm">
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-teal-400">
               Why WorkBridge

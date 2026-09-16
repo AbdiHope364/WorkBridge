@@ -13,9 +13,9 @@ const stats = [
 
 export function HeroSection() {
   return (
-    <section id="find-jobs" className="bg-white pt-6 sm:pt-12 md:pt-16 lg:pt-20 overflow-hidden">
+    <section id="find-jobs" className="bg-white pt-4 sm:pt-8 md:pt-12 overflow-hidden">
       <Container size="xl" className="w-full px-4 sm:px-6 md:px-8 lg:px-10">
-        <div className="grid items-center gap-8 lg:gap-12 lg:grid-cols-2">
+        <div className="grid items-center gap-6 lg:gap-10 lg:grid-cols-2">
           {/* Left - Text Content */}
           <div className="order-2 lg:order-1 text-center lg:text-left flex flex-col items-center lg:items-start">
             <h1 className="text-2xl sm:text-4xl md:text-5xl font-black leading-[1.15] tracking-tight text-slate-950 max-w-xl">
@@ -23,22 +23,22 @@ export function HeroSection() {
               <span className="text-emerald-600">dream job</span> in Ethiopia.
             </h1>
 
-            <p className="mt-3 sm:mt-5 text-sm sm:text-base md:text-lg leading-relaxed text-slate-700 max-w-lg">
+            <p className="mt-2.5 sm:mt-4 text-sm sm:text-base md:text-lg leading-relaxed text-slate-700 max-w-lg">
               WorkBridge connects skilled workers and employers across Ethiopia.
               Find trusted professionals or discover new job opportunities
               quickly and securely.
             </p>
 
-            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
+            <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
               <Link
                 href="/jobs"
-                className="inline-flex items-center justify-center w-full sm:w-auto rounded-xl bg-emerald-600 hover:bg-emerald-700 px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all shadow-md hover:shadow-emerald-500/20 active:scale-95"
+                className="inline-flex items-center justify-center w-full sm:w-auto rounded-xl bg-emerald-600 hover:bg-emerald-700 px-6 py-3 text-sm sm:text-base font-bold text-white transition-all shadow-md hover:shadow-emerald-500/20 active:scale-95"
               >
                 Find Jobs
               </Link>
               <Link
                 href="/dashboard/employer"
-                className="inline-flex items-center justify-center w-full sm:w-auto rounded-xl bg-slate-950 hover:bg-slate-800 px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all shadow-md active:scale-95"
+                className="inline-flex items-center justify-center w-full sm:w-auto rounded-xl bg-slate-950 hover:bg-slate-800 px-6 py-3 text-sm sm:text-base font-bold text-white transition-all shadow-md active:scale-95"
               >
                 Hire Workers
               </Link>
@@ -47,8 +47,8 @@ export function HeroSection() {
 
           {/* Right - Image */}
           <div className="order-1 lg:order-2 flex justify-center w-full">
-            <div className="relative flex w-full max-w-md lg:max-w-xl items-center justify-center bg-slate-50 p-4 sm:p-6 rounded-2xl border border-slate-100 shadow-xs">
-              <div className="relative w-full aspect-video sm:aspect-4/3 max-h-[340px]">
+            <div className="relative flex w-full max-w-md lg:max-w-xl items-center justify-center bg-slate-50 p-3 sm:p-5 rounded-2xl border border-slate-100 shadow-xs">
+              <div className="relative w-full aspect-video sm:aspect-4/3 max-h-[300px]">
                 <Image
                   src="/hero-image.png"
                   alt="Professionals looking for jobs and talent"
@@ -63,8 +63,8 @@ export function HeroSection() {
         </div>
 
         {/* Stats Section */}
-        <div className="mt-10 sm:mt-14 md:mt-16 flex justify-center w-full">
-          <div className="grid w-full max-w-5xl grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 rounded-t-2xl sm:rounded-t-3xl md:rounded-t-4xl bg-emerald-700 px-4 sm:px-8 py-6 sm:py-8 md:py-10 text-center text-white shadow-sm">
+        <div className="mt-6 sm:mt-10 flex justify-center w-full">
+          <div className="grid w-full max-w-5xl grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-5 rounded-t-2xl sm:rounded-t-3xl bg-emerald-700 px-4 sm:px-6 py-5 sm:py-6 md:py-8 text-center text-white shadow-sm">
             {stats.map((stat, index) => (
               <div
                 key={stat.label}
