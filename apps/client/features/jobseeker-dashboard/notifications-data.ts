@@ -27,7 +27,7 @@ export const jobseekerNotifications: JobseekerNotification[] = [
     id: "new-application-google",
     title: "New Application from Google",
     description:
-      "Hi Robera, we have reviewed your portfolio and we would like to schedule google meeting next week... check your gmail for the timeline.",
+      "Hi Abdi, we have reviewed your portfolio and we would like to schedule google meeting next week... check your gmail for the timeline.",
     timeLabel: "YESTERDAY",
     category: "messages",
     isUnread: true,

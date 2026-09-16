@@ -55,14 +55,14 @@ export const profileExperience: ProfileExperience = {
 export const profileEducation: ProfileEducation = {
   id: "software-engineering",
   program: "Software Engineering",
-  school: "Bacholors Degree",
-  period: "Jimma University",
-  description: "07/06/2026 - 28/06/2026\nDescription part here",
+  school: "Bachelors Degree",
+  period: "Dire Dawa University",
+  description: "Department of Software Engineering, Dire Dawa Institute of Technology (DDU-IoT)",
 };
 
 export const profileSocialLinks: ProfileSocialLink[] = [
-  { platform: "resume", url: "robera_wakjira_resume_2026.pdf" },
-  { platform: "linkedin", url: "https://linkedin.com/in/username" },
-  { platform: "github", url: "https://github.com/in/username" },
-  { platform: "portfolio", url: "https://yourportfolio.com" },
+  { platform: "resume", url: "abdi_abiot_resume_2026.pdf" },
+  { platform: "linkedin", url: "https://linkedin.com/in/abdiabiot" },
+  { platform: "github", url: "https://github.com/abdiabiot" },
+  { platform: "portfolio", url: "https://abdiabiot.dev" },
 ];

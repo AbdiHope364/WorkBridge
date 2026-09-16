@@ -28,7 +28,7 @@ interface VerificationRequest {
 const mockRequests: VerificationRequest[] = [
   {
     id: "1",
-    applicantName: "Abdisa Leta",
+    applicantName: "Abdi Abiot",
     userType: "Jobseeker",
     documentType: "National ID",
     submittedDate: "June 20, 2025",

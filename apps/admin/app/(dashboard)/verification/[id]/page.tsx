@@ -24,9 +24,9 @@ export default function VerificationDetailPage() {
   // TODO: Fetch real verification application data by id
   const request = {
     id,
-    applicantName: "Abdisa Leta",
+    applicantName: "Abdi Abiot",
     userType: "Jobseeker",
-    email: "abdisaleta@gmail.com",
+    email: "abdihope24@gmail.com",
     submittedDate: "June 20, 2025",
     status: "Pending",
     documents: [

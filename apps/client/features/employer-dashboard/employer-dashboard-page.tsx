@@ -155,6 +155,13 @@ export function EmployerDashboardPage() {
     return employerProfile.fullName?.charAt(0) ?? "E";
   })();
 
+  const clientDisplayName = (() => {
+    if (employerProfile?.employerType === "COMPANY_EMPLOYER") {
+      return employerProfile.companyName || user?.fullName || "Employer";
+    }
+    return employerProfile?.fullName || user?.fullName || "Client";
+  })();
+
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
       <div className="flex min-h-screen flex-col md:flex-row">
@@ -191,7 +198,7 @@ export function EmployerDashboardPage() {
           <div className="p-4 sm:p-6 md:p-10 max-w-7xl mx-auto w-full">
             <header className="mb-6 sm:mb-10">
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
-                Hiring Overview
+                Hello, {clientDisplayName} 👋
               </h1>
               <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
                 Real-time summary of your recruitment pipeline & 0% commission direct trade.

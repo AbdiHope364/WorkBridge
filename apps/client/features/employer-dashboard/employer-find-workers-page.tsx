@@ -18,12 +18,12 @@ const popularCategories = [
 
 const professionals = [
   {
-    name: "Robera Wakjira",
-    role: "Graphics Designer",
-    category: "Designing",
-    location: "Addis Ababa, Mexico",
-    rating: 4.9,
-    reviews: 207,
+    name: "Abdi Abiot",
+    role: "Full Stack Engineer & UI Architect",
+    category: "Developers",
+    location: "Dire Dawa / Addis Ababa",
+    rating: 5.0,
+    reviews: 215,
     nearby: true,
     verified: true,
   },

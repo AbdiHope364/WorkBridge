@@ -30,7 +30,7 @@ const mockNotifications: Notification[] = [
     id: "1",
     type: "verification",
     title: "New Verification Request",
-    message: "Abdisa Leta has submitted identity documents for verification.",
+    message: "Abdi Abiot has submitted identity documents for verification.",
     time: "2 min ago",
     read: false,
   },
@@ -82,7 +82,7 @@ const mockNotifications: Notification[] = [
     type: "job",
     title: "Job Post Rejected",
     message:
-      '"Construction Manager" posted by Abdisa Leta was rejected for incomplete details.',
+      '"Construction Manager" posted by Abdi Abiot was rejected for incomplete details.',
     time: "Yesterday",
     read: true,
   },

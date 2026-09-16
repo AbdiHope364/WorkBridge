@@ -133,7 +133,7 @@ export function JobseekerDashboardPage() {
           <div className="w-full max-w-275 px-4 py-6 sm:px-6 md:px-10 md:py-10">
             <div className="mb-8 md:mb-10">
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
-                Hello, {jobseekerProfile?.firstName || "Jobseeker"}
+                Hello, {jobseekerProfile?.firstName || user?.fullName?.split(" ")[0] || user?.fullName || "Worker"} 👋
               </h1>
               <p className="text-sm sm:text-base text-slate-500 mt-1 sm:mt-2 font-medium">
                 Checkout what is updated on your career journey today.

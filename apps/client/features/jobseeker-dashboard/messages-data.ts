@@ -14,7 +14,7 @@ export const messageConversations: MessageConversation[] = [
     senderName: "Usmael Taju",
     company: "google company",
     preview:
-      "Hi Robera, we have reviewed your portfolio and we would like to schedule google meeting next week... check your gmail for the timeline.",
+      "Hi Abdi, we have reviewed your portfolio and we would like to schedule google meeting next week... check your gmail for the timeline.",
     timeLabel: "10:45 AM",
     unread: true,
     href: "/dashboard/messages/usmael-google-1",
@@ -24,7 +24,7 @@ export const messageConversations: MessageConversation[] = [
     senderName: "Usmael Taju",
     company: "google company",
     preview:
-      "Hi Robera, we have reviewed your portfolio and we would like to schedule google meeting next week... check your gmail for the timeline.",
+      "Hi Abdi, we have reviewed your portfolio and we would like to schedule google meeting next week... check your gmail for the timeline.",
     timeLabel: "04:49 PM",
     unread: true,
     href: "/dashboard/messages/usmael-google-2",
@@ -34,7 +34,7 @@ export const messageConversations: MessageConversation[] = [
     senderName: "Usmael Taju",
     company: "google company",
     preview:
-      "Hi Robera, we have reviewed your portfolio and we would like to schedule google meeting next week... check your gmail for the timeline.",
+      "Hi Abdi, we have reviewed your portfolio and we would like to schedule google meeting next week... check your gmail for the timeline.",
     timeLabel: "TODAY",
     unread: true,
     href: "/dashboard/messages/usmael-google-3",
@@ -44,7 +44,7 @@ export const messageConversations: MessageConversation[] = [
     senderName: "Usmael Taju",
     company: "google company",
     preview:
-      "Hi Robera, we have reviewed your portfolio and we would like to schedule google meeting next week... check your gmail for the timeline.",
+      "Hi Abdi, we have reviewed your portfolio and we would like to schedule google meeting next week... check your gmail for the timeline.",
     timeLabel: "YESTERDAY",
     unread: true,
     href: "/dashboard/messages/usmael-google-4",

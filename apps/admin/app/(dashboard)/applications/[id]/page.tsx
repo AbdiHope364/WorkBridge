@@ -38,8 +38,8 @@ interface ApplicationRecord {
 const mockApplications: ApplicationRecord[] = [
   {
     id: "1",
-    applicantName: "Abdisa Leta",
-    applicantEmail: "abdisaleta@gmail.com",
+    applicantName: "Abdi Abiot",
+    applicantEmail: "abdihope24@gmail.com",
     applicantPhone: "+251 900 000 000",
     jobTitle: "Senior React Developer",
     employer: "TechCorp Solutions",
@@ -49,7 +49,7 @@ const mockApplications: ApplicationRecord[] = [
     coverLetter:
       "I am excited to apply for the Senior React Developer role at TechCorp Solutions. With 5+ years of experience building scalable applications with React, TypeScript, and Next.js, I am confident I would be a great fit for your engineering team. I have led front-end efforts in projects serving thousands of users and am eager to bring that expertise to your team.",
     skills: ["React.js", "TypeScript", "Next.js", "Node.js", "GraphQL"],
-    resumeFile: "abdisa_leta_resume.pdf",
+    resumeFile: "abdi_abiot_resume.pdf",
   },
   {
     id: "2",

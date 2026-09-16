@@ -442,7 +442,7 @@ function IndividualOnboardingForm({
           required
           value={fields.fullName}
           onChange={(v) => onChange({ fullName: v })}
-          placeholder="e.g. Robera Wakjira"
+          placeholder="e.g. Abdi Abiot"
         />
         <EditableField
           label="Phone Number"

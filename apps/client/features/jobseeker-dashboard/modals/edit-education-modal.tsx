@@ -56,7 +56,7 @@ export function EditEducationModal({
               name="schoolName"
               value={formData.schoolName || ""}
               onChange={handleChange}
-              placeholder="e.g. Jimma University"
+              placeholder="e.g. Dire Dawa University"
               className="w-full px-3 py-2 border border-slate-200 rounded-md text-sm placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>

@@ -27,7 +27,7 @@ interface Application {
 const mockApplications: Application[] = [
   {
     id: "1",
-    applicantName: "Abdisa Leta",
+    applicantName: "Abdi Abiot",
     jobTitle: "Senior React Developer",
     employer: "TechCorp Solutions",
     appliedDate: "June 20, 2025",

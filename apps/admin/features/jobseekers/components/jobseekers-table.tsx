@@ -39,8 +39,8 @@ const mockJobseekers: Jobseeker[] = [
   },
   {
     id: "2",
-    name: "Abdisa Leta",
-    email: "abdisaleta@gmail.com",
+    name: "Abdi Abiot",
+    email: "abdihope24@gmail.com",
     phone: "+2519000000",
     skills: ["React.js", "Node.js", "MongoDb", "+2"],
     status: "Active",

@@ -26,7 +26,7 @@ const placeholderIndividualProfile = {
   activeJobs: 0,
   workersHired: 0,
   fields: {
-    fullName: "Eg. Robera Wakjira",
+    fullName: "Eg. Abdi Abiot",
     phone: "",
     location: { city: "Shegger", addressLine1: "", addressLine2: "" },
     gender: "",
