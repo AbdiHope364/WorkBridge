@@ -77,8 +77,8 @@ export function LandingHeader() {
               <LogoMark />
             </Link>
 
-            {/* Desktop Navigation - Center / Right */}
-            <div className="hidden lg:flex items-center gap-6 xl:gap-10 text-sm xl:text-[17px] font-bold text-slate-950">
+            {/* Desktop Navigation - Center */}
+            <div className="hidden md:flex items-center gap-6 lg:gap-8 xl:gap-10 text-sm xl:text-[16px] font-bold text-slate-950">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -103,19 +103,19 @@ export function LandingHeader() {
               })}
             </div>
 
-            {/* Mobile Menu Toggle Button - Positioned to the far right */}
-            <div className="flex lg:hidden items-center justify-end ml-auto">
+            {/* Menu Toggle Button - Always visible on the far right */}
+            <div className="flex items-center justify-end shrink-0">
               <button
                 type="button"
                 onClick={() => setIsMenuOpen((prev) => !prev)}
-                className="flex items-center justify-center h-10 w-10 rounded-xl text-slate-700 hover:bg-slate-100 hover:text-slate-900 active:scale-90 transition-all cursor-pointer"
+                className="flex items-center justify-center h-10 w-10 sm:h-11 sm:w-11 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 hover:bg-slate-100 hover:border-slate-300 hover:text-slate-950 active:scale-95 transition-all cursor-pointer shrink-0 shadow-2xs"
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMenuOpen}
               >
                 {isMenuOpen ? (
-                  <X className="h-6 w-6" />
+                  <X className="h-5 w-5 sm:h-6 sm:w-6" />
                 ) : (
-                  <Menu className="h-6 w-6" />
+                  <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
                 )}
               </button>
             </div>
@@ -123,43 +123,43 @@ export function LandingHeader() {
         </nav>
       </header>
 
-      {/* Mobile Drawer Backdrop */}
+      {/* Drawer Backdrop */}
       {isMenuOpen && (
         <div
-          className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs lg:hidden transition-opacity duration-200"
+          className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-200"
           onClick={() => setIsMenuOpen(false)}
           aria-hidden="true"
         />
       )}
 
-      {/* Mobile Sliding Menu Drawer */}
+      {/* Sliding Menu Drawer */}
       <aside
-        className={`fixed inset-y-0 right-0 z-50 flex w-72 sm:w-80 flex-col bg-white shadow-2xl transition-transform duration-300 ease-out lg:hidden ${
+        className={`fixed inset-y-0 right-0 z-50 flex w-72 sm:w-84 flex-col bg-white shadow-2xl transition-transform duration-300 ease-out ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex flex-col h-full">
-          {/* Mobile Menu Header with close toggle button on far right */}
+          {/* Drawer Header with Logo and Close Button on far right */}
           <div className="flex items-center justify-between border-b border-slate-100 p-4 bg-gradient-to-r from-emerald-50/60 to-white">
             <Link
               href="/"
               onClick={() => setIsMenuOpen(false)}
-              className="transition-transform hover:scale-105"
+              className="shrink-0 transition-transform hover:scale-105 flex items-center"
             >
-              <LogoMark />
+              <WorkBridgeLogo className="h-8 sm:h-9 w-auto max-w-[150px] sm:max-w-[170px]" />
             </Link>
             <button
               type="button"
               onClick={() => setIsMenuOpen(false)}
-              className="ml-auto p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all active:scale-90 cursor-pointer"
+              className="shrink-0 p-2 rounded-xl text-slate-600 hover:text-slate-950 hover:bg-slate-100 border border-transparent hover:border-slate-200 transition-all active:scale-90 cursor-pointer"
               aria-label="Close menu"
             >
               <X className="h-5 w-5" />
             </button>
           </div>
 
-          {/* Mobile Navigation Links */}
-          <nav className="flex-1 overflow-y-auto p-4">
+          {/* Drawer Navigation Links */}
+          <nav className="flex-1 overflow-y-auto p-4 space-y-4">
             <div className="space-y-1">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
@@ -187,7 +187,7 @@ export function LandingHeader() {
             </div>
 
             {/* Quick Actions */}
-            <div className="mt-6 space-y-2 border-t border-slate-100 pt-6">
+            <div className="space-y-2 border-t border-slate-100 pt-4">
               <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
                 Quick Actions
               </p>
@@ -195,7 +195,7 @@ export function LandingHeader() {
                 <Link
                   href="/jobs"
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex flex-col items-center gap-1.5 rounded-xl bg-slate-50 px-4 py-3 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-100 hover:scale-105 active:scale-95"
+                  className="flex flex-col items-center gap-1.5 rounded-xl bg-slate-50 border border-slate-100 px-4 py-3 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-100 hover:scale-[1.02] active:scale-95"
                 >
                   <Briefcase className="h-5 w-5 text-emerald-600" />
                   Browse Jobs
@@ -203,7 +203,7 @@ export function LandingHeader() {
                 <Link
                   href="/find-workers"
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex flex-col items-center gap-1.5 rounded-xl bg-slate-50 px-4 py-3 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-100 hover:scale-105 active:scale-95"
+                  className="flex flex-col items-center gap-1.5 rounded-xl bg-slate-50 border border-slate-100 px-4 py-3 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-100 hover:scale-[1.02] active:scale-95"
                 >
                   <Users className="h-5 w-5 text-emerald-600" />
                   Find Workers
@@ -212,7 +212,7 @@ export function LandingHeader() {
             </div>
 
             {/* Special Offer Banner */}
-            <div className="mt-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 p-4 text-white shadow-xs">
+            <div className="rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 p-4 text-white shadow-xs">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 animate-pulse shrink-0" />
                 <p className="text-xs font-bold">
