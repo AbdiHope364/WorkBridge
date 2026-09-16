@@ -77,8 +77,8 @@ export function LandingHeader() {
               <LogoMark />
             </Link>
 
-            {/* Desktop Navigation - Center */}
-            <div className="hidden md:flex items-center gap-6 lg:gap-8 xl:gap-10 text-sm xl:text-[16px] font-bold text-slate-950">
+            {/* Desktop Navigation - Hidden on Mobile & Tablet, Visible on Desktop (lg+) */}
+            <div className="hidden lg:flex items-center gap-6 xl:gap-10 text-sm xl:text-[16px] font-bold text-slate-950">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -103,19 +103,19 @@ export function LandingHeader() {
               })}
             </div>
 
-            {/* Menu Toggle Button - Always visible on the far right */}
-            <div className="flex items-center justify-end shrink-0">
+            {/* Menu Toggle Button - Visible on Tablet and Mobile (< lg), Hidden on Desktop (lg+) */}
+            <div className="flex lg:hidden items-center justify-end shrink-0">
               <button
                 type="button"
                 onClick={() => setIsMenuOpen((prev) => !prev)}
-                className="flex items-center justify-center h-8.5 w-8.5 sm:h-10 sm:w-10 rounded-lg sm:rounded-xl border border-slate-200 bg-slate-50 text-slate-800 hover:bg-slate-100 hover:border-slate-300 hover:text-slate-950 active:scale-95 transition-all cursor-pointer shrink-0 shadow-2xs"
+                className="flex items-center justify-center h-9 w-9 sm:h-10 sm:w-10 md:h-10.5 md:w-10.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 hover:bg-slate-100 hover:border-slate-300 hover:text-slate-950 active:scale-95 transition-all cursor-pointer shrink-0 shadow-2xs"
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMenuOpen}
               >
                 {isMenuOpen ? (
-                  <X className="h-4.5 w-4.5 sm:h-5 sm:w-5" />
+                  <X className="h-5 w-5 sm:h-5.5 sm:w-5.5 text-slate-800" />
                 ) : (
-                  <Menu className="h-4.5 w-4.5 sm:h-5 sm:w-5" />
+                  <Menu className="h-5 w-5 sm:h-5.5 sm:w-5.5 text-slate-800" />
                 )}
               </button>
             </div>
@@ -123,18 +123,18 @@ export function LandingHeader() {
         </nav>
       </header>
 
-      {/* Drawer Backdrop */}
+      {/* Drawer Backdrop - Tablet & Mobile */}
       {isMenuOpen && (
         <div
-          className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-200"
+          className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs lg:hidden transition-opacity duration-200"
           onClick={() => setIsMenuOpen(false)}
           aria-hidden="true"
         />
       )}
 
-      {/* Sliding Menu Drawer */}
+      {/* Sliding Menu Drawer - Tablet & Mobile */}
       <aside
-        className={`fixed inset-y-0 right-0 z-50 flex w-72 sm:w-84 flex-col bg-white shadow-2xl transition-transform duration-300 ease-out ${
+        className={`fixed inset-y-0 right-0 z-50 flex w-72 sm:w-80 md:w-88 flex-col bg-white shadow-2xl transition-transform duration-300 ease-out lg:hidden ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
