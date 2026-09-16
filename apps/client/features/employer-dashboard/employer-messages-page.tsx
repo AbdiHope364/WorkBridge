@@ -5,6 +5,7 @@ import {
   SearchJobIcon,
 } from "../jobseeker-dashboard/components/dashboard-icons";
 import { EmployerSidebar } from "./components/employer-sidebar";
+import { WorkBridgeLogo } from "@repo/ui";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
@@ -160,16 +161,11 @@ function Header() {
   return (
     <header className="flex h-[71px] items-center justify-between border-b border-[#cfd1d8] bg-white px-6 md:px-12">
       <Link
-        href="/"
+        href="/dashboard/employer"
         aria-label="WorkBridge home"
-        className="hidden h-full w-[82px] items-center justify-center text-[#172653] md:flex"
+        className="hidden h-full items-center text-[#172653] md:flex"
       >
-        <span className="relative h-12 w-8">
-          <span className="absolute left-1/2 top-0 h-12 w-1 -translate-x-1/2 rounded-full bg-current" />
-          <span className="absolute left-1/2 top-2 h-3 w-3 -translate-x-1/2 rounded-full bg-current" />
-          <span className="absolute bottom-2 left-1 h-1 w-7 rotate-[60deg] rounded-full bg-current" />
-          <span className="absolute bottom-2 right-1 h-1 w-7 -rotate-[60deg] rounded-full bg-current" />
-        </span>
+        <WorkBridgeLogo className="h-8 w-auto max-w-[170px]" />
       </Link>
 
       <div className="ml-auto flex items-center gap-8">

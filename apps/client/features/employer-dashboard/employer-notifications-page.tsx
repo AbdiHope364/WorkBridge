@@ -8,6 +8,7 @@ import { useNotifications } from "@/contexts/notification-context";
 import { useProfile } from "@/contexts/profile-context";
 import { type Notification, type NotificationCategory } from "@repo/types";
 import Image from "next/image";
+import { WorkBridgeLogo } from "@repo/ui";
 
 import type {
   CompanyProfile,
@@ -371,16 +372,11 @@ function Header() {
   return (
     <header className="hidden md:flex h-[62px] items-center justify-between border-b border-[#d9d9df] bg-white px-6 shadow-[0_2px_5px_rgba(15,23,42,0.14)] md:px-10">
       <Link
-        href="/"
+        href="/dashboard/employer"
         aria-label="WorkBridge home"
-        className="hidden h-full w-[82px] items-center justify-center text-[#172653] md:flex"
+        className="hidden h-full items-center text-[#172653] md:flex"
       >
-        <span className="relative h-12 w-8">
-          <span className="absolute left-1/2 top-0 h-12 w-1 -translate-x-1/2 rounded-full bg-current" />
-          <span className="absolute left-1/2 top-2 h-3 w-3 -translate-x-1/2 rounded-full bg-current" />
-          <span className="absolute bottom-2 left-1 h-1 w-7 rotate-[60deg] rounded-full bg-current" />
-          <span className="absolute bottom-2 right-1 h-1 w-7 -rotate-[60deg] rounded-full bg-current" />
-        </span>
+        <WorkBridgeLogo className="h-8 w-auto max-w-[170px]" />
       </Link>
 
       <div className="ml-auto flex items-center gap-8">

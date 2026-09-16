@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { BellIcon } from "../jobseeker-dashboard/components/dashboard-icons";
 import { EmployerSidebar } from "./components/employer-sidebar";
+import { WorkBridgeLogo } from "@repo/ui";
 import {
   CompanyProfile,
   EmployerProfile,
@@ -229,16 +230,11 @@ function Header({ profile }: { profile: EmployerProfile }) {
   return (
     <header className="hidden md:flex h-[50px] items-center justify-between border-b border-[#d9d9df] bg-white px-6 shadow-[0_2px_5px_rgba(15,23,42,0.16)] md:px-10">
       <Link
-        href="/"
+        href="/dashboard/employer"
         aria-label="WorkBridge home"
-        className="hidden h-full w-[82px] items-center justify-center text-[#172653] md:flex"
+        className="hidden h-full items-center text-[#172653] md:flex"
       >
-        <span className="relative h-11 w-7">
-          <span className="absolute left-1/2 top-0 h-11 w-0.5 -translate-x-1/2 rounded-full bg-current" />
-          <span className="absolute left-1/2 top-2 h-3 w-3 -translate-x-1/2 rounded-full bg-current" />
-          <span className="absolute bottom-2 left-1 h-0.5 w-6 rotate-[60deg] rounded-full bg-current" />
-          <span className="absolute bottom-2 right-1 h-0.5 w-6 -rotate-[60deg] rounded-full bg-current" />
-        </span>
+        <WorkBridgeLogo className="h-8 w-auto max-w-[170px]" />
       </Link>
 
       <div className="ml-auto flex items-center gap-8">

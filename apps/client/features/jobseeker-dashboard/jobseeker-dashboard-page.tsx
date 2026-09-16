@@ -13,6 +13,7 @@ import { JobseekerSidebar } from "./components/jobseeker-sidebar";
 import { BookingsList } from "../bookings/components/bookings-list";
 import { useAuth } from "@/contexts/auth-context";
 import { useProfile } from "@/contexts/profile-context";
+import { WorkBridgeLogo } from "@repo/ui";
 
 // Define proper types
 interface DashboardAnalytics {
@@ -112,9 +113,9 @@ export function JobseekerDashboardPage() {
         <section className="min-w-0 flex-1 overflow-y-auto pt-16 pb-20 md:pt-0 md:pb-0">
           {/* Header - visible on md+ since mobile has sticky top app bar */}
           <header className="hidden md:flex h-20 items-center justify-between border-b border-slate-200 bg-white px-6 md:px-10">
-            <h2 className="text-xl font-black text-[#14214a] tracking-tight">
-              WorkBridge
-            </h2>
+            <Link href="/dashboard" className="flex items-center">
+              <WorkBridgeLogo className="h-9 w-auto max-w-[190px]" />
+            </Link>
             <div className="flex items-center gap-5">
               <Link href="/dashboard/saved-jobs">
                 <BookmarkIcon className="w-5 h-5 text-slate-400 hover:text-teal-600" />

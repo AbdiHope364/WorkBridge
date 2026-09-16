@@ -12,6 +12,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useProfile } from "@/contexts/profile-context";
 import { api } from "@/lib/api";
 import Image from "next/image";
+import { WorkBridgeLogo } from "@repo/ui";
 
 /** --- Icons & Glyphs --- */
 const Icons = {
@@ -170,9 +171,9 @@ export function EmployerDashboardPage() {
         <section className="flex-1 flex flex-col min-w-0 pt-16 pb-20 md:pt-0 md:pb-0 overflow-y-auto">
           {/* Header */}
           <header className="hidden md:flex h-20 bg-white border-b border-slate-200 items-center justify-between px-6 md:px-10 sticky top-0 z-20">
-            <h2 className="text-xl font-black text-slate-800 tracking-tight italic">
-              WorkBridge
-            </h2>
+            <Link href="/dashboard/employer" className="flex items-center">
+              <WorkBridgeLogo className="h-9 w-auto max-w-[190px]" />
+            </Link>
             <div className="flex items-center gap-6">
               <Link href="/dashboard/employer/notifications">
                 <BellIcon className="h-5 w-5 text-slate-400 hover:text-teal-600 cursor-pointer" />
