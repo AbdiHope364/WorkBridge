@@ -67,18 +67,18 @@ export function LandingHeader() {
         }`}
       >
         <nav className="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
-          <div className="flex h-16 sm:h-20 items-center justify-between w-full">
+          <div className="relative flex h-16 sm:h-20 items-center justify-between w-full">
             {/* Logo - Left */}
             <Link
               href="/"
               aria-label="Workbridge home"
-              className="shrink-0 transition-transform hover:scale-105 active:scale-95 flex items-center"
+              className="shrink-0 transition-transform hover:scale-105 active:scale-95 flex items-center z-10"
             >
               <LogoMark />
             </Link>
 
-            {/* Desktop Navigation - Hidden on Mobile & Tablet, Visible on Desktop (lg+) */}
-            <div className="hidden lg:flex items-center gap-6 xl:gap-10 text-sm xl:text-[16px] font-bold text-slate-950">
+            {/* Desktop Navigation - Centered in the middle on Desktop (lg+) */}
+            <div className="hidden lg:flex items-center gap-6 xl:gap-10 text-sm xl:text-[16px] font-bold text-slate-950 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -104,7 +104,7 @@ export function LandingHeader() {
             </div>
 
             {/* Menu Toggle Button - Visible on Tablet and Mobile (< lg), Hidden on Desktop (lg+) */}
-            <div className="flex lg:hidden items-center justify-end shrink-0">
+            <div className="flex lg:hidden items-center justify-end shrink-0 z-10">
               <button
                 type="button"
                 onClick={() => setIsMenuOpen((prev) => !prev)}
