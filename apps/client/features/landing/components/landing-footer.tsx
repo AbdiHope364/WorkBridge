@@ -43,17 +43,18 @@ export function LandingFooter() {
   return (
     <footer id="help" className="bg-[#101b3b] text-white border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
-          {/* Brand & Contacts */}
-          <div className="sm:col-span-2 lg:col-span-1 space-y-4">
+        {/* 2 in a row on mobile, 4 on tablet, 5 on desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-8 sm:gap-8 lg:gap-10">
+          {/* Brand & Contacts - Full width on mobile/tablet, 1 col on desktop */}
+          <div className="col-span-2 md:col-span-4 lg:col-span-1 space-y-4 pb-4 sm:pb-0 border-b border-slate-800/80 sm:border-none">
             <Link href="/" className="inline-block">
-              <WorkBridgeLogo theme="dark" className="h-10 sm:h-11 w-auto max-w-[210px]" />
+              <WorkBridgeLogo theme="dark" className="h-10 sm:h-11 w-auto max-w-[200px]" />
             </Link>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xs">
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-sm">
               Connecting skilled trade workers with clients and employers across Ethiopia with 0% wage commission.
             </p>
 
-            <div className="space-y-2 pt-2 text-xs sm:text-sm text-slate-300">
+            <div className="space-y-2 pt-1 text-xs sm:text-sm text-slate-300">
               <p className="flex items-center gap-2.5">
                 <Mail className="h-4 w-4 text-emerald-400 shrink-0" />
                 <span>support@workbridge.et</span>
@@ -69,7 +70,7 @@ export function LandingFooter() {
             </div>
           </div>
 
-          {/* Links Columns */}
+          {/* Links Columns - 2 in a row on mobile */}
           {footerColumns.map((column) => (
             <div key={column.title} className="space-y-3">
               <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-emerald-400">
