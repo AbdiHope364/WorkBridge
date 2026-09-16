@@ -64,7 +64,10 @@ export function JobseekerSidebar() {
       label: "Find Jobs",
       icon: BriefcaseIcon,
       isActive: (p: string) =>
-        p.startsWith("/dashboard/jobs") || p.startsWith("/dashboard/find-jobs"),
+        p === "/dashboard/jobs" ||
+        p.startsWith("/dashboard/jobs/") ||
+        p === "/dashboard/find-jobs" ||
+        p.startsWith("/dashboard/find-jobs/"),
     },
     {
       href: "/dashboard/messages",
@@ -72,25 +75,31 @@ export function JobseekerSidebar() {
       icon: ChatBubbleLeftIcon,
       hasBadge: true,
       isActive: (p: string) =>
-        p.startsWith("/dashboard/messages") || p.startsWith("/dashboard/chat"),
+        p === "/dashboard/messages" ||
+        p.startsWith("/dashboard/messages/") ||
+        p === "/dashboard/chat" ||
+        p.startsWith("/dashboard/chat/"),
     },
     {
       href: "/dashboard/payments",
       label: "Payments",
       icon: CreditCardIcon,
-      isActive: (p: string) => p.startsWith("/dashboard/payments"),
+      isActive: (p: string) =>
+        p === "/dashboard/payments" || p.startsWith("/dashboard/payments/"),
     },
     {
       href: "/dashboard/profile",
       label: "Profile",
       icon: UserIcon,
-      isActive: (p: string) => p.startsWith("/dashboard/profile"),
+      isActive: (p: string) =>
+        p === "/dashboard/profile" || p.startsWith("/dashboard/profile/"),
     },
     {
       href: "/dashboard/settings",
       label: "Settings",
       icon: Cog6ToothIcon,
-      isActive: (p: string) => p.startsWith("/dashboard/settings"),
+      isActive: (p: string) =>
+        p === "/dashboard/settings" || p.startsWith("/dashboard/settings/"),
     },
   ];
 
@@ -107,7 +116,10 @@ export function JobseekerSidebar() {
       label: "Jobs",
       icon: BriefcaseIcon,
       isActive: (p: string) =>
-        p.startsWith("/dashboard/jobs") || p.startsWith("/dashboard/find-jobs"),
+        p === "/dashboard/jobs" ||
+        p.startsWith("/dashboard/jobs/") ||
+        p === "/dashboard/find-jobs" ||
+        p.startsWith("/dashboard/find-jobs/"),
     },
     {
       href: "/dashboard/messages",
@@ -115,19 +127,24 @@ export function JobseekerSidebar() {
       icon: ChatBubbleLeftIcon,
       hasBadge: true,
       isActive: (p: string) =>
-        p.startsWith("/dashboard/messages") || p.startsWith("/dashboard/chat"),
+        p === "/dashboard/messages" ||
+        p.startsWith("/dashboard/messages/") ||
+        p === "/dashboard/chat" ||
+        p.startsWith("/dashboard/chat/"),
     },
     {
       href: "/dashboard/payments",
       label: "Payments",
       icon: CreditCardIcon,
-      isActive: (p: string) => p.startsWith("/dashboard/payments"),
+      isActive: (p: string) =>
+        p === "/dashboard/payments" || p.startsWith("/dashboard/payments/"),
     },
     {
       href: "/dashboard/settings",
       label: "Settings",
       icon: Cog6ToothIcon,
-      isActive: (p: string) => p.startsWith("/dashboard/settings"),
+      isActive: (p: string) =>
+        p === "/dashboard/settings" || p.startsWith("/dashboard/settings/"),
     },
   ];
 
