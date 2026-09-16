@@ -8,3 +8,4 @@ export default async function DashboardMessagesIdPage({
   const { id } = await params;
   return <ChatInterface initialConversationId={id} />;
 }
+

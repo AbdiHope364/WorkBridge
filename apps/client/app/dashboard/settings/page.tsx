@@ -3,3 +3,4 @@ import { JobseekerSettingsPage } from "@/features/jobseeker-dashboard/settings-p
 export default function SettingsPage() {
   return <JobseekerSettingsPage />;
 }
+

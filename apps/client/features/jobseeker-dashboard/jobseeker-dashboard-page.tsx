@@ -105,13 +105,13 @@ export function JobseekerDashboardPage() {
   ];
 
   return (
-    <main className="h-screen bg-[#f8f8fa] text-slate-950">
-      <div className="flex h-full flex-col md:flex-row">
+    <main className="min-h-screen bg-[#f8f8fa] text-slate-950">
+      <div className="flex min-h-screen flex-col md:flex-row">
         <JobseekerSidebar />
 
-        <section className="min-w-0 flex-1 overflow-y-auto">
-          {/* Header */}
-          <header className="flex h-20 items-center justify-between border-b border-slate-200 bg-white px-6 md:px-10">
+        <section className="min-w-0 flex-1 overflow-y-auto pt-16 pb-20 md:pt-0 md:pb-0">
+          {/* Header - visible on md+ since mobile has sticky top app bar */}
+          <header className="hidden md:flex h-20 items-center justify-between border-b border-slate-200 bg-white px-6 md:px-10">
             <h2 className="text-xl font-black text-[#14214a] tracking-tight">
               WorkBridge
             </h2>
@@ -130,18 +130,18 @@ export function JobseekerDashboardPage() {
             </div>
           </header>
 
-          <div className="w-full max-w-275 px-6 py-10 md:px-10">
-            <div className="mb-10">
-              <h1 className="text-4xl font-black text-slate-900 tracking-tight">
+          <div className="w-full max-w-275 px-4 py-6 sm:px-6 md:px-10 md:py-10">
+            <div className="mb-8 md:mb-10">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
                 Hello, {jobseekerProfile?.firstName || "Jobseeker"}
               </h1>
-              <p className="text-slate-500 mt-2 font-medium">
+              <p className="text-sm sm:text-base text-slate-500 mt-1 sm:mt-2 font-medium">
                 Checkout what is updated on your career journey today.
               </p>
             </div>
 
             {/* Metrics Grid */}
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
               {metrics.map((metric, idx) => (
                 <article
                   key={idx}

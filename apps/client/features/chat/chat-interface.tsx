@@ -449,20 +449,20 @@ export function ChatInterface({
   };
 
   return (
-    <div className="flex h-screen bg-[#f8f8fa] text-slate-950 antialiased overflow-hidden">
-      {/* 1. Common Left Sidebar */}
+    <div className="flex h-screen bg-[#f8f8fa] text-slate-950 antialiased overflow-hidden flex-col md:flex-row">
+      {/* 1. Common Left Sidebar (Provides sticky top bar & bottom nav on mobile, sidebar on desktop) */}
       <JobseekerSidebar />
 
       {/* 2. Main Messaging Hub */}
-      <div className="flex flex-1 min-w-0 h-full">
-        {/* Panel A: Conversations List (Hidden on mobile if in chat view) */}
+      <div className="flex flex-1 min-w-0 h-full overflow-hidden">
+        {/* Panel A: Conversations List (Visible on mobile when mobileView === "list") */}
         <div
-          className={`w-full md:w-[380px] lg:w-[420px] bg-white border-r border-slate-200 flex flex-col h-full shrink-0 ${
+          className={`w-full md:w-[360px] lg:w-[400px] bg-white border-r border-slate-200 flex flex-col h-full shrink-0 pt-16 pb-20 md:pt-0 md:pb-0 ${
             mobileView === "chat" ? "hidden md:flex" : "flex"
           }`}
         >
           {/* Header */}
-          <div className="p-5 border-b border-slate-100 flex items-center justify-between">
+          <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-xl font-black text-[#14214a] tracking-tight">Messages</h1>
@@ -475,7 +475,7 @@ export function ChatInterface({
 
             <button
               onClick={() => setIsNewChatModalOpen(true)}
-              className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs transition-all flex items-center gap-1.5 text-xs font-bold"
+              className="p-2 sm:p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs transition-all flex items-center gap-1.5 text-xs font-bold"
               title="Start New Conversation"
             >
               <Plus className="w-4 h-4" />
@@ -484,7 +484,7 @@ export function ChatInterface({
           </div>
 
           {/* Search Box */}
-          <div className="p-4 border-b border-slate-100">
+          <div className="p-3 sm:p-4 border-b border-slate-100">
             <div className="relative">
               <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
@@ -522,7 +522,7 @@ export function ChatInterface({
           </div>
 
           {/* 0% Commission Badge */}
-          <div className="mx-4 mt-3 p-2.5 rounded-xl bg-emerald-50/80 border border-emerald-200/60 flex items-center gap-2.5 text-xs">
+          <div className="mx-3 sm:mx-4 mt-3 p-2.5 rounded-xl bg-emerald-50/80 border border-emerald-200/60 flex items-center gap-2.5 text-xs">
             <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
             <div className="text-[11px] leading-tight text-emerald-900">
               <span className="font-bold">0% Middleman Fees:</span> 100% direct trade wage settlement on all chats.
@@ -530,7 +530,7 @@ export function ChatInterface({
           </div>
 
           {/* Conversations Scrollable List */}
-          <div className="flex-1 overflow-y-auto p-3 space-y-1.5">
+          <div className="flex-1 overflow-y-auto p-2.5 sm:p-3 space-y-1.5">
             {filteredConversations.length === 0 ? (
               <div className="text-center py-12 px-4 text-slate-400">
                 <Search className="w-8 h-8 mx-auto mb-2 opacity-40" />
@@ -544,7 +544,7 @@ export function ChatInterface({
                   <button
                     key={conv.id}
                     onClick={() => handleSelectConversation(conv.id)}
-                    className={`w-full text-left p-3.5 rounded-2xl transition-all border flex gap-3 items-start relative group ${
+                    className={`w-full text-left p-3 sm:p-3.5 rounded-2xl transition-all border flex gap-3 items-start relative group ${
                       isCurrent
                         ? "bg-emerald-50/60 border-emerald-200 shadow-xs"
                         : "bg-white border-transparent hover:bg-slate-50 hover:border-slate-200"
@@ -553,7 +553,7 @@ export function ChatInterface({
                     {/* Avatar with Online Indicator */}
                     <div className="relative shrink-0 mt-0.5">
                       <div
-                        className={`w-11 h-11 rounded-full flex items-center justify-center font-bold text-xs border shadow-xs ${conv.avatarBg}`}
+                        className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center font-bold text-xs border shadow-xs ${conv.avatarBg}`}
                       >
                         {conv.initials}
                       </div>
@@ -614,60 +614,63 @@ export function ChatInterface({
           </div>
         </div>
 
-        {/* Panel B: Active Chat Window */}
+        {/* Panel B: Active Chat Window (Takes over viewport on mobile when in chat view) */}
         <div
           className={`flex-1 flex flex-col h-full bg-[#f8f8fa] min-w-0 ${
-            mobileView === "list" ? "hidden md:flex" : "flex"
+            mobileView === "list"
+              ? "hidden md:flex"
+              : "fixed inset-0 z-50 md:static md:flex"
           }`}
         >
           {activeConversation ? (
             <>
               {/* Chat Header */}
-              <div className="h-20 bg-white border-b border-slate-200 px-6 flex items-center justify-between shrink-0 shadow-xs">
-                <div className="flex items-center gap-3.5 min-w-0">
+              <div className="h-16 sm:h-20 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between shrink-0 shadow-xs">
+                <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
                   {/* Mobile Back Button */}
                   <button
                     onClick={() => setMobileView("list")}
-                    className="md:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 mr-1"
+                    className="md:hidden flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold mr-1 shrink-0 transition active:scale-95"
+                    aria-label="Back to conversations"
                   >
-                    <ArrowLeft className="w-5 h-5" />
+                    <ArrowLeft className="w-4 h-4" />
+                    <span>Chats</span>
                   </button>
 
                   <div className="relative shrink-0">
                     <div
-                      className={`w-11 h-11 rounded-full flex items-center justify-center font-bold text-xs border shadow-xs ${activeConversation.avatarBg}`}
+                      className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center font-bold text-xs border shadow-xs ${activeConversation.avatarBg}`}
                     >
                       {activeConversation.initials}
                     </div>
                     {activeConversation.isOnline && (
-                      <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full ring-1 ring-emerald-500/20" />
+                      <span className="absolute bottom-0 right-0 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-emerald-500 border-2 border-white rounded-full ring-1 ring-emerald-500/20" />
                     )}
                   </div>
 
                   <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <h2 className="text-base font-black text-[#14214a] truncate">
+                    <div className="flex items-center gap-1.5">
+                      <h2 className="text-sm sm:text-base font-black text-[#14214a] truncate">
                         {activeConversation.senderName}
                       </h2>
                       {activeConversation.verified && (
-                        <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 text-[10px] font-black px-2 py-0.5 rounded-md border border-emerald-200">
+                        <span className="inline-flex items-center gap-0.5 bg-emerald-50 text-emerald-700 text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded-md border border-emerald-200 shrink-0">
                           <ShieldCheck className="w-3 h-3" /> Verified
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-slate-500 truncate mt-0.5">
-                      <span className="font-semibold text-slate-700">{activeConversation.company}</span>
+                    <div className="flex items-center gap-1 text-[11px] sm:text-xs text-slate-500 truncate">
+                      <span className="font-semibold text-slate-700 truncate">{activeConversation.company}</span>
                       <span>•</span>
-                      <span className="text-emerald-600 font-semibold">
-                        {isTyping ? "Typing message..." : activeConversation.isOnline ? "Active Now" : activeConversation.lastSeen || "Offline"}
+                      <span className="text-emerald-600 font-semibold shrink-0">
+                        {isTyping ? "Typing..." : activeConversation.isOnline ? "Online" : activeConversation.lastSeen || "Offline"}
                       </span>
                     </div>
                   </div>
                 </div>
 
                 {/* Right Action Tools */}
-                <div className="flex items-center gap-2">
-                  {/* Job context tag */}
+                <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                   <div className="hidden lg:flex flex-col items-end mr-2">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Direct Trade Gig</span>
                     <span className="text-xs font-bold text-slate-800">{activeConversation.projectBudget}</span>
@@ -675,14 +678,14 @@ export function ChatInterface({
 
                   <button
                     onClick={() => setIsCallModalOpen(true)}
-                    className="p-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition-colors shadow-xs"
+                    className="p-2 sm:p-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition-colors shadow-xs"
                     title="Audio Call"
                   >
                     <Phone className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => setIsVideoModalOpen(true)}
-                    className="p-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition-colors shadow-xs"
+                    className="p-2 sm:p-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition-colors shadow-xs"
                     title="Google Meet / Video Sync"
                   >
                     <Video className="w-4 h-4" />
@@ -691,12 +694,12 @@ export function ChatInterface({
               </div>
 
               {/* Chat Thread / Messages Area */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3 sm:space-y-4">
                 {/* Date Divider */}
-                <div className="flex items-center justify-center my-2">
-                  <div className="bg-white/90 backdrop-blur-xs border border-slate-200/80 px-4 py-1.5 rounded-full shadow-xs flex items-center gap-2 text-[11px] font-bold text-slate-600">
-                    <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Today • WorkBridge 0% Direct Trade Escrow Active</span>
+                <div className="flex items-center justify-center my-1 sm:my-2">
+                  <div className="bg-white/90 backdrop-blur-xs border border-slate-200/80 px-3 sm:px-4 py-1 rounded-full shadow-xs flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold text-slate-600 text-center">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span>0% Direct Trade Escrow Active</span>
                   </div>
                 </div>
 
@@ -710,13 +713,13 @@ export function ChatInterface({
                       className={`flex flex-col ${isMe ? "items-end" : "items-start"} group relative`}
                     >
                       <div
-                        className={`flex gap-3 max-w-[80%] md:max-w-[70%] ${
+                        className={`flex gap-2 sm:gap-3 max-w-[88%] sm:max-w-[75%] md:max-w-[70%] ${
                           isMe ? "flex-row-reverse" : "flex-row"
                         }`}
                       >
                         {!isMe && (
                           <div
-                            className={`w-8 h-8 rounded-full shrink-0 flex items-center justify-center font-bold text-[10px] mt-1 border ${activeConversation.avatarBg}`}
+                            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full shrink-0 flex items-center justify-center font-bold text-[10px] mt-1 border ${activeConversation.avatarBg}`}
                           >
                             {activeConversation.initials}
                           </div>
@@ -724,29 +727,29 @@ export function ChatInterface({
 
                         <div className="space-y-1">
                           <div
-                            className={`p-4 rounded-2xl shadow-xs text-sm leading-relaxed transition-all ${
+                            className={`p-3 sm:p-4 rounded-2xl shadow-xs text-xs sm:text-sm leading-relaxed transition-all ${
                               isMe
                                 ? "bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-tr-xs"
                                 : "bg-white text-slate-800 border border-slate-200/80 rounded-tl-xs"
                             }`}
                           >
-                            <p className="whitespace-pre-wrap">{msg.text}</p>
+                            <p className="whitespace-pre-wrap break-words">{msg.text}</p>
 
                             {/* Attached File Card */}
                             {msg.attachment && (
                               <div
-                                className={`mt-3 p-3 rounded-xl flex items-center justify-between gap-3 border ${
+                                className={`mt-2.5 p-2.5 rounded-xl flex items-center justify-between gap-2 border ${
                                   isMe
                                     ? "bg-white/10 border-white/20 text-white"
                                     : "bg-slate-50 border-slate-200 text-slate-800"
                                 }`}
                               >
-                                <div className="flex items-center gap-2.5 min-w-0">
-                                  <FileText className={`w-5 h-5 shrink-0 ${isMe ? "text-amber-200" : "text-emerald-600"}`} />
+                                <div className="flex items-center gap-2 min-w-0">
+                                  <FileText className={`w-4 h-4 sm:w-5 sm:h-5 shrink-0 ${isMe ? "text-amber-200" : "text-emerald-600"}`} />
                                   <div className="min-w-0">
                                     <p className="text-xs font-bold truncate">{msg.attachment.name}</p>
                                     <p className={`text-[10px] ${isMe ? "text-emerald-100" : "text-slate-400"}`}>
-                                      {msg.attachment.size} • Verified Document
+                                      {msg.attachment.size} • Verified
                                     </p>
                                   </div>
                                 </div>
@@ -777,7 +780,7 @@ export function ChatInterface({
 
                           {/* Timestamp & Status */}
                           <div
-                            className={`flex items-center gap-1.5 text-[10px] text-slate-400 font-semibold px-1 ${
+                            className={`flex items-center gap-1 text-[10px] text-slate-400 font-semibold px-1 ${
                               isMe ? "justify-end" : "justify-start"
                             }`}
                           >
@@ -805,13 +808,13 @@ export function ChatInterface({
 
                 {/* Typing indicator */}
                 {isTyping && (
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3">
                     <div
-                      className={`w-8 h-8 rounded-full shrink-0 flex items-center justify-center font-bold text-[10px] border ${activeConversation.avatarBg}`}
+                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full shrink-0 flex items-center justify-center font-bold text-[10px] border ${activeConversation.avatarBg}`}
                     >
                       {activeConversation.initials}
                     </div>
-                    <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-xs px-4 py-3 shadow-xs flex items-center gap-1.5">
+                    <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-xs px-3.5 py-2.5 shadow-xs flex items-center gap-1.5">
                       <span className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
                       <span className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
                       <span className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
@@ -823,15 +826,15 @@ export function ChatInterface({
               </div>
 
               {/* Quick Suggestion Chips */}
-              <div className="px-6 py-2 bg-white/70 backdrop-blur-xs border-t border-slate-100 flex gap-2 overflow-x-auto no-scrollbar">
-                <span className="text-[11px] font-bold text-slate-400 self-center shrink-0 flex items-center gap-1">
-                  <Zap className="w-3 h-3 text-amber-500" /> Fast reply:
+              <div className="px-3 sm:px-6 py-2 bg-white/70 backdrop-blur-xs border-t border-slate-100 flex gap-2 overflow-x-auto no-scrollbar">
+                <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 self-center shrink-0 flex items-center gap-1">
+                  <Zap className="w-3 h-3 text-amber-500" /> Quick reply:
                 </span>
                 {SMART_SUGGESTIONS.map((suggestion, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleSendMessage(suggestion)}
-                    className="px-3 py-1.5 rounded-full bg-slate-100 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-300 border border-slate-200 text-slate-700 text-xs font-semibold whitespace-nowrap transition-all shrink-0"
+                    className="px-2.5 sm:px-3 py-1 rounded-full bg-slate-100 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-300 border border-slate-200 text-slate-700 text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all shrink-0 active:scale-95"
                   >
                     {suggestion}
                   </button>
@@ -840,11 +843,11 @@ export function ChatInterface({
 
               {/* Attached file preview before sending */}
               {attachedFile && (
-                <div className="mx-6 mb-2 p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-emerald-600" />
-                    <span className="text-xs font-bold text-emerald-900">{attachedFile.name}</span>
-                    <span className="text-[10px] text-emerald-700">({attachedFile.size})</span>
+                <div className="mx-3 sm:mx-6 mb-2 p-2 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <FileText className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span className="text-xs font-bold text-emerald-900 truncate">{attachedFile.name}</span>
+                    <span className="text-[10px] text-emerald-700 shrink-0">({attachedFile.size})</span>
                   </div>
                   <button
                     onClick={() => setAttachedFile(null)}
@@ -856,28 +859,26 @@ export function ChatInterface({
               )}
 
               {/* Message Composer Box */}
-              <div className="p-4 bg-white border-t border-slate-200 shrink-0">
-                <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-2xl p-2 focus-within:border-emerald-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all">
+              <div className="p-2.5 sm:p-4 bg-white border-t border-slate-200 shrink-0">
+                <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-50 border border-slate-200 rounded-2xl p-1.5 sm:p-2 focus-within:border-emerald-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all">
                   {/* File Attachment Button */}
-                  <div className="relative">
-                    <button
-                      type="button"
-                      onClick={() => simulateAttachment("Trade_Certification_2026.pdf", "pdf", "2.1 MB")}
-                      className="p-2.5 rounded-xl text-slate-500 hover:text-emerald-600 hover:bg-slate-100 transition-colors"
-                      title="Attach Trade Documents or Photos"
-                    >
-                      <Paperclip className="w-4 h-4" />
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => simulateAttachment("Trade_Certification_2026.pdf", "pdf", "2.1 MB")}
+                    className="p-2 sm:p-2.5 rounded-xl text-slate-500 hover:text-emerald-600 hover:bg-slate-100 transition-colors"
+                    title="Attach Trade Documents or Photos"
+                  >
+                    <Paperclip className="w-4 h-4" />
+                  </button>
 
-                  {/* Input Text Box */}
+                  {/* Input Text Box (text-base prevents iOS zoom on focus) */}
                   <input
                     type="text"
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder={`Message ${activeConversation.senderName}... (Press Enter to send)`}
-                    className="flex-1 bg-transparent text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none px-2"
+                    placeholder={`Message ${activeConversation.senderName}...`}
+                    className="flex-1 bg-transparent text-base sm:text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none px-1.5"
                   />
 
                   {/* Emoji Button */}
@@ -885,7 +886,7 @@ export function ChatInterface({
                     <button
                       type="button"
                       onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                      className="p-2.5 rounded-xl text-slate-500 hover:text-emerald-600 hover:bg-slate-100 transition-colors"
+                      className="p-2 sm:p-2.5 rounded-xl text-slate-500 hover:text-emerald-600 hover:bg-slate-100 transition-colors"
                       title="Add Emoji"
                     >
                       <Smile className="w-4 h-4" />
@@ -914,7 +915,7 @@ export function ChatInterface({
                     type="button"
                     onClick={() => handleSendMessage()}
                     disabled={!inputMessage.trim() && !attachedFile}
-                    className="p-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 disabled:hover:bg-emerald-600 text-white font-bold transition-all shadow-xs flex items-center justify-center shrink-0"
+                    className="p-2.5 sm:p-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 disabled:hover:bg-emerald-600 text-white font-bold transition-all shadow-xs flex items-center justify-center shrink-0 active:scale-95"
                   >
                     <Send className="w-4 h-4" />
                   </button>
@@ -935,46 +936,46 @@ export function ChatInterface({
 
       {/* MODAL 1: Interactive Video Call Simulator */}
       {isVideoModalOpen && (
-        <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#14214a] border border-slate-700 rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl flex flex-col">
-            <div className="p-4 bg-slate-900/60 border-b border-slate-700 flex items-center justify-between text-white">
+        <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-[#14214a] border border-slate-700 rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh]">
+            <div className="p-3 sm:p-4 bg-slate-900/60 border-b border-slate-700 flex items-center justify-between text-white">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
-                <span className="text-xs font-black uppercase tracking-wider text-emerald-400">Google Meet Sync (0% Platform Direct)</span>
+                <span className="text-xs font-black uppercase tracking-wider text-emerald-400">Google Meet Sync (0% Direct)</span>
               </div>
               <span className="text-xs font-mono text-slate-300">{formatDuration(callDuration)}</span>
             </div>
 
-            <div className="relative aspect-video bg-slate-900 flex items-center justify-center p-8">
+            <div className="relative aspect-video bg-slate-900 flex items-center justify-center p-4 sm:p-8">
               {/* Remote Video Placeholder */}
               <div className="flex flex-col items-center text-center">
-                <div className={`w-24 h-24 rounded-full flex items-center justify-center text-2xl font-black border-4 ${activeConversation.avatarBg} shadow-xl mb-4`}>
+                <div className={`w-16 h-16 sm:w-24 sm:h-24 rounded-full flex items-center justify-center text-xl sm:text-2xl font-black border-4 ${activeConversation.avatarBg} shadow-xl mb-3 sm:mb-4`}>
                   {activeConversation.initials}
                 </div>
-                <h3 className="text-xl font-black text-white">{activeConversation.senderName}</h3>
-                <p className="text-xs text-emerald-300 mt-1">{activeConversation.company}</p>
-                <p className="text-[11px] text-slate-400 mt-3 bg-slate-800/80 px-3 py-1 rounded-full">
+                <h3 className="text-lg sm:text-xl font-black text-white">{activeConversation.senderName}</h3>
+                <p className="text-xs text-emerald-300 mt-0.5">{activeConversation.company}</p>
+                <p className="text-[10px] sm:text-[11px] text-slate-400 mt-2 bg-slate-800/80 px-3 py-1 rounded-full">
                   High-definition secure line established
                 </p>
               </div>
 
               {/* Self Video PiP */}
-              <div className="absolute bottom-4 right-4 w-36 aspect-video bg-slate-800 rounded-2xl border-2 border-slate-700 shadow-xl overflow-hidden flex items-center justify-center text-white">
+              <div className="absolute bottom-3 right-3 w-28 sm:w-36 aspect-video bg-slate-800 rounded-2xl border-2 border-slate-700 shadow-xl overflow-hidden flex items-center justify-center text-white">
                 {videoOff ? (
-                  <VideoOff className="w-6 h-6 text-slate-500" />
+                  <VideoOff className="w-5 h-5 text-slate-500" />
                 ) : (
                   <div className="text-center">
-                    <span className="text-xs font-bold text-emerald-400">You (Camera On)</span>
+                    <span className="text-[10px] sm:text-xs font-bold text-emerald-400">You (Camera On)</span>
                   </div>
                 )}
               </div>
             </div>
 
             {/* Call Controls */}
-            <div className="p-6 bg-slate-900/90 flex items-center justify-center gap-4">
+            <div className="p-4 sm:p-6 bg-slate-900/90 flex items-center justify-center gap-3 sm:gap-4">
               <button
                 onClick={() => setCallMuted(!callMuted)}
-                className={`p-4 rounded-full transition ${
+                className={`p-3 sm:p-4 rounded-full transition ${
                   callMuted ? "bg-rose-600 text-white" : "bg-slate-700 text-white hover:bg-slate-600"
                 }`}
                 title={callMuted ? "Unmute" : "Mute"}
@@ -984,7 +985,7 @@ export function ChatInterface({
 
               <button
                 onClick={() => setVideoOff(!videoOff)}
-                className={`p-4 rounded-full transition ${
+                className={`p-3 sm:p-4 rounded-full transition ${
                   videoOff ? "bg-rose-600 text-white" : "bg-slate-700 text-white hover:bg-slate-600"
                 }`}
                 title={videoOff ? "Turn Video On" : "Turn Video Off"}
@@ -994,7 +995,7 @@ export function ChatInterface({
 
               <button
                 onClick={() => setIsVideoModalOpen(false)}
-                className="px-6 py-4 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-black text-xs flex items-center gap-2 shadow-lg transition"
+                className="px-5 py-3 sm:px-6 sm:py-4 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-black text-xs flex items-center gap-2 shadow-lg transition active:scale-95"
               >
                 <PhoneOff className="w-5 h-5" /> End Call
               </button>
@@ -1005,21 +1006,21 @@ export function ChatInterface({
 
       {/* MODAL 2: Interactive Voice Call Simulator */}
       {isCallModalOpen && (
-        <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl p-8 flex flex-col items-center text-center">
-            <div className={`w-20 h-20 rounded-full flex items-center justify-center text-xl font-black border-4 ${activeConversation.avatarBg} shadow-lg mb-4 animate-pulse`}>
+        <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-3xl w-full max-w-sm sm:max-w-md overflow-hidden shadow-2xl p-6 sm:p-8 flex flex-col items-center text-center">
+            <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center text-lg sm:text-xl font-black border-4 ${activeConversation.avatarBg} shadow-lg mb-4 animate-pulse`}>
               {activeConversation.initials}
             </div>
-            <h3 className="text-xl font-black text-slate-900">{activeConversation.senderName}</h3>
+            <h3 className="text-lg sm:text-xl font-black text-slate-900">{activeConversation.senderName}</h3>
             <p className="text-xs text-slate-500 font-semibold mt-0.5">{activeConversation.company}</p>
             <div className="mt-3 px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full border border-emerald-200">
               In Call: {formatDuration(callDuration)}
             </div>
 
-            <div className="flex gap-4 mt-8">
+            <div className="flex gap-4 mt-6 sm:mt-8">
               <button
                 onClick={() => setCallMuted(!callMuted)}
-                className={`p-4 rounded-full transition ${
+                className={`p-3.5 sm:p-4 rounded-full transition ${
                   callMuted ? "bg-rose-600 text-white" : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                 }`}
               >
@@ -1027,7 +1028,7 @@ export function ChatInterface({
               </button>
               <button
                 onClick={() => setIsCallModalOpen(false)}
-                className="px-6 py-4 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition"
+                className="px-6 py-3.5 sm:py-4 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition active:scale-95"
               >
                 <PhoneOff className="w-5 h-5" /> End
               </button>
@@ -1038,13 +1039,13 @@ export function ChatInterface({
 
       {/* MODAL 3: Start New Chat */}
       {isNewChatModalOpen && (
-        <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl p-6">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-              <h3 className="text-lg font-black text-[#14214a]">Start a New Message</h3>
+        <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl p-5 sm:p-6">
+            <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-100">
+              <h3 className="text-base sm:text-lg font-black text-[#14214a]">Start a New Message</h3>
               <button
                 onClick={() => setIsNewChatModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-700"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1054,7 +1055,7 @@ export function ChatInterface({
               Select a verified company or employer to initiate a direct 0% commission conversation:
             </p>
 
-            <div className="space-y-2 max-h-64 overflow-y-auto">
+            <div className="space-y-2 max-h-60 overflow-y-auto">
               {[
                 { name: "Addis Solar Technologies", role: "Rooftop Commercial Project", lead: "Mussie Belay" },
                 { name: "Ethiopian Airlines MEP Group", role: "Substation Maintenance", lead: "Dawit Kebede" },
@@ -1077,7 +1078,7 @@ export function ChatInterface({
               ))}
             </div>
 
-            <div className="mt-6 flex justify-end">
+            <div className="mt-5 sm:mt-6 flex justify-end">
               <button
                 onClick={() => setIsNewChatModalOpen(false)}
                 className="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200"

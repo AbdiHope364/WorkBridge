@@ -87,13 +87,13 @@ export function JobseekerSettingsPage() {
   };
 
   return (
-    <div className="flex h-screen bg-[#f8f8fa] text-slate-950">
+    <div className="flex min-h-screen bg-[#f8f8fa] text-slate-950 flex-col md:flex-row">
       {/* Common Sidebar */}
       <JobseekerSidebar />
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto">
-        <header className="flex h-20 items-center justify-between border-b border-slate-200 bg-white px-8">
+      <main className="flex-1 overflow-y-auto pt-16 pb-20 md:pt-0 md:pb-0">
+        <header className="hidden md:flex h-20 items-center justify-between border-b border-slate-200 bg-white px-8">
           <div>
             <h1 className="text-xl font-black text-[#14214a] tracking-tight">Account Settings</h1>
             <p className="text-xs text-slate-500">Manage your profile, security, and notification preferences</p>
@@ -105,7 +105,7 @@ export function JobseekerSettingsPage() {
           </div>
         </header>
 
-        <div className="max-w-5xl mx-auto p-8 space-y-6">
+        <div className="max-w-5xl mx-auto p-4 sm:p-6 md:p-8 space-y-6">
           {/* Status Message */}
           {statusMsg && (
             <div
@@ -124,14 +124,14 @@ export function JobseekerSettingsPage() {
             </div>
           )}
 
-          {/* Tab Bar */}
-          <div className="flex border-b border-slate-200 bg-white rounded-2xl p-1.5 shadow-sm gap-1">
+          {/* Tab Bar - Horizontally scrollable on mobile phones */}
+          <div className="flex border-b border-slate-200 bg-white rounded-2xl p-1.5 shadow-xs gap-1 overflow-x-auto no-scrollbar">
             <button
               type="button"
               onClick={() => setActiveTab("general")}
-              className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 ${
+              className={`flex-1 min-w-max py-2.5 px-3.5 sm:px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 whitespace-nowrap ${
                 activeTab === "general"
-                  ? "bg-emerald-600 text-white shadow-sm"
+                  ? "bg-emerald-600 text-white shadow-xs"
                   : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
               }`}
             >
@@ -140,9 +140,9 @@ export function JobseekerSettingsPage() {
             <button
               type="button"
               onClick={() => setActiveTab("security")}
-              className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 ${
+              className={`flex-1 min-w-max py-2.5 px-3.5 sm:px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 whitespace-nowrap ${
                 activeTab === "security"
-                  ? "bg-emerald-600 text-white shadow-sm"
+                  ? "bg-emerald-600 text-white shadow-xs"
                   : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
               }`}
             >
@@ -151,9 +151,9 @@ export function JobseekerSettingsPage() {
             <button
               type="button"
               onClick={() => setActiveTab("notifications")}
-              className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 ${
+              className={`flex-1 min-w-max py-2.5 px-3.5 sm:px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 whitespace-nowrap ${
                 activeTab === "notifications"
-                  ? "bg-emerald-600 text-white shadow-sm"
+                  ? "bg-emerald-600 text-white shadow-xs"
                   : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
               }`}
             >
@@ -162,9 +162,9 @@ export function JobseekerSettingsPage() {
             <button
               type="button"
               onClick={() => setActiveTab("account")}
-              className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 ${
+              className={`flex-1 min-w-max py-2.5 px-3.5 sm:px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 whitespace-nowrap ${
                 activeTab === "account"
-                  ? "bg-emerald-600 text-white shadow-sm"
+                  ? "bg-emerald-600 text-white shadow-xs"
                   : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
               }`}
             >
@@ -174,13 +174,13 @@ export function JobseekerSettingsPage() {
 
           {/* TAB 1: General Profile */}
           {activeTab === "general" && (
-            <form onSubmit={handleSaveGeneral} className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm space-y-6">
+            <form onSubmit={handleSaveGeneral} className="bg-white rounded-3xl border border-slate-200 p-4 sm:p-6 md:p-8 shadow-xs space-y-6">
               <div>
                 <h3 className="text-lg font-black text-slate-900">Personal & Trade Details</h3>
                 <p className="text-xs text-slate-500">Update how clients see your profile and reach out for job bookings.</p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                     Full Name / Trade Title
@@ -443,3 +443,4 @@ export function JobseekerSettingsPage() {
     </div>
   );
 }
+
