@@ -3,20 +3,15 @@
 import Link from "next/link";
 import { BellIcon, BookmarkIcon } from "./dashboard-icons";
 import Image from "next/image";
+import { WorkBridgeLogo } from "@repo/ui";
 
 function LogoMark() {
   return (
     <Link
       href="/dashboard"
-      className="flex items-center gap-2 font-black text-[#14214a]"
+      className="flex items-center"
     >
-      <span className="relative h-8 w-6 text-[#14214a]">
-        <span className="absolute left-1/2 top-0 h-8 w-0.5 -translate-x-1/2 bg-current" />
-        <span className="absolute left-1/2 top-2 h-2 w-2 -translate-x-1/2 rounded-full bg-current" />
-        <span className="absolute left-1 top-4 h-0.5 w-5 rotate-45 bg-current" />
-        <span className="absolute left-1 top-4 h-0.5 w-5 -rotate-45 bg-current" />
-      </span>
-      WorkBridge
+      <WorkBridgeLogo className="h-9 w-auto max-w-[190px]" />
     </Link>
   );
 }

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 45 160 150" width="100%" height="100%">
+  <defs>
+    <!-- Left Pillar Gradient (Navy) -->
+    <linearGradient id="markLeftGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+
+    <!-- Right Pillar Gradient (Teal/Cyan) -->
+    <linearGradient id="markRightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#0D9488" />
+    </linearGradient>
+
+    <!-- Dynamic Arch Gradient (The Bridge Connector) -->
+    <linearGradient id="markArchGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="50%" stop-color="#0EA5E9" />
+      <stop offset="100%" stop-color="#14B8A6" />
+    </linearGradient>
+
+    <!-- Energy Amber Dot Gradient -->
+    <linearGradient id="markAmberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+
+    <!-- Drop Shadow for floating depth -->
+    <filter id="markSoftShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <g filter="url(#markSoftShadow)">
+    <!-- Base Foundation Line -->
+    <line x1="45" y1="185" x2="195" y2="185" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round" />
+
+    <!-- Left Pillar (First W Stroke) -->
+    <path d="M 50 70 
+             C 50 60, 62 55, 70 62 
+             L 88 155 
+             C 90 165, 102 165, 105 155 
+             L 115 105 
+             C 112 115, 96 178, 85 178 
+             C 75 178, 50 85, 50 70 Z" 
+          fill="url(#markLeftGrad)" />
+
+    <!-- Right Pillar (Final W Stroke) -->
+    <path d="M 190 70 
+             C 190 60, 178 55, 170 62 
+             L 152 155 
+             C 150 165, 138 165, 135 155 
+             L 125 105 
+             C 128 115, 144 178, 155 178 
+             C 165 178, 190 85, 190 70 Z" 
+          fill="url(#markRightGrad)" />
+
+    <!-- Upward Golden Keystone Node (The Center Pinnacle) -->
+    <circle cx="120" cy="118" r="7.5" fill="url(#markAmberGrad)" />
+
+    <!-- Connecting Suspension Bridge Arch (Forming the central W truss) -->
+    <path d="M 68 128 
+             Q 120 40, 172 128" 
+          fill="none" 
+          stroke="url(#markArchGrad)" 
+          stroke-width="12" 
+          stroke-linecap="round" />
+
+    <!-- Subtle Arch Roadway Deck -->
+    <path d="M 78 134 
+             Q 120 62, 162 134" 
+          fill="none" 
+          stroke="#FFFFFF" 
+          stroke-width="2.5" 
+          stroke-dasharray="5 4" 
+          stroke-linecap="round" 
+          opacity="0.9" />
+  </g>
+</svg>

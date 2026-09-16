@@ -16,6 +16,7 @@ import {
   ArrowRightOnRectangleIcon,
   SparklesIcon,
 } from "@heroicons/react/24/outline";
+import { WorkBridgeLogo } from "@repo/ui";
 
 export function JobseekerSidebar() {
   const pathname = usePathname();
@@ -156,14 +157,9 @@ export function JobseekerSidebar() {
       <header className="fixed top-0 left-0 right-0 z-40 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 backdrop-blur-md px-4 md:hidden shadow-xs">
         <Link
           href="/dashboard/jobseeker"
-          className="text-lg font-black text-[#14214a] tracking-tight flex items-center gap-2"
+          className="flex items-center gap-2"
         >
-          <span className="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-black text-sm shadow-xs">
-            W
-          </span>
-          <span className="leading-none">
-            Work<span className="text-emerald-600">bridge</span>
-          </span>
+          <WorkBridgeLogo className="h-8 w-auto max-w-[170px]" />
         </Link>
 
         <div className="flex items-center gap-2">
@@ -209,21 +205,13 @@ export function JobseekerSidebar() {
         }`}
       >
         {/* Drawer Brand Header */}
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-emerald-50/60 to-white">
+        <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-emerald-50/60 to-white">
           <Link
             href="/dashboard/jobseeker"
             onClick={() => setIsDrawerOpen(false)}
-            className="text-xl font-black text-[#14214a] tracking-tight flex items-center gap-2.5"
+            className="flex items-center"
           >
-            <span className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-sm shadow-xs">
-              W
-            </span>
-            <div className="flex flex-col">
-              <span className="leading-tight">WorkBridge</span>
-              <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest">
-                Jobseeker Hub
-              </span>
-            </div>
+            <WorkBridgeLogo className="h-9 w-auto max-w-[190px]" />
           </Link>
           <button
             type="button"
@@ -332,15 +320,12 @@ export function JobseekerSidebar() {
       {/* 4. Desktop Sidebar (Sticky on laptop / desktop viewports) */}
       {/* ========================================================= */}
       <aside className="hidden md:flex w-64 bg-white border-r border-slate-200 h-screen sticky top-0 flex-col shrink-0 z-20">
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between">
+        <div className="p-4 border-b border-slate-100 flex items-center justify-between">
           <Link
             href="/dashboard/jobseeker"
-            className="text-xl font-black text-[#14214a] tracking-tight flex items-center gap-2"
+            className="flex items-center"
           >
-            <span className="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-black text-sm shadow-xs">
-              W
-            </span>
-            WorkBridge
+            <WorkBridgeLogo className="h-9 w-auto max-w-[200px]" />
           </Link>
         </div>
 

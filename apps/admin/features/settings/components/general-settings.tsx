@@ -14,6 +14,7 @@ import {
   Upload,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { WorkBridgeLogomark } from "@repo/ui";
 
 interface GeneralSettingsData {
   companyName: string;
@@ -106,8 +107,8 @@ export function GeneralSettings() {
           {/* Logo/Company Image */}
           <div className="flex items-center gap-6 mb-6 pb-6 border-b border-slate-100">
             <div className="relative">
-              <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-[#4100F2] to-[#2B00A1] flex items-center justify-center text-white text-2xl font-black">
-                WB
+              <div className="w-20 h-20 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center p-2">
+                <WorkBridgeLogomark className="w-16 h-16" />
               </div>
               {isEditing && (
                 <button className="absolute -bottom-1 -right-1 p-1.5 bg-white rounded-full border border-slate-200 shadow-sm hover:bg-slate-50 transition-colors">

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, Home, Briefcase, Users, HelpCircle, Mail, LogIn, UserPlus, Sparkles, ArrowRight } from "lucide-react";
 
+import { WorkBridgeLogo } from "@repo/ui";
+
 const navLinks = [
   { href: "/", label: "Home", icon: <Home className="h-4 w-4" /> },
   { href: "/jobs", label: "Find Jobs", icon: <Briefcase className="h-4 w-4" /> },
@@ -16,43 +18,7 @@ const navLinks = [
 
 function LogoMark() {
   return (
-    <div className="flex items-center gap-2 sm:gap-2.5 text-[#1b2855]">
-      <svg
-        aria-hidden="true"
-        className="h-8 w-7 sm:h-10 sm:w-9 md:h-12 md:w-10 lg:h-14 lg:w-12 transition-all duration-300"
-        viewBox="0 0 48 64"
-        fill="none"
-      >
-        <path
-          d="M24 6v52M24 12 8 58M24 12l16 46"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeWidth="4"
-        />
-        <circle
-          cx="24"
-          cy="20"
-          r="6"
-          fill="white"
-          stroke="currentColor"
-          strokeWidth="4"
-        />
-        <path
-          d="M15 58h18M20 50h8"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeWidth="3"
-        />
-      </svg>
-      <div className="flex flex-col leading-none">
-        <span className="text-base sm:text-lg md:text-xl lg:text-[22px] font-black tracking-tight text-slate-950">
-          Work<span className="text-emerald-600">bridge</span>
-        </span>
-        <span className="hidden sm:block text-[6px] sm:text-[7px] md:text-[8px] lg:text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-          Job Platform
-        </span>
-      </div>
-    </div>
+    <WorkBridgeLogo className="h-10 sm:h-11 md:h-12 w-auto max-w-[200px] sm:max-w-[230px]" />
   );
 }
 

@@ -1,3 +1,5 @@
+import { WorkBridgeLogo } from "@repo/ui";
+
 const footerColumns = [
   {
     title: "For Job seekers",
@@ -99,7 +101,7 @@ export function LandingFooter() {
       <div className="max-w-7xl mx-auto px-6 py-10">
         <div className="grid gap-10 md:grid-cols-[1.6fr_repeat(4,1fr)]">
           <div>
-            <h2 className="text-[28px] font-black leading-none">Workbridge</h2>
+            <WorkBridgeLogo theme="dark" className="h-12 w-auto max-w-[240px] mb-2" />
             <p className="mt-2 text-sm text-white/85">
               Connects a client with local job seekers.
             </p>

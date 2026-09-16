@@ -5,6 +5,7 @@ export * from "./components/code";
 export * from "./components/container";
 export * from "./components/input";
 export * from "./components/job-card";
+export * from "./components/logo";
 export * from "./components/modal";
 export * from "./components/section-header";
 export * from "./components/select";

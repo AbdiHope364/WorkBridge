@@ -1,17 +1,15 @@
 import { Suspense } from "react";
 import { ForgotPasswordForm } from "@/features/auth/components/forgot-password-form";
+import { WorkBridgeLogo } from "@repo/ui";
 
 export default function ForgotPasswordPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
       <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-xl">
-        <div className="mb-2 text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-            WorkBridge
-          </h1>
-
-          <p className="mt-2 text-lg font-semibold text-slate-800">
-            Admin Dashboard
+        <div className="mb-6 text-center flex flex-col items-center">
+          <WorkBridgeLogo className="h-12 w-auto max-w-[260px] mb-2" />
+          <p className="mt-1 text-xs font-bold text-slate-400 uppercase tracking-widest">
+            Admin Password Recovery
           </p>
         </div>
 

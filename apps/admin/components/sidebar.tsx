@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/auth-context";
+import { WorkBridgeLogo } from "@repo/ui";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/" },
@@ -56,11 +57,10 @@ export function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-gradient-to-b from-[#00D47E] to-[#049B74] text-white flex flex-col overflow-y-auto">
       {/* Logo Section */}
-      <div className="p-6 flex items-center gap-3">
-        <div className="bg-white/20 p-2 rounded-xl">
-          <Compass className="w-6 h-6 text-white" />
-        </div>
-        <span className="text-xl font-bold tracking-tight">WorkBridge</span>
+      <div className="p-6 flex items-center justify-center border-b border-white/15">
+        <Link href="/" className="flex items-center">
+          <WorkBridgeLogo theme="dark" className="h-10 w-auto max-w-[200px]" />
+        </Link>
       </div>
 
       {/* User Profile */}

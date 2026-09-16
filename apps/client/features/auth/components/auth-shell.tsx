@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { Card } from "@repo/ui";
+import { Card, WorkBridgeLogo } from "@repo/ui";
 
 interface AuthShellProps {
   title: string;
@@ -28,9 +28,12 @@ export function AuthShell({
       <div className="mx-auto grid max-w-6xl w-full gap-8 lg:grid-cols-[1.15fr_0.9fr] items-center">
         <section className="hidden overflow-hidden rounded-4xl border border-slate-200 bg-slate-950/5 p-10 text-white shadow-lg lg:block">
           <div className="space-y-8">
-            <div className="rounded-3xl bg-emerald-700 p-8 shadow-inner shadow-slate-900/5">
-              <p className="text-sm uppercase tracking-[0.24em] text-emerald-500">
-                Welcome to Workbridge
+            <div className="rounded-3xl bg-emerald-800 p-8 shadow-inner shadow-slate-900/5">
+              <div className="mb-4">
+                <WorkBridgeLogo theme="dark" className="h-10 w-auto" />
+              </div>
+              <p className="text-sm uppercase tracking-[0.24em] text-emerald-300 font-bold">
+                Welcome to WorkBridge
               </p>
               <h1 className="mt-4 text-3xl font-extrabold tracking-[-0.04em] text-white">
                 {sideHeading}
@@ -66,6 +69,9 @@ export function AuthShell({
           <Card className="w-full max-w-xl p-5 sm:p-8 shadow-xl rounded-2xl sm:rounded-3xl">
             <div className="space-y-5 sm:space-y-6">
               <div>
+                <Link href="/" className="inline-block mb-3 hover:opacity-85 transition">
+                  <WorkBridgeLogo className="h-10 w-auto" />
+                </Link>
                 <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.24em] text-emerald-600">
                   {title}
                 </p>

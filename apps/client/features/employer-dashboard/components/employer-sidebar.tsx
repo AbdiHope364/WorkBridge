@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useAuth } from "@/contexts/auth-context";
 import type { SVGProps } from "react";
+import { useAuth } from "@/contexts/auth-context";
+import { WorkBridgeLogo } from "@repo/ui";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
@@ -203,13 +204,8 @@ export function EmployerSidebar() {
     <>
       {/* --- Mobile Top Nav (Sticky on phones, hidden on desktop) --- */}
       <div className="fixed top-0 left-0 right-0 z-40 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 backdrop-blur-md px-4 sm:px-6 md:hidden shadow-xs">
-        <Link href="/dashboard/employer" className="text-lg font-black text-[#172653] tracking-tight flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-teal-600 text-white flex items-center justify-center font-black text-sm shadow-xs">
-            W
-          </span>
-          <span>
-            Work<span className="text-teal-600">bridge</span>
-          </span>
+        <Link href="/dashboard/employer" className="flex items-center">
+          <WorkBridgeLogo className="h-8 w-auto max-w-[170px]" />
         </Link>
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -240,14 +236,8 @@ export function EmployerSidebar() {
       >
         {/* Brand Header */}
         <div className="flex h-20 shrink-0 items-center justify-between px-6 border-b border-white/10">
-          <Link href="/dashboard/employer" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-500 shadow-lg shadow-teal-500/20">
-              <span className="text-xl font-black">W</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-black tracking-tight">WorkBridge</span>
-              <span className="text-[10px] text-teal-400 font-bold uppercase tracking-widest">Employer Hub</span>
-            </div>
+          <Link href="/dashboard/employer" className="flex items-center">
+            <WorkBridgeLogo theme="dark" className="h-9 w-auto max-w-[190px]" />
           </Link>
           <button
             onClick={() => setIsOpen(false)}
