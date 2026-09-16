@@ -108,14 +108,14 @@ export function LandingHeader() {
               <button
                 type="button"
                 onClick={() => setIsMenuOpen((prev) => !prev)}
-                className="flex items-center justify-center h-10 w-10 sm:h-11 sm:w-11 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 hover:bg-slate-100 hover:border-slate-300 hover:text-slate-950 active:scale-95 transition-all cursor-pointer shrink-0 shadow-2xs"
+                className="flex items-center justify-center h-8.5 w-8.5 sm:h-10 sm:w-10 rounded-lg sm:rounded-xl border border-slate-200 bg-slate-50 text-slate-800 hover:bg-slate-100 hover:border-slate-300 hover:text-slate-950 active:scale-95 transition-all cursor-pointer shrink-0 shadow-2xs"
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMenuOpen}
               >
                 {isMenuOpen ? (
-                  <X className="h-5 w-5 sm:h-6 sm:w-6" />
+                  <X className="h-4.5 w-4.5 sm:h-5 sm:w-5" />
                 ) : (
-                  <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
+                  <Menu className="h-4.5 w-4.5 sm:h-5 sm:w-5" />
                 )}
               </button>
             </div>
@@ -140,26 +140,26 @@ export function LandingHeader() {
       >
         <div className="flex flex-col h-full">
           {/* Drawer Header with Logo and Close Button on far right */}
-          <div className="flex items-center justify-between border-b border-slate-100 p-4 bg-gradient-to-r from-emerald-50/60 to-white">
+          <div className="flex items-center justify-between border-b border-slate-100 px-3.5 py-3 sm:p-4 bg-gradient-to-r from-emerald-50/60 to-white">
             <Link
               href="/"
               onClick={() => setIsMenuOpen(false)}
               className="shrink-0 transition-transform hover:scale-105 flex items-center"
             >
-              <WorkBridgeLogo className="h-8 sm:h-9 w-auto max-w-[150px] sm:max-w-[170px]" />
+              <WorkBridgeLogo className="h-7 sm:h-9 w-auto max-w-[140px] sm:max-w-[170px]" />
             </Link>
             <button
               type="button"
               onClick={() => setIsMenuOpen(false)}
-              className="shrink-0 p-2 rounded-xl text-slate-600 hover:text-slate-950 hover:bg-slate-100 border border-transparent hover:border-slate-200 transition-all active:scale-90 cursor-pointer"
+              className="shrink-0 p-1.5 sm:p-2 rounded-lg sm:rounded-xl text-slate-600 hover:text-slate-950 hover:bg-slate-100 border border-transparent hover:border-slate-200 transition-all active:scale-90 cursor-pointer"
               aria-label="Close menu"
             >
-              <X className="h-5 w-5" />
+              <X className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
           </div>
 
           {/* Drawer Navigation Links */}
-          <nav className="flex-1 overflow-y-auto p-4 space-y-4">
+          <nav className="flex-1 overflow-y-auto px-3.5 py-3 sm:p-4 space-y-3 sm:space-y-4">
             <div className="space-y-1">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
@@ -168,7 +168,7 @@ export function LandingHeader() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`relative flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all group ${
+                    className={`relative flex items-center justify-between px-3 py-2 sm:px-4 sm:py-3 rounded-lg sm:rounded-xl text-sm sm:text-base font-medium transition-all group ${
                       active
                         ? "bg-emerald-50 text-emerald-600 font-semibold"
                         : "text-slate-700 hover:bg-slate-50 active:bg-slate-100"
@@ -176,10 +176,10 @@ export function LandingHeader() {
                   >
                     <span>{link.label}</span>
                     {active && (
-                      <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-emerald-500 animate-pulse" />
                     )}
                     {!active && (
-                      <ChevronDown className="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-1" />
+                      <ChevronDown className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-slate-400 transition-transform group-hover:translate-x-1" />
                     )}
                   </Link>
                 );
@@ -187,35 +187,35 @@ export function LandingHeader() {
             </div>
 
             {/* Quick Actions */}
-            <div className="space-y-2 border-t border-slate-100 pt-4">
-              <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            <div className="space-y-2 border-t border-slate-100 pt-3 sm:pt-4">
+              <p className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-400">
                 Quick Actions
               </p>
               <div className="grid grid-cols-2 gap-2">
                 <Link
                   href="/jobs"
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex flex-col items-center gap-1.5 rounded-xl bg-slate-50 border border-slate-100 px-4 py-3 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-100 hover:scale-[1.02] active:scale-95"
+                  className="flex flex-col items-center gap-1 sm:gap-1.5 rounded-lg sm:rounded-xl bg-slate-50 border border-slate-100 px-3 py-2.5 sm:px-4 sm:py-3 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-100 hover:scale-[1.02] active:scale-95"
                 >
-                  <Briefcase className="h-5 w-5 text-emerald-600" />
+                  <Briefcase className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-600" />
                   Browse Jobs
                 </Link>
                 <Link
                   href="/find-workers"
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex flex-col items-center gap-1.5 rounded-xl bg-slate-50 border border-slate-100 px-4 py-3 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-100 hover:scale-[1.02] active:scale-95"
+                  className="flex flex-col items-center gap-1 sm:gap-1.5 rounded-lg sm:rounded-xl bg-slate-50 border border-slate-100 px-3 py-2.5 sm:px-4 sm:py-3 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-100 hover:scale-[1.02] active:scale-95"
                 >
-                  <Users className="h-5 w-5 text-emerald-600" />
+                  <Users className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-600" />
                   Find Workers
                 </Link>
               </div>
             </div>
 
             {/* Special Offer Banner */}
-            <div className="rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 p-4 text-white shadow-xs">
+            <div className="rounded-xl sm:rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 p-3 sm:p-4 text-white shadow-xs">
               <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 animate-pulse shrink-0" />
-                <p className="text-xs font-bold">
+                <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-pulse shrink-0" />
+                <p className="text-[11px] sm:text-xs font-bold">
                   🎉 New jobs & trade tasks added daily!
                 </p>
               </div>
