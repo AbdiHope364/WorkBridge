@@ -34,24 +34,39 @@ export function getProfileInitials(fullName?: string) {
     .join("");
 }
 
-export function ProfileAvatar({ size = "lg" }: { size?: "sm" | "lg" }) {
-  const sizeClass = size === "sm" ? "h-16 w-16" : "h-20 w-20";
-  const headClass = size === "sm" ? "top-3 h-4 w-4" : "top-4 h-5 w-5";
-  const bodyClass = size === "sm" ? "bottom-2 h-7 w-9" : "bottom-3 h-8 w-11";
-  const ringClass =
-    size === "sm" ? "left-3 top-3 h-9 w-9" : "left-4 top-4 h-10 w-10";
+export function ProfileAvatar({
+  size = "lg",
+  initials = "W",
+  src,
+}: {
+  size?: "sm" | "md" | "lg";
+  initials?: string;
+  src?: string | null;
+}) {
+  const sizeClass =
+    size === "sm"
+      ? "h-12 w-12 text-sm rounded-xl"
+      : size === "md"
+        ? "h-16 w-16 text-base rounded-2xl"
+        : "h-20 w-20 text-xl rounded-2xl";
 
   return (
-    <div className={`relative shrink-0 rounded-lg bg-slate-900 ${sizeClass}`}>
-      <div
-        className={`absolute left-1/2 -translate-x-1/2 rounded-full bg-amber-200 ${headClass}`}
-      />
-      <div
-        className={`absolute left-1/2 -translate-x-1/2 rounded-t-full bg-emerald-700 ${bodyClass}`}
-      />
-      <div
-        className={`absolute rounded-full border border-amber-400/50 ${ringClass}`}
-      />
+    <div
+      className={`relative shrink-0 overflow-hidden bg-slate-900 border border-slate-200 shadow-xs flex items-center justify-center font-black select-none ${sizeClass}`}
+    >
+      {src ? (
+        <Image
+          src={src}
+          alt="Avatar"
+          fill
+          unoptimized
+          className="object-cover"
+        />
+      ) : (
+        <div className="w-full h-full bg-gradient-to-br from-emerald-800 to-slate-950 text-amber-200 flex items-center justify-center tracking-wider">
+          {initials}
+        </div>
+      )}
     </div>
   );
 }
@@ -65,33 +80,33 @@ export function ProfileTopHeader({
   url?: string;
   condition?: boolean;
 }) {
-  const showInitials = condition ?? !url;
+  const showInitials = condition ?? (!url || url.includes("undefined"));
 
   return (
     <header className="hidden md:flex h-20 items-center justify-between border-b border-slate-200 bg-white px-8">
       <LogoMark />
       <div className="flex items-center gap-5">
         <Link href="/dashboard/saved-jobs" aria-label="Saved jobs">
-          <BookmarkIcon className="h-5 w-5" />
+          <BookmarkIcon className="h-5 w-5 text-slate-400 hover:text-emerald-600 transition" />
         </Link>
         <Link href="/dashboard/notifications" aria-label="Notifications">
-          <BellIcon className="h-5 w-5" />
+          <BellIcon className="h-5 w-5 text-slate-400 hover:text-emerald-600 transition" />
         </Link>
         <Link
           href="/dashboard/profile"
           aria-label="Profile"
-          className="grid h-12 w-12 place-items-center rounded-full border-4 border-emerald-950 bg-slate-900 text-sm font-black text-emerald-100 shadow-sm"
+          className="relative h-11 w-11 rounded-xl overflow-hidden border-2 border-emerald-800 bg-slate-900 text-sm font-black text-amber-200 flex items-center justify-center shadow-xs transition hover:opacity-90"
         >
-          {showInitials ? (
-            initials
-          ) : (
+          {!showInitials && url ? (
             <Image
-              src={url ?? ""}
-              width={70}
-              height={70}
-              style={{ width: "48", height: "48", borderRadius: "50%" }}
+              src={url}
+              fill
+              unoptimized
+              className="object-cover"
               alt="Profile"
             />
+          ) : (
+            <span>{initials || "W"}</span>
           )}
         </Link>
       </div>

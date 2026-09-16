@@ -43,7 +43,25 @@ router.post('/jobseekers/upload-avatar', async (req, res) => {
   if (!profile) {
     return res.status(404).json({ error: 'Profile not found' });
   }
-  res.json({ success: true, data: profile, pagination: null });
+
+  const avatarUrl = req.body?.avatarUrl || req.body?.avatar?.url || req.body?.avatar || req.body?.url || (typeof req.body === 'string' && req.body.startsWith('data:image') ? req.body : null);
+  const avatarObj = {
+    url: avatarUrl || profile.avatar?.url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200',
+    publicId: req.body?.publicId || profile.avatar?.publicId || `avatar_${Date.now()}`
+  };
+
+  await collections.profiles.updateOne(
+    { userId: req.user.id, type: 'jobseeker' },
+    { $set: { avatar: avatarObj, updatedAt: new Date().toISOString() } }
+  );
+
+  await collections.users.updateOne(
+    { id: req.user.id },
+    { $set: { avatarUrl: avatarObj.url, avatar: avatarObj.url, updatedAt: new Date().toISOString() } }
+  );
+
+  const updated = await collections.profiles.findOne({ userId: req.user.id, type: 'jobseeker' });
+  res.json({ success: true, data: updated, pagination: null });
 });
 
 // Employer - Company profiles
@@ -84,7 +102,20 @@ router.post('/employer/companies/upload-logo', async (req, res) => {
   if (!profile) {
     return res.status(404).json({ error: 'Profile not found' });
   }
-  res.json({ success: true, data: profile, pagination: null });
+
+  const logoUrl = req.body?.logoUrl || req.body?.url || req.body?.companyLogoUrl?.url || (typeof req.body === 'string' && req.body.startsWith('data:image') ? req.body : null);
+  const logoObj = {
+    url: logoUrl || profile.companyLogoUrl?.url || 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=200',
+    publicId: req.body?.publicId || profile.companyLogoUrl?.publicId || `logo_${Date.now()}`
+  };
+
+  await collections.profiles.updateOne(
+    { userId: req.user.id, type: 'employer-company' },
+    { $set: { companyLogoUrl: logoObj, updatedAt: new Date().toISOString() } }
+  );
+
+  const updated = await collections.profiles.findOne({ userId: req.user.id, type: 'employer-company' });
+  res.json({ success: true, data: updated, pagination: null });
 });
 
 router.post('/employer/companies/upload-banner', async (req, res) => {
@@ -92,7 +123,20 @@ router.post('/employer/companies/upload-banner', async (req, res) => {
   if (!profile) {
     return res.status(404).json({ error: 'Profile not found' });
   }
-  res.json({ success: true, data: profile, pagination: null });
+
+  const bannerUrl = req.body?.bannerUrl || req.body?.url || req.body?.bannerImageUrl?.url || (typeof req.body === 'string' && req.body.startsWith('data:image') ? req.body : null);
+  const bannerObj = {
+    url: bannerUrl || profile.bannerImageUrl?.url || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800',
+    publicId: req.body?.publicId || profile.bannerImageUrl?.publicId || `banner_${Date.now()}`
+  };
+
+  await collections.profiles.updateOne(
+    { userId: req.user.id, type: 'employer-company' },
+    { $set: { bannerImageUrl: bannerObj, updatedAt: new Date().toISOString() } }
+  );
+
+  const updated = await collections.profiles.findOne({ userId: req.user.id, type: 'employer-company' });
+  res.json({ success: true, data: updated, pagination: null });
 });
 
 // Employer - Individual profiles
@@ -125,7 +169,25 @@ router.post('/employer/individuals/upload-avatar', async (req, res) => {
   if (!profile) {
     return res.status(404).json({ error: 'Profile not found' });
   }
-  res.json({ success: true, data: profile, pagination: null });
+
+  const avatarUrl = req.body?.avatarUrl || req.body?.avatar?.url || req.body?.avatar || req.body?.url || (typeof req.body === 'string' && req.body.startsWith('data:image') ? req.body : null);
+  const avatarObj = {
+    url: avatarUrl || profile.avatar?.url || 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=200',
+    publicId: req.body?.publicId || profile.avatar?.publicId || `avatar_${Date.now()}`
+  };
+
+  await collections.profiles.updateOne(
+    { userId: req.user.id, type: 'employer-individual' },
+    { $set: { avatar: avatarObj, updatedAt: new Date().toISOString() } }
+  );
+
+  await collections.users.updateOne(
+    { id: req.user.id },
+    { $set: { avatarUrl: avatarObj.url, avatar: avatarObj.url, updatedAt: new Date().toISOString() } }
+  );
+
+  const updated = await collections.profiles.findOne({ userId: req.user.id, type: 'employer-individual' });
+  res.json({ success: true, data: updated, pagination: null });
 });
 
 export default router;

@@ -2,7 +2,6 @@
 
 import {
   getProfileInitials,
-  ProfileAvatar,
   ProfileTopHeader,
 } from "./components/profile-settings-layout";
 import { JobseekerSidebar } from "./components/jobseeker-sidebar";
@@ -248,7 +247,15 @@ export function JobseekerProfilePage() {
     );
   }
 
-  const fullName = `${jobseekerProfile?.firstName} ${jobseekerProfile?.lastName}`;
+  const fullName = `${jobseekerProfile?.firstName || ""} ${jobseekerProfile?.lastName || ""}`.trim() || user?.fullName || "Abdi Abiot";
+
+  const avatarUrl =
+    jobseekerProfile?.avatar?.url ||
+    (jobseekerProfile?.avatar?.publicId && env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+      ? `https://res.cloudinary.com/${env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${jobseekerProfile.avatar.publicId}`
+      : null) ||
+    user?.avatarUrl ||
+    null;
 
   return (
     <main className="min-h-screen bg-[#f8f8fa] text-slate-950">
@@ -257,9 +264,8 @@ export function JobseekerProfilePage() {
 
         <section className="min-w-0 flex-1 overflow-y-auto pt-16 pb-20 md:pt-0 md:pb-0">
           <ProfileTopHeader
-            condition={!jobseekerProfile?.avatar?.publicId}
             initials={initials}
-            url={`https://res.cloudinary.com/${env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${jobseekerProfile?.avatar?.publicId}`}
+            url={avatarUrl || undefined}
           />
 
           <div className="mx-auto grid max-w-295 gap-6 px-4 py-6 sm:px-6 sm:py-9 lg:grid-cols-[240px_1fr]">
@@ -307,43 +313,43 @@ export function JobseekerProfilePage() {
             </aside>
 
             <section className="grid gap-6 xl:grid-cols-2">
-              <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                <div className="flex gap-5">
+              <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div className="flex gap-4 sm:gap-5 items-start">
                   <button
                     type="button"
                     onClick={() => openModal("profileImage")}
-                    className="relative group"
+                    className="relative group shrink-0 focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded-2xl"
+                    title="Click to change profile photo"
                   >
-                    {jobseekerProfile?.avatar?.publicId ? (
-                      <Image
-                        src={`https://res.cloudinary.com/${env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${jobseekerProfile.avatar.publicId}`}
-                        alt="Profile Avatar"
-                        width={100}
-                        height={100}
-                        style={{
-                          borderRadius: 20,
-                          height: "auto",
-                          width: "auto",
-                        }}
-                      />
-                    ) : (
-                      <ProfileAvatar />
-                    )}
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-slate-900 border-2 border-slate-200 shadow-sm flex items-center justify-center relative">
+                      {avatarUrl ? (
+                        <Image
+                          src={avatarUrl}
+                          alt="Profile Avatar"
+                          fill
+                          unoptimized
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-emerald-800 to-slate-950 text-amber-200 font-black text-2xl sm:text-3xl flex items-center justify-center">
+                          {initials || "W"}
+                        </div>
+                      )}
+                    </div>
 
-                    <div className="absolute inset-0 flex items-end justify-end pr-1 pb-1">
-                      <div className="p-2 bg-emerald-500 rounded-full text-white opacity-0 group-hover:opacity-100 transition cursor-pointer">
-                        <EditIcon className="h-3 w-3" />
-                      </div>
+                    <div className="absolute -bottom-1 -right-1 p-1.5 bg-emerald-600 group-hover:bg-emerald-500 text-white rounded-xl shadow-md border-2 border-white transition transform group-hover:scale-110 flex items-center justify-center cursor-pointer">
+                      <EditIcon className="h-3.5 w-3.5" />
                     </div>
                   </button>
+
                   <div className="min-w-0 flex-1">
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <h2 className="text-xl font-normal leading-tight text-slate-950">
-                          {fullName ?? "Abdi Abiot"}
+                        <h2 className="text-xl font-bold leading-tight text-slate-950">
+                          {fullName}
                         </h2>
-                        <p className="text-sm font-semibold text-teal-600">
-                          {jobseekerProfile?.bio ?? "Full Stack developer"}
+                        <p className="text-sm font-semibold text-teal-600 mt-0.5">
+                          {jobseekerProfile?.bio ?? "Full Stack Engineer & Trades Professional"}
                         </p>
                       </div>
                       <button
@@ -601,8 +607,28 @@ export function JobseekerProfilePage() {
       <EditProfileImageModal
         isOpen={modals.profileImage}
         onClose={() => closeModal("profileImage")}
-        onSave={async (file) => {
-          await api.profiles.jobseeker.uploadAvatar(file);
+        currentImage={avatarUrl}
+        initials={initials}
+        onSave={async (_file, dataUrl) => {
+          try {
+            await api.client.request("/accounts/jobseekers/upload-avatar", {
+              method: "POST",
+              body: { avatarUrl: dataUrl },
+            });
+          } catch (e) {
+            console.error("Avatar upload fallback error:", e);
+          }
+          await refreshProfile();
+        }}
+        onRemove={async () => {
+          try {
+            await api.client.request("/accounts/jobseekers/upload-avatar", {
+              method: "POST",
+              body: { avatarUrl: "" },
+            });
+          } catch (e) {
+            console.error("Avatar remove fallback error:", e);
+          }
           await refreshProfile();
         }}
       />

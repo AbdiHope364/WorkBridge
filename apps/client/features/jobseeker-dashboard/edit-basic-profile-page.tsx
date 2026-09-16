@@ -136,21 +136,21 @@ export function EditBasicProfilePage() {
             >
               <div className="flex flex-col items-center">
                 <div className="relative">
-                  <ProfileAvatar size="sm" />
-                  <button
-                    type="button"
+                  <ProfileAvatar size="md" initials={initials} src={user?.avatarUrl} />
+                  <Link
+                    href="/dashboard/profile"
                     aria-label="Change profile photo"
-                    className="absolute -bottom-1 -right-1 grid h-6 w-6 place-items-center rounded-full border-2 border-white bg-emerald-500 text-white"
+                    className="absolute -bottom-1 -right-1 grid h-7 w-7 place-items-center rounded-full border-2 border-white bg-emerald-500 text-white shadow-sm hover:bg-emerald-600 transition"
                   >
                     <CameraIcon />
-                  </button>
+                  </Link>
                 </div>
-                <button
-                  type="button"
-                  className="mt-2 text-xs font-medium text-slate-950 hover:text-emerald-600"
+                <Link
+                  href="/dashboard/profile"
+                  className="mt-2 text-xs font-semibold text-slate-700 hover:text-emerald-600 transition"
                 >
-                  View or Edit
-                </button>
+                  Change Profile Photo
+                </Link>
               </div>
 
               <div className="mt-2">

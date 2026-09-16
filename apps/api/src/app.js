@@ -22,7 +22,8 @@ const app = express();
 
 app.use(cors({ origin: true }));
 app.use(morgan('dev'));
-app.use(express.json());
+app.use(express.json({ limit: '25mb' }));
+app.use(express.urlencoded({ limit: '25mb', extended: true }));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobsRoutes);
@@ -35,6 +36,7 @@ app.use('/api/landing', landingRoutes);
 app.use('/api/support', supportRoutes);
 app.use('/api/notifications', notificationsRoutes);
 app.use('/api/accounts', accountsRoutes);
+app.use('/api/profiles', accountsRoutes);
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/subscriptions', subscriptionsRoutes);
 
