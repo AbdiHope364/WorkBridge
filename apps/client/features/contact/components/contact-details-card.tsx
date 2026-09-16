@@ -9,17 +9,17 @@ const details = [
   },
   {
     title: "Mobile",
-    body: ["+251 900 000000", "+251 900 000000"],
+    body: ["+251 909 911 111", "+251 911 223 344"],
     icon: "phone",
   },
   {
     title: "Availability",
-    body: ["Monday - Friday", "8:00 am - 5:00 PM"],
+    body: ["Monday - Friday", "8:00 AM - 5:00 PM"],
     icon: "clock",
   },
   {
     title: "Email",
-    body: ["workbridge@mail.com"],
+    body: ["support@workbridge.et", "info@workbridge.et"],
     icon: "mail",
   },
 ];
@@ -92,8 +92,8 @@ export function ContactDetailsCard() {
               <h3 className="text-sm font-black text-slate-950">
                 {item.title}
               </h3>
-              {item.body.map((line) => (
-                <p key={line} className="text-xs leading-5 text-slate-800">
+              {item.body.map((line, idx) => (
+                <p key={`${item.title}-${idx}`} className="text-xs leading-5 text-slate-800">
                   {line}
                 </p>
               ))}
