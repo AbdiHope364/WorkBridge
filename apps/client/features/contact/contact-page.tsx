@@ -1,6 +1,6 @@
 import { Container } from "@repo/ui/container";
-import { LandingFooter } from "../landing-page/components/landing-footer";
-import { LandingHeader } from "../landing-page/components/landing-header";
+import { LandingFooter } from "../landing/components/landing-footer";
+import { LandingHeader } from "../landing/components/landing-header";
 import { ContactDetailsCard } from "./components/contact-details-card";
 import { ContactFaqSection } from "./components/contact-faq-section";
 import { ContactFormCard } from "./components/contact-form-card";

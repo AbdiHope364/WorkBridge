@@ -81,10 +81,10 @@ export function JobsPage() {
 
   return (
     <main className="min-h-screen max-w-full bg-slate-50 text-slate-900">
-      <section className="bg-slate-50 py-10">
-        <Container size="xl" className="max-w-6xl">
-          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 items-end">
+      <section className="bg-slate-50 py-6 md:py-10">
+        <Container size="xl" className="max-w-6xl px-4 sm:px-6">
+          <div className="rounded-2xl md:rounded-3xl border border-slate-200 bg-white p-4 sm:p-6 md:p-8 shadow-sm">
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4 items-end">
               <Input
                 label="Search"
                 placeholder="Job title or keywords..."
@@ -133,14 +133,14 @@ export function JobsPage() {
             </div>
 
             {/* --- QUICK TAG BAR --- */}
-            <div className="mt-8 flex flex-wrap items-center gap-2 pt-6 border-t border-slate-50">
-              <span className="text-[10px] font-black uppercase text-slate-400 mr-2">
+            <div className="mt-6 sm:mt-8 flex items-center gap-2 pt-4 sm:pt-6 border-t border-slate-100 overflow-x-auto pb-2 no-scrollbar">
+              <span className="text-[10px] font-black uppercase text-slate-400 shrink-0 mr-1">
                 Quick Filter:
               </span>
               <button
                 type="button"
                 onClick={() => onFilterChange(setActiveTag, "All")}
-                className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${
+                className={`shrink-0 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs font-bold transition-all ${
                   activeTag === "All"
                     ? "bg-slate-900 text-white"
                     : "bg-slate-100 text-slate-500 hover:bg-slate-200"
@@ -153,7 +153,7 @@ export function JobsPage() {
                   key={type}
                   type="button"
                   onClick={() => onFilterChange(setActiveTag, type)}
-                  className={`px-5 py-2 rounded-full text-xs font-bold transition-all border ${
+                  className={`shrink-0 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs font-bold transition-all border ${
                     activeTag === type
                       ? "bg-teal-600 border-teal-600 text-white shadow-md"
                       : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
@@ -165,7 +165,7 @@ export function JobsPage() {
             </div>
           </div>
 
-          <div className="mt-10 border-y border-slate-200 bg-white px-8 py-5 flex justify-between items-center rounded-xl">
+          <div className="mt-6 sm:mt-10 border-y border-slate-200 bg-white px-4 py-3 sm:px-8 sm:py-5 flex flex-col sm:flex-row justify-between items-center gap-2 rounded-xl">
             <p className="text-sm font-bold text-slate-900 tracking-tight">
               {isLoading
                 ? "Loading information..."

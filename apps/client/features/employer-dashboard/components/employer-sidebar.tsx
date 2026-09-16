@@ -169,6 +169,14 @@ const navigationItems = [
   },
 ];
 
+const mobileBottomNavItems = [
+  { label: "Overview", href: "/dashboard/employer", icon: Icons.Home },
+  { label: "My Jobs", href: "/dashboard/employer/my-jobs", icon: Icons.Jobs },
+  { label: "Applicants", href: "/dashboard/employer/applications", icon: Icons.Users },
+  { label: "Messages", href: "/dashboard/employer/messages", icon: Icons.Chat },
+  { label: "Profile", href: "/dashboard/employer/profile", icon: Icons.Profile },
+];
+
 export function EmployerSidebar() {
   const { logout } = useAuth();
   const pathname = usePathname();
@@ -193,14 +201,20 @@ export function EmployerSidebar() {
 
   return (
     <>
-      {/* --- Mobile Top Nav (Visible only on small screens) --- */}
-      <div className="fixed top-0 left-0 right-0 z-40 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6 md:hidden">
-        <Link href="/" className="text-lg font-black text-[#172653]">
-          WorkBridge
+      {/* --- Mobile Top Nav (Sticky on phones, hidden on desktop) --- */}
+      <div className="fixed top-0 left-0 right-0 z-40 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 backdrop-blur-md px-4 sm:px-6 md:hidden shadow-xs">
+        <Link href="/dashboard/employer" className="text-lg font-black text-[#172653] tracking-tight flex items-center gap-2">
+          <span className="w-7 h-7 rounded-lg bg-teal-600 text-white flex items-center justify-center font-black text-sm shadow-xs">
+            W
+          </span>
+          <span>
+            Work<span className="text-teal-600">bridge</span>
+          </span>
         </Link>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 transition-all"
+          className="rounded-xl p-2 text-slate-700 hover:bg-slate-100 active:scale-95 transition-all"
+          aria-label={isOpen ? "Close menu" : "Open menu"}
         >
           {isOpen ? (
             <Icons.XClose className="h-6 w-6" />
@@ -213,72 +227,106 @@ export function EmployerSidebar() {
       {/* --- Mobile Backdrop Overlay --- */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-xs md:hidden animate-fade-in"
           onClick={() => setIsOpen(false)}
         />
       )}
 
-      {/* --- Sidebar Container --- */}
+      {/* --- Mobile Sliding Off-Canvas Drawer --- */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-[#172653] text-white transition-transform duration-300 ease-in-out md:sticky md:top-0 md:h-screen md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-[#172653] text-white shadow-2xl transition-transform duration-300 ease-out md:sticky md:top-0 md:h-screen md:w-64 md:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Brand Header */}
-        <div className="flex h-20 shrink-0 items-center px-8 border-b border-white/5">
-          <Link href="/" className="flex items-center gap-3">
+        <div className="flex h-20 shrink-0 items-center justify-between px-6 border-b border-white/10">
+          <Link href="/dashboard/employer" className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-500 shadow-lg shadow-teal-500/20">
               <span className="text-xl font-black">W</span>
             </div>
-            <span className="text-xl font-black tracking-tight tracking-wide">
-              WorkBridge
-            </span>
+            <div className="flex flex-col">
+              <span className="text-lg font-black tracking-tight">WorkBridge</span>
+              <span className="text-[10px] text-teal-400 font-bold uppercase tracking-widest">Employer Hub</span>
+            </div>
           </Link>
+          <button
+            onClick={() => setIsOpen(false)}
+            className="md:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10"
+          >
+            <Icons.XClose className="h-5 w-5" />
+          </button>
         </div>
 
-        {/* Navigation - Uses flex-1 and overflow-y-auto for internal scrolling if content is long */}
-        <nav className="flex-1 overflow-y-auto px-4 py-6 scrollbar-hide">
-          <div className="space-y-1">
-            {navigationItems.map((item) => {
-              const Icon = item.icon;
-              const isActive =
-                item.href === "/dashboard/employer"
-                  ? pathname === item.href
-                  : pathname.startsWith(item.href);
+        {/* Navigation List */}
+        <nav className="flex-1 overflow-y-auto px-4 py-6 scrollbar-hide space-y-1">
+          {navigationItems.map((item) => {
+            const Icon = item.icon;
+            const isActive =
+              item.href === "/dashboard/employer"
+                ? pathname === item.href
+                : pathname.startsWith(item.href);
 
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold transition-all ${
-                    isActive
-                      ? "bg-teal-500 text-white shadow-lg shadow-teal-500/20"
-                      : "text-slate-400 hover:bg-white/5 hover:text-white"
-                  }`}
-                >
-                  <Icon
-                    className={`h-5 w-5 ${isActive ? "text-white" : "text-slate-400"}`}
-                  />
-                  {item.label}
-                </Link>
-              );
-            })}
-          </div>
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setIsOpen(false)}
+                className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition-all ${
+                  isActive
+                    ? "bg-teal-500 text-white shadow-lg shadow-teal-500/20"
+                    : "text-slate-300 hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                <Icon
+                  className={`h-5 w-5 ${isActive ? "text-white" : "text-slate-400"}`}
+                />
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Footer / Logout */}
-        <div className="mt-auto border-t border-white/5 p-4 shrink-0">
+        <div className="mt-auto border-t border-white/10 p-4 shrink-0">
           <button
             type="button"
             onClick={handleLogout}
             disabled={isLoggingOut}
-            className="flex w-full items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-400 transition-all hover:bg-red-500/10 hover:text-red-400 disabled:opacity-50"
+            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-slate-300 transition-all hover:bg-red-500/20 hover:text-red-400 disabled:opacity-50"
           >
             <Icons.Logout className="h-5 w-5" />
             {isLoggingOut ? "Signing out..." : "Sign Out"}
           </button>
         </div>
       </aside>
+
+      {/* --- Mobile Bottom Navigation Bar --- */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around bg-white/95 backdrop-blur-md border-t border-slate-200 py-1 px-1 md:hidden shadow-lg safe-area-bottom">
+        {mobileBottomNavItems.map((tab) => {
+          const isItemActive =
+            tab.href === "/dashboard/employer"
+              ? pathname === tab.href
+              : pathname.startsWith(tab.href);
+          const Icon = tab.icon;
+          return (
+            <Link
+              key={tab.href}
+              href={tab.href}
+              className={`flex flex-col items-center justify-center flex-1 py-1.5 px-1 rounded-xl text-[10px] font-bold transition-all ${
+                isItemActive
+                  ? "text-teal-600"
+                  : "text-slate-500 hover:text-slate-900"
+              }`}
+            >
+              <Icon className={`w-5 h-5 ${isItemActive ? "text-teal-600" : "text-slate-400"}`} />
+              <span className="mt-0.5 truncate">{tab.label}</span>
+              {isItemActive && (
+                <span className="w-4 h-0.5 rounded-full bg-teal-600 mt-0.5" />
+              )}
+            </Link>
+          );
+        })}
+      </nav>
     </>
   );
 }

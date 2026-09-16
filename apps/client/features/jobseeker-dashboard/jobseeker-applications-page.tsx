@@ -193,37 +193,30 @@ export function JobseekerApplicationsPage() {
     );
 
   return (
-    <main className="h-screen flex overflow-hidden bg-[#F8FAFC]">
-      {/* FIXED SIDEBAR */}
-      <div className="hidden md:block w-64 h-full shrink-0 border-r border-slate-200">
-        <JobseekerSidebar />
-      </div>
+    <main className="min-h-screen flex flex-col md:flex-row bg-[#F8FAFC]">
+      <JobseekerSidebar />
 
-      <div className="md:hidden">
-        <JobseekerSidebar />
-      </div>
-
-      <section className="flex-1 h-full overflow-y-auto p-4 sm:p-8 md:p-12 min-w-0 scroll-smooth">
+      <section className="flex-1 min-w-0 overflow-y-auto pt-16 pb-20 md:pt-0 md:pb-0 p-4 sm:p-6 md:p-10 w-full">
         <div className="max-w-5xl mx-auto">
-          <header className="mb-8 pt-16 md:pt-0">
-            <h1 className="text-4xl font-light text-[#0F132E] tracking-tight">
+          <header className="mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-4xl font-black text-[#0F132E] tracking-tight">
               My Applications
             </h1>
-            <p className="text-slate-500 text-base mt-2 font-medium">
+            <p className="text-slate-500 text-xs sm:text-base mt-1 sm:mt-2 font-medium">
               Manage and track your active job journey.
             </p>
           </header>
 
-          <div className="w-full mb-8">
-            <div className="bg-white border border-slate-200 p-1 rounded-2xl flex gap-1 overflow-x-auto no-scrollbar shadow-sm">
+          <div className="w-full mb-6 sm:mb-8">
+            <div className="bg-white border border-slate-200 p-1.5 rounded-2xl flex gap-1 overflow-x-auto no-scrollbar shadow-xs">
               {tabs.map((t) => (
                 <button
                   key={t.value}
                   onClick={() => setActiveTab(t.value)}
-                  className={`whitespace-nowrap px-6 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                  className={`whitespace-nowrap px-4 sm:px-6 py-2 rounded-xl text-xs font-bold transition-all ${
                     activeTab === t.value
-                      ? "bg-[#0F132E] text-white shadow-md"
-                      : "text-slate-400 hover:text-[#0F132E]"
+                      ? "bg-[#0F132E] text-white shadow-xs"
+                      : "text-slate-500 hover:text-[#0F132E] hover:bg-slate-50"
                   }`}
                 >
                   {t.label}
@@ -232,9 +225,9 @@ export function JobseekerApplicationsPage() {
             </div>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 pb-12">
             {filtered.length === 0 ? (
-              <div className="bg-white py-24 text-center rounded-3xl border-2 border-dashed border-slate-200 shadow-inner text-slate-400 font-medium">
+              <div className="bg-white py-16 text-center rounded-3xl border-2 border-dashed border-slate-200 text-slate-400 font-medium px-4">
                 No applications found for this filter.
               </div>
             ) : (

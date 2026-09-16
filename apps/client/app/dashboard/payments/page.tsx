@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { useAuth } from "@/contexts/auth-context";
 import { api } from "@/lib/api";
 import { Button, Input } from "@repo/ui";
+import { JobseekerSidebar } from "@/features/jobseeker-dashboard/components/jobseeker-sidebar";
 
 interface PaymentItem {
   id: string;
@@ -307,98 +308,102 @@ export default function PaymentsPage() {
   }, [payments, searchQuery, statusFilter]);
 
   return (
-    <div className="min-h-screen bg-slate-50/50 py-10 px-4 sm:px-8">
-      <div className="mx-auto max-w-7xl space-y-8">
-        {/* Header */}
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h1 className="text-3xl font-black text-slate-950 tracking-tight">
-              Payments, Escrow & Wallet
-            </h1>
-            <p className="mt-1 text-sm text-slate-600">
-              Manage your Telebirr, CBE Birr, Chapa escrow settlements, and service payouts securely.
-            </p>
+    <div className="flex min-h-screen bg-[#f8f8fa] text-slate-950 flex-col md:flex-row">
+      {/* Common Sidebar with Mobile Top and Bottom Nav */}
+      <JobseekerSidebar />
+
+      <main className="flex-1 min-w-0 overflow-y-auto pt-16 pb-20 md:pt-0 md:pb-0 p-4 sm:p-6 md:p-10">
+        <div className="mx-auto max-w-7xl space-y-6 sm:space-y-8">
+          {/* Header */}
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
+                Payments, Escrow & Wallet
+              </h1>
+              <p className="mt-1 text-xs sm:text-sm text-slate-600">
+                Manage your Telebirr, CBE Birr, Chapa escrow settlements, and service payouts securely.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <Button
+                onClick={() => setIsDepositModalOpen(true)}
+                className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-xs"
+              >
+                + Deposit Funds
+              </Button>
+            </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Button
-              onClick={() => setIsDepositModalOpen(true)}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-sm"
+          {/* Interactive Stats Cards */}
+          <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-3">
+            <div className="rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-xs">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Available Wallet</span>
+                <span className="rounded-full bg-emerald-100 p-2 text-emerald-700 text-xs">💰</span>
+              </div>
+              <p className="mt-3 text-2xl sm:text-3xl font-black text-slate-950">
+                {walletStats.availableBalance.toLocaleString()} <span className="text-base font-bold text-slate-500">ETB</span>
+              </p>
+              <p className="mt-1 text-xs text-emerald-600 font-semibold">✓ Ready for instant worker booking</p>
+            </div>
+
+            <div className="rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-xs">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Funds Held in Escrow</span>
+                <span className="rounded-full bg-amber-100 p-2 text-amber-700 text-xs">🛡️</span>
+              </div>
+              <p className="mt-3 text-2xl sm:text-3xl font-black text-amber-700">
+                {walletStats.inEscrow.toLocaleString()} <span className="text-base font-bold text-amber-500">ETB</span>
+              </p>
+              <p className="mt-1 text-xs text-slate-500 font-medium">Locked safely until job completion</p>
+            </div>
+
+            <div className="rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-xs">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Total Processed</span>
+                <span className="rounded-full bg-purple-100 p-2 text-purple-700 text-xs">📈</span>
+              </div>
+              <p className="mt-3 text-2xl sm:text-3xl font-black text-slate-950">
+                {walletStats.totalDeposited.toLocaleString()} <span className="text-base font-bold text-slate-500">ETB</span>
+              </p>
+              <p className="mt-1 text-xs text-slate-500 font-medium">100% Ethiopian gateway verified</p>
+            </div>
+          </div>
+
+          {/* Tabs Navigation - Horizontally Scrollable on Phones */}
+          <div className="flex border-b border-slate-200 overflow-x-auto no-scrollbar gap-1">
+            <button
+              onClick={() => setActiveTab("history")}
+              className={`pb-3.5 px-4 sm:px-6 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition ${
+                activeTab === "history"
+                  ? "border-emerald-600 text-emerald-700"
+                  : "border-transparent text-slate-500 hover:text-slate-900"
+              }`}
             >
-              + Deposit Funds
-            </Button>
+              📜 Transaction History ({payments.length})
+            </button>
+            <button
+              onClick={() => setActiveTab("escrow")}
+              className={`pb-3.5 px-4 sm:px-6 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition ${
+                activeTab === "escrow"
+                  ? "border-emerald-600 text-emerald-700"
+                  : "border-transparent text-slate-500 hover:text-slate-900"
+              }`}
+            >
+              🛡️ Escrow Settlements ({bookings.length})
+            </button>
+            <button
+              onClick={() => setActiveTab("subscriptions")}
+              className={`pb-3.5 px-4 sm:px-6 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition ${
+                activeTab === "subscriptions"
+                  ? "border-emerald-600 text-emerald-700"
+                  : "border-transparent text-slate-500 hover:text-slate-900"
+              }`}
+            >
+              ⭐ Subscription Plans
+            </button>
           </div>
-        </div>
-
-        {/* Interactive Stats Cards */}
-        <div className="grid gap-5 sm:grid-cols-3">
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Available Wallet</span>
-              <span className="rounded-full bg-emerald-100 p-2 text-emerald-700 text-xs">💰</span>
-            </div>
-            <p className="mt-3 text-3xl font-black text-slate-950">
-              {walletStats.availableBalance.toLocaleString()} <span className="text-base font-bold text-slate-500">ETB</span>
-            </p>
-            <p className="mt-1 text-xs text-emerald-600 font-semibold">✓ Ready for instant worker booking</p>
-          </div>
-
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Funds Held in Escrow</span>
-              <span className="rounded-full bg-amber-100 p-2 text-amber-700 text-xs">🛡️</span>
-            </div>
-            <p className="mt-3 text-3xl font-black text-amber-700">
-              {walletStats.inEscrow.toLocaleString()} <span className="text-base font-bold text-amber-500">ETB</span>
-            </p>
-            <p className="mt-1 text-xs text-slate-500 font-medium">Locked safely until job completion</p>
-          </div>
-
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Total Processed</span>
-              <span className="rounded-full bg-purple-100 p-2 text-purple-700 text-xs">📈</span>
-            </div>
-            <p className="mt-3 text-3xl font-black text-slate-950">
-              {walletStats.totalDeposited.toLocaleString()} <span className="text-base font-bold text-slate-500">ETB</span>
-            </p>
-            <p className="mt-1 text-xs text-slate-500 font-medium">100% Ethiopian gateway verified</p>
-          </div>
-        </div>
-
-        {/* Tabs Navigation */}
-        <div className="flex border-b border-slate-200">
-          <button
-            onClick={() => setActiveTab("history")}
-            className={`pb-3.5 px-6 text-sm font-bold border-b-2 transition ${
-              activeTab === "history"
-                ? "border-emerald-600 text-emerald-700"
-                : "border-transparent text-slate-500 hover:text-slate-900"
-            }`}
-          >
-            📜 Transaction History ({payments.length})
-          </button>
-          <button
-            onClick={() => setActiveTab("escrow")}
-            className={`pb-3.5 px-6 text-sm font-bold border-b-2 transition ${
-              activeTab === "escrow"
-                ? "border-emerald-600 text-emerald-700"
-                : "border-transparent text-slate-500 hover:text-slate-900"
-            }`}
-          >
-            🛡️ Escrow Settlements ({bookings.length})
-          </button>
-          <button
-            onClick={() => setActiveTab("subscriptions")}
-            className={`pb-3.5 px-6 text-sm font-bold border-b-2 transition ${
-              activeTab === "subscriptions"
-                ? "border-emerald-600 text-emerald-700"
-                : "border-transparent text-slate-500 hover:text-slate-900"
-            }`}
-          >
-            ⭐ Subscription Plans
-          </button>
-        </div>
 
         {/* TAB 1: Transaction History */}
         {activeTab === "history" && (
@@ -438,8 +443,8 @@ export default function PaymentsPage() {
                 <p className="mt-1 text-xs text-slate-500">Try adjusting your filters or deposit funds into your wallet.</p>
               </div>
             ) : (
-              <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-                <table className="w-full text-left border-collapse">
+              <div className="overflow-x-auto rounded-3xl border border-slate-200 bg-white shadow-xs">
+                <table className="w-full min-w-[640px] text-left border-collapse">
                   <thead>
                     <tr className="border-b border-slate-100 bg-slate-50/70 text-xs font-bold uppercase tracking-wider text-slate-500">
                       <th className="py-4 px-6">Transaction</th>
@@ -811,7 +816,8 @@ export default function PaymentsPage() {
             </div>
           </div>
         )}
-      </div>
+        </div>
+      </main>
     </div>
   );
 }

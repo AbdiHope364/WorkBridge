@@ -581,17 +581,17 @@ export function EmployerEditJobPage() {
           </div>
         </section>
 
-        <div className="flex items-center justify-between gap-6 pt-10 border-t border-slate-200">
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-6 sm:pt-10 border-t border-slate-200">
           <Link
             href="/dashboard/employer/my-jobs"
-            className="text-sm font-bold text-slate-500 hover:text-slate-800 transition-colors flex items-center gap-2"
+            className="inline-flex items-center justify-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-800 transition-colors py-2"
           >
             <BackIcon className="h-4 w-4" /> Cancel Changes
           </Link>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="h-12 px-10 rounded-xl bg-teal-600 text-sm font-bold text-white hover:bg-teal-700 shadow-xl shadow-teal-600/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            className="h-12 px-8 sm:px-10 rounded-xl bg-teal-600 text-sm font-bold text-white hover:bg-teal-700 shadow-xl shadow-teal-600/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {isSubmitting ? "Updating..." : "Save Changes"}
             <SendIcon className="h-4 w-4" />

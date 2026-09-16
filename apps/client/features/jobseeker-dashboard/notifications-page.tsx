@@ -50,16 +50,26 @@ function NotificationCard({
   notification: JobseekerNotification;
 }) {
   return (
-    <article className="relative grid min-h-24 grid-cols-[36px_1fr_auto] items-start gap-4 rounded-md bg-slate-200/80 px-6 py-4">
-      <div className="absolute left-0 top-0 h-full w-1 rounded-l-md bg-teal-500" />
-      {notification.icon === "message" ? (
-        <NotificationAvatar />
-      ) : (
-        <NotificationIcon icon={notification.icon} />
-      )}
+    <article className="relative flex flex-col sm:grid sm:grid-cols-[36px_1fr_auto] items-start gap-3 sm:gap-4 rounded-xl border border-slate-200/80 bg-white p-4 sm:px-6 sm:py-4 shadow-sm">
+      <div className="absolute left-0 top-0 h-full w-1 rounded-l-xl bg-teal-500" />
+      <div className="flex items-center gap-3 sm:block">
+        {notification.icon === "message" ? (
+          <NotificationAvatar />
+        ) : (
+          <NotificationIcon icon={notification.icon} />
+        )}
+        <div className="flex flex-1 items-center justify-between sm:hidden">
+          <span className="text-[10px] font-medium text-neutral-500">
+            {notification.timeLabel}
+          </span>
+          {notification.isUnread ? (
+            <span className="h-2.5 w-2.5 rounded-full bg-blue-600" />
+          ) : null}
+        </div>
+      </div>
 
-      <div className="min-w-0 border-l border-slate-300 pl-4">
-        <h2 className="text-sm font-black leading-tight text-slate-950">
+      <div className="min-w-0 sm:border-l sm:border-slate-200 sm:pl-4">
+        <h2 className="text-sm font-bold leading-tight text-slate-950">
           {notification.title}
         </h2>
         <p className="mt-1 max-w-[760px] text-xs leading-5 text-neutral-600">
@@ -67,13 +77,13 @@ function NotificationCard({
         </p>
         <Link
           href={notification.href}
-          className="mt-3 inline-flex text-xs font-semibold text-teal-600 hover:text-teal-700"
+          className="mt-2 inline-flex text-xs font-semibold text-teal-600 hover:text-teal-700"
         >
-          View Detail
+          View Detail →
         </Link>
       </div>
 
-      <div className="flex h-full min-w-20 flex-col items-end justify-between gap-5">
+      <div className="hidden sm:flex h-full min-w-20 flex-col items-end justify-between gap-5">
         <span className="text-[10px] font-medium text-neutral-500">
           {notification.timeLabel}
         </span>
@@ -88,20 +98,8 @@ function NotificationCard({
 export function NotificationsPage() {
   const { isLoading, isAuthenticated } = useAuth();
 
-  // const user = {
-  //   fullName: "Mock User",
-  // };
-
-  // const isLoading = false;
-  // const isAuthenticated = true;
   const [activeTab, setActiveTab] = useState<NotificationTab>("all");
   const [notifications, setNotifications] = useState(jobseekerNotifications);
-
-  // useEffect(() => {
-  //   if (!isLoading && !isAuthenticated) {
-  //     router.replace("/login?next=/dashboard/notifications");
-  //   }
-  // }, [isAuthenticated, isLoading, router]);
 
   const filteredNotifications = useMemo(() => {
     if (activeTab === "all") {
@@ -139,29 +137,29 @@ export function NotificationsPage() {
       <div className="flex min-h-screen flex-col md:flex-row">
         <JobseekerSidebar />
 
-        <section className="min-w-0 flex-1 px-6 py-5 md:px-9">
+        <section className="min-w-0 flex-1 overflow-y-auto px-4 py-6 sm:px-6 md:px-9 pt-16 pb-20 md:pt-8 md:pb-8">
           <div className="max-w-[1040px]">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <h1 className="text-4xl font-normal leading-tight tracking-normal text-black">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight text-slate-950">
                   Notification Center
                 </h1>
-                <p className="text-base text-neutral-500">
-                  Track and manage your job application.
+                <p className="mt-1 text-xs sm:text-sm text-neutral-500">
+                  Track and manage your job application updates and messages.
                 </p>
               </div>
 
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 self-start border-slate-200 px-5 text-sm font-medium text-neutral-600 shadow-sm hover:bg-slate-50 sm:self-auto"
+                className="h-9 self-start rounded-xl border-slate-200 px-4 text-xs font-semibold text-neutral-700 shadow-sm hover:bg-slate-50 sm:self-auto"
                 onClick={markAllAsRead}
               >
                 Mark all as read
               </Button>
             </div>
 
-            <div className="mt-6 inline-grid grid-cols-5 rounded-md border border-slate-200 bg-white p-0.5">
+            <div className="mt-6 flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar rounded-xl border border-slate-200 bg-white p-1.5 shadow-sm">
               {notificationTabs.map((tab) => {
                 const isActive = activeTab === tab.value;
 
@@ -170,10 +168,10 @@ export function NotificationsPage() {
                     key={tab.value}
                     type="button"
                     className={
-                      `h-7 min-w-24 rounded px-3 text-sm transition ` +
+                      `shrink-0 rounded-lg px-3.5 py-1.5 text-xs font-semibold transition ` +
                       (isActive
-                        ? "bg-white text-emerald-600 shadow-sm"
-                        : "text-neutral-500 hover:text-slate-950")
+                        ? "bg-emerald-600 text-white shadow-sm"
+                        : "text-slate-600 hover:text-slate-950 hover:bg-slate-50")
                     }
                     onClick={() => setActiveTab(tab.value)}
                   >
@@ -183,7 +181,7 @@ export function NotificationsPage() {
               })}
             </div>
 
-            <div className="mt-6 space-y-6">
+            <div className="mt-6 space-y-3 sm:space-y-4">
               {filteredNotifications.length > 0 ? (
                 filteredNotifications.map((notification) => (
                   <NotificationCard

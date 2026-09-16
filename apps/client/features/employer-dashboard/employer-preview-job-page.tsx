@@ -496,36 +496,36 @@ export function EmployerPreviewJobPage() {
 
           <PreviewField className="lg:col-span-2">
             <p className="text-base font-medium text-black">Description</p>
-            <div className="mt-3 px-8 text-xs leading-tight text-[#777] whitespace-pre-wrap">
+            <div className="mt-3 px-2 sm:px-8 text-xs leading-relaxed text-[#777] whitespace-pre-wrap">
               {job.description || "No description provided"}
             </div>
           </PreviewField>
         </div>
 
-        <div className="mt-4 grid gap-4">
+        <div className="mt-6 grid gap-3 sm:gap-4">
           <button
             onClick={handlePostJob}
             disabled={isSubmitting}
-            className="inline-flex h-8 items-center justify-center gap-2 rounded bg-[#00aaa8] text-lg font-semibold text-white hover:bg-[#009999] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#00aaa8] text-sm sm:text-base font-semibold text-white hover:bg-[#009999] disabled:opacity-50 disabled:cursor-not-allowed transition shadow-sm"
           >
             {isSubmitting ? "Posting..." : "Post Job"}
             <SendIcon className="h-4 w-4" />
           </button>
 
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             <button
               onClick={() => {
                 router.push("/dashboard/employer/create");
               }}
               disabled={isSubmitting}
-              className="grid h-8 place-items-center border border-[#00aaa8] bg-white text-base font-medium text-black hover:bg-gray-50"
+              className="grid h-10 place-items-center rounded-xl border border-[#00aaa8] bg-white text-xs sm:text-sm font-medium text-black hover:bg-gray-50 transition"
             >
               Edit Again
             </button>
             <button
               onClick={handleSaveDraft}
               disabled={isSubmitting}
-              className="h-8 border border-[#00aaa8] bg-white text-base font-medium text-[#00aaa8] hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="h-10 rounded-xl border border-[#00aaa8] bg-white text-xs sm:text-sm font-medium text-[#00aaa8] hover:bg-teal-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Saving..." : "Save as Draft"}
             </button>
@@ -533,10 +533,10 @@ export function EmployerPreviewJobPage() {
 
           <Link
             href="/dashboard/employer/create"
-            className="inline-flex items-center gap-2 text-xl font-normal text-black hover:text-gray-600"
+            className="inline-flex items-center justify-center gap-2 text-sm sm:text-base font-normal text-black hover:text-gray-600 py-2"
           >
-            <BackIcon className="h-5 w-5" />
-            Back
+            <BackIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+            Back to Editor
           </Link>
         </div>
       </div>

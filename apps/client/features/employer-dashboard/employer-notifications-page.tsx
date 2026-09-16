@@ -369,7 +369,7 @@ function Header() {
   const unread = unreadCount;
 
   return (
-    <header className="flex h-[62px] items-center justify-between border-b border-[#d9d9df] bg-white px-6 shadow-[0_2px_5px_rgba(15,23,42,0.14)] md:px-10">
+    <header className="hidden md:flex h-[62px] items-center justify-between border-b border-[#d9d9df] bg-white px-6 shadow-[0_2px_5px_rgba(15,23,42,0.14)] md:px-10">
       <Link
         href="/"
         aria-label="WorkBridge home"
@@ -450,10 +450,10 @@ export function EmployerNotificationsPage() {
       <div className="flex min-h-screen flex-col md:flex-row">
         <EmployerSidebar />
 
-        <section className="flex min-w-0 flex-1 flex-col">
+        <section className="flex min-w-0 flex-1 flex-col pt-16 pb-20 md:pt-0 md:pb-0 overflow-y-auto">
           <Header />
 
-          <div className="w-full px-2 pb-6 pt-6 md:px-9">
+          <div className="w-full px-4 sm:px-6 pb-6 pt-6 md:px-9">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <div className="flex items-center gap-2">

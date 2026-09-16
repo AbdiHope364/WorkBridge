@@ -42,20 +42,39 @@ function ConversationCard({
   return (
     <Link
       href={conversation.href}
-      className="grid min-h-24 grid-cols-[56px_1fr_auto] items-center gap-4 rounded-lg border border-slate-200 bg-white px-6 py-4 shadow-sm transition hover:border-teal-300 hover:shadow-md"
+      className="flex flex-col sm:grid sm:grid-cols-[56px_1fr_auto] items-start sm:items-center gap-3 sm:gap-4 rounded-xl border border-slate-200 bg-white p-4 sm:px-6 sm:py-4 shadow-sm transition hover:border-teal-300 hover:shadow-md"
     >
-      <Avatar />
+      <div className="flex items-center gap-3 w-full sm:w-auto">
+        <Avatar />
+        <div className="min-w-0 flex-1 sm:hidden">
+          <div className="flex items-center justify-between">
+            <h2 className="truncate text-sm font-bold text-slate-950">
+              {conversation.senderName}
+            </h2>
+            <span className="text-[10px] font-semibold text-teal-600">
+              {conversation.timeLabel}
+            </span>
+          </div>
+          <p className="truncate text-xs text-neutral-500">
+            {conversation.company}
+          </p>
+        </div>
+      </div>
 
-      <div className="min-w-0">
-        <h2 className="truncate text-lg font-black leading-tight text-slate-950">
+      <div className="hidden sm:block min-w-0">
+        <h2 className="truncate text-base font-black leading-tight text-slate-950">
           {conversation.senderName} . {conversation.company}
         </h2>
-        <p className="mt-2 max-w-[760px] text-sm leading-5 text-neutral-500">
+        <p className="mt-1 max-w-[760px] text-xs sm:text-sm leading-5 text-neutral-500 line-clamp-2">
           {conversation.preview}
         </p>
       </div>
 
-      <div className="flex h-full flex-col items-end justify-between gap-4">
+      <p className="sm:hidden text-xs text-neutral-500 line-clamp-2">
+        {conversation.preview}
+      </p>
+
+      <div className="hidden sm:flex h-full flex-col items-end justify-between gap-4">
         <span className="text-xs font-semibold text-teal-600">
           {conversation.timeLabel}
         </span>
@@ -119,18 +138,18 @@ export function MessagesPage() {
       <div className="flex min-h-screen flex-col md:flex-row">
         <JobseekerSidebar />
 
-        <section className="min-w-0 flex-1 px-6 py-5 md:px-8">
+        <section className="min-w-0 flex-1 overflow-y-auto px-4 py-6 sm:px-6 md:px-8 pt-16 pb-20 md:pt-8 md:pb-8">
           <div className="max-w-[1040px]">
             <div>
-              <h1 className="text-4xl font-normal leading-tight tracking-normal text-black">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight text-slate-950">
                 Messages
               </h1>
-              <p className="text-base text-neutral-500">
-                Track and manage messages.
+              <p className="mt-1 text-xs sm:text-sm text-neutral-500">
+                Track and manage direct employer conversations.
               </p>
             </div>
 
-            <label className="mt-6 flex h-14 max-w-[740px] items-center gap-4 rounded-lg border border-slate-300 bg-white px-6 text-teal-500 shadow-sm">
+            <label className="mt-6 flex h-12 sm:h-14 max-w-[740px] items-center gap-3 sm:gap-4 rounded-xl border border-slate-200 bg-white px-4 sm:px-6 text-teal-500 shadow-sm">
               <SearchIcon />
               <span className="sr-only">Search conversations</span>
               <input

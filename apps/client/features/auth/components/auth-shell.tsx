@@ -24,8 +24,8 @@ export function AuthShell({
   footerLinkHref,
 }: AuthShellProps) {
   return (
-    <main className="min-h-screen bg-slate-100 py-10 px-4 sm:py-16">
-      <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.15fr_0.9fr]">
+    <main className="min-h-screen bg-slate-100 py-6 sm:py-12 px-3 sm:px-6 flex items-center justify-center">
+      <div className="mx-auto grid max-w-6xl w-full gap-8 lg:grid-cols-[1.15fr_0.9fr] items-center">
         <section className="hidden overflow-hidden rounded-4xl border border-slate-200 bg-slate-950/5 p-10 text-white shadow-lg lg:block">
           <div className="space-y-8">
             <div className="rounded-3xl bg-emerald-700 p-8 shadow-inner shadow-slate-900/5">
@@ -62,20 +62,20 @@ export function AuthShell({
           </div>
         </section>
 
-        <section className="flex items-center justify-center">
-          <Card className="w-full max-w-xl p-8 shadow-xl">
-            <div className="space-y-6">
+        <section className="flex items-center justify-center w-full">
+          <Card className="w-full max-w-xl p-5 sm:p-8 shadow-xl rounded-2xl sm:rounded-3xl">
+            <div className="space-y-5 sm:space-y-6">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-emerald-600">
+                <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.24em] text-emerald-600">
                   {title}
                 </p>
-                <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950">
+                <h2 className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-black tracking-[-0.04em] text-slate-950">
                   {subtitle}
                 </h2>
               </div>
               <div>{children}</div>
               {footerText && footerLinkText && footerLinkHref ? (
-                <p className="text-sm text-slate-500">
+                <p className="text-xs sm:text-sm text-slate-500">
                   {footerText}{" "}
                   <Link
                     href={footerLinkHref}

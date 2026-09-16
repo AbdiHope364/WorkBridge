@@ -141,9 +141,9 @@ export function EmployerApplicationsPage() {
     <main className="min-h-screen bg-slate-50 text-slate-900">
       <div className="flex min-h-screen flex-col md:flex-row">
         <EmployerSidebar />
-        <section className="flex-1 flex flex-col min-w-0">
-          <div className="p-6 md:p-10 max-w-7xl mx-auto w-full">
-            <header className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
+        <section className="flex-1 flex flex-col min-w-0 pt-16 pb-20 md:pt-0 md:pb-0 overflow-y-auto">
+          <div className="p-4 sm:p-6 md:p-10 max-w-7xl mx-auto w-full">
+            <header className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 mb-6 sm:mb-10">
               <div className="min-w-0">
                 <div className="flex items-center gap-3 mb-2">
                   {jobId && (
@@ -154,11 +154,11 @@ export function EmployerApplicationsPage() {
                       <Icons.Back />
                     </Link>
                   )}
-                  <h1 className="text-3xl font-black tracking-tight text-slate-900 truncate">
+                  <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 truncate">
                     {pageTitle}
                   </h1>
                 </div>
-                <p className="text-slate-500 font-medium ml-1">
+                <p className="text-slate-500 font-medium text-xs sm:text-sm">
                   {jobId
                     ? "Showing candidates for this specific listing"
                     : "Review all incoming applications across your postings."}
@@ -169,7 +169,7 @@ export function EmployerApplicationsPage() {
                 <input
                   type="search"
                   placeholder="Search by candidate name..."
-                  className="w-full h-12 pl-12 pr-4 rounded-xl border border-slate-200 outline-none focus:border-teal-500 transition-all bg-white shadow-sm"
+                  className="w-full h-11 sm:h-12 pl-11 sm:pl-12 pr-4 rounded-xl border border-slate-200 outline-none focus:border-teal-500 transition-all bg-white shadow-sm text-sm"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -177,7 +177,7 @@ export function EmployerApplicationsPage() {
             </header>
 
             {/* Filter Tabs */}
-            <div className="flex p-1 bg-slate-200/50 rounded-xl w-fit mb-8 overflow-x-auto max-w-full">
+            <div className="flex p-1 bg-slate-200/50 rounded-xl w-full sm:w-fit mb-6 sm:mb-8 overflow-x-auto no-scrollbar">
               {[
                 "ALL",
                 STATUS.APPLIED,
@@ -189,7 +189,7 @@ export function EmployerApplicationsPage() {
                 <button
                   key={f}
                   onClick={() => setStatusFilter(f)}
-                  className={`px-6 py-2.5 rounded-lg text-xs font-black uppercase transition-all whitespace-nowrap ${
+                  className={`shrink-0 px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg text-xs font-black uppercase transition-all whitespace-nowrap ${
                     statusFilter === f
                       ? "bg-white text-slate-900 shadow-sm"
                       : "text-slate-500 hover:text-slate-800"
@@ -202,27 +202,27 @@ export function EmployerApplicationsPage() {
 
             <div className="space-y-4">
               {loading ? (
-                <div className="py-20 text-center animate-pulse font-bold text-slate-400 uppercase tracking-widest">
+                <div className="py-20 text-center animate-pulse font-bold text-slate-400 uppercase tracking-widest text-xs sm:text-sm">
                   Loading Pipeline...
                 </div>
               ) : filteredList.length > 0 ? (
                 filteredList.map((app) => (
                   <article
                     key={app._id}
-                    className="bg-white border border-slate-200 rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-md transition-all"
+                    className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 hover:shadow-md transition-all"
                   >
-                    <div className="flex gap-5 flex-1 min-w-0">
-                      <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center text-2xl font-bold text-slate-300 border border-slate-100 shrink-0">
+                    <div className="flex gap-4 sm:gap-5 flex-1 min-w-0">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-slate-50 flex items-center justify-center text-xl sm:text-2xl font-bold text-slate-300 border border-slate-100 shrink-0">
                         {app.applicantSnapshot?.firstName?.[0]}
                       </div>
                       <div className="min-w-0">
-                        <h2 className="text-xl font-bold text-slate-900 truncate">
+                        <h2 className="text-base sm:text-xl font-bold text-slate-900 truncate">
                           {app.applicantSnapshot?.firstName}{" "}
                           {app.applicantSnapshot?.lastName}
                         </h2>
 
                         {/* JOB CONTEXT INFO */}
-                        <div className="flex items-center gap-2 text-sm font-semibold text-teal-600 mt-1">
+                        <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold text-teal-600 mt-1">
                           <Icons.Briefcase />
                           <span className="truncate">
                             Applied for:{" "}
@@ -230,7 +230,7 @@ export function EmployerApplicationsPage() {
                           </span>
                         </div>
 
-                        <p className="text-sm font-medium text-slate-400 mt-1">
+                        <p className="text-xs sm:text-sm font-medium text-slate-400 mt-0.5 sm:mt-1">
                           Current:{" "}
                           {app.applicantSnapshot?.currentPosition ||
                             "Applicant"}
@@ -238,22 +238,22 @@ export function EmployerApplicationsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4 shrink-0">
-                      <div className="flex flex-col md:flex-row items-center gap-3">
+                    <div className="flex items-center gap-3 sm:gap-4 shrink-0 w-full md:w-auto">
+                      <div className="flex flex-row items-center gap-2 sm:gap-3 w-full md:w-auto">
                         <Link
                           href={`/dashboard/employer/applications/${app._id}`}
-                          className="h-10 px-5 rounded-xl bg-slate-900 text-white text-xs font-bold flex items-center gap-2 hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10"
+                          className="flex-1 md:flex-none h-10 px-4 sm:px-5 rounded-xl bg-slate-900 text-white text-xs font-bold flex items-center justify-center gap-2 hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10"
                         >
                           <Icons.User /> View Profile
                         </Link>
-                        <div className="relative">
+                        <div className="relative flex-1 md:flex-none">
                           <select
                             aria-label="Update application status"
                             value={app.status}
                             onChange={(e) =>
                               handleUpdateStatus(app._id, e.target.value)
                             }
-                            className="h-10 pl-4 pr-10 rounded-xl border-2 border-slate-900 bg-white text-xs font-bold appearance-none cursor-pointer outline-none focus:ring-4 focus:ring-teal-500/10 transition-all"
+                            className="w-full md:w-auto h-10 pl-3 sm:pl-4 pr-8 sm:pr-10 rounded-xl border-2 border-slate-900 bg-white text-xs font-bold appearance-none cursor-pointer outline-none focus:ring-4 focus:ring-teal-500/10 transition-all"
                           >
                             <option value={STATUS.APPLIED}>Applied</option>
                             <option value={STATUS.REVIEWING}>Reviewing</option>
@@ -275,7 +275,7 @@ export function EmployerApplicationsPage() {
                 ))
               ) : (
                 <div className="py-24 text-center bg-white rounded-3xl border-2 border-dashed border-slate-200">
-                  <p className="text-slate-400 font-bold uppercase tracking-widest italic">
+                  <p className="text-slate-400 font-bold uppercase tracking-widest italic text-xs sm:text-sm">
                     No matching applications found
                   </p>
                 </div>

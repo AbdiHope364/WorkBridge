@@ -160,14 +160,16 @@ export function EmployerDashboardPage() {
       <div className="flex min-h-screen flex-col md:flex-row">
         <EmployerSidebar />
 
-        <section className="flex-1 flex flex-col min-w-0">
+        <section className="flex-1 flex flex-col min-w-0 pt-16 pb-20 md:pt-0 md:pb-0 overflow-y-auto">
           {/* Header */}
-          <header className="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-10 sticky top-0 z-20">
+          <header className="hidden md:flex h-20 bg-white border-b border-slate-200 items-center justify-between px-6 md:px-10 sticky top-0 z-20">
             <h2 className="text-xl font-black text-slate-800 tracking-tight italic">
               WorkBridge
             </h2>
             <div className="flex items-center gap-6">
-              <BellIcon className="h-5 w-5 text-slate-400 cursor-pointer" />
+              <Link href="/dashboard/employer/notifications">
+                <BellIcon className="h-5 w-5 text-slate-400 hover:text-teal-600 cursor-pointer" />
+              </Link>
               <Link href="/dashboard/employer/profile">
                 <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white font-black text-sm shadow-lg overflow-hidden border-2 border-slate-900">
                   {employerProfile?.employerType === "COMPANY_EMPLOYER" && employerProfile.companyLogoUrl?.url ? (
@@ -186,18 +188,18 @@ export function EmployerDashboardPage() {
             </div>
           </header>
 
-          <div className="p-8 md:p-12 max-w-7xl mx-auto w-full">
-            <header className="mb-10">
-              <h1 className="text-4xl font-black text-slate-900 tracking-tight">
+          <div className="p-4 sm:p-6 md:p-10 max-w-7xl mx-auto w-full">
+            <header className="mb-6 sm:mb-10">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
                 Hiring Overview
               </h1>
-              <p className="text-slate-500 font-medium mt-1">
-                Real-time summary of your current recruitment pipeline.
+              <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
+                Real-time summary of your recruitment pipeline & 0% commission direct trade.
               </p>
             </header>
 
             {/* Metrics */}
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 sm:gap-6 grid-cols-2 lg:grid-cols-4">
               <StatCard
                 label="Live Jobs"
                 value={analytics?.dashboardCards?.activePostings || 0}
@@ -211,7 +213,7 @@ export function EmployerDashboardPage() {
                 colorClass="bg-blue-50 text-blue-600"
               />
               <StatCard
-                label="Total Applications"
+                label="Applications"
                 value={analytics?.dashboardCards?.totalApplications || 0}
                 icon={Icons.Users}
                 colorClass="bg-purple-50 text-purple-600"

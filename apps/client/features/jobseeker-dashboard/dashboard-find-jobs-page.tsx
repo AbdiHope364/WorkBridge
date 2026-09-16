@@ -34,7 +34,7 @@ export function DashboardFindJobsPage() {
   return (
     <main className="min-h-screen bg-slate-50 flex flex-col md:flex-row">
       <JobseekerSidebar />
-      <section className="flex-1 min-w-0 w-full pt-16 md:pt-0">
+      <section className="flex-1 min-w-0 w-full pt-16 pb-20 md:pt-0 md:pb-0">
         <div className="w-full max-w-full overflow-x-hidden">
           <JobsPage />
         </div>

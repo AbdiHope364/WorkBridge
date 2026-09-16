@@ -176,27 +176,22 @@ export function SavedJobsPage() {
     );
 
   return (
-    <main className="h-screen flex overflow-hidden bg-[#F8FAFC]">
-      <div className="hidden md:block w-64 h-full shrink-0 border-r border-slate-200">
-        <JobseekerSidebar />
-      </div>
+    <main className="min-h-screen flex flex-col md:flex-row bg-[#F8FAFC]">
+      <JobseekerSidebar />
 
-      <div className="md:hidden">
-        <JobseekerSidebar />
-      </div>
-      <section className="flex-1 h-full overflow-y-auto overflow-x-hidden p-4 sm:p-8 md:p-12 min-w-0 w-full">
+      <section className="flex-1 min-w-0 overflow-y-auto pt-16 pb-20 md:pt-0 md:pb-0 p-4 sm:p-6 md:p-10 w-full">
         <div className="max-w-5xl mx-auto w-full">
-          <header className="mb-10 pt-16 md:pt-0">
-            <h1 className="text-4xl md:text-5xl font-light text-[#0F132E] tracking-tight">
+          <header className="mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-[#0F132E] tracking-tight">
               Saved Jobs
             </h1>
-            <p className="text-slate-500 text-sm md:text-lg mt-2 font-medium">
+            <p className="text-slate-500 text-xs sm:text-base mt-1 sm:mt-2 font-medium">
               You have {items.length} positions saved for your review.
             </p>
           </header>
 
           {items.length > 0 ? (
-            <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 pb-24 w-full">
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2 pb-12 w-full">
               {items.map((item) => (
                 <div key={item._id} className="min-w-0 w-full">
                   <SavedJobCard savedItem={item} onRemove={handleRemove} />
@@ -204,11 +199,12 @@ export function SavedJobsPage() {
               ))}
             </div>
           ) : (
-            <div className="py-20 bg-white rounded-[2.5rem] border-2 border-dashed border-slate-200 text-center">
-              <h2 className="text-xl font-bold text-[#0F132E]">Empty list</h2>
+            <div className="py-16 bg-white rounded-3xl border-2 border-dashed border-slate-200 text-center px-4">
+              <h2 className="text-lg sm:text-xl font-bold text-[#0F132E]">Empty list</h2>
+              <p className="text-xs text-slate-400 mt-1">Browse trade jobs and bookmark them for later.</p>
               <Link
-                href="/jobs"
-                className="mt-6 inline-flex px-8 py-3 bg-[#0F132E] text-white font-black text-xs uppercase tracking-widest rounded-xl"
+                href="/dashboard/jobs"
+                className="mt-6 inline-flex px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-widest rounded-xl transition shadow-xs"
               >
                 Browse Jobs
               </Link>

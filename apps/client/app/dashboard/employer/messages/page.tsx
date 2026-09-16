@@ -1,5 +1,5 @@
-import { EmployerMessagesPage } from "@/features/employer-dashboard/employer-messages-page";
+import { ChatInterface } from "@/features/chat/chat-interface";
 
 export default function EmployerMessagesRoute() {
-  return <EmployerMessagesPage />;
+  return <ChatInterface />;
 }

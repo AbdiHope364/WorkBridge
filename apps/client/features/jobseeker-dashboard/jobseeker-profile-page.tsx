@@ -251,18 +251,18 @@ export function JobseekerProfilePage() {
   const fullName = `${jobseekerProfile?.firstName} ${jobseekerProfile?.lastName}`;
 
   return (
-    <main className="h-screen bg-[#f8f8fa] text-slate-950">
-      <div className="flex h-screen flex-col md:flex-row">
+    <main className="min-h-screen bg-[#f8f8fa] text-slate-950">
+      <div className="flex min-h-screen flex-col md:flex-row">
         <JobseekerSidebar />
 
-        <section className="min-w-0 overflow-y-auto">
+        <section className="min-w-0 flex-1 overflow-y-auto pt-16 pb-20 md:pt-0 md:pb-0">
           <ProfileTopHeader
             condition={!jobseekerProfile?.avatar?.publicId}
             initials={initials}
             url={`https://res.cloudinary.com/${env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${jobseekerProfile?.avatar?.publicId}`}
           />
 
-          <div className="mx-auto grid max-w-295 gap-8 px-6 py-9 lg:grid-cols-[240px_1fr]">
+          <div className="mx-auto grid max-w-295 gap-6 px-4 py-6 sm:px-6 sm:py-9 lg:grid-cols-[240px_1fr]">
             <aside className="space-y-5">
               <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
                 <div className="mb-3 flex items-center justify-between">

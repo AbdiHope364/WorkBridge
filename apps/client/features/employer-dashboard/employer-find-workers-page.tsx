@@ -284,8 +284,8 @@ export function EmployerFindWorkersPage() {
       <div className="flex min-h-screen flex-col md:flex-row">
         <EmployerSidebar />
 
-        <section className="flex min-w-0 flex-1 flex-col">
-          <header className="flex h-[69px] items-center justify-between border-b border-[#d9d9df] bg-white px-6 shadow-[0_2px_5px_rgba(15,23,42,0.18)] md:px-10">
+        <section className="flex min-w-0 flex-1 flex-col pt-16 pb-20 md:pt-0 md:pb-0 overflow-y-auto">
+          <header className="hidden md:flex h-[69px] items-center justify-between border-b border-[#d9d9df] bg-white px-6 shadow-[0_2px_5px_rgba(15,23,42,0.18)] md:px-10">
             <Link
               href="/"
               aria-label="WorkBridge home"
@@ -314,7 +314,7 @@ export function EmployerFindWorkersPage() {
             </div>
           </header>
 
-          <div className="w-full max-w-[1110px] px-6 pb-6 pt-9 md:px-11">
+          <div className="w-full max-w-[1110px] px-4 sm:px-6 pb-6 pt-6 sm:pt-9 md:px-11">
             <div>
               <h1 className="text-[28px] font-medium uppercase leading-none tracking-normal">
                 Find Trusted Workers For Any Job

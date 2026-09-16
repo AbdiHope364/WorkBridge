@@ -5,6 +5,8 @@ import { useAuth } from "@/contexts/auth-context";
 import { Container, Button } from "@repo/ui";
 import { Check, Sparkles, Shield, ArrowRight } from "lucide-react";
 import { MockCheckoutModal } from "@/features/pricing/components/mock-checkout-modal";
+import { LandingHeader } from "@/features/landing/components/landing-header";
+import { LandingFooter } from "@/features/landing/components/landing-footer";
 import type { SubscriptionPlan, UserQuotas } from "@repo/types";
 import Link from "next/link";
 
@@ -59,43 +61,45 @@ export default function PricingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 py-16">
-      <Container>
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-4">
-            <Sparkles className="w-3.5 h-3.5" /> Simple, Transparent Freemium Plans
-          </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
-            Accelerate Your Work with WorkBridge Pro
-          </h1>
-          <p className="text-slate-600 text-lg">
-            Start completely for free. Upgrade when you need unlimited applications, verified trade badges, or priority job postings.
-          </p>
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      <LandingHeader />
+      <main className="flex-1 py-10 sm:py-16">
+        <Container className="px-4 sm:px-6">
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-4">
+              <Sparkles className="w-3.5 h-3.5" /> Simple, Transparent Freemium Plans
+            </div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3 sm:mb-4">
+              Accelerate Your Work with WorkBridge Pro
+            </h1>
+            <p className="text-slate-600 text-sm sm:text-base md:text-lg">
+              Start completely for free. Upgrade when you need unlimited applications, verified trade badges, or priority job postings.
+            </p>
 
-          {/* Role Tab Switcher */}
-          <div className="mt-8 inline-flex p-1.5 bg-slate-200/80 rounded-2xl border border-slate-300">
-            <button
-              onClick={() => setTargetRole("jobseeker")}
-              className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${
-                targetRole === "jobseeker"
-                  ? "bg-white text-emerald-800 shadow-md"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
-            >
-              👷 For Tradesmen & Workers
-            </button>
-            <button
-              onClick={() => setTargetRole("employer")}
-              className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${
-                targetRole === "employer"
-                  ? "bg-white text-emerald-800 shadow-md"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
-            >
-              🏢 For Employers & Clients
-            </button>
-          </div>
+            {/* Role Tab Switcher */}
+            <div className="mt-6 sm:mt-8 flex items-center justify-center p-1.5 bg-slate-200/80 rounded-2xl border border-slate-300 w-full sm:w-auto overflow-x-auto">
+              <button
+                onClick={() => setTargetRole("jobseeker")}
+                className={`flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all whitespace-nowrap ${
+                  targetRole === "jobseeker"
+                    ? "bg-white text-emerald-800 shadow-md"
+                    : "text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                👷 For Tradesmen & Workers
+              </button>
+              <button
+                onClick={() => setTargetRole("employer")}
+                className={`flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all whitespace-nowrap ${
+                  targetRole === "employer"
+                    ? "bg-white text-emerald-800 shadow-md"
+                    : "text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                🏢 For Employers & Clients
+              </button>
+            </div>
 
           {/* Current Quota Banner for logged-in users */}
           {user && quotas ? (
@@ -278,6 +282,7 @@ export default function PricingPage() {
           </p>
         </div>
       </Container>
+    </main>
 
       {/* Mock Checkout Modal */}
       <MockCheckoutModal
@@ -288,6 +293,7 @@ export default function PricingPage() {
           loadData();
         }}
       />
+      <LandingFooter />
     </div>
   );
 }

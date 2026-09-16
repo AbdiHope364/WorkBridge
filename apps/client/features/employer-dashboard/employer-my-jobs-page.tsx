@@ -220,15 +220,15 @@ export function EmployerMyJobsPage() {
       <div className="flex min-h-screen flex-col md:flex-row">
         <EmployerSidebar />
 
-        <section className="flex min-w-0 flex-1 flex-col">
+        <section className="flex min-w-0 flex-1 flex-col pt-16 pb-20 md:pt-0 md:pb-0 overflow-y-auto">
           {/* Header */}
-          <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white/80 backdrop-blur-md px-6 md:px-10">
+          <header className="hidden md:flex sticky top-0 z-20 h-16 items-center justify-between border-b border-slate-200 bg-white/80 backdrop-blur-md px-6 md:px-10">
             <h2 className="text-sm font-semibold text-slate-500">
               Dashboard / My Jobs
             </h2>
             <div className="flex items-center gap-6">
               <Link
-                href="/dashboard/notifications"
+                href="/dashboard/employer/notifications"
                 className="p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors"
               >
                 <BellIcon className="h-5 w-5" />
@@ -236,21 +236,21 @@ export function EmployerMyJobsPage() {
             </div>
           </header>
 
-          <div className="w-full px-6 py-8 md:px-10">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between mb-8">
+          <div className="w-full px-4 py-6 sm:px-6 md:px-10">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8">
               <div>
-                <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+                <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                   My Job Listings
                 </h1>
-                <p className="mt-1 text-slate-500 text-sm">
+                <p className="mt-1 text-slate-500 text-xs sm:text-sm">
                   Manage your active postings and track applicants.
                 </p>
               </div>
               <Link
                 href="/dashboard/employer/create"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-teal-600 px-6 text-sm font-bold text-white hover:bg-teal-700 shadow-lg shadow-teal-600/20 transition-all"
+                className="inline-flex h-11 sm:h-12 items-center justify-center gap-2 rounded-xl bg-teal-600 px-5 sm:px-6 text-xs sm:text-sm font-bold text-white hover:bg-teal-700 shadow-lg shadow-teal-600/20 transition-all self-start sm:self-auto"
               >
-                <PlusIcon className="h-5 w-5" />
+                <PlusIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                 Post New Job
               </Link>
             </div>

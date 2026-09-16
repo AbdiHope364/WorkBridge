@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo } from "react";
 import { JobseekerSidebar } from "../jobseeker-dashboard/components/jobseeker-sidebar";
+import { EmployerSidebar } from "../employer-dashboard/components/employer-sidebar";
 import { useAuth } from "@/contexts/auth-context";
 import {
   Search,
@@ -451,7 +452,7 @@ export function ChatInterface({
   return (
     <div className="flex h-screen bg-[#f8f8fa] text-slate-950 antialiased overflow-hidden flex-col md:flex-row">
       {/* 1. Common Left Sidebar (Provides sticky top bar & bottom nav on mobile, sidebar on desktop) */}
-      <JobseekerSidebar />
+      {user?.role === "employer" ? <EmployerSidebar /> : <JobseekerSidebar />}
 
       {/* 2. Main Messaging Hub */}
       <div className="flex flex-1 min-w-0 h-full overflow-hidden">

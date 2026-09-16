@@ -115,7 +115,7 @@ function Avatar({ small = false }: { small?: boolean }) {
 
 function Header() {
   return (
-    <header className="flex h-[50px] items-center justify-between border-b border-[#d9d9df] bg-white px-6 shadow-[0_2px_5px_rgba(15,23,42,0.16)] md:px-10">
+    <header className="hidden md:flex h-[50px] items-center justify-between border-b border-[#d9d9df] bg-white px-6 shadow-[0_2px_5px_rgba(15,23,42,0.16)] md:px-10">
       <Link
         href="/"
         aria-label="WorkBridge home"
@@ -697,9 +697,9 @@ export function EmployerOnboardingPage() {
     <main className="min-h-screen bg-[#f7f7fb] text-black">
       <div className="flex min-h-screen flex-col md:flex-row">
         <EmployerSidebar />
-        <section className="flex min-w-0 flex-1 flex-col">
+        <section className="flex min-w-0 flex-1 flex-col pt-16 pb-20 md:pt-0 md:pb-0 overflow-y-auto">
           <Header />
-          <div className="flex flex-1 justify-center">
+          <div className="flex flex-1 justify-center px-4 sm:px-6">
             <OnboardingShell />
           </div>
         </section>

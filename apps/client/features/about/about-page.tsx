@@ -1,5 +1,5 @@
-import { LandingFooter } from "../landing-page/components/landing-footer";
-import { LandingHeader } from "../landing-page/components/landing-header";
+import { LandingFooter } from "../landing/components/landing-footer";
+import { LandingHeader } from "../landing/components/landing-header";
 import { AboutCtaSection } from "./components/about-cta-section";
 import { AboutHeroSection } from "./components/about-hero-section";
 import { AboutMainSection } from "./components/about-main-section";

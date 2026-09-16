@@ -153,31 +153,31 @@ export function EmployerApplicantProfilePage() {
     <main className="min-h-screen bg-[#F8FAFC] flex flex-col md:flex-row text-slate-900">
       <EmployerSidebar />
 
-      <section className="flex-1 min-w-0 p-6 md:p-10 overflow-y-auto">
-        <div className="max-w-5xl mx-auto space-y-8">
+      <section className="flex-1 min-w-0 p-4 sm:p-6 md:p-10 pt-16 pb-20 md:pt-10 md:pb-10 overflow-y-auto">
+        <div className="max-w-5xl mx-auto space-y-6 sm:space-y-8">
           {/* Header breadcrumb */}
           <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <h1 className="text-2xl font-bold text-slate-900">
+            <div className="space-y-0.5 sm:space-y-1">
+              <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
                 Job Applications
               </h1>
-              <p className="text-sm text-slate-500 font-medium">
+              <p className="text-xs sm:text-sm text-slate-500 font-medium">
                 Summary of hiring activities for this candidate.
               </p>
             </div>
             <Link
               href="/dashboard/employer/applications"
-              className="flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-teal-600 transition-colors"
+              className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-bold text-slate-400 hover:text-teal-600 transition-colors"
             >
               <Icons.Back /> Back to List
             </Link>
           </div>
 
           {/* MAIN PROFILE CARD */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm">
-            <div className="flex flex-col lg:flex-row justify-between gap-8">
-              <div className="flex gap-6 items-start">
-                <div className="w-24 h-24 rounded-2xl border-4 border-teal-500 overflow-hidden shadow-lg shrink-0">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 md:p-8 shadow-sm">
+            <div className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+                <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl border-4 border-teal-500 overflow-hidden shadow-lg shrink-0">
                   {snapshot?.avatar?.url ? (
                     <Image
                       src={snapshot.avatar.url}
@@ -187,17 +187,17 @@ export function EmployerApplicantProfilePage() {
                       className="object-cover h-full w-full"
                     />
                   ) : (
-                    <div className="w-full h-full bg-slate-900 flex items-center justify-center text-white text-3xl font-black">
+                    <div className="w-full h-full bg-slate-900 flex items-center justify-center text-white text-2xl sm:text-3xl font-black">
                       {snapshot?.firstName?.charAt(0)}
                     </div>
                   )}
                 </div>
 
                 <div className="min-w-0">
-                  <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
                     {snapshot?.firstName} {snapshot?.lastName}
                   </h2>
-                  <p className="text-lg font-semibold text-slate-600 mt-1">
+                  <p className="text-base sm:text-lg font-semibold text-slate-600 mt-1">
                     {snapshot?.currentPosition}
                   </p>
                   <div className="flex flex-wrap gap-2 mt-3">
@@ -221,18 +221,18 @@ export function EmployerApplicantProfilePage() {
               </div>
 
               {/* ACTION BUTTONS & STATUS */}
-              <div className="flex flex-col gap-3 min-w-[160px]">
+              <div className="flex flex-row lg:flex-col gap-3 min-w-[160px]">
                 <button
                   onClick={() => handleStatusUpdate("ACCEPTED")}
                   disabled={isUpdating || application.status === "ACCEPTED"}
-                  className="h-11 rounded-xl bg-teal-600 text-white font-bold hover:bg-teal-700 transition-all disabled:opacity-50 shadow-md"
+                  className="flex-1 lg:flex-none h-11 rounded-xl bg-teal-600 text-white font-bold hover:bg-teal-700 transition-all disabled:opacity-50 shadow-md text-xs sm:text-sm"
                 >
                   Accept
                 </button>
                 <button
                   onClick={() => handleStatusUpdate("REJECTED")}
                   disabled={isUpdating || application.status === "REJECTED"}
-                  className="h-11 rounded-xl border-2 border-slate-900 bg-white text-slate-900 font-bold hover:bg-slate-50 transition-all disabled:opacity-50"
+                  className="flex-1 lg:flex-none h-11 rounded-xl border-2 border-slate-900 bg-white text-slate-900 font-bold hover:bg-slate-50 transition-all disabled:opacity-50 text-xs sm:text-sm"
                 >
                   Reject
                 </button>

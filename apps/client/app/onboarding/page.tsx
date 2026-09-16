@@ -88,13 +88,13 @@ export default function OnboardingPage() {
   const progress = (stepIndex / STEPS.length) * 100;
 
   return (
-    <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6">
+    <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 sm:p-6">
       <div className="max-w-xl w-full">
-        <div className="mb-10 text-center">
-          <h1 className="text-3xl font-black text-slate-900 uppercase tracking-tighter italic">
+        <div className="mb-6 sm:mb-10 text-center">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 uppercase tracking-tighter italic">
             Complete your Profile
           </h1>
-          <div className="mt-6 flex items-center gap-4">
+          <div className="mt-4 sm:mt-6 flex items-center gap-4">
             <div className="flex-1 bg-slate-200 h-1.5 rounded-full overflow-hidden">
               <div
                 className="bg-emerald-500 h-full transition-all duration-500"
@@ -107,22 +107,22 @@ export default function OnboardingPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-[2.5rem] border border-slate-200 shadow-2xl p-10 text-center relative overflow-hidden">
-          <h2 className="text-2xl font-bold text-slate-900">
+        <div className="bg-white rounded-2xl sm:rounded-[2.5rem] border border-slate-200 shadow-2xl p-6 sm:p-10 text-center relative overflow-hidden flex flex-col gap-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
             {currentStep.title}
           </h2>
-          <p className="text-slate-500 mt-2 mb-10 text-sm leading-relaxed">
+          <p className="text-slate-500 text-xs sm:text-sm leading-relaxed mb-4">
             {currentStep.desc}
           </p>
           <button
             onClick={() => setIsModalActive(true)}
-            className="w-full py-4 bg-slate-950 text-white rounded-2xl font-bold hover:bg-emerald-600 transition-all"
+            className="w-full py-3.5 sm:py-4 bg-slate-950 text-white rounded-xl sm:rounded-2xl font-bold text-sm hover:bg-emerald-600 transition-all"
           >
             Start this step
           </button>
           <button
             onClick={handleSkip}
-            className="text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-slate-600 transition"
+            className="text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-slate-600 transition py-1"
           >
             Skip for now
           </button>

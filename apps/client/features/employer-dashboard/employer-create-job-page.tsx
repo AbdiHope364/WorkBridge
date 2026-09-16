@@ -730,37 +730,39 @@ export function EmployerCreateJobPage() {
           </label>
         </div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-[1fr_auto_1fr_auto] sm:items-center">
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
           <Link
             href="/dashboard/employer"
-            className="inline-flex items-center gap-2 text-xl font-normal text-black hover:text-gray-600"
+            className="inline-flex items-center justify-center gap-2 text-sm sm:text-base font-medium text-slate-600 hover:text-slate-900 py-2"
           >
-            <BackIcon className="h-5 w-5" />
+            <BackIcon className="h-4 w-4 sm:h-5 sm:w-5" />
             Back
           </Link>
-          <button
-            type="button"
-            disabled={isSubmitting}
-            onClick={() => handleSaveDraft()}
-            className="h-7 w-[113px] rounded border border-[#00aaa8] bg-white text-base font-medium text-black hover:bg-gray-50"
-          >
-            Save as Draft
-          </button>
-          <button
-            type="button"
-            onClick={handlePreview}
-            className="h-7 w-[113px] rounded border border-[#00aaa8] bg-white text-base font-medium text-[#00aaa8] sm:justify-self-end hover:bg-gray-50"
-          >
-            Preview
-          </button>
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="inline-flex h-7 w-[113px] items-center justify-center gap-2 rounded bg-[#00aaa8] text-base font-semibold text-white hover:bg-[#009999] disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isSubmitting ? "Posting..." : "Post Job"}
-            <SendIcon className="h-4 w-4" />
-          </button>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <button
+              type="button"
+              disabled={isSubmitting}
+              onClick={() => handleSaveDraft()}
+              className="flex-1 sm:flex-none h-10 px-4 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 transition"
+            >
+              Save Draft
+            </button>
+            <button
+              type="button"
+              onClick={handlePreview}
+              className="flex-1 sm:flex-none h-10 px-4 rounded-xl border border-[#00aaa8] bg-white text-xs sm:text-sm font-semibold text-[#00aaa8] hover:bg-teal-50 transition"
+            >
+              Preview
+            </button>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full sm:w-auto inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-[#00aaa8] px-6 text-xs sm:text-sm font-bold text-white hover:bg-[#009999] disabled:opacity-50 transition shadow-sm"
+            >
+              {isSubmitting ? "Posting..." : "Post Job"}
+              <SendIcon className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </form>
     </main>

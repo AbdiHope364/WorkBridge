@@ -68,7 +68,7 @@ export function ProfileTopHeader({
   const showInitials = condition ?? !url;
 
   return (
-    <header className="flex h-20 items-center justify-between border-b border-slate-200 bg-white px-8">
+    <header className="hidden md:flex h-20 items-center justify-between border-b border-slate-200 bg-white px-8">
       <LogoMark />
       <div className="flex items-center gap-5">
         <Link href="/dashboard/saved-jobs" aria-label="Saved jobs">

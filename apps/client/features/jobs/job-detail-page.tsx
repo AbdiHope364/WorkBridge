@@ -222,19 +222,19 @@ export function JobDetailPage({ job }: { job: any }) {
     : "Recently";
 
   return (
-    <main className="min-h-screen bg-[#F8FAFC] pb-20">
-      <div className="bg-white border-b border-slate-200 pt-10 pb-8">
-        <Container size="lg" className="max-w-6xl">
+    <main className="min-h-screen bg-[#F8FAFC] pb-16 sm:pb-20">
+      <div className="bg-white border-b border-slate-200 pt-6 sm:pt-10 pb-6 sm:pb-8">
+        <Container size="lg" className="max-w-6xl px-4 sm:px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="flex gap-6">
-              <div className="w-20 h-20 rounded-3xl bg-slate-900 flex items-center justify-center text-white text-3xl font-black shadow-xl">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-slate-900 flex items-center justify-center text-white text-2xl sm:text-3xl font-black shadow-xl shrink-0">
                 {company?.displayName?.charAt(0).toUpperCase()}
               </div>
-              <div className="space-y-2">
-                <h1 className="text-3xl font-black text-slate-900 tracking-tight">
+              <div className="space-y-1.5 sm:space-y-2 min-w-0">
+                <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                   {job.title}
                 </h1>
-                <div className="flex flex-wrap items-center gap-y-2 gap-x-6 text-slate-500 font-medium text-sm">
+                <div className="flex flex-wrap items-center gap-y-1.5 gap-x-4 sm:gap-x-6 text-slate-500 font-medium text-xs sm:text-sm">
                   <span className="font-bold text-slate-900">
                     {company?.displayName}
                   </span>
@@ -248,12 +248,12 @@ export function JobDetailPage({ job }: { job: any }) {
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-row items-center gap-2 sm:gap-3 w-full sm:w-auto">
               <Button
                 variant={isSaved ? "primary" : "outline"}
                 disabled={isSaving}
                 onClick={handleSaveToggle}
-                className={`h-12 px-6 rounded-xl font-bold flex items-center gap-2 ${isSaved ? "bg-teal-600 border-teal-600 text-white" : "text-slate-600"}`}
+                className={`flex-1 sm:flex-none h-11 sm:h-12 px-4 sm:px-6 rounded-xl font-bold flex items-center justify-center gap-2 text-xs sm:text-sm ${isSaved ? "bg-teal-600 border-teal-600 text-white" : "text-slate-600"}`}
               >
                 <Icons.Bookmark filled={isSaved} />
                 {isSaved ? "Saved" : "Save Job"}
@@ -264,7 +264,7 @@ export function JobDetailPage({ job }: { job: any }) {
                     ? setShowApplyModal(true)
                     : router.push("/login")
                 }
-                className="h-12 px-10 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black shadow-lg shadow-teal-600/20"
+                className="flex-1 sm:flex-none h-11 sm:h-12 px-6 sm:px-10 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black shadow-lg shadow-teal-600/20 text-xs sm:text-sm"
               >
                 Apply Now
               </Button>
@@ -273,10 +273,10 @@ export function JobDetailPage({ job }: { job: any }) {
         </Container>
       </div>
 
-      <Container size="lg" className="max-w-6xl mt-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <div className="lg:col-span-2 space-y-10">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <Container size="lg" className="max-w-6xl mt-6 sm:mt-10 px-4 sm:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-10">
+          <div className="lg:col-span-2 space-y-6 sm:space-y-10">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
               <InfoBox
                 icon={Icons.Wallet}
                 label="Salary"
@@ -309,24 +309,24 @@ export function JobDetailPage({ job }: { job: any }) {
               />
             </div>
 
-            <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-              <h2 className="text-xl font-black text-slate-900 mb-6">
+            <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-slate-200 shadow-sm">
+              <h2 className="text-lg sm:text-xl font-black text-slate-900 mb-4 sm:mb-6">
                 Description
               </h2>
-              <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed whitespace-pre-wrap font-medium">
+              <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed whitespace-pre-wrap font-medium text-xs sm:text-sm">
                 {job.description}
               </div>
             </div>
 
-            <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-              <h2 className="text-xl font-black text-slate-900 mb-6">
+            <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-slate-200 shadow-sm">
+              <h2 className="text-lg sm:text-xl font-black text-slate-900 mb-4 sm:mb-6">
                 Required Skills
               </h2>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2 sm:gap-3">
                 {job.skills?.map((skill: any) => (
                   <Badge
                     key={skill.name}
-                    className="bg-slate-100 text-slate-700 px-5 py-2 rounded-xl text-sm font-bold border-none"
+                    className="bg-slate-100 text-slate-700 px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold border-none"
                   >
                     {skill.name}
                   </Badge>
@@ -335,8 +335,8 @@ export function JobDetailPage({ job }: { job: any }) {
             </div>
           </div>
 
-          <div className="space-y-8">
-            <Card className="rounded-[2rem] border-slate-200 p-8 shadow-sm bg-white overflow-hidden relative">
+          <div className="space-y-6 sm:space-y-8">
+            <Card className="rounded-2xl sm:rounded-[2rem] border-slate-200 p-5 sm:p-8 shadow-sm bg-white overflow-hidden relative">
               <div className="absolute top-0 left-0 w-full h-24 bg-slate-900" />
               <div className="relative pt-6 text-center">
                 <div className="w-20 h-20 rounded-2xl bg-white border-4 border-white shadow-lg flex items-center justify-center text-slate-900 text-2xl font-black mx-auto">

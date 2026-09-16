@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { LandingHeader } from "../landing-page/components/landing-header";
+import { LandingHeader } from "../landing/components/landing-header";
+import { LandingFooter } from "../landing/components/landing-footer";
 import { BookWorkerModal } from "../bookings/components/book-worker-modal";
 
 const filterTabs = ["All Workers", "Nearby", "Top Rated", "Verified Only", "Emergency Callout"];
@@ -478,6 +479,7 @@ export function FindWorkersPage() {
           }}
         />
       )}
+      <LandingFooter />
     </main>
   );
 }

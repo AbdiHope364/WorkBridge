@@ -4,7 +4,8 @@ import { useEffect, useState, useCallback } from "react";
 import { Container } from "@repo/ui/container";
 import { Input } from "@repo/ui/input";
 import { JobCard } from "@repo/ui/job-card";
-import { LandingHeader } from "../landing-page/components/landing-header";
+import { LandingHeader } from "../landing/components/landing-header";
+import { LandingFooter } from "../landing/components/landing-footer";
 
 import { JOB_CATEGORIES, JOB_TYPES } from "@repo/types/jobs";
 import { api } from "@/lib/api";
@@ -311,6 +312,7 @@ export function JobsPage() {
           )}
         </Container>
       </section>
+      <LandingFooter />
     </main>
   );
 }
