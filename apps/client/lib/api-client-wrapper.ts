@@ -80,6 +80,8 @@ export function createJobsService(api: ApiClient) {
       api.request(`/jobs/${id}/save`, { method: "POST" }),
     removeSavedJob: async (id: string) =>
       api.request(`/jobs/saved/${id}`, { method: "DELETE" }),
+    applyJob: async (id: string, data?: object) =>
+      api.request(`/jobs/${id}/apply`, { method: "POST", body: data }),
   };
 }
 

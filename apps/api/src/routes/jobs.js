@@ -23,12 +23,13 @@ router.get('/employer/dashboard', protect, authorize('employer', 'admin'), getEm
 router.get('/jobseeker/dashboard', protect, authorize('worker', 'jobseeker', 'admin'), getJobseekerDashboard);
 router.get('/employer', protect, authorize('employer', 'admin'), getEmployerJobs);
 router.get('/applications', protect, authorize('employer', 'admin'), getApplications);
+router.post('/applications', protect, authorize('worker', 'jobseeker', 'admin'), applyJob);
 
 // Parameterized job endpoints
 router.get('/:id', getJobById);
 router.put('/:id', protect, authorize('employer', 'admin'), updateJob);
 router.delete('/:id', protect, authorize('employer', 'admin'), deleteJob);
-router.post('/:id/apply', protect, authorize('worker'), applyJob);
+router.post('/:id/apply', protect, authorize('worker', 'jobseeker', 'admin'), applyJob);
 router.post('/:id/shortlist', protect, authorize('employer', 'admin'), shortlistCandidate);
 
 export default router;

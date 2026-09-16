@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
 import { Badge } from "@repo/ui/badge";
@@ -10,6 +10,7 @@ import { Container } from "@repo/ui/container";
 
 import { api } from "@/lib/api";
 import { useAuth } from "@/contexts/auth-context";
+import { ApplyForPositionModal } from "./components/apply-for-position-modal";
 
 const Icons = {
   MapPin: () => (
@@ -139,9 +140,6 @@ export function JobDetailPage({ job }: { job: any }) {
   const [isSaved, setIsSaved] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
-  const [isApplying, setIsApplying] = useState(false);
-  const [coverLetter, setCoverLetter] = useState("");
-  const [resume, setResume] = useState<File | null>(null);
 
   useEffect(() => {
     const checkStatus = async () => {
@@ -182,37 +180,6 @@ export function JobDetailPage({ job }: { job: any }) {
       alert("Action failed.");
     } finally {
       setIsSaving(false);
-    }
-  };
-
-  const handleApply = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    setIsApplying(true);
-
-    try {
-      const formData = new FormData();
-
-      formData.append("jobId", job.id || job._id);
-
-      if (coverLetter.trim()) {
-        formData.append("coverLetter", coverLetter.trim());
-      }
-
-      if (resume) {
-        formData.append("attachments", resume);
-      }
-      await api.applications.submitApplication(formData);
-
-      alert("Application submitted!");
-      setShowApplyModal(false);
-
-      setCoverLetter("");
-      setResume(null);
-    } catch (err: any) {
-      alert(err?.message || "Submission failed.");
-    } finally {
-      setIsApplying(false);
     }
   };
 
@@ -389,62 +356,11 @@ export function JobDetailPage({ job }: { job: any }) {
       </Container>
 
       {showApplyModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 backdrop-blur-sm p-4">
-          <Card className="w-full max-w-xl bg-white rounded-[2rem] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
-            <div className="p-8 border-b border-slate-100 flex justify-between items-center">
-              <h2 className="text-2xl font-black text-slate-900">
-                Apply for Position
-              </h2>
-              <button
-                onClick={() => setShowApplyModal(false)}
-                className="text-slate-400 hover:text-slate-600 transition-colors"
-              >
-                <Icons.X />
-              </button>
-            </div>
-            <form onSubmit={handleApply} className="p-8 space-y-6">
-              <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">
-                  Cover Letter
-                </label>
-                <textarea
-                  value={coverLetter}
-                  onChange={(e) => setCoverLetter(e.target.value)}
-                  className="w-full min-h-[140px] p-4 rounded-xl border border-slate-200 focus:ring-4 focus:ring-teal-500/10 focus:border-teal-500 outline-none transition-all resize-none text-sm"
-                  placeholder="Share why you're a good fit..."
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">
-                  Resume / CV (Optional)
-                </label>
-                <input
-                  type="file"
-                  accept=".pdf,.doc,.docx"
-                  onChange={(e) => setResume(e.target.files?.[0] || null)}
-                  className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100"
-                />
-              </div>
-              <div className="flex gap-4 pt-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setShowApplyModal(false)}
-                  className="flex-1 h-12 rounded-xl font-bold"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  disabled={isApplying}
-                  className="flex-1 h-12 rounded-xl bg-teal-600 text-white font-bold shadow-lg shadow-teal-600/20"
-                >
-                  {isApplying ? "Submitting..." : "Submit Application"}
-                </Button>
-              </div>
-            </form>
-          </Card>
-        </div>
+        <ApplyForPositionModal
+          job={job}
+          isOpen={showApplyModal}
+          onClose={() => setShowApplyModal(false)}
+        />
       )}
     </main>
   );
