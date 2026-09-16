@@ -3,59 +3,22 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown, Home, Briefcase, Users, HelpCircle, Mail, LogIn, UserPlus, Sparkles, ArrowRight } from "lucide-react";
+import { Menu, X, ChevronDown, Briefcase, Users, Sparkles } from "lucide-react";
 
 import { WorkBridgeLogo } from "@repo/ui";
 
 const navLinks = [
-  { href: "/", label: "Home", icon: <Home className="h-4 w-4" /> },
-  { href: "/jobs", label: "Find Jobs", icon: <Briefcase className="h-4 w-4" /> },
-  { href: "/find-workers", label: "Find Workers", icon: <Users className="h-4 w-4" /> },
-  { href: "/pricing", label: "Pricing", icon: <Sparkles className="h-4 w-4" /> },
-  { href: "/#how-it-works", label: "How it works", icon: <HelpCircle className="h-4 w-4" /> },
-  { href: "/contact-us", label: "Help", icon: <Mail className="h-4 w-4" /> },
+  { href: "/", label: "Home" },
+  { href: "/jobs", label: "Find Jobs" },
+  { href: "/find-workers", label: "Find Workers" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/#how-it-works", label: "How it works" },
+  { href: "/contact-us", label: "Help" },
 ];
 
 function LogoMark() {
   return (
     <WorkBridgeLogo className="h-10 sm:h-11 md:h-12 w-auto max-w-[200px] sm:max-w-[230px]" />
-  );
-}
-
-function SignInIcon() {
-  return (
-    <svg aria-hidden="true" className="h-4 w-4" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M9 6 15 12 9 18M15 12H3M15 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function SignUpIcon() {
-  return (
-    <svg aria-hidden="true" className="h-4 w-4" viewBox="0 0 24 24" fill="none">
-      <rect
-        x="4"
-        y="3"
-        width="16"
-        height="18"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M19 11v6M16 14h6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
   );
 }
 
@@ -96,7 +59,7 @@ export function LandingHeader() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        menuRef.current && 
+        menuRef.current &&
         !menuRef.current.contains(event.target as Node) &&
         buttonRef.current &&
         !buttonRef.current.contains(event.target as Node)
@@ -134,60 +97,46 @@ export function LandingHeader() {
         <nav className="w-full px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12">
           <div className="flex h-16 sm:h-18 md:h-20.5 lg:h-23 items-center justify-between max-w-full">
             {/* Logo - Left */}
-            <Link href="/" aria-label="Workbridge home" className="shrink-0 transition-transform hover:scale-105 active:scale-95">
+            <Link
+              href="/"
+              aria-label="Workbridge home"
+              className="shrink-0 transition-transform hover:scale-105 active:scale-95"
+            >
               <LogoMark />
             </Link>
 
-            {/* Desktop Navigation - Center */}
-            <div className="hidden lg:flex items-center gap-4 xl:gap-13 text-sm xl:text-[17px] font-bold text-slate-950">
+            {/* Desktop Navigation - Center / Right */}
+            <div className="hidden lg:flex items-center gap-6 xl:gap-10 text-sm xl:text-[17px] font-bold text-slate-950">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative whitespace-nowrap transition-colors duration-200 group flex items-center gap-1 ${
+                    className={`relative whitespace-nowrap transition-colors duration-200 group py-1 ${
                       active
                         ? "text-emerald-600"
                         : "text-slate-600 hover:text-slate-950"
                     }`}
                   >
-                    <span className="transition-transform group-hover:scale-110">
-                      {link.icon}
-                    </span>
                     {link.label}
-                    {/* Underline only on hover - never on active */}
-                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full" />
+                    {/* Underline on hover or active */}
+                    <span
+                      className={`absolute -bottom-1 left-0 h-0.5 rounded-full bg-emerald-500 transition-all duration-300 ${
+                        active ? "w-full" : "w-0 group-hover:w-full"
+                      }`}
+                    />
                   </Link>
                 );
               })}
             </div>
 
-            {/* Right Side - Desktop Auth Buttons & Mobile Menu */}
-            <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-              {/* Sign In - Desktop only */}
-              <Link
-                href="/login"
-                className="hidden lg:flex items-center gap-1.5 h-9 md:h-10 px-4 md:px-5 lg:px-6 rounded-xl border border-slate-200 text-sm md:text-[14px] lg:text-[17px] font-semibold text-slate-700 transition-all hover:border-slate-950 hover:bg-slate-950 hover:text-white hover:scale-105 active:scale-95"
-              >
-                <SignInIcon />
-                Sign In
-              </Link>
-
-              {/* Sign Up - Desktop only */}
-              <Link
-                href="/register"
-                className="hidden lg:flex items-center gap-1.5 h-9 md:h-10 px-4 md:px-5 lg:px-6 rounded-xl bg-slate-950 text-sm md:text-[14px] lg:text-[17px] font-semibold text-white transition-all hover:bg-emerald-600 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-emerald-500/30"
-              >
-                <SignUpIcon />
-                Sign Up
-              </Link>
-
-              {/* Mobile Menu Toggle - Only button on mobile */}
+            {/* Mobile Menu Toggle */}
+            <div className="flex lg:hidden items-center">
               <button
                 ref={buttonRef}
                 onClick={toggleMenu}
-                className={`lg:hidden flex items-center justify-center h-9 w-9 sm:h-10 sm:w-10 rounded-lg transition-all hover:bg-slate-100 active:scale-90 ${
+                className={`flex items-center justify-center h-9 w-9 sm:h-10 sm:w-10 rounded-lg transition-all hover:bg-slate-100 active:scale-90 ${
                   isMenuOpen ? "bg-slate-100" : ""
                 }`}
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -213,14 +162,18 @@ export function LandingHeader() {
           />
 
           {/* Menu Panel */}
-          <div 
+          <div
             ref={menuRef}
             className="absolute right-0 top-0 h-full w-70 sm:w-80 bg-white shadow-2xl animate-slide-in"
           >
             <div className="flex flex-col h-full">
               {/* Mobile Menu Header */}
               <div className="flex items-center justify-between border-b border-slate-100 p-4 bg-linear-to-r from-emerald-50/50 to-white">
-                <Link href="/" onClick={closeMenu} className="transition-transform hover:scale-105">
+                <Link
+                  href="/"
+                  onClick={closeMenu}
+                  className="transition-transform hover:scale-105"
+                >
                   <LogoMark />
                 </Link>
                 <button
@@ -241,58 +194,22 @@ export function LandingHeader() {
                         key={link.href}
                         href={link.href}
                         onClick={closeMenu}
-                        className={`relative flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all group ${
+                        className={`relative flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium transition-all group ${
                           active
-                            ? "bg-emerald-50 text-emerald-600"
+                            ? "bg-emerald-50 text-emerald-600 font-semibold"
                             : "text-slate-700 hover:bg-slate-50"
                         }`}
                       >
-                        <span className={`transition-transform group-hover:scale-110 ${active ? "text-emerald-600" : ""}`}>
-                          {link.icon}
-                        </span>
-                        {link.label}
+                        <span>{link.label}</span>
                         {active && (
-                          <span className="ml-auto h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                         )}
                         {!active && (
-                          <ChevronDown className="ml-auto h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-1" />
+                          <ChevronDown className="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-1" />
                         )}
-                        {/* Underline only on hover for mobile */}
-                        <span className="absolute bottom-1 left-4 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-[calc(100%-2rem)]" />
                       </Link>
                     );
                   })}
-                </div>
-
-                {/* Mobile Auth Buttons */}
-                <div className="mt-6 space-y-3 border-t border-slate-100 pt-6">
-                  <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">
-                    Account
-                  </p>
-                  
-                  <Link
-                    href="/login"
-                    onClick={closeMenu}
-                    className="flex items-center justify-between w-full rounded-xl border border-slate-200 px-4 py-3.5 text-sm font-semibold text-slate-700 transition-all hover:bg-slate-50 hover:scale-[1.02] active:scale-95 group"
-                  >
-                    <span className="flex items-center gap-3">
-                      <LogIn className="h-4 w-4 text-emerald-600" />
-                      Sign In
-                    </span>
-                    <ArrowRight className="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-1" />
-                  </Link>
-
-                  <Link
-                    href="/register"
-                    onClick={closeMenu}
-                    className="flex items-center justify-between w-full rounded-xl bg-linear-to-r from-slate-950 to-emerald-600 px-4 py-3.5 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-95 hover:shadow-lg hover:shadow-emerald-500/30 group"
-                  >
-                    <span className="flex items-center gap-3">
-                      <UserPlus className="h-4 w-4" />
-                      Sign Up
-                    </span>
-                    <ArrowRight className="h-4 w-4 text-white/70 transition-transform group-hover:translate-x-1" />
-                  </Link>
                 </div>
 
                 {/* Quick Actions */}

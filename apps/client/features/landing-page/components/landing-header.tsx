@@ -8,48 +8,12 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/jobs", label: "Find Jobs" },
   { href: "/find-workers", label: "Find Workers" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/contact-us", label: "Help" },
 ];
 
 function LogoMark() {
   return <WorkBridgeLogo className="h-10 sm:h-12 w-auto max-w-[210px]" />;
-}
-
-function SignInIcon() {
-  return (
-    <svg aria-hidden="true" className="h-4 w-4" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M9 6 15 12 9 18M15 12H3M15 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function SignUpIcon() {
-  return (
-    <svg aria-hidden="true" className="h-4 w-4" viewBox="0 0 24 24" fill="none">
-      <rect
-        x="4"
-        y="3"
-        width="16"
-        height="18"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M19 11v6M16 14h6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
 }
 
 export function LandingHeader() {
@@ -68,7 +32,7 @@ export function LandingHeader() {
           <LogoMark />
         </Link>
 
-        <div className="hidden items-center gap-1 md:flex  shrink-0">
+        <div className="hidden items-center gap-1 md:flex shrink-0">
           {navLinks.map((link) => {
             const active = isActive(link.href);
             const cls = [
@@ -87,23 +51,6 @@ export function LandingHeader() {
               </Link>
             );
           })}
-        </div>
-
-        <div className="flex items-center gap-3">
-          <Link
-            href="/login"
-            className="hidden h-10 items-center gap-1.5 rounded-xl border border-slate-200 px-5 text-[14px] font-semibold text-slate-700 transition-all hover:border-slate-950 hover:bg-slate-950 hover:text-white sm:inline-flex"
-          >
-            <SignInIcon />
-            Sign In
-          </Link>
-          <Link
-            href="/register"
-            className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-slate-950 px-5 text-[14px] font-semibold text-white transition-all hover:bg-emerald-600"
-          >
-            <SignUpIcon />
-            Sign Up
-          </Link>
         </div>
       </nav>
     </header>
