@@ -1,5 +1,5 @@
-import { MessagesPage } from "../../../features/jobseeker-dashboard/messages-page";
+import { ChatInterface } from "@/features/chat/chat-interface";
 
 export default function DashboardMessagesPage() {
-  return <MessagesPage />;
+  return <ChatInterface />;
 }

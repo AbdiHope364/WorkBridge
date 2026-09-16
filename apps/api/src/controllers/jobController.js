@@ -1,17 +1,37 @@
 import { collections } from '../data/db.js';
 
 export const getJobs = async (req, res) => {
-  const query = String(req.query.q || '').toLowerCase();
-  const filter = query ? {
-    $or: [
-      { title: { $regex: query, $options: 'i' } },
-      { company: { $regex: query, $options: 'i' } },
-      { category: { $regex: query, $options: 'i' } },
-    ],
-  } : {};
+  try {
+    const query = String(req.query.q || req.query.keyword || '').toLowerCase();
+    const category = req.query.category;
+    const location = req.query.location;
 
-  const jobs = await collections.jobs.find(filter).toArray();
-  res.json({ jobs });
+    const filter = {};
+    if (query) {
+      filter.$or = [
+        { title: { $regex: query, $options: 'i' } },
+        { company: { $regex: query, $options: 'i' } },
+        { category: { $regex: query, $options: 'i' } },
+        { description: { $regex: query, $options: 'i' } },
+      ];
+    }
+    if (category) {
+      filter.category = { $regex: category, $options: 'i' };
+    }
+    if (location) {
+      filter.location = { $regex: location, $options: 'i' };
+    }
+
+    const jobs = await collections.jobs.find(filter).toArray();
+    return res.json({
+      jobs,
+      totalJobs: jobs.length,
+      data: { jobs, totalJobs: jobs.length },
+    });
+  } catch (err) {
+    console.error('getJobs error:', err);
+    return res.status(500).json({ error: 'Failed to fetch jobs' });
+  }
 };
 
 export const getEmployerJobs = async (req, res) => {
