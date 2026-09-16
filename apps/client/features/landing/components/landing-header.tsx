@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, Briefcase, Users, Sparkles } from "lucide-react";
-
 import { WorkBridgeLogo } from "@repo/ui";
 
 const navLinks = [
@@ -26,8 +25,6 @@ export function LandingHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const menuRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // Track scroll for shadow effect
   useEffect(() => {
@@ -43,33 +40,17 @@ export function LandingHeader() {
     setIsMenuOpen(false);
   }, [pathname]);
 
-  // Prevent body scroll when menu is open
+  // Lock body scroll when menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
     };
   }, [isMenuOpen]);
-
-  // Close menu on click outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target as Node)
-      ) {
-        setIsMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const isActive = (href: string) => {
     const linkPath = href.split("#")[0] ?? "";
@@ -78,20 +59,11 @@ export function LandingHeader() {
     return false;
   };
 
-  const toggleMenu = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full border-b border-slate-100 bg-white/95 backdrop-blur-sm transition-all duration-300 ${
-          isScrolled ? "shadow-md" : ""
+        className={`sticky top-0 z-40 w-full border-b border-slate-100 bg-white/95 backdrop-blur-md transition-all duration-200 ${
+          isScrolled ? "shadow-sm" : ""
         }`}
       >
         <nav className="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
@@ -134,17 +106,16 @@ export function LandingHeader() {
             {/* Mobile Menu Toggle Button - Positioned to the far right */}
             <div className="flex lg:hidden items-center justify-end ml-auto">
               <button
-                ref={buttonRef}
-                onClick={toggleMenu}
-                className={`flex items-center justify-center h-10 w-10 rounded-xl transition-all hover:bg-slate-100 active:scale-90 cursor-pointer ${
-                  isMenuOpen ? "bg-slate-100 text-slate-900" : "text-slate-700"
-                }`}
+                type="button"
+                onClick={() => setIsMenuOpen((prev) => !prev)}
+                className="flex items-center justify-center h-10 w-10 rounded-xl text-slate-700 hover:bg-slate-100 hover:text-slate-900 active:scale-90 transition-all cursor-pointer"
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isMenuOpen}
               >
                 {isMenuOpen ? (
-                  <X className="h-6 w-6 transition-transform rotate-90" />
+                  <X className="h-6 w-6" />
                 ) : (
-                  <Menu className="h-6 w-6 transition-transform" />
+                  <Menu className="h-6 w-6" />
                 )}
               </button>
             </div>
@@ -152,137 +123,106 @@ export function LandingHeader() {
         </nav>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Drawer Backdrop */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-fade-in"
-            onClick={closeMenu}
-          />
-
-          {/* Menu Panel */}
-          <div
-            ref={menuRef}
-            className="absolute right-0 top-0 h-full w-72 sm:w-80 bg-white shadow-2xl animate-slide-in"
-          >
-            <div className="flex flex-col h-full">
-              {/* Mobile Menu Header with close toggle button on far right */}
-              <div className="flex items-center justify-between border-b border-slate-100 p-4 bg-linear-to-r from-emerald-50/50 to-white">
-                <Link
-                  href="/"
-                  onClick={closeMenu}
-                  className="transition-transform hover:scale-105"
-                >
-                  <LogoMark />
-                </Link>
-                <button
-                  onClick={closeMenu}
-                  className="ml-auto p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all hover:rotate-90 active:scale-90 cursor-pointer"
-                  aria-label="Close menu"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-
-              {/* Mobile Navigation Links */}
-              <nav className="flex-1 overflow-y-auto p-4">
-                <div className="space-y-1">
-                  {navLinks.map((link) => {
-                    const active = isActive(link.href);
-                    return (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        onClick={closeMenu}
-                        className={`relative flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all group ${
-                          active
-                            ? "bg-emerald-50 text-emerald-600 font-semibold"
-                            : "text-slate-700 hover:bg-slate-50"
-                        }`}
-                      >
-                        <span>{link.label}</span>
-                        {active && (
-                          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                        )}
-                        {!active && (
-                          <ChevronDown className="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-1" />
-                        )}
-                      </Link>
-                    );
-                  })}
-                </div>
-
-                {/* Quick Actions */}
-                <div className="mt-6 space-y-2 border-t border-slate-100 pt-6">
-                  <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                    Quick Actions
-                  </p>
-                  <div className="grid grid-cols-2 gap-2">
-                    <Link
-                      href="/jobs"
-                      onClick={closeMenu}
-                      className="flex flex-col items-center gap-1.5 rounded-xl bg-slate-50 px-4 py-3 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-100 hover:scale-105 active:scale-95"
-                    >
-                      <Briefcase className="h-5 w-5 text-emerald-600" />
-                      Browse Jobs
-                    </Link>
-                    <Link
-                      href="/find-workers"
-                      onClick={closeMenu}
-                      className="flex flex-col items-center gap-1.5 rounded-xl bg-slate-50 px-4 py-3 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-100 hover:scale-105 active:scale-95"
-                    >
-                      <Users className="h-5 w-5 text-emerald-600" />
-                      Find Workers
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Special Offer Banner */}
-                <div className="mt-6 rounded-2xl bg-linear-to-r from-emerald-500 to-emerald-600 p-4 text-white shadow-xs">
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="h-4 w-4 animate-pulse" />
-                    <p className="text-xs font-bold">
-                      🎉 New jobs & trade tasks added daily!
-                    </p>
-                  </div>
-                </div>
-              </nav>
-            </div>
-          </div>
-        </div>
+        <div
+          className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs lg:hidden transition-opacity duration-200"
+          onClick={() => setIsMenuOpen(false)}
+          aria-hidden="true"
+        />
       )}
 
-      {/* CSS Animations */}
-      <style>{`
-        @keyframes slideIn {
-          from {
-            transform: translateX(100%);
-            opacity: 0;
-          }
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-        
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        
-        .animate-slide-in {
-          animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .animate-fade-in {
-          animation: fadeIn 0.2s ease-out;
-        }
-      `}</style>
+      {/* Mobile Sliding Menu Drawer */}
+      <aside
+        className={`fixed inset-y-0 right-0 z-50 flex w-72 sm:w-80 flex-col bg-white shadow-2xl transition-transform duration-300 ease-out lg:hidden ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="flex flex-col h-full">
+          {/* Mobile Menu Header with close toggle button on far right */}
+          <div className="flex items-center justify-between border-b border-slate-100 p-4 bg-gradient-to-r from-emerald-50/60 to-white">
+            <Link
+              href="/"
+              onClick={() => setIsMenuOpen(false)}
+              className="transition-transform hover:scale-105"
+            >
+              <LogoMark />
+            </Link>
+            <button
+              type="button"
+              onClick={() => setIsMenuOpen(false)}
+              className="ml-auto p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all active:scale-90 cursor-pointer"
+              aria-label="Close menu"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          {/* Mobile Navigation Links */}
+          <nav className="flex-1 overflow-y-auto p-4">
+            <div className="space-y-1">
+              {navLinks.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`relative flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all group ${
+                      active
+                        ? "bg-emerald-50 text-emerald-600 font-semibold"
+                        : "text-slate-700 hover:bg-slate-50 active:bg-slate-100"
+                    }`}
+                  >
+                    <span>{link.label}</span>
+                    {active && (
+                      <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                    )}
+                    {!active && (
+                      <ChevronDown className="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-1" />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Quick Actions */}
+            <div className="mt-6 space-y-2 border-t border-slate-100 pt-6">
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                Quick Actions
+              </p>
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  href="/jobs"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex flex-col items-center gap-1.5 rounded-xl bg-slate-50 px-4 py-3 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-100 hover:scale-105 active:scale-95"
+                >
+                  <Briefcase className="h-5 w-5 text-emerald-600" />
+                  Browse Jobs
+                </Link>
+                <Link
+                  href="/find-workers"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex flex-col items-center gap-1.5 rounded-xl bg-slate-50 px-4 py-3 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-100 hover:scale-105 active:scale-95"
+                >
+                  <Users className="h-5 w-5 text-emerald-600" />
+                  Find Workers
+                </Link>
+              </div>
+            </div>
+
+            {/* Special Offer Banner */}
+            <div className="mt-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 p-4 text-white shadow-xs">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 animate-pulse shrink-0" />
+                <p className="text-xs font-bold">
+                  🎉 New jobs & trade tasks added daily!
+                </p>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </aside>
     </>
   );
 }
