@@ -85,7 +85,7 @@ export function createJobsService(api: ApiClient) {
       return api.request(`/jobs?q=${encodeURIComponent(query)}`);
     },
     getJobseekerDashboard: async () => {
-      return api.request(`/dashboard/jobseeker`);
+      return api.request(`/jobs/jobseeker/dashboard`);
     },
     getEmployerDashboard: async () => api.request("/jobs/employer/dashboard"),
     getEmployerJobs: async (params?: Record<string, string | number | boolean | undefined>) =>

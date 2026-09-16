@@ -14,7 +14,8 @@ import notificationsRoutes from './routes/notifications.js';
 import accountsRoutes from './routes/accounts.js';
 import bookingsRoutes from './routes/bookings.js';
 import subscriptionsRoutes from './routes/subscriptions.js';
-import errorHandler from './middleware/errorHandler.js';
+import { getJobseekerDashboard, getEmployerDashboard } from './controllers/jobController.js';
+import { protect } from './middleware/auth.js';
 
 const app = express();
 
@@ -35,6 +36,10 @@ app.use('/api/notifications', notificationsRoutes);
 app.use('/api/accounts', accountsRoutes);
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/subscriptions', subscriptionsRoutes);
+
+// Dashboard direct route aliases
+app.get('/api/dashboard/jobseeker', protect, getJobseekerDashboard);
+app.get('/api/dashboard/employer', protect, getEmployerDashboard);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'WorkBridge API is healthy' });

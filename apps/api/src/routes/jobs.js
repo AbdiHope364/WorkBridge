@@ -9,6 +9,7 @@ import {
   shortlistCandidate,
   getEmployerJobs,
   getEmployerDashboard,
+  getJobseekerDashboard,
   getApplications,
 } from '../controllers/jobController.js';
 import { protect, authorize } from '../middleware/auth.js';
@@ -19,6 +20,7 @@ const router = express.Router();
 router.get('/', getJobs);
 router.post('/', protect, authorize('employer', 'admin'), createJob);
 router.get('/employer/dashboard', protect, authorize('employer', 'admin'), getEmployerDashboard);
+router.get('/jobseeker/dashboard', protect, authorize('worker', 'jobseeker', 'admin'), getJobseekerDashboard);
 router.get('/employer', protect, authorize('employer', 'admin'), getEmployerJobs);
 router.get('/applications', protect, authorize('employer', 'admin'), getApplications);
 
