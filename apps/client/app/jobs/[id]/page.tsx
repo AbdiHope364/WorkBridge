@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, notFound } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { api } from "@/lib/api";
 import { JobDetailPage } from "@/features/jobs/job-detail-page";
+import { Button } from "@repo/ui/button";
 
 export default function Page() {
   const params = useParams();
+  const router = useRouter();
   const id = params.id as string;
 
   const [job, setJob] = useState<any>(null);
@@ -19,10 +22,11 @@ export default function Page() {
 
       try {
         setLoading(true);
-        const response = await api.jobs.getJob(id);
-        const jobData = response?.data || response;
+        setError(false);
+        const response: any = await api.jobs.getJob(id);
+        const jobData = response?.data?.job || response?.data || response?.job || response;
 
-        if (!jobData || !jobData.title) {
+        if (!jobData || (!jobData.title && !jobData.id)) {
           setError(true);
         } else {
           setJob(jobData);
@@ -48,8 +52,36 @@ export default function Page() {
       </div>
     );
   }
+
   if (error || !job) {
-    return notFound();
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-[#F8FAFC] px-4 text-center">
+        <div className="w-16 h-16 rounded-3xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4 border border-emerald-100 shadow-sm">
+          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <h1 className="text-2xl font-black text-slate-900 tracking-tight">Job Not Found</h1>
+        <p className="text-slate-500 text-sm mt-2 max-w-md font-medium">
+          The requested position could not be found or may have been filled.
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
+          <Button
+            variant="outline"
+            onClick={() => router.back()}
+            className="rounded-xl font-bold px-6 h-11"
+          >
+            Go Back
+          </Button>
+          <Link
+            href="/jobs"
+            className="inline-flex items-center justify-center px-6 h-11 rounded-xl bg-teal-600 text-white font-bold text-sm hover:bg-teal-700 shadow-lg shadow-teal-600/20"
+          >
+            Browse All Jobs
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return <JobDetailPage job={job} />;

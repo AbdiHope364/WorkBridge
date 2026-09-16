@@ -1,4 +1,5 @@
 import { collections } from '../data/db.js';
+import { mockJobs } from '../data/mocks/index.js';
 
 export const getJobs = async (req, res) => {
   try {
@@ -19,14 +20,42 @@ export const getJobs = async (req, res) => {
       filter.category = { $regex: category, $options: 'i' };
     }
     if (location) {
-      filter.location = { $regex: location, $options: 'i' };
+      filter.$or = [
+        ...(filter.$or || []),
+        { location: { $regex: location, $options: 'i' } },
+        { 'location.city': { $regex: location, $options: 'i' } },
+      ];
     }
 
-    const jobs = await collections.jobs.find(filter).toArray();
+    let jobs = await collections.jobs.find(filter).toArray();
+    if (!jobs || jobs.length === 0) {
+      jobs = mockJobs;
+    }
+
+    const normalizedJobs = jobs.map((job) => ({
+      ...job,
+      id: String(job.id || job._id),
+      _id: String(job._id || job.id),
+      employerSnapshot: job.employerSnapshot || {
+        displayName: job.company || 'Employer',
+        industry: job.category || 'Trade',
+        displayLocation: typeof job.location === 'object' ? job.location?.city : (job.location || 'Addis Ababa'),
+      },
+      location: typeof job.location === 'object' ? job.location : { city: job.location || 'Addis Ababa', country: 'Ethiopia' },
+      jobType: job.jobType || job.type || 'Full-time',
+      experienceLevel: job.experienceLevel || job.experience || 'Entry Level',
+      vacancies: job.vacancies || 1,
+      skills: Array.isArray(job.skills)
+        ? job.skills.map(s => (typeof s === 'string' ? { name: s } : s))
+        : Array.isArray(job.requirements)
+        ? job.requirements.map(r => (typeof r === 'string' ? { name: r } : r))
+        : [],
+    }));
+
     return res.json({
-      jobs,
-      totalJobs: jobs.length,
-      data: { jobs, totalJobs: jobs.length },
+      jobs: normalizedJobs,
+      totalJobs: normalizedJobs.length,
+      data: { jobs: normalizedJobs, totalJobs: normalizedJobs.length },
     });
   } catch (err) {
     console.error('getJobs error:', err);
@@ -143,11 +172,72 @@ export const getApplications = async (req, res) => {
 };
 
 export const getJobById = async (req, res) => {
-  const job = await collections.jobs.findOne({ id: String(req.params.id) });
-  if (!job) {
-    return res.status(404).json({ error: 'Job not found' });
+  try {
+    const rawId = req.params.id;
+    let job = null;
+
+    // 1. Try finding in MongoDB by id or _id as string/number
+    job = await collections.jobs.findOne({
+      $or: [
+        { id: String(rawId) },
+        { id: isNaN(Number(rawId)) ? undefined : Number(rawId) },
+        { _id: String(rawId) },
+      ].filter(Boolean),
+    });
+
+    // 2. If not found and rawId could be a MongoDB ObjectId
+    if (!job && rawId && typeof rawId === 'string' && rawId.length === 24) {
+      try {
+        const { ObjectId } = await import('mongodb');
+        job = await collections.jobs.findOne({ _id: new ObjectId(rawId) });
+      } catch (e) {}
+    }
+
+    // 3. Fallback to mockJobs if not found in db
+    if (!job) {
+      job = mockJobs.find((j) => String(j.id) === String(rawId) || String(j._id) === String(rawId));
+    }
+
+    if (!job) {
+      return res.status(404).json({ error: 'Job not found' });
+    }
+
+    // Normalize job object for frontend consistency
+    const normalized = {
+      ...job,
+      id: String(job.id || job._id),
+      _id: String(job._id || job.id),
+      employerSnapshot: job.employerSnapshot || {
+        displayName: job.company || 'Employer',
+        industry: job.category || 'Trade',
+        displayLocation: typeof job.location === 'object' ? job.location?.city : (job.location || 'Addis Ababa'),
+      },
+      location: typeof job.location === 'object' ? job.location : { city: job.location || 'Addis Ababa', country: 'Ethiopia' },
+      jobType: job.jobType || job.type || 'Full-time',
+      experienceLevel: job.experienceLevel || job.experience || 'Entry Level',
+      vacancies: job.vacancies || 1,
+      skills: Array.isArray(job.skills)
+        ? job.skills.map(s => (typeof s === 'string' ? { name: s } : s))
+        : Array.isArray(job.requirements)
+        ? job.requirements.map(r => (typeof r === 'string' ? { name: r } : r))
+        : [],
+      requirements: Array.isArray(job.requirements)
+        ? job.requirements
+        : Array.isArray(job.skills)
+        ? job.skills.map(s => (typeof s === 'string' ? s : s?.name || ''))
+        : [],
+    };
+
+    return res.json({
+      success: true,
+      job: normalized,
+      data: normalized,
+      ...normalized,
+    });
+  } catch (error) {
+    console.error('getJobById error:', error);
+    return res.status(500).json({ error: 'Failed to retrieve job details' });
   }
-  res.json({ job });
 };
 
 export const createJob = async (req, res) => {

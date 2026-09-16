@@ -299,7 +299,11 @@ export function ChatInterface({
 
   // Active conversation
   const activeConversation = useMemo(() => {
-    return conversations.find((c) => c.id === activeId) || conversations[0];
+    return (
+      conversations.find((c) => c.id === activeId) ||
+      conversations.find((c) => c.id.startsWith(activeId) || activeId.startsWith(c.id)) ||
+      conversations[0]
+    );
   }, [conversations, activeId]);
 
   // Scroll to bottom when messages update

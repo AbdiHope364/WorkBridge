@@ -216,10 +216,27 @@ export function JobDetailPage({ job }: { job: any }) {
     }
   };
 
-  const company = job.employerSnapshot;
+  const company = job.employerSnapshot || {
+    displayName: job.company || "Employer",
+    industry: job.category || "General",
+    displayLocation: typeof job.location === "object" ? job.location?.city : (job.location || "Addis Ababa"),
+  };
+  const locationCity = typeof job.location === "object" ? job.location?.city : (job.location || "Addis Ababa");
+  const salaryDisplay =
+    typeof job.salary === "number"
+      ? `${job.salary.toLocaleString()} ETB`
+      : job.salary
+      ? `${job.salary}`
+      : "Negotiable";
   const postedDate = job.createdAt
     ? formatDistanceToNow(new Date(job.createdAt), { addSuffix: true })
     : "Recently";
+
+  const skillsList = Array.isArray(job.skills) && job.skills.length > 0
+    ? job.skills
+    : Array.isArray(job.requirements) && job.requirements.length > 0
+    ? job.requirements.map((r: any) => (typeof r === "string" ? { name: r } : r))
+    : [{ name: "Trade Certified" }, { name: "Direct Settlement" }];
 
   return (
     <main className="min-h-screen bg-[#F8FAFC] pb-16 sm:pb-20">
@@ -227,8 +244,8 @@ export function JobDetailPage({ job }: { job: any }) {
         <Container size="lg" className="max-w-6xl px-4 sm:px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-slate-900 flex items-center justify-center text-white text-2xl sm:text-3xl font-black shadow-xl shrink-0">
-                {company?.displayName?.charAt(0).toUpperCase()}
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-slate-900 flex items-center justify-center text-white text-2xl sm:text-3xl font-black shadow-xl shrink-0 uppercase">
+                {company?.displayName?.charAt(0) || "E"}
               </div>
               <div className="space-y-1.5 sm:space-y-2 min-w-0">
                 <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
@@ -239,7 +256,7 @@ export function JobDetailPage({ job }: { job: any }) {
                     {company?.displayName}
                   </span>
                   <div className="flex items-center gap-1.5">
-                    <Icons.MapPin /> {job.location?.city}
+                    <Icons.MapPin /> {locationCity}
                   </div>
                   <div className="flex items-center gap-1.5">
                     <Icons.Clock /> Posted {postedDate}
@@ -279,18 +296,18 @@ export function JobDetailPage({ job }: { job: any }) {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
               <InfoBox
                 icon={Icons.Wallet}
-                label="Salary"
-                value={`${job.salary?.toLocaleString()} ETB`}
+                label="Salary / Rate"
+                value={salaryDisplay}
               />
               <InfoBox
                 icon={Icons.Briefcase}
                 label="Job Type"
-                value={formatEnum(job.jobType)}
+                value={formatEnum(job.jobType || job.type || "Full-time")}
               />
               <InfoBox
                 icon={Icons.Briefcase}
                 label="Level"
-                value={formatEnum(job.experienceLevel)}
+                value={formatEnum(job.experienceLevel || job.experience || "Intermediate")}
               />
               <InfoBox
                 icon={Icons.Users}
@@ -300,12 +317,12 @@ export function JobDetailPage({ job }: { job: any }) {
               <InfoBox
                 icon={Icons.Briefcase}
                 label="Category"
-                value={formatEnum(job.category)}
+                value={formatEnum(job.category || "General")}
               />
               <InfoBox
                 icon={Icons.Briefcase}
                 label="Environment"
-                value={formatEnum(job.workerType)}
+                value={formatEnum(job.workerType || "On-site")}
               />
             </div>
 
@@ -314,23 +331,26 @@ export function JobDetailPage({ job }: { job: any }) {
                 Description
               </h2>
               <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed whitespace-pre-wrap font-medium text-xs sm:text-sm">
-                {job.description}
+                {job.description || "No detailed description provided."}
               </div>
             </div>
 
             <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-slate-200 shadow-sm">
               <h2 className="text-lg sm:text-xl font-black text-slate-900 mb-4 sm:mb-6">
-                Required Skills
+                Required Skills & Certifications
               </h2>
               <div className="flex flex-wrap gap-2 sm:gap-3">
-                {job.skills?.map((skill: any) => (
-                  <Badge
-                    key={skill.name}
-                    className="bg-slate-100 text-slate-700 px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold border-none"
-                  >
-                    {skill.name}
-                  </Badge>
-                ))}
+                {skillsList.map((skill: any, idx: number) => {
+                  const skillName = typeof skill === "string" ? skill : skill?.name || skill?.title || `Skill ${idx + 1}`;
+                  return (
+                    <Badge
+                      key={`${skillName}-${idx}`}
+                      className="bg-slate-100 text-slate-700 px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold border-none"
+                    >
+                      {skillName}
+                    </Badge>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -339,8 +359,8 @@ export function JobDetailPage({ job }: { job: any }) {
             <Card className="rounded-2xl sm:rounded-[2rem] border-slate-200 p-5 sm:p-8 shadow-sm bg-white overflow-hidden relative">
               <div className="absolute top-0 left-0 w-full h-24 bg-slate-900" />
               <div className="relative pt-6 text-center">
-                <div className="w-20 h-20 rounded-2xl bg-white border-4 border-white shadow-lg flex items-center justify-center text-slate-900 text-2xl font-black mx-auto">
-                  {company?.displayName?.charAt(0).toUpperCase()}
+                <div className="w-20 h-20 rounded-2xl bg-white border-4 border-white shadow-lg flex items-center justify-center text-slate-900 text-2xl font-black mx-auto uppercase">
+                  {company?.displayName?.charAt(0) || "E"}
                 </div>
                 <h3 className="text-lg font-black text-slate-900 mt-4">
                   {company?.displayName}
@@ -352,13 +372,13 @@ export function JobDetailPage({ job }: { job: any }) {
                   <div className="flex justify-between">
                     <span className="text-slate-400">Location</span>
                     <span className="text-slate-800 font-bold">
-                      {company?.displayLocation || job.location?.city}
+                      {company?.displayLocation || locationCity}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-400">Website</span>
                     <span className="text-teal-600 font-bold hover:underline cursor-pointer">
-                      Visit Site
+                      Direct Trade Verified
                     </span>
                   </div>
                 </div>

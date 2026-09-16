@@ -273,7 +273,7 @@ export function JobseekerDashboardPage() {
                 </div>
                 <div className="mt-8 pt-6 border-t border-slate-50 text-center">
                   <Link
-                    href="/dashboard/activities"
+                    href="/dashboard/applications"
                     className="text-sm font-bold text-teal-600 hover:text-teal-700 transition-colors uppercase tracking-widest"
                   >
                     Full History →
