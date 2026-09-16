@@ -58,7 +58,7 @@ export function BookWorkerModal({
   const [offeredPrice, setOfferedPrice] = useState<number | string>(
     typeof worker.hourlyRate === "number" ? worker.hourlyRate * 3 : 1500
   );
-  const [currency, setCurrency] = useState(worker.currency || "ETB");
+  const currency = worker.currency || "ETB";
   const [clientPhone, setClientPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -282,14 +282,9 @@ export function BookWorkerModal({
                       onChange={(e) => setOfferedPrice(e.target.value)}
                       required
                     />
-                    <select
-                      value={currency}
-                      onChange={(e) => setCurrency(e.target.value)}
-                      className="w-20 rounded-xl border border-slate-200 bg-slate-50 px-2 text-xs font-bold text-slate-800"
-                    >
-                      <option value="ETB">ETB</option>
-                      <option value="USD">USD</option>
-                    </select>
+                    <span className="inline-flex items-center justify-center px-3 rounded-xl border border-slate-200 bg-slate-100 text-xs font-black text-slate-800">
+                      ETB
+                    </span>
                   </div>
                 </div>
               </div>

@@ -33,8 +33,8 @@ const mockSubscriptions: ActiveSubscription[] = [
     status: "active",
     startDate: "Jan 1, 2025",
     endDate: "Dec 31, 2025",
-    amount: 99,
-    currency: "USD",
+    amount: 999,
+    currency: "ETB",
     members: 25,
   },
   {
@@ -44,8 +44,8 @@ const mockSubscriptions: ActiveSubscription[] = [
     status: "active",
     startDate: "Mar 15, 2025",
     endDate: "Mar 15, 2026",
-    amount: 49,
-    currency: "USD",
+    amount: 499,
+    currency: "ETB",
     members: 12,
   },
   {
@@ -56,7 +56,7 @@ const mockSubscriptions: ActiveSubscription[] = [
     startDate: "Pending",
     endDate: "Pending",
     amount: 0,
-    currency: "USD",
+    currency: "ETB",
     members: 3,
   },
   {
@@ -66,8 +66,8 @@ const mockSubscriptions: ActiveSubscription[] = [
     status: "expired",
     startDate: "Feb 1, 2025",
     endDate: "May 1, 2025",
-    amount: 49,
-    currency: "USD",
+    amount: 499,
+    currency: "ETB",
     members: 8,
   },
 ];
@@ -166,7 +166,7 @@ export function ActiveSubscriptions() {
                     <div className="flex items-center gap-1 text-slate-500">
                       <CreditCard className="w-3 h-3" />
                       <span>
-                        ${sub.amount}/{sub.currency}
+                        {sub.amount} {sub.currency}
                       </span>
                     </div>
                   </div>

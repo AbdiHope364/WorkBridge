@@ -39,7 +39,7 @@ const mockPlans: Plan[] = [
     name: "Free",
     description: "Basic features for getting started",
     price: 0,
-    currency: "USD",
+    currency: "ETB",
     interval: "monthly",
     icon: Users,
     color: "bg-slate-500",
@@ -57,8 +57,8 @@ const mockPlans: Plan[] = [
     id: "pro",
     name: "Pro",
     description: "For growing businesses",
-    price: 49,
-    currency: "USD",
+    price: 499,
+    currency: "ETB",
     interval: "monthly",
     popular: true,
     icon: Briefcase,
@@ -78,8 +78,8 @@ const mockPlans: Plan[] = [
     id: "business",
     name: "Business",
     description: "For large organizations",
-    price: 99,
-    currency: "USD",
+    price: 999,
+    currency: "ETB",
     interval: "monthly",
     icon: Building2,
     color: "bg-amber-500",
@@ -199,18 +199,17 @@ export function SubscriptionPlans() {
 
                   <div className="mb-4">
                     <span className="text-2xl font-black text-slate-900">
-                      $
                       {billingInterval === "monthly"
-                        ? plan.price
-                        : Math.round(yearlyPrice)}
+                        ? plan.price.toLocaleString()
+                        : Math.round(yearlyPrice).toLocaleString()}{" "}
+                      ETB
                     </span>
                     <span className="text-sm font-medium text-slate-400">
                       /{billingInterval === "monthly" ? "mo" : "yr"}
                     </span>
                     {billingInterval === "yearly" && plan.price > 0 && (
                       <p className="text-[9px] font-medium text-emerald-600 mt-0.5">
-                        Save ${Math.round(plan.price * 12 - yearlyPrice)}{" "}
-                        annually
+                        Save {Math.round(plan.price * 12 - yearlyPrice).toLocaleString()} ETB annually
                       </p>
                     )}
                   </div>

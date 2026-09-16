@@ -5,7 +5,7 @@ export const mockJobs = [
     company: 'Tech Corp',
     location: 'Addis Ababa',
     type: 'Full-time',
-    salary: '$50,000 - $70,000',
+    salary: '40,000 - 60,000 ETB / month',
   },
   {
     id: '2',
@@ -13,7 +13,7 @@ export const mockJobs = [
     company: 'Digital Solutions',
     location: 'Remote',
     type: 'Contract',
-    salary: '$40,000 - $60,000',
+    salary: '35,000 - 50,000 ETB / month',
   },
   {
     id: '3',
@@ -21,7 +21,7 @@ export const mockJobs = [
     company: 'Creative Studio',
     location: 'Addis Ababa',
     type: 'Full-time',
-    salary: '$35,000 - $50,000',
+    salary: '30,000 - 45,000 ETB / month',
   },
   {
     id: '4',
@@ -29,7 +29,7 @@ export const mockJobs = [
     company: 'Cloud Systems',
     location: 'Remote',
     type: 'Contract',
-    salary: '$60,000 - $80,000',
+    salary: '50,000 - 70,000 ETB / month',
   },
 ];
 

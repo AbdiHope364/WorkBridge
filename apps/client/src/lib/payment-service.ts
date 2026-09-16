@@ -30,16 +30,16 @@ class PaymentService {
       return [
         {
           id: "p1",
-          amount: 2800,
-          currency: "USD",
+          amount: 28000,
+          currency: "ETB",
           status: "completed",
           createdAt: new Date().toISOString(),
-          description: "Monthly Freelance Payout",
+          description: "Monthly Service Payout",
         },
         {
           id: "p2",
-          amount: 29,
-          currency: "USD",
+          amount: 499,
+          currency: "ETB",
           status: "completed",
           createdAt: new Date(Date.now() - 7 * 86400000).toISOString(),
           description: "Pro Plan Subscription",

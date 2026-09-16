@@ -34,7 +34,7 @@ export default function JobDetailPage() {
     type: "Full-Time",
     category: "Software Development",
     location: "Addis Ababa, Ethiopia (Hybrid)",
-    salary: "$2,500 - $4,000 / month",
+    salary: "25,000 - 40,000 ETB / month",
     postedDate: "June 18, 2025",
     status: "Pending",
     experience: "5+ Years",

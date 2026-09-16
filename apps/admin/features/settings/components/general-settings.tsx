@@ -34,9 +34,9 @@ export function GeneralSettings() {
     email: "admin@workbridge.com",
     phone: "+1 (555) 123-4567",
     address: "123 Tech Park, Silicon Valley, CA 94025",
-    timezone: "America/Los_Angeles",
+    timezone: "Africa/Addis_Ababa",
     language: "English",
-    currency: "USD",
+    currency: "ETB",
   });
 
   const [formData, setFormData] = useState(settings);

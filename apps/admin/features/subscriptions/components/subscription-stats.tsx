@@ -88,7 +88,7 @@ export function SubscriptionStats() {
     },
     {
       label: "Monthly Revenue",
-      value: "$24,850",
+      value: "24,850 ETB",
       change: "+22.7%",
       trend: "up" as const,
       icon: DollarSign,
