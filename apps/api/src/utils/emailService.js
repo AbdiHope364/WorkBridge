@@ -1,10 +1,10 @@
 /**
  * WorkBridge Email Service
- * Supports Resend, Brevo (Sendinblue), SendGrid, and Console Simulation
+ * Supports Free Gmail SMTP (Google App Password), Resend, Brevo, and Console Simulation
  */
+import nodemailer from 'nodemailer';
 
 export const sendOtpEmail = async ({ to, name = 'User', otp }) => {
-  const senderEmail = process.env.EMAIL_FROM || 'auth@workbridge.et';
   const appName = 'WorkBridge Ethiopia';
 
   const htmlContent = `
@@ -62,7 +62,35 @@ export const sendOtpEmail = async ({ to, name = 'User', otp }) => {
     </html>
   `;
 
-  // 1. If Resend API Key is provided
+  // 1. If Free Gmail / Custom SMTP credentials are provided (100% Free Forever)
+  const emailUser = process.env.EMAIL_USER || process.env.GMAIL_USER || process.env.SMTP_USER;
+  const emailPass = process.env.EMAIL_PASS || process.env.GMAIL_APP_PASSWORD || process.env.SMTP_PASS;
+
+  if (emailUser && emailPass) {
+    try {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: emailUser,
+          pass: emailPass,
+        },
+      });
+
+      const info = await transporter.sendMail({
+        from: `"${appName}" <${emailUser}>`,
+        to,
+        subject: `${otp} is your WorkBridge verification code`,
+        html: htmlContent,
+      });
+
+      console.log(`[EmailService] Free Gmail SMTP email successfully delivered to ${to} (MessageID: ${info.messageId})`);
+      return { success: true, provider: 'gmail-smtp', id: info.messageId };
+    } catch (err) {
+      console.error(`[EmailService] Gmail SMTP error:`, err);
+    }
+  }
+
+  // 2. If Resend API Key is provided
   if (process.env.RESEND_API_KEY) {
     try {
       const response = await fetch('https://api.resend.com/emails', {
@@ -91,7 +119,7 @@ export const sendOtpEmail = async ({ to, name = 'User', otp }) => {
     }
   }
 
-  // 2. If Brevo (Sendinblue) API Key is provided
+  // 3. If Brevo (Sendinblue) API Key is provided
   if (process.env.BREVO_API_KEY) {
     try {
       const response = await fetch('https://api.brevo.com/v3/smtp/email', {
@@ -121,7 +149,7 @@ export const sendOtpEmail = async ({ to, name = 'User', otp }) => {
     }
   }
 
-  // 3. Fallback: Terminal Simulator & Log (Active when no email service API key is set)
+  // 4. Fallback: Terminal Simulator & Log (Active when no email service is set)
   console.log(`\n======================================================`);
   console.log(`📧 [EMAIL DELIVERY SIMULATOR - WORKBRIDGE OTP]`);
   console.log(`To:       ${to} (${name})`);
@@ -129,7 +157,7 @@ export const sendOtpEmail = async ({ to, name = 'User', otp }) => {
   console.log(`------------------------------------------------------`);
   console.log(`Your 6-Digit OTP Code:  👉 [  ${otp}  ] 👈`);
   console.log(`Expiry:   10 Minutes from now`);
-  console.log(`Tip:      To send live emails to real inboxes, add RESEND_API_KEY or BREVO_API_KEY in apps/api/.env`);
+  console.log(`Tip:      To send live emails directly from your Gmail, add EMAIL_USER and EMAIL_PASS to apps/api/.env`);
   console.log(`======================================================\n`);
 
   return { success: true, provider: 'simulator', otp };
