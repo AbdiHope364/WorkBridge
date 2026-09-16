@@ -14,6 +14,7 @@ import notificationsRoutes from './routes/notifications.js';
 import accountsRoutes from './routes/accounts.js';
 import bookingsRoutes from './routes/bookings.js';
 import subscriptionsRoutes from './routes/subscriptions.js';
+import errorHandler from './middleware/errorHandler.js';
 import { getJobseekerDashboard, getEmployerDashboard } from './controllers/jobController.js';
 import { protect } from './middleware/auth.js';
 
