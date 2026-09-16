@@ -17,7 +17,7 @@
 - **Student Name:** Abdi Abiot (ID: DDU1500744)
 - **Host Organization:** SORARDI PLC
 - **Industry Supervisor:** Mr. Dawit Tesfaye (Lead Software Architect, SORARDI PLC)
-- **Academic Advisor:** Mr. Fikadu (Department of Software Engineering, DDU-IoT)
+- **Academic Advisor / Supervisor:** Mr. Busha Dinsa (Department of Software Engineering, DDU-IoT)
 - **Internship Duration:** March 15, 2026 – July 15, 2026 (4 Months / 8 Sprints)
 
 ---

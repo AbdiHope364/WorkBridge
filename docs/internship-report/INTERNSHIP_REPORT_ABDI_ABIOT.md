@@ -21,7 +21,7 @@
 **Internship & Institutional Information:**
 - **Host Organization:** SORARDI PLC, Addis Ababa & Dire Dawa, Ethiopia
 - **Industry Supervisor:** Mr. Dawit Tesfaye (Lead Software Architect, SORARDI PLC)
-- **Academic Advisor:** Mr. Fikadu (Lecturer, Department of Software Engineering, DDU-IoT)
+- **Academic Advisor / Supervisor:** Mr. Busha Dinsa (Department of Software Engineering, DDU-IoT)
 - **Internship Duration:** 4 Months (March 15, 2026 – July 15, 2026)
 - **Date of Submission:** 10/01/2018 E.C. (September 20, 2026 G.C.)
 - **Date of Defense / Presentation:** 12/01/2018 E.C. (September 22, 2026 G.C.)
@@ -32,7 +32,7 @@
 
 I, **Abdi Abiot**, hereby declare that this internship report entitled **"Software Engineering Internship Report: WorkBridge Platform Development and Supporting Software Systems at SORARDI PLC"** is my original work developed during my 4-month industrial internship from March 15, 2026, to July 15, 2026, at SORARDI PLC. 
 
-This report presents authentic technical contributions, design decisions, implementation details, testing results, and professional experiences acquired under the joint supervision of **Mr. Dawit Tesfaye** (Industry Supervisor at SORARDI PLC) and **Mr. Fikadu** (Academic Advisor at Dire Dawa University). All external sources, libraries, frameworks, and literature utilized during this tenure have been duly cited and acknowledged.
+This report presents authentic technical contributions, design decisions, implementation details, testing results, and professional experiences acquired under the joint supervision of **Mr. Dawit Tesfaye** (Industry Supervisor at SORARDI PLC) and **Mr. Busha Dinsa** (Academic Advisor / Supervisor at Dire Dawa University). All external sources, libraries, frameworks, and literature utilized during this tenure have been duly cited and acknowledged.
 
 - **Student Name:** Abdi Abiot  
 - **Signature:** ___________________________  
@@ -50,10 +50,10 @@ This is to certify that **Abdi Abiot** (ID: DDU1500744) has successfully complet
 - **Date:** ___________________________  
 - **Company Stamp:**
 
-### 2. Academic Advisor Approval
+### 2. Academic Advisor / Supervisor Approval
 This is to certify that this internship report has been submitted to the Department of Software Engineering, Dire Dawa Institute of Technology, Dire Dawa University, in partial fulfillment of the requirements for the Degree of Bachelor of Science in Software Engineering, and is approved for oral defense and evaluation.
 
-- **Academic Advisor:** Mr. Fikadu (Department of Software Engineering, DDU-IoT)  
+- **Academic Advisor / Supervisor:** Mr. Busha Dinsa (Department of Software Engineering, DDU-IoT)  
 - **Signature:** ___________________________  
 - **Date:** ___________________________  
 
@@ -65,7 +65,7 @@ First and foremost, I would like to express my deepest gratitude to the Almighty
 
 I extend my heartfelt appreciation and sincere gratitude to the management and engineering leadership of **SORARDI PLC** for providing me with the opportunity to join their software engineering team. Special and profound thanks go to my industry supervisor, **Mr. Dawit Tesfaye** (Lead Software Architect at SORARDI PLC), whose technical mentorship, thorough code reviews, architectural insights, and encouragement were instrumental in transforming my academic knowledge into enterprise-grade engineering practice. I also thank my senior colleagues and team members at SORARDI PLC for their collaborative spirit and guidance across modern full-stack development, agile ceremonies, and distributed systems.
 
-I express my deepest respect and gratitude to my academic advisor, **Mr. Fikadu**, and all faculty members of the **Department of Software Engineering** at **Dire Dawa Institute of Technology (DDU-IoT)**. Their solid curriculum, rigorous standards, and continuous academic guidance provided the theoretical and practical foundation required to excel in a high-intensity industrial environment.
+I express my deepest respect and gratitude to my academic advisor and supervisor, **Mr. Busha Dinsa**, and all faculty members of the **Department of Software Engineering** at **Dire Dawa Institute of Technology (DDU-IoT)**. Their solid curriculum, rigorous standards, and continuous academic guidance provided the theoretical and practical foundation required to excel in a high-intensity industrial environment.
 
 Finally, I am eternally indebted to my family and classmates for their unconditional love, moral support, and encouragement throughout my studies and internship tenure.
 
