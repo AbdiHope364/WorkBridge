@@ -13,32 +13,32 @@ const stats = [
 
 export function HeroSection() {
   return (
-    <section id="find-jobs" className="bg-white pb-0 pt-12 sm:pt-16 md:pt-20 lg:pt-24 xl:pt-28">
-      <Container size="xl" className="w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
-        <div className="grid items-center gap-5 md:gap-5 lg:gap-5 xl:gap-5 lg:grid-cols-2">
+    <section id="find-jobs" className="bg-white pt-6 sm:pt-12 md:pt-16 lg:pt-20 overflow-hidden">
+      <Container size="xl" className="w-full px-4 sm:px-6 md:px-8 lg:px-10">
+        <div className="grid items-center gap-8 lg:gap-12 lg:grid-cols-2">
           {/* Left - Text Content */}
-          <div className="order-2 lg:order-1 text-center lg:text-left">
-            <h1 className="text-3xl sm:text-4xl md:text-[38px] lg:text-[42px] xl:text-[46px] 2xl:text-[52px] font-black leading-[1.12] tracking-[-0.04em] text-slate-950 max-w-full lg:max-w-140 mx-auto lg:mx-0">
+          <div className="order-2 lg:order-1 text-center lg:text-left flex flex-col items-center lg:items-start">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black leading-[1.15] tracking-tight text-slate-950 max-w-xl">
               Hire top talent or find your{" "}
               <span className="text-emerald-600">dream job</span> in Ethiopia.
             </h1>
-            
-            <p className="mt-3 sm:mt-4 md:mt-5 text-sm sm:text-base md:text-[17px] lg:text-[18px] xl:text-[19px] leading-[1.28] text-slate-800 max-w-full lg:max-w-125 mx-auto lg:mx-0">
+
+            <p className="mt-3 sm:mt-5 text-sm sm:text-base md:text-lg leading-relaxed text-slate-700 max-w-lg">
               WorkBridge connects skilled workers and employers across Ethiopia.
               Find trusted professionals or discover new job opportunities
               quickly and securely.
             </p>
-            
-            <div className="mt-5 sm:mt-6 md:mt-7 lg:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-5 justify-center lg:justify-start">
+
+            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
               <Link
                 href="/jobs"
-                className="inline-flex items-center justify-center w-full sm:w-auto min-w-35 rounded-xl bg-emerald-700 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base font-bold text-white transition-all hover:bg-emerald-800 hover:shadow-lg hover:shadow-emerald-500/30"
+                className="inline-flex items-center justify-center w-full sm:w-auto rounded-xl bg-emerald-600 hover:bg-emerald-700 px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all shadow-md hover:shadow-emerald-500/20 active:scale-95"
               >
                 Find Jobs
               </Link>
               <Link
                 href="/dashboard/employer"
-                className="inline-flex items-center justify-center w-full sm:w-auto min-w-35 rounded-xl bg-slate-950 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base font-bold text-white transition-all hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-500/30"
+                className="inline-flex items-center justify-center w-full sm:w-auto rounded-xl bg-slate-950 hover:bg-slate-800 px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all shadow-md active:scale-95"
               >
                 Hire Workers
               </Link>
@@ -46,44 +46,42 @@ export function HeroSection() {
           </div>
 
           {/* Right - Image */}
-          <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="relative flex w-full max-w-full md:max-w-125 lg:max-w-137.5 xl:max-w-152.5 items-center justify-center bg-slate-50 px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 rounded-xl">
-              <div className="relative w-full aspect-video">
+          <div className="order-1 lg:order-2 flex justify-center w-full">
+            <div className="relative flex w-full max-w-md lg:max-w-xl items-center justify-center bg-slate-50 p-4 sm:p-6 rounded-2xl border border-slate-100 shadow-xs">
+              <div className="relative w-full aspect-video sm:aspect-4/3 max-h-[340px]">
                 <Image
                   src="/hero-image.png"
                   alt="Professionals looking for jobs and talent"
                   fill
                   className="object-contain"
                   priority
-                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 50vw"
                 />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Stats Section - Centered */}
-        <div className="mt-8 sm:mt-10 md:mt-12 lg:mt-14 xl:mt-16 flex justify-center">
-          <div
-            style={{ background: "#04865a" }}
-            className="grid w-full max-w-full md:max-w-[90%] lg:max-w-[85%] xl:max-w-[80%] grid-cols-2 gap-3 sm:gap-4 md:gap-5 rounded-t-2xl sm:rounded-t-3xl md:rounded-t-4xl lg:rounded-t-[5rem] bg-[#04865a] px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 py-6 sm:py-7 md:py-8 lg:py-10 xl:py-12 text-center text-white"
-          >
+        {/* Stats Section */}
+        <div className="mt-10 sm:mt-14 md:mt-16 flex justify-center w-full">
+          <div className="grid w-full max-w-5xl grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 rounded-t-2xl sm:rounded-t-3xl md:rounded-t-4xl bg-emerald-700 px-4 sm:px-8 py-6 sm:py-8 md:py-10 text-center text-white shadow-sm">
             {stats.map((stat, index) => (
-              <div 
+              <div
                 key={stat.label}
-                className={`
-                  ${index === 0 || index === 2 ? 'border-r border-white/20 sm:border-r-0' : ''}
-                  ${index === 0 ? 'border-b border-white/20 sm:border-b-0' : ''}
-                  ${index === 1 ? 'border-b border-white/20 sm:border-b-0' : ''}
-                  ${index === 2 ? 'sm:border-b-0' : ''}
-                  ${index < 2 ? 'pb-3 sm:pb-0' : 'pt-3 sm:pt-0'}
-                  ${index % 2 === 1 ? 'sm:border-r-0' : ''}
-                `}
+                className={`flex flex-col items-center justify-center ${
+                  index % 2 === 0
+                    ? "border-r border-white/20 sm:border-r-0"
+                    : ""
+                } ${
+                  index < 3
+                    ? "sm:border-r sm:border-white/20"
+                    : ""
+                }`}
               >
-                <p className="text-xl sm:text-2xl md:text-[26px] lg:text-[29px] xl:text-[32px] 2xl:text-[36px] font-black leading-none">
+                <p className="text-xl sm:text-2xl md:text-3xl font-black leading-tight">
                   {stat.value}
                 </p>
-                <p className="mt-1 sm:mt-1.5 md:mt-2 text-[8px] sm:text-[9px] md:text-[10px] lg:text-[11px] xl:text-xs font-medium text-white/80">
+                <p className="mt-1 text-xs sm:text-sm font-medium text-white/80">
                   {stat.label}
                 </p>
               </div>

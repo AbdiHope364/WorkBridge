@@ -1,52 +1,54 @@
+"use client";
+
 const seekerSteps = [
   {
     step: "01",
     heading: "Create Your Profile",
-    body: "Add your experience, skills, and resume in minutes",
+    body: "Add your experience, skills, and trade certifications in minutes.",
   },
   {
     step: "02",
     heading: "Discover Jobs",
-    body: "Browse verified listings by category, location, or skill set",
+    body: "Browse verified listings by category, location, or skill set.",
   },
   {
     step: "03",
     heading: "Apply Instantly",
-    body: "View job details and apply with your saved profile",
+    body: "View job details and apply directly with your saved credentials.",
   },
   {
     step: "04",
-    heading: "Get Hired",
-    body: "Track applications and chat directly with employers",
+    heading: "Get Hired & Paid",
+    body: "Track applications, chat with employers, and receive guaranteed pay.",
   },
 ];
 
 const employerSteps = [
   {
     step: "01",
-    heading: "Create a Company Profile",
-    body: "Add your company info and get verified on the platform",
+    heading: "Create a Profile",
+    body: "Set up as an Individual Client or Company and get verified.",
   },
   {
     step: "02",
-    heading: "Post a Job",
-    body: "Define the role, salary range, and requirements",
+    heading: "Post Your Requirement",
+    body: "Define the job, required skills, and clear wage in ETB.",
   },
   {
     step: "03",
-    heading: "Review Applicants",
-    body: "Filter candidates by skills, experience, and fit",
+    heading: "Review Candidates",
+    body: "Filter applicants by verified ratings, experience, and proximity.",
   },
   {
     step: "04",
-    heading: "Hire & Manage",
-    body: "Message, hire, and track your new team members",
+    heading: "Hire with Confidence",
+    body: "Message, hire, and approve completed work with 0% platform commission.",
   },
 ];
 
 const benefits = [
   {
-    label: "Smart Job Matching",
+    label: "Smart Trade Matching",
     icon: (
       <svg
         viewBox="0 0 20 20"
@@ -84,7 +86,7 @@ const benefits = [
     ),
   },
   {
-    label: "Verified Companies",
+    label: "Verified Identity & TIN",
     icon: (
       <svg
         viewBox="0 0 20 20"
@@ -102,7 +104,7 @@ const benefits = [
     ),
   },
   {
-    label: "Secure Hiring Process",
+    label: "0% Commission Direct Pay",
     icon: (
       <svg
         viewBox="0 0 20 20"
@@ -138,30 +140,30 @@ function StepList({
   const numberColor = dark ? "text-emerald-400" : "text-emerald-600";
   const headingColor = dark ? "text-white" : "text-slate-950";
   const bodyColor = dark ? "text-slate-400" : "text-slate-500";
-  const connectorColor = dark ? "border-slate-700" : "border-slate-200";
+  const connectorColor = dark ? "border-slate-800" : "border-slate-200";
 
   return (
-    <ol className="relative mt-8 space-y-0">
+    <ol className="relative mt-6 sm:mt-8 space-y-0">
       {steps.map((s, i) => (
-        <li key={s.step} className="relative flex gap-5 pb-7 last:pb-0">
+        <li key={s.step} className="relative flex gap-4 sm:gap-5 pb-6 last:pb-0">
           {i < steps.length - 1 && (
             <span
-              className={`absolute left-4.75 top-8 h-full w-px border-l border-dashed ${connectorColor}`}
+              className={`absolute left-4.5 top-8 h-full w-px border-l border-dashed ${connectorColor}`}
             />
           )}
           {/* Number bubble */}
           <span
-            className={`relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
-              dark ? "bg-white" : "bg-slate-100"
-            } text-[12px] font-black tabular-nums ${numberColor}`}
+            className={`relative z-10 flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full ${
+              dark ? "bg-slate-900 border border-slate-800" : "bg-slate-100"
+            } text-xs sm:text-[13px] font-black tabular-nums ${numberColor}`}
           >
             {s.step}
           </span>
-          <div className="pt-1.5">
-            <h4 className={`text-[14px] font-bold ${headingColor}`}>
+          <div className="pt-1">
+            <h4 className={`text-sm sm:text-base font-bold ${headingColor}`}>
               {s.heading}
             </h4>
-            <p className={`mt-0.5 text-[13px] leading-snug ${bodyColor}`}>
+            <p className={`mt-0.5 text-xs sm:text-[13px] leading-relaxed ${bodyColor}`}>
               {s.body}
             </p>
           </div>
@@ -173,66 +175,64 @@ function StepList({
 
 export function HowItWorksSection() {
   return (
-    <section id="how-it-works" className="bg-slate-50 py-16 px-10 gap-4">
-      <div className="mx-auto max-w-325 px-6">
+    <section id="how-it-works" className="bg-slate-50 py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl">
         {/* Section label + heading */}
-        <div className="text-center">
+        <div className="text-center max-w-2xl mx-auto">
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600">
             How it works
           </p>
-          <h2 className="mt-2 text-[28px] font-black tracking-tight text-slate-950 sm:text-[34px]">
+          <h2 className="mt-1 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-slate-950">
             Up and running in four steps
           </h2>
-          <p className="mx-auto mt-2 max-w-lg text-[14px] text-slate-500">
-            Whether you&apos;re hiring or job hunting, getting started takes minutes.
+          <p className="mt-2 text-xs sm:text-sm text-slate-500">
+            Whether you&apos;re hiring or job hunting, getting started takes only minutes.
           </p>
         </div>
 
         {/* Two-panel steps */}
-        <div className="mt-12 grid gap-10 lg:grid-cols-2">
+        <div className="mt-8 sm:mt-12 grid gap-6 sm:gap-8 lg:grid-cols-2">
           {/* Seeker panel — light */}
-          <div className="rounded-2xl border border-slate-100 bg-white p-8 shadow-sm">
+          <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-5 sm:p-7 md:p-8 shadow-xs">
             <span className="inline-block rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-emerald-700">
               For Job Seekers
             </span>
-            <p className="mt-2 text-[20px] font-black text-slate-950">
-              Find work that fits your life
+            <p className="mt-2 text-lg sm:text-xl font-black text-slate-950">
+              Find work that fits your expertise
             </p>
             <StepList steps={seekerSteps} />
           </div>
 
           {/* Employer panel — dark */}
-          <div className="rounded-2xl bg-slate-950 p-8">
-            <span className="inline-block rounded-full bg-slate-800 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-slate-400">
+          <div className="rounded-2xl sm:rounded-3xl bg-slate-950 p-5 sm:p-7 md:p-8 border border-slate-900 shadow-xs">
+            <span className="inline-block rounded-full bg-slate-800 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-teal-400">
               For Employers
             </span>
-            <p className="mt-2 text-[20px] font-black text-white">
-              Hire the right person, faster
+            <p className="mt-2 text-lg sm:text-xl font-black text-white">
+              Hire verified professionals faster
             </p>
             <StepList steps={employerSteps} dark />
           </div>
         </div>
 
         {/* Why choose us — full-width banner */}
-        <div className="mt-6 flex flex-col gap-8 rounded-2xl bg-[#1b2855] px-8 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-14">
-          <div className="shrink-0">
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white">
-              Why Workbridge
+        <div className="mt-8 sm:mt-10 flex flex-col gap-6 sm:gap-8 rounded-2xl sm:rounded-3xl bg-[#1b2855] p-6 sm:p-10 lg:flex-row lg:items-center lg:justify-between">
+          <div className="shrink-0 max-w-sm">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-teal-400">
+              Why WorkBridge
             </p>
-            <h3 className="mt-1.5 text-[22px] font-black leading-snug text-white sm:text-[26px]">
-              Built for trust,
-              <br />
-              designed for speed.
+            <h3 className="mt-1.5 text-xl sm:text-2xl font-black leading-snug text-white">
+              Built for trust, designed for speed in Ethiopia.
             </h3>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:gap-6 items-center justify-center ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {benefits.map((b) => (
-              <div key={b.label} className="flex items-start gap-3">
-                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-emerald-400">
+              <div key={b.label} className="flex items-center gap-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/10 text-emerald-400">
                   {b.icon}
                 </span>
-                <span className="pt-1.5 text-[13px] font-semibold leading-snug text-white">
+                <span className="text-xs sm:text-sm font-semibold text-white">
                   {b.label}
                 </span>
               </div>

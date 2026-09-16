@@ -1,147 +1,89 @@
+"use client";
+
+import Link from "next/link";
 import { WorkBridgeLogo } from "@repo/ui";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 const footerColumns = [
   {
-    title: "For Job seekers",
-    links: ["Browse jobs", "Companies Hiring", "Upload Resume"],
+    title: "For Job Seekers",
+    links: [
+      { label: "Browse Jobs", href: "/jobs" },
+      { label: "Find Workers", href: "/find-workers" },
+      { label: "Pricing & Plans", href: "/pricing" },
+    ],
   },
   {
     title: "For Employers",
     links: [
-      "Post a Job",
-      "Employer Login",
-      "Candidate Search",
-      "Pricing Plans",
+      { label: "Post a Job", href: "/dashboard/employer" },
+      { label: "Employer Dashboard", href: "/dashboard/employer" },
+      { label: "Candidate Search", href: "/find-workers" },
     ],
   },
   {
     title: "Company",
-    links: ["About Us", "Contact Us", "Blog"],
+    links: [
+      { label: "About Us", href: "/about-us" },
+      { label: "Contact Us", href: "/contact-us" },
+      { label: "Pricing", href: "/pricing" },
+    ],
   },
   {
-    title: "Help &support",
+    title: "Help & Support",
     links: [
-      "Help center/ FAQ",
-      "Contact Support",
-      "Account Issues",
-      "Password reset",
-      "Billing &payments help",
+      { label: "Help Center / FAQ", href: "/contact-us" },
+      { label: "Support Desk", href: "/contact-us" },
+      { label: "Privacy Policy", href: "/about-us" },
     ],
   },
 ];
 
-function getFooterHref(label: string) {
-  if (label === "About Us") {
-    return "/about-us";
-  }
-
-  if (label === "Contact Us") {
-    return "/contact-us";
-  }
-
-  return "#home";
-}
-
-function ContactIcon({ type }: { type: "email" | "location" | "phone" }) {
-  if (type === "email") {
-    return (
-      <svg
-        aria-hidden="true"
-        className="h-4 w-4"
-        viewBox="0 0 24 24"
-        fill="none"
-      >
-        <path
-          d="M4 6h16v12H4V6Zm1.5 1.5 6.5 5 6.5-5"
-          stroke="currentColor"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-      </svg>
-    );
-  }
-
-  if (type === "phone") {
-    return (
-      <svg
-        aria-hidden="true"
-        className="h-4 w-4"
-        viewBox="0 0 24 24"
-        fill="none"
-      >
-        <path
-          d="M7 5h3l1.5 4-2 1.2c.9 1.9 2.4 3.4 4.3 4.3l1.2-2 4 1.5v3c0 1.1-.9 2-2 2C10.4 19 5 13.6 5 7c0-1.1.9-2 2-2Z"
-          stroke="currentColor"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-      </svg>
-    );
-  }
-
-  return (
-    <svg aria-hidden="true" className="h-4 w-4" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M12 21s7-5.4 7-12A7 7 0 1 0 5 9c0 6.6 7 12 7 12Z"
-        stroke="currentColor"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-      <circle cx="12" cy="9" r="2.5" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-
 export function LandingFooter() {
   return (
-    <footer
-      id="help"
-      className="border-t-2 border-violet-600 bg-[#1b2855] text-white"
-    >
-      <div className="max-w-7xl mx-auto px-6 py-10">
-        <div className="grid gap-10 md:grid-cols-[1.6fr_repeat(4,1fr)]">
-          <div>
-            <WorkBridgeLogo theme="dark" className="h-12 w-auto max-w-[240px] mb-2" />
-            <p className="mt-2 text-sm text-white/85">
-              Connects a client with local job seekers.
+    <footer id="help" className="bg-[#101b3b] text-white border-t border-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
+          {/* Brand & Contacts */}
+          <div className="sm:col-span-2 lg:col-span-1 space-y-4">
+            <Link href="/" className="inline-block">
+              <WorkBridgeLogo theme="dark" className="h-10 sm:h-11 w-auto max-w-[210px]" />
+            </Link>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xs">
+              Connecting skilled trade workers with clients and employers across Ethiopia with 0% wage commission.
             </p>
 
-            <div className="mt-5 space-y-2 text-sm text-white/90">
-              <p className="flex items-center gap-2">
-                <span className="text-emerald-500">
-                  <ContactIcon type="email" />
-                </span>
-                workbridge@gmail.com
+            <div className="space-y-2 pt-2 text-xs sm:text-sm text-slate-300">
+              <p className="flex items-center gap-2.5">
+                <Mail className="h-4 w-4 text-emerald-400 shrink-0" />
+                <span>support@workbridge.et</span>
               </p>
-              <p className="flex items-center gap-2">
-                <span className="text-emerald-500">
-                  <ContactIcon type="phone" />
-                </span>
-                +251-909-911-111-11
+              <p className="flex items-center gap-2.5">
+                <Phone className="h-4 w-4 text-emerald-400 shrink-0" />
+                <span>+251 909 911 111</span>
               </p>
-              <p className="flex items-center gap-2">
-                <span className="text-emerald-500">
-                  <ContactIcon type="location" />
-                </span>
-                Addis Ababa, Ethiopia
+              <p className="flex items-center gap-2.5">
+                <MapPin className="h-4 w-4 text-emerald-400 shrink-0" />
+                <span>Addis Ababa, Ethiopia</span>
               </p>
             </div>
           </div>
 
+          {/* Links Columns */}
           {footerColumns.map((column) => (
-            <div key={column.title}>
-              <h3 className="text-sm font-black text-emerald-500">
+            <div key={column.title} className="space-y-3">
+              <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-emerald-400">
                 {column.title}
               </h3>
-              <ul className="mt-4 space-y-2 text-xs font-semibold text-white/95">
+              <ul className="space-y-2 text-xs sm:text-sm font-medium text-slate-300">
                 {column.links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href={getFooterHref(link)}
-                      className="transition hover:text-emerald-400"
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="transition hover:text-white hover:underline block py-0.5"
                     >
-                      {link}
-                    </a>
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -149,15 +91,17 @@ export function LandingFooter() {
           ))}
         </div>
 
-        <div className="mt-10 border-t border-white/35 pt-5">
-          <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-            <p>Terms of Use &privacy policy</p>
-            <p className="flex items-center gap-2">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full border border-emerald-500 text-xs font-black text-emerald-500">
-                C
-              </span>
-              2026 Workbridge. All rights reserved.
-            </p>
+        {/* Bottom copyright */}
+        <div className="mt-10 sm:mt-12 pt-6 border-t border-slate-800 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p>© {new Date().getFullYear()} WorkBridge Ethiopia. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <Link href="/about-us" className="hover:text-slate-200 transition">
+              Terms of Service
+            </Link>
+            <span>•</span>
+            <Link href="/about-us" className="hover:text-slate-200 transition">
+              Privacy Policy
+            </Link>
           </div>
         </div>
       </div>
