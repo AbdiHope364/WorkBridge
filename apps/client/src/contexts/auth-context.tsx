@@ -7,15 +7,23 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
-import { api, setAuthToken, clearAuthToken, getAuthToken } from "@/lib/api";
-import type { User } from "@repo/types/auth";
+import {
+  api,
+  setAuthToken,
+  clearAuthToken,
+  getAuthToken,
+  setSessionCookie,
+  clearSessionCookie,
+} from "@/lib/api";
+import type { User, RegisterRequest } from "@repo/types/auth";
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
   refreshUser: () => Promise<void>;
-  login: (email: string, password: string) => Promise<{ token: string }>;
+  login: (email: string, password: string) => Promise<{ token: string; user?: User }>;
+  register: (payload: RegisterRequest) => Promise<{ token: string; user?: User }>;
   logout: () => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
   resetPassword: (token: string, password: string) => Promise<void>;
@@ -36,14 +44,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       const response = await api.auth.me();
-      setUser(response);
+      if (response) {
+        setUser(response);
+      }
     } catch (error) {
       console.error("Failed to refresh user:", error);
-      if (error instanceof Error && 
-          (error.message.includes("Authorization") || 
-           error.message.includes("token") ||
-           error.message.includes("401"))) {
+      if (
+        error instanceof Error &&
+        (error.message.includes("Authorization") ||
+          error.message.includes("token") ||
+          error.message.includes("401"))
+      ) {
         clearAuthToken();
+        clearSessionCookie();
         setUser(null);
       }
     }
@@ -51,12 +64,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => {
     const response = await api.auth.login({ email, password });
-    const { token } = response;
+    const { token, user: loggedInUser } = response;
 
     setAuthToken(token);
+    setSessionCookie();
+    if (loggedInUser) {
+      setUser(loggedInUser);
+    }
     await refreshUser();
 
-    return { token };
+    return { token, user: loggedInUser };
+  };
+
+  const register = async (payload: RegisterRequest) => {
+    const response = await api.auth.register(payload);
+    const { token, user: registeredUser } = response;
+
+    setAuthToken(token);
+    setSessionCookie();
+    if (registeredUser) {
+      setUser(registeredUser);
+    }
+    await refreshUser();
+
+    return { token, user: registeredUser };
   };
 
   const logout = async () => {
@@ -66,6 +97,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.error("Logout error:", error);
     } finally {
       clearAuthToken();
+      clearSessionCookie();
       setUser(null);
     }
   };
@@ -90,6 +122,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated: !!user,
         refreshUser,
         login,
+        register,
         logout,
         forgotPassword,
         resetPassword,

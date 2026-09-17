@@ -10,7 +10,6 @@ import {
   CardDescription,
   Input,
 } from "@repo/ui";
-import { api, setSessionCookie, setAuthToken } from "@/lib/api";
 import { registerSchema, type RegisterFormValues } from "../lib/auth-schemas";
 import type { RegisterRequest } from "@repo/types/auth";
 import { useAuth } from "@/contexts/auth-context";
@@ -32,7 +31,7 @@ export function RegisterForm({
   buttonLabel,
 }: RegisterFormProps) {
   const searchParams = useSearchParams();
-  const { refreshUser } = useAuth();
+  const { register } = useAuth();
 
   const [isGoogleModalOpen, setIsGoogleModalOpen] = useState(false);
   const [form, setForm] = useState<RegisterFormValues>({
@@ -129,19 +128,15 @@ export function RegisterForm({
     };
 
     try {
-      const result = await api.auth.register(payload);
+      const result = await register(payload);
       if (!result?.token) {
         throw new Error("No access token returned from backend");
       }
 
-      setAuthToken(result.token);
-      setSessionCookie();
-      await refreshUser();
-
       const defaultRedirect =
         role === "jobseeker" ? "/dashboard/jobseeker" : "/dashboard/employer";
       const redirectTo = searchParams.get("next") ?? defaultRedirect;
-      window.location.href = redirectTo;
+      window.location.assign(redirectTo);
     } catch (error) {
       const message =
         error instanceof Error
