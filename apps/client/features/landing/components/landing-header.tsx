@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown, Briefcase, Users, Sparkles } from "lucide-react";
+import { Menu, X, ChevronDown, Briefcase, Users, Sparkles, LogIn, UserPlus } from "lucide-react";
 import { WorkBridgeLogo } from "@repo/ui";
 
 const navLinks = [
@@ -78,7 +78,7 @@ export function LandingHeader() {
             </Link>
 
             {/* Desktop Navigation - Centered in the middle on Desktop (lg+) */}
-            <div className="hidden lg:flex items-center gap-6 xl:gap-10 text-sm xl:text-[16px] font-bold text-slate-950 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+            <div className="hidden lg:flex items-center gap-6 xl:gap-9 text-sm xl:text-[15px] font-bold text-slate-950 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -103,12 +103,32 @@ export function LandingHeader() {
               })}
             </div>
 
-            {/* Menu Toggle Button - Visible on Tablet and Mobile (< lg), Hidden on Desktop (lg+) */}
-            <div className="flex lg:hidden items-center justify-end shrink-0 z-10">
+            {/* Right Side - Desktop Auth Buttons (lg+) & Mobile Menu Toggle (< lg) */}
+            <div className="flex items-center gap-2.5 sm:gap-3 z-10 shrink-0">
+              {/* Desktop Sign In & Sign Up */}
+              <div className="hidden lg:flex items-center gap-2.5">
+                <Link
+                  href="/login"
+                  className="inline-flex items-center gap-1.5 h-10 px-4 xl:px-5 rounded-xl border border-slate-200 text-xs xl:text-sm font-bold text-slate-700 hover:text-slate-950 hover:border-slate-400 hover:bg-slate-50 transition-all active:scale-95"
+                >
+                  <LogIn className="w-4 h-4 text-slate-500" />
+                  Sign In
+                </Link>
+
+                <Link
+                  href="/register"
+                  className="inline-flex items-center gap-1.5 h-10 px-4 xl:px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs xl:text-sm font-bold shadow-sm shadow-emerald-500/20 transition-all hover:scale-105 active:scale-95"
+                >
+                  <UserPlus className="w-4 h-4" />
+                  Sign Up
+                </Link>
+              </div>
+
+              {/* Menu Toggle Button - Tablet and Mobile (< lg) */}
               <button
                 type="button"
                 onClick={() => setIsMenuOpen((prev) => !prev)}
-                className="flex items-center justify-center h-9 w-9 sm:h-10 sm:w-10 md:h-10.5 md:w-10.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 hover:bg-slate-100 hover:border-slate-300 hover:text-slate-950 active:scale-95 transition-all cursor-pointer shrink-0 shadow-2xs"
+                className="flex lg:hidden items-center justify-center h-9 w-9 sm:h-10 sm:w-10 md:h-10.5 md:w-10.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 hover:bg-slate-100 hover:border-slate-300 hover:text-slate-950 active:scale-95 transition-all cursor-pointer shrink-0 shadow-2xs"
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMenuOpen}
               >
@@ -184,6 +204,31 @@ export function LandingHeader() {
                   </Link>
                 );
               })}
+            </div>
+
+            {/* Auth Buttons for Mobile/Tablet */}
+            <div className="space-y-2 border-t border-slate-100 pt-3 sm:pt-4">
+              <p className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-400">
+                Account Access
+              </p>
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  href="/login"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center justify-center gap-1.5 rounded-lg sm:rounded-xl border border-slate-200 bg-white px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm font-bold text-slate-800 transition-all hover:bg-slate-50 hover:border-slate-300 active:scale-95"
+                >
+                  <LogIn className="w-4 h-4 text-slate-500" />
+                  Sign In
+                </Link>
+                <Link
+                  href="/register"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center justify-center gap-1.5 rounded-lg sm:rounded-xl bg-emerald-600 px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm font-bold text-white shadow-xs transition-all hover:bg-emerald-700 active:scale-95"
+                >
+                  <UserPlus className="w-4 h-4" />
+                  Sign Up
+                </Link>
+              </div>
             </div>
 
             {/* Quick Actions */}

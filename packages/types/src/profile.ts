@@ -22,3 +22,4 @@ export interface EmployerKycProfile {
   tinNumber?: string;
   isVerified: boolean;
 }
+
