@@ -25,7 +25,11 @@ import {
   X,
   Edit3,
   Bell,
-  Check,
+  CreditCard,
+  QrCode,
+  FileCheck2,
+  BadgeCheck,
+  RefreshCw,
 } from "lucide-react";
 import { EmployerSidebar } from "./components/employer-sidebar";
 import {
@@ -922,82 +926,364 @@ function IndividualDetailsTab({
 // ─── Verification Tab ─────────────────────────────────────────────────────────
 
 function VerificationTab({ isCompany = false }: { isCompany?: boolean }) {
+  const [editing, setEditing] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
+  // Form states
+  const [faydaFin, setFaydaFin] = useState(
+    isCompany ? "FIN-8812-4439-0192" : "FIN-4820-1945-7731"
+  );
+  const [officerName, setOfficerName] = useState(
+    isCompany ? "Solomon Tesfaye (Managing Director)" : "Dawit Mekonnen"
+  );
+  const [tinNumber, setTinNumber] = useState("0048192847");
+  const [businessLicense, setBusinessLicense] = useState("BL/AA/2024/99182");
+  const [docFrontName, setDocFrontName] = useState(
+    isCompany ? "trade_license_certified_2025.pdf" : "fayda_nid_front.jpg"
+  );
+  const [docBackName, setDocBackName] = useState(
+    isCompany ? "director_fayda_nid_scan.jpg" : "fayda_nid_back.jpg"
+  );
+  const [verificationStatus, setVerificationStatus] = useState<
+    "VERIFIED" | "PENDING" | "UNVERIFIED"
+  >("VERIFIED");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setSuccessMsg(null);
+
+    try {
+      await new Promise((r) => setTimeout(r, 650));
+      setVerificationStatus("PENDING");
+      setEditing(false);
+      setSuccessMsg("Fayda KYC credentials submitted for Admin Verification review!");
+    } catch {
+      // ignore
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Verification Status Banner */}
-      <div className="p-5 rounded-2xl bg-teal-50 border border-teal-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3.5">
-          <div className="h-11 w-11 rounded-xl bg-teal-600 flex items-center justify-center text-white shrink-0 shadow-sm">
-            <ShieldCheck className="w-6 h-6" />
+      <div className="p-6 rounded-3xl bg-gradient-to-r from-[#0b241b] via-[#103b2c] to-[#0b241b] text-white border border-emerald-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative overflow-hidden">
+        <div className="flex items-center gap-4 relative z-10">
+          <div className="h-12 w-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300 shrink-0 shadow-sm">
+            <ShieldCheck className="w-7 h-7" />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-teal-950">
+            <div className="flex items-center gap-2">
+              <h4 className="text-base font-black text-white">
+                {isCompany
+                  ? "Enterprise Fayda KYC & Trade License"
+                  : "Fayda National ID Verification"}
+              </h4>
+              <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-emerald-500/30 text-emerald-200 border border-emerald-400/30">
+                0% Commission Verified
+              </span>
+            </div>
+            <p className="text-xs text-emerald-200/80 mt-1 max-w-xl">
               {isCompany
-                ? "Enterprise Verification Verified"
-                : "National ID Verification Approved"}
-            </h4>
-            <p className="text-xs text-teal-800 mt-0.5">
-              Your profile is fully verified on WorkBridge with zero transaction commission.
+                ? "Your company is authorized to post jobs, hire workers directly, and disburse milestone payments with complete trust."
+                : "Your personal Fayda Identification Number (FIN) is verified on WorkBridge, ensuring trusted hiring and secure direct hiring."}
             </p>
           </div>
         </div>
-        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-white text-teal-700 border border-teal-200 self-start sm:self-auto shadow-xs">
-          <Check className="w-3.5 h-3.5 text-teal-600" /> Active Verified
-        </span>
-      </div>
 
-      {/* Uploaded Documents Showcase */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <FileText className="w-5 h-5 text-teal-600" />
-              <h4 className="text-sm font-bold text-slate-900">
-                {isCompany ? "Trade License / TIN Certificate" : "National ID (Front)"}
-              </h4>
-            </div>
-            <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-              Verified
+        <div className="flex items-center gap-3 relative z-10 self-start sm:self-auto">
+          {verificationStatus === "VERIFIED" && (
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-500 text-white shadow-sm">
+              <BadgeCheck className="w-4 h-4" /> Active Verified
             </span>
-          </div>
-          <p className="text-xs text-slate-500">
-            {isCompany
-              ? "Official commercial registration and tax certificate issued in Ethiopia."
-              : "Clear scanned image of your Ethiopian National ID or Passport front."}
-          </p>
-          <div className="h-28 rounded-xl border border-dashed border-slate-300 bg-white flex flex-col items-center justify-center text-slate-400 gap-1.5">
-            <CheckCircle2 className="w-6 h-6 text-teal-600" />
-            <span className="text-xs font-semibold text-slate-700">
-              Document On File
+          )}
+          {verificationStatus === "PENDING" && (
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-500 text-slate-950 shadow-sm">
+              <RefreshCw className="w-4 h-4 animate-spin" /> Pending Review
             </span>
-          </div>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <FileText className="w-5 h-5 text-teal-600" />
-              <h4 className="text-sm font-bold text-slate-900">
-                {isCompany ? "Principal Representative ID" : "National ID (Back)"}
-              </h4>
-            </div>
-            <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-              Verified
-            </span>
-          </div>
-          <p className="text-xs text-slate-500">
-            {isCompany
-              ? "Government ID of the authorized company officer or owner."
-              : "Back side of your Ethiopian National ID containing barcodes and stamps."}
-          </p>
-          <div className="h-28 rounded-xl border border-dashed border-slate-300 bg-white flex flex-col items-center justify-center text-slate-400 gap-1.5">
-            <CheckCircle2 className="w-6 h-6 text-teal-600" />
-            <span className="text-xs font-semibold text-slate-700">
-              Document On File
-            </span>
-          </div>
+          )}
+          <button
+            type="button"
+            onClick={() => setEditing(!editing)}
+            className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/20 transition"
+          >
+            {editing ? "Cancel Edit" : "Update ID"}
+          </button>
         </div>
       </div>
+
+      {successMsg && (
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-sm font-semibold flex items-center gap-3">
+          <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+          <span>{successMsg}</span>
+        </div>
+      )}
+
+      {/* Digital Fayda ID Card Summary */}
+      <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h4 className="text-sm font-black text-slate-900">
+              {isCompany ? "Authorized Officer Fayda Identity" : "Fayda National Digital Credential"}
+            </h4>
+            <p className="text-xs text-slate-500">
+              Official Ethiopian National Digital ID (FIN) verification badge
+            </p>
+          </div>
+          <span className="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            {faydaFin}
+          </span>
+        </div>
+
+        <div className="max-w-md mx-auto bg-gradient-to-br from-[#0c2e1d] via-[#10482c] to-[#0b2618] text-white p-5 rounded-2xl shadow-md border border-emerald-600/30">
+          <div className="flex items-center justify-between border-b border-emerald-500/20 pb-2 mb-3">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded bg-amber-400 text-slate-950 font-black text-[10px] flex items-center justify-center">
+                ET
+              </div>
+              <span className="text-[10px] font-black uppercase text-emerald-300 tracking-wider">
+                FDRE National ID (Fayda / ፋይዳ)
+              </span>
+            </div>
+            <QrCode className="w-5 h-5 text-emerald-300" />
+          </div>
+
+          <div className="flex items-center gap-4 text-xs">
+            <div className="w-16 h-20 rounded-lg bg-slate-800 border border-emerald-400/40 flex flex-col items-center justify-center text-emerald-200 shrink-0">
+              <User className="w-8 h-8" />
+              <span className="text-[8px] font-bold bg-emerald-600 text-white w-full text-center mt-1">
+                VERIFIED
+              </span>
+            </div>
+            <div className="space-y-1 min-w-0">
+              <div>
+                <span className="text-[9px] uppercase text-emerald-300 font-bold block">
+                  {isCompany ? "Officer Name" : "Legal Name"}
+                </span>
+                <span className="font-bold text-white text-xs truncate block">{officerName}</span>
+              </div>
+              <div>
+                <span className="text-[9px] uppercase text-emerald-300 font-bold block">
+                  Fayda FIN Number
+                </span>
+                <span className="font-mono font-extrabold text-amber-300 text-xs tracking-wider">
+                  {faydaFin}
+                </span>
+              </div>
+              {isCompany && (
+                <div>
+                  <span className="text-[9px] uppercase text-emerald-300 font-bold block">
+                    TIN / Business Reg
+                  </span>
+                  <span className="font-mono text-white text-[11px]">{tinNumber}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Edit Form */}
+      {editing ? (
+        <form onSubmit={handleSubmit} className="p-6 md:p-8 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-6">
+          <div>
+            <h4 className="text-base font-black text-slate-900">
+              Update Fayda KYC Information
+            </h4>
+            <p className="text-xs text-slate-500">
+              Resubmit your National ID and credentials for updated verification.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                Fayda Identification Number (FIN) *
+              </label>
+              <div className="relative">
+                <CreditCard className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                <input
+                  type="text"
+                  value={faydaFin}
+                  onChange={(e) => setFaydaFin(e.target.value)}
+                  placeholder="e.g. FIN-4820-1945-7731"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm font-mono focus:border-teal-500 focus:outline-none"
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                {isCompany ? "Authorized Officer Legal Name *" : "Full Legal Name *"}
+              </label>
+              <input
+                type="text"
+                value={officerName}
+                onChange={(e) => setOfficerName(e.target.value)}
+                placeholder="e.g. Dawit Mekonnen"
+                className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:border-teal-500 focus:outline-none"
+                required
+              />
+            </div>
+
+            {isCompany && (
+              <>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    Tax Identification Number (TIN) *
+                  </label>
+                  <input
+                    type="text"
+                    value={tinNumber}
+                    onChange={(e) => setTinNumber(e.target.value)}
+                    placeholder="e.g. 0048192847"
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm font-mono focus:border-teal-500 focus:outline-none"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    Commercial Business License Number *
+                  </label>
+                  <input
+                    type="text"
+                    value={businessLicense}
+                    onChange={(e) => setBusinessLicense(e.target.value)}
+                    placeholder="e.g. BL/AA/2024/99182"
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm font-mono focus:border-teal-500 focus:outline-none"
+                    required
+                  />
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* Document Uploads */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div className="p-4 rounded-2xl border-2 border-dashed border-teal-200 bg-teal-50/30 flex flex-col items-center justify-center text-center space-y-2">
+              <div className="p-3 bg-white rounded-xl text-teal-600 shadow-xs">
+                <FileCheck2 className="w-6 h-6" />
+              </div>
+              <div className="text-xs font-bold text-slate-900">
+                {isCompany ? "Trade License / TIN Certificate" : "Fayda ID Card (Front)"}
+              </div>
+              <span className="text-[11px] font-mono text-teal-700">{docFrontName}</span>
+              <label className="cursor-pointer text-[11px] font-bold text-teal-600 hover:text-teal-700 bg-white px-3 py-1 rounded-lg border border-teal-200">
+                Choose New File
+                <input
+                  type="file"
+                  accept="image/*,.pdf"
+                  className="hidden"
+                  onChange={(e) => {
+                    if (e.target.files?.[0]) setDocFrontName(e.target.files[0].name);
+                  }}
+                />
+              </label>
+            </div>
+
+            <div className="p-4 rounded-2xl border-2 border-dashed border-teal-200 bg-teal-50/30 flex flex-col items-center justify-center text-center space-y-2">
+              <div className="p-3 bg-white rounded-xl text-teal-600 shadow-xs">
+                <FileCheck2 className="w-6 h-6" />
+              </div>
+              <div className="text-xs font-bold text-slate-900">
+                {isCompany ? "Authorized Officer Fayda ID" : "Fayda ID Card (Back)"}
+              </div>
+              <span className="text-[11px] font-mono text-teal-700">{docBackName}</span>
+              <label className="cursor-pointer text-[11px] font-bold text-teal-600 hover:text-teal-700 bg-white px-3 py-1 rounded-lg border border-teal-200">
+                Choose New File
+                <input
+                  type="file"
+                  accept="image/*,.pdf"
+                  className="hidden"
+                  onChange={(e) => {
+                    if (e.target.files?.[0]) setDocBackName(e.target.files[0].name);
+                  }}
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="pt-4 border-t border-slate-100 flex justify-end gap-3">
+            <button
+              type="button"
+              onClick={() => setEditing(false)}
+              className="px-5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="px-6 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold shadow-xs transition flex items-center gap-2"
+            >
+              {submitting ? (
+                <>
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Submitting...
+                </>
+              ) : (
+                "Save & Submit Verification"
+              )}
+            </button>
+          </div>
+        </form>
+      ) : (
+        /* Uploaded Documents Showcase */
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <FileText className="w-5 h-5 text-teal-600" />
+                <h4 className="text-sm font-bold text-slate-900">
+                  {isCompany ? "Trade License / TIN Certificate" : "Fayda National ID (Front)"}
+                </h4>
+              </div>
+              <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                Verified
+              </span>
+            </div>
+            <p className="text-xs text-slate-500">
+              {isCompany
+                ? "Official commercial registration and tax certificate issued in Ethiopia."
+                : "Clear scanned image of your Ethiopian Fayda National ID front."}
+            </p>
+            <div className="h-28 rounded-xl border border-dashed border-slate-300 bg-white flex flex-col items-center justify-center text-slate-400 gap-1.5">
+              <CheckCircle2 className="w-6 h-6 text-teal-600" />
+              <span className="text-xs font-semibold text-slate-700">
+                {docFrontName}
+              </span>
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <FileText className="w-5 h-5 text-teal-600" />
+                <h4 className="text-sm font-bold text-slate-900">
+                  {isCompany ? "Officer Fayda ID (FIN)" : "Fayda National ID (Back)"}
+                </h4>
+              </div>
+              <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                Verified
+              </span>
+            </div>
+            <p className="text-xs text-slate-500">
+              {isCompany
+                ? "Government Fayda National ID of the authorized company officer."
+                : "Back side of your Ethiopian Fayda National ID with barcodes and stamps."}
+            </p>
+            <div className="h-28 rounded-xl border border-dashed border-slate-300 bg-white flex flex-col items-center justify-center text-slate-400 gap-1.5">
+              <CheckCircle2 className="w-6 h-6 text-teal-600" />
+              <span className="text-xs font-semibold text-slate-700">
+                {docBackName}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -345,9 +345,15 @@ export function JobseekerProfilePage() {
                   <div className="min-w-0 flex-1">
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <h2 className="text-xl font-bold leading-tight text-slate-950">
-                          {fullName}
-                        </h2>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h2 className="text-xl font-bold leading-tight text-slate-950">
+                            {fullName}
+                          </h2>
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-xs">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            Fayda Verified (FIN: {jobseekerProfile?.faydaFin || "FIN-9042-8821-3419"})
+                          </span>
+                        </div>
                         <p className="text-sm font-semibold text-teal-600 mt-0.5">
                           {jobseekerProfile?.bio ?? "Full Stack Engineer & Trades Professional"}
                         </p>

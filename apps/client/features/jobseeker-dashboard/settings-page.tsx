@@ -7,6 +7,7 @@ import { Button } from "@repo/ui";
 import {
   User,
   Shield,
+  ShieldCheck,
   Bell,
   CheckCircle2,
   AlertTriangle,
@@ -14,12 +15,17 @@ import {
   Smartphone,
   MapPin,
   Sparkles,
+  CreditCard,
+  FileCheck2,
+  QrCode,
+  BadgeCheck,
+  RefreshCw,
 } from "lucide-react";
 
 export function JobseekerSettingsPage() {
   const { user, refreshUser } = useAuth();
 
-  const [activeTab, setActiveTab] = useState<"general" | "security" | "notifications" | "account">("general");
+  const [activeTab, setActiveTab] = useState<"general" | "kyc" | "security" | "notifications" | "account">("general");
 
   // General state
   const [fullName, setFullName] = useState(user?.fullName || "");
@@ -27,6 +33,16 @@ export function JobseekerSettingsPage() {
   const [location, setLocation] = useState("Addis Ababa, Ethiopia");
   const [tradeHeadline, setTradeHeadline] = useState("Certified Master Electrician & Solar Installer");
   const [hourlyRate, setHourlyRate] = useState("350");
+
+  // Fayda KYC State
+  const [faydaNumber, setFaydaNumber] = useState(user?.faydaFin || "FIN-9042-8821-3419");
+  const [fullNameOnFayda, setFullNameOnFayda] = useState(user?.fullName || "Abdi Abiot");
+  const [dateOfBirth, setDateOfBirth] = useState("2001-05-14");
+  const [gender, setGender] = useState<"MALE" | "FEMALE" | "OTHER">("MALE");
+  const [kycStatus, setKycStatus] = useState<"VERIFIED" | "PENDING" | "UNVERIFIED" | "REJECTED">("VERIFIED");
+  const [frontDocName, setFrontDocName] = useState("fayda_nid_front_scan.jpg");
+  const [backDocName, setBackDocName] = useState("fayda_nid_back_scan.jpg");
+  const [kycSubmitting, setKycSubmitting] = useState(false);
 
   // Security state
   const [currentPassword, setCurrentPassword] = useState("");
@@ -86,6 +102,28 @@ export function JobseekerSettingsPage() {
     }
   };
 
+  const handleSaveKyc = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!faydaNumber.trim()) {
+      setStatusMsg({ type: "error", text: "Please enter your Fayda Identification Number (FIN)." });
+      return;
+    }
+    setKycSubmitting(true);
+    setStatusMsg(null);
+    try {
+      await new Promise((r) => setTimeout(r, 700));
+      setKycStatus("PENDING");
+      setStatusMsg({
+        type: "success",
+        text: "Fayda KYC details updated and submitted for verification!",
+      });
+    } catch (err: any) {
+      setStatusMsg({ type: "error", text: err.message || "Failed to submit Fayda verification" });
+    } finally {
+      setKycSubmitting(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-[#f8f8fa] text-slate-950 flex-col md:flex-row">
       {/* Common Sidebar */}
@@ -96,7 +134,7 @@ export function JobseekerSettingsPage() {
         <header className="hidden md:flex h-20 items-center justify-between border-b border-slate-200 bg-white px-8">
           <div>
             <h1 className="text-xl font-black text-[#14214a] tracking-tight">Account Settings</h1>
-            <p className="text-xs text-slate-500">Manage your profile, security, and notification preferences</p>
+            <p className="text-xs text-slate-500">Manage your profile, Fayda KYC identity, and security</p>
           </div>
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
@@ -136,6 +174,17 @@ export function JobseekerSettingsPage() {
               }`}
             >
               <User className="w-4 h-4" /> General Profile
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("kyc")}
+              className={`flex-1 min-w-max py-2.5 px-3.5 sm:px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 whitespace-nowrap ${
+                activeTab === "kyc"
+                  ? "bg-emerald-600 text-white shadow-xs"
+                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+              }`}
+            >
+              <ShieldCheck className="w-4 h-4" /> Fayda KYC & ID
             </button>
             <button
               type="button"
@@ -274,6 +323,260 @@ export function JobseekerSettingsPage() {
                 </Button>
               </div>
             </form>
+          )}
+
+          {/* TAB: Fayda KYC & National ID */}
+          {activeTab === "kyc" && (
+            <div className="space-y-6">
+              {/* Fayda KYC Header Card */}
+              <div className="p-6 rounded-3xl bg-gradient-to-r from-[#0d2218] via-[#123826] to-[#0d2218] text-white border border-emerald-800 shadow-sm relative overflow-hidden">
+                <div className="absolute right-0 top-0 translate-x-10 -translate-y-10 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300 shrink-0">
+                      <ShieldCheck className="w-7 h-7" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-lg font-black tracking-tight text-white">
+                          Ethiopian Fayda National ID (KYC)
+                        </h3>
+                        <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                          NIDP Standard
+                        </span>
+                      </div>
+                      <p className="text-xs text-emerald-200/80 mt-1 max-w-xl">
+                        Verify your identity with Ethiopia&apos;s National Digital Identity (Fayda). Verified workers unlock higher client trust, verified badge, and priority booking on WorkBridge.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {kycStatus === "VERIFIED" && (
+                      <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 text-white shadow-sm">
+                        <BadgeCheck className="w-4 h-4" /> Fayda Verified
+                      </span>
+                    )}
+                    {kycStatus === "PENDING" && (
+                      <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 shadow-sm">
+                        <RefreshCw className="w-4 h-4 animate-spin" /> Review Pending
+                      </span>
+                    )}
+                    {kycStatus === "UNVERIFIED" && (
+                      <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-200">
+                        Unverified
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Digital Fayda Card Preview */}
+              <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-sm font-black text-slate-900">Digital Fayda Card Preview</h4>
+                    <p className="text-xs text-slate-500">How your verified digital identity appears to clients</p>
+                  </div>
+                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                    Official NID Credentials
+                  </span>
+                </div>
+
+                <div className="max-w-lg mx-auto bg-gradient-to-br from-[#0c311e] via-[#104a2d] to-[#0c2417] text-white p-6 rounded-2xl shadow-lg border-2 border-emerald-600/40 relative overflow-hidden">
+                  <div className="flex items-center justify-between border-b border-emerald-500/30 pb-3 mb-4">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-amber-400 flex items-center justify-center font-black text-slate-950 text-xs">
+                        ET
+                      </div>
+                      <div>
+                        <div className="text-[10px] font-black uppercase tracking-widest text-emerald-300">
+                          Federal Democratic Republic of Ethiopia
+                        </div>
+                        <div className="text-xs font-extrabold text-white">
+                          Fayda National Identity Card (ፋይዳ)
+                        </div>
+                      </div>
+                    </div>
+                    <QrCode className="w-7 h-7 text-emerald-300 shrink-0" />
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-4 items-center">
+                    <div className="col-span-1">
+                      <div className="w-24 h-28 rounded-xl bg-slate-800 border-2 border-emerald-400/40 overflow-hidden flex flex-col items-center justify-center relative shadow-inner">
+                        <User className="w-12 h-12 text-emerald-200" />
+                        <span className="text-[9px] font-bold bg-emerald-600 text-white w-full text-center py-0.5 absolute bottom-0">
+                          FIN VERIFIED
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="col-span-2 space-y-1.5 text-xs">
+                      <div>
+                        <span className="text-[10px] uppercase text-emerald-300 font-bold block">Full Name</span>
+                        <span className="font-bold text-white text-sm">{fullNameOnFayda || "Abdi Abiot"}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] uppercase text-emerald-300 font-bold block">Fayda ID (FIN)</span>
+                        <span className="font-mono font-extrabold text-amber-300 tracking-wider text-sm">{faydaNumber || "FIN-9042-8821-3419"}</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 pt-1">
+                        <div>
+                          <span className="text-[9px] uppercase text-emerald-300/80 font-bold block">Date of Birth</span>
+                          <span className="font-semibold text-white text-[11px]">{dateOfBirth}</span>
+                        </div>
+                        <div>
+                          <span className="text-[9px] uppercase text-emerald-300/80 font-bold block">Gender</span>
+                          <span className="font-semibold text-white text-[11px]">{gender}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Fayda KYC Update Form */}
+              <form onSubmit={handleSaveKyc} className="bg-white rounded-3xl border border-slate-200 p-6 md:p-8 shadow-xs space-y-6">
+                <div>
+                  <h3 className="text-lg font-black text-slate-900">Update Fayda Identification Details</h3>
+                  <p className="text-xs text-slate-500">Provide your official Fayda Identification Number (FIN) and scanned ID documents.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Fayda Identification Number (FIN) *
+                    </label>
+                    <div className="relative">
+                      <CreditCard className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                      <input
+                        type="text"
+                        value={faydaNumber}
+                        onChange={(e) => setFaydaNumber(e.target.value)}
+                        placeholder="e.g. FIN-9042-8821-3419"
+                        className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm font-mono focus:border-emerald-500 focus:outline-none"
+                        required
+                      />
+                    </div>
+                    <span className="text-[11px] text-slate-400 mt-1 block">
+                      12 to 16-digit official Fayda Number assigned by National ID Program.
+                    </span>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Full Legal Name (as on Fayda ID) *
+                    </label>
+                    <input
+                      type="text"
+                      value={fullNameOnFayda}
+                      onChange={(e) => setFullNameOnFayda(e.target.value)}
+                      placeholder="e.g. Abdi Abiot"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:border-emerald-500 focus:outline-none"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Date of Birth *
+                    </label>
+                    <input
+                      type="date"
+                      value={dateOfBirth}
+                      onChange={(e) => setDateOfBirth(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:border-emerald-500 focus:outline-none"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Gender
+                    </label>
+                    <select
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value as any)}
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:border-emerald-500 focus:outline-none bg-white"
+                    >
+                      <option value="MALE">Male</option>
+                      <option value="FEMALE">Female</option>
+                      <option value="OTHER">Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Upload Documents Grid */}
+                <div className="space-y-3 pt-2">
+                  <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                    Scanned ID Documents
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Front Dropzone */}
+                    <div className="p-4 rounded-2xl border-2 border-dashed border-emerald-200 bg-emerald-50/40 flex flex-col items-center justify-center text-center space-y-2">
+                      <div className="p-3 bg-white rounded-xl text-emerald-600 shadow-xs">
+                        <FileCheck2 className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-900">Fayda ID Card (Front)</div>
+                        <div className="text-[11px] font-mono text-emerald-700 mt-0.5">{frontDocName}</div>
+                      </div>
+                      <label className="cursor-pointer text-[11px] font-bold text-emerald-600 hover:text-emerald-700 bg-white px-3 py-1 rounded-lg border border-emerald-200">
+                        Replace Front Scan
+                        <input
+                          type="file"
+                          accept="image/*,.pdf"
+                          className="hidden"
+                          onChange={(e) => {
+                            if (e.target.files?.[0]) {
+                              setFrontDocName(e.target.files[0].name);
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+
+                    {/* Back Dropzone */}
+                    <div className="p-4 rounded-2xl border-2 border-dashed border-emerald-200 bg-emerald-50/40 flex flex-col items-center justify-center text-center space-y-2">
+                      <div className="p-3 bg-white rounded-xl text-emerald-600 shadow-xs">
+                        <FileCheck2 className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-900">Fayda ID Card (Back / Barcode)</div>
+                        <div className="text-[11px] font-mono text-emerald-700 mt-0.5">{backDocName}</div>
+                      </div>
+                      <label className="cursor-pointer text-[11px] font-bold text-emerald-600 hover:text-emerald-700 bg-white px-3 py-1 rounded-lg border border-emerald-200">
+                        Replace Back Scan
+                        <input
+                          type="file"
+                          accept="image/*,.pdf"
+                          className="hidden"
+                          onChange={(e) => {
+                            if (e.target.files?.[0]) {
+                              setBackDocName(e.target.files[0].name);
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="flex items-center gap-2 text-xs text-slate-500">
+                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                    <span>Protected by WorkBridge National ID Privacy Policy</span>
+                  </div>
+                  <Button
+                    type="submit"
+                    isLoading={kycSubmitting}
+                    className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8"
+                  >
+                    Save &amp; Submit Fayda KYC
+                  </Button>
+                </div>
+              </form>
+            </div>
           )}
 
           {/* TAB 2: Security & Password */}

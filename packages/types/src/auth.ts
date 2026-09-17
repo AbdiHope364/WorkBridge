@@ -1,5 +1,21 @@
 export type UserRole = "jobseeker" | "employer" | "admin";
 
+export type FaydaKycStatus = "UNVERIFIED" | "PENDING" | "VERIFIED" | "REJECTED";
+
+export interface FaydaKycDetails {
+  faydaNumber: string; // e.g. FIN-9042-8821-3419 or 12/16-digit FIN
+  fullNameOnFayda: string;
+  dateOfBirth?: string;
+  gender?: "MALE" | "FEMALE" | "OTHER";
+  idFrontUrl?: string;
+  idBackUrl?: string;
+  photoUrl?: string;
+  status: FaydaKycStatus;
+  rejectionReason?: string;
+  submittedAt?: string;
+  verifiedAt?: string;
+}
+
 export interface User {
   id: string;
   email: string;
@@ -12,6 +28,8 @@ export interface User {
   subscriptionTier?: "free" | "pro_monthly" | "pro_annual";
   applicationsUsedThisMonth?: number;
   jobPostsUsed?: number;
+  faydaKyc?: FaydaKycDetails;
+  faydaFin?: string;
   createdAt: string;
   updatedAt: string;
   lastLoginAt: string | null;

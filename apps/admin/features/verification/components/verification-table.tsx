@@ -21,6 +21,7 @@ interface VerificationRequest {
   applicantName: string;
   userType: "Jobseeker" | "Employer";
   documentType: string;
+  faydaFin?: string;
   submittedDate: string;
   status: "Pending" | "Verified" | "Rejected";
 }
@@ -30,15 +31,17 @@ const mockRequests: VerificationRequest[] = [
     id: "1",
     applicantName: "Abdi Abiot",
     userType: "Jobseeker",
-    documentType: "National ID",
+    documentType: "Fayda National ID (FIN)",
+    faydaFin: "FIN-9042-8821-3419",
     submittedDate: "June 20, 2025",
     status: "Pending",
   },
   {
     id: "2",
-    applicantName: "TechCorp Solutions",
+    applicantName: "TechCorp Solutions (Solomon T.)",
     userType: "Employer",
-    documentType: "Business License",
+    documentType: "Trade License & Officer Fayda",
+    faydaFin: "FIN-8812-4439-0192",
     submittedDate: "June 19, 2025",
     status: "Verified",
   },
@@ -46,7 +49,8 @@ const mockRequests: VerificationRequest[] = [
     id: "3",
     applicantName: "Sara Ahmed",
     userType: "Jobseeker",
-    documentType: "Passport",
+    documentType: "Fayda National ID (FIN)",
+    faydaFin: "FIN-1102-3958-8201",
     submittedDate: "June 18, 2025",
     status: "Pending",
   },
@@ -54,15 +58,17 @@ const mockRequests: VerificationRequest[] = [
     id: "4",
     applicantName: "Green Energy Ltd",
     userType: "Employer",
-    documentType: "Tax Certificate",
+    documentType: "Commercial Tax Certificate",
+    faydaFin: "FIN-7721-9930-4128",
     submittedDate: "June 17, 2025",
     status: "Rejected",
   },
   {
     id: "5",
-    applicantName: "Mark Smith",
-    userType: "Jobseeker",
-    documentType: "National ID",
+    applicantName: "Dawit Mekonnen",
+    userType: "Employer",
+    documentType: "Fayda National ID (FIN)",
+    faydaFin: "FIN-4820-1945-7731",
     submittedDate: "June 16, 2025",
     status: "Verified",
   },
@@ -134,10 +140,10 @@ export function VerificationTable() {
                 className="group hover:bg-slate-50/50 transition-colors"
               >
                 <td className="px-5 py-2.5">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2.5">
                     <div
                       className={cn(
-                        "w-8 h-8 rounded-full flex items-center justify-center border font-bold text-xs",
+                        "w-8 h-8 rounded-full flex items-center justify-center border font-bold text-xs shrink-0",
                         req.userType === "Jobseeker"
                           ? "bg-blue-50 text-blue-600 border-blue-100"
                           : "bg-emerald-50 text-emerald-600 border-emerald-100",
@@ -145,9 +151,16 @@ export function VerificationTable() {
                     >
                       {req.applicantName.charAt(0)}
                     </div>
-                    <span className="font-black text-slate-800 text-xs tracking-tight truncate max-w-[150px]">
-                      {req.applicantName}
-                    </span>
+                    <div className="min-w-0">
+                      <div className="font-black text-slate-800 text-xs tracking-tight truncate max-w-[170px]">
+                        {req.applicantName}
+                      </div>
+                      {req.faydaFin && (
+                        <span className="font-mono text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200 inline-block mt-0.5">
+                          {req.faydaFin}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </td>
                 <td className="px-5 py-2.5">

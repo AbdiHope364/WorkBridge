@@ -29,9 +29,10 @@ export interface ProfileSocialLink {
 
 export const profileChecklist: ProfileChecklistItem[] = [
   { id: "basic-info", label: "Basic Info", isComplete: true },
+  { id: "fayda-kyc", label: "Fayda National ID (KYC)", isComplete: true },
   { id: "skills", label: "Skills", isComplete: true },
   { id: "experience", label: "Experience", isComplete: true },
-  { id: "education", label: "Education", isComplete: false },
+  { id: "education", label: "Education", isComplete: true },
   { id: "resume", label: "Resumes", isComplete: false },
 ];
 

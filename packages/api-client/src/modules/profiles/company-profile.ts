@@ -44,6 +44,7 @@ export interface CompanyProfile {
   companyCulture: string[];
   businessLicenseNumber?: string;
   businessLicenseDocumentUrl?: Avatar;
+  authorizedOfficerFaydaFin?: string;
   nationalIdOrPassportNumber?: string;
   nationalIdOrPassportDocumentUrl?: Avatar;
   verificationStatus: VerificationStatus;
@@ -81,6 +82,7 @@ export interface UpdateCompanyProfileRequest {
   companyCulture?: string[];
   businessLicenseNumber?: string;
   businessLicenseDocumentUrl?: Avatar;
+  authorizedOfficerFaydaFin?: string;
   nationalIdOrPassportNumber?: string;
   nationalIdOrPassportDocumentUrl?: Avatar;
   isPublicProfileVisible?: boolean;

@@ -6,4 +6,5 @@ export * from "./jobs";
 export * from "./notifications";
 export * from "./payments";
 export * from "./bookings";
+export * from "./profile";
 export * from "./reviews";

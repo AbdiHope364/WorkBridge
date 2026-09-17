@@ -63,6 +63,8 @@ export interface JobseekerProfile {
 
   accountStatus: "ACTIVE" | "INACTIVE";
   verificationStatus: "UNVERIFIED" | "PENDING" | "VERIFIED" | "REJECTED";
+  faydaFin?: string;
+  nationalIdNumber?: string;
 
   visibility: "PUBLIC" | "PRIVATE";
 
@@ -87,4 +89,6 @@ export interface UpdateJobseekerProfileRequest {
   skills?: Skill[];
   educations?: Education[];
   experiences?: Experience[];
+  faydaFin?: string;
+  nationalIdNumber?: string;
 }
