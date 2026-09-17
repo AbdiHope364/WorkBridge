@@ -12,7 +12,7 @@ import {
 } from "./components/profile-settings-layout";
 import { JobseekerSidebar } from "./components/jobseeker-sidebar";
 
-const initialSkills = ["UI/UX design", "UI/UX design", "UI/UX design"];
+const initialSkills: string[] = [];
 
 interface BasicProfileForm {
   bio: string;
@@ -31,13 +31,13 @@ const initialForm: BasicProfileForm = {
   bio: "",
   firstName: "",
   lastName: "",
-  phoneNumber: "+251-900-000-000",
+  phoneNumber: "",
   cityLocation: "",
   gender: "",
   dateOfBirth: "",
-  addressLine1: "yourusername@gmail.com",
-  addressLine2: "yourusername@gmail.com",
-  currentPosition: "eg. Senior software engineer",
+  addressLine1: "",
+  addressLine2: "",
+  currentPosition: "",
 };
 
 function CameraIcon() {

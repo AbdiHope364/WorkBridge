@@ -1,14 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
-import { Button } from "@repo/ui";
+import { Button, Spinner } from "@repo/ui";
 import { useCurrentUser } from "../../hooks/use-current-user";
 import { JobseekerSidebar } from "./components/jobseeker-sidebar";
-import {
-  messageConversations,
-  type MessageConversation,
-} from "./messages-data";
+import { type MessageConversation } from "./messages-data";
+import { api } from "@/lib/api";
 
 function SearchIcon() {
   return (
@@ -88,43 +86,57 @@ function ConversationCard({
 
 export function MessagesPage() {
   const { isLoading, isAuthenticated } = useCurrentUser();
-  // const user = {
-  //   fullName: "Mock User",
-  // };
-
-  // const isLoading = false;
-  // const isAuthenticated = true;
-
   const [query, setQuery] = useState("");
+  const [conversations, setConversations] = useState<MessageConversation[]>([]);
+  const [loadingChat, setLoadingChat] = useState(true);
 
-  // useEffect(() => {
-  //   if (!isLoading && !isAuthenticated) {
-  //     router.replace("/login?next=/dashboard/messages");
-  //   }
-  // }, [isAuthenticated, isLoading, router]);
+  useEffect(() => {
+    const fetchConversations = async () => {
+      if (!isAuthenticated) return;
+      try {
+        setLoadingChat(true);
+        const res = await api.chat.listConversations();
+        const rawList = Array.isArray(res) ? res : (res as any)?.conversations || [];
+        const formatted: MessageConversation[] = rawList.map((c: any) => ({
+          id: c.id || c.conversationId || `c_${Math.random()}`,
+          senderName: c.senderName || c.participants?.[1] || "Employer",
+          company: c.company || "Trade Client",
+          preview: c.messages?.[c.messages.length - 1]?.text || "Start a conversation",
+          timeLabel: c.updatedAt ? new Date(c.updatedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "Recent",
+          unread: Boolean(c.messages?.some((m: any) => !m.read)),
+          href: `/dashboard/messages/${c.conversationId || c.id}`,
+        }));
+        setConversations(formatted);
+      } catch (err) {
+        console.error("Failed to load conversations:", err);
+      } finally {
+        setLoadingChat(false);
+      }
+    };
+
+    fetchConversations();
+  }, [isAuthenticated]);
 
   const filteredConversations = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
     if (!normalizedQuery) {
-      return messageConversations;
+      return conversations;
     }
 
-    return messageConversations.filter((conversation) => {
+    return conversations.filter((conversation) => {
       return (
         conversation.senderName.toLowerCase().includes(normalizedQuery) ||
         conversation.company.toLowerCase().includes(normalizedQuery) ||
         conversation.preview.toLowerCase().includes(normalizedQuery)
       );
     });
-  }, [query]);
+  }, [query, conversations]);
 
-  if (isLoading) {
+  if (isLoading || loadingChat) {
     return (
-      <main className="grid min-h-screen place-items-center bg-slate-50 text-slate-700">
-        <div className="rounded-lg border border-slate-200 bg-white px-6 py-4 text-sm font-semibold shadow-sm">
-          Checking your session...
-        </div>
+      <main className="grid min-h-screen place-items-center bg-[#f8f8fa]">
+        <Spinner />
       </main>
     );
   }

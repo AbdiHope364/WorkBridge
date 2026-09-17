@@ -9,20 +9,11 @@ router.use(protect);
 
 router.get('/conversations', async (req, res) => {
   try {
-    let conversations = await collections.messages.find({
+    const conversations = await collections.messages.find({
       participants: { $in: [req.user.id] },
     }).toArray();
 
-    // If user has no conversations yet, return mock conversations with user injected
-    if (!conversations || conversations.length === 0) {
-      conversations = mockMessages.map((conv, idx) => ({
-        ...conv,
-        id: conv.conversationId || `c${idx + 1}`,
-        participants: [req.user.id, ...(conv.participants.filter(p => p !== req.user.id))],
-      }));
-    }
-
-    res.json(conversations);
+    res.json(conversations || []);
   } catch (error) {
     res.status(500).json({ error: error.message || 'Failed to fetch conversations' });
   }

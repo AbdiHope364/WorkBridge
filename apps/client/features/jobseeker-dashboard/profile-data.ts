@@ -28,42 +28,30 @@ export interface ProfileSocialLink {
 }
 
 export const profileChecklist: ProfileChecklistItem[] = [
-  { id: "basic-info", label: "Basic Info", isComplete: true },
-  { id: "fayda-kyc", label: "Fayda National ID (KYC)", isComplete: true },
-  { id: "skills", label: "Skills", isComplete: true },
-  { id: "experience", label: "Experience", isComplete: true },
-  { id: "education", label: "Education", isComplete: true },
+  { id: "basic-info", label: "Basic Info", isComplete: false },
+  { id: "fayda-kyc", label: "Fayda National ID (KYC)", isComplete: false },
+  { id: "skills", label: "Skills", isComplete: false },
+  { id: "experience", label: "Experience", isComplete: false },
+  { id: "education", label: "Education", isComplete: false },
   { id: "resume", label: "Resumes", isComplete: false },
 ];
 
-export const profileSkills: Skill[] = [
-  { _id: "1", name: "Figma design" },
-  { _id: "2", name: "Node.js" },
-  { _id: "3", name: "Express.js" },
-  { _id: "4", name: "MongoDB" },
-  { _id: "5", name: "Web services" },
-  { _id: "6", name: "Photoshop" },
-];
+export const profileSkills: Skill[] = [];
 
 export const profileExperience: ProfileExperience = {
-  id: "full-stack-developer",
-  role: "Full Stack developer Intern",
-  company: "Eaglelion systems technology",
-  period: "07/06/2026 - 28/06/2026",
-  description: "Description part here",
+  id: "",
+  role: "",
+  company: "",
+  period: "",
+  description: "",
 };
 
 export const profileEducation: ProfileEducation = {
-  id: "software-engineering",
-  program: "Software Engineering",
-  school: "Bachelors Degree",
-  period: "Dire Dawa University",
-  description: "Department of Software Engineering, Dire Dawa Institute of Technology (DDU-IoT)",
+  id: "",
+  program: "",
+  school: "",
+  period: "",
+  description: "",
 };
 
-export const profileSocialLinks: ProfileSocialLink[] = [
-  { platform: "resume", url: "abdi_abiot_resume_2026.pdf" },
-  { platform: "linkedin", url: "https://linkedin.com/in/abdiabiot" },
-  { platform: "github", url: "https://github.com/abdiabiot" },
-  { platform: "portfolio", url: "https://abdiabiot.dev" },
-];
+export const profileSocialLinks: ProfileSocialLink[] = [];

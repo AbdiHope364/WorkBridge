@@ -1,16 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { Button, Spinner } from "@repo/ui";
 import { MessageIcon, SmallCheckIcon } from "./components/dashboard-icons";
 import { JobseekerSidebar } from "./components/jobseeker-sidebar";
 import {
-  jobseekerNotifications,
   type JobseekerNotification,
   type NotificationCategory,
 } from "./notifications-data";
 import { useAuth } from "@/contexts/auth-context";
+import { api } from "@/lib/api";
 
 type NotificationTab = "all" | "unread" | NotificationCategory;
 
@@ -99,7 +99,36 @@ export function NotificationsPage() {
   const { isLoading, isAuthenticated } = useAuth();
 
   const [activeTab, setActiveTab] = useState<NotificationTab>("all");
-  const [notifications, setNotifications] = useState(jobseekerNotifications);
+  const [notifications, setNotifications] = useState<JobseekerNotification[]>([]);
+  const [loadingFeed, setLoadingFeed] = useState(true);
+
+  useEffect(() => {
+    const fetchFeed = async () => {
+      if (!isAuthenticated) return;
+      try {
+        setLoadingFeed(true);
+        const res = await api.notifications.getFeed();
+        const rawList = res?.data || (res as any)?.notifications || [];
+        const formatted: JobseekerNotification[] = rawList.map((n: any) => ({
+          id: n.id || n._id,
+          title: n.title || "Notification",
+          description: n.message || n.description || "",
+          timeLabel: n.createdAt ? new Date(n.createdAt).toLocaleDateString() : "Recent",
+          category: (n.category || "applications") as NotificationCategory,
+          isUnread: n.isRead === false || !n.isRead,
+          icon: n.type === "message" ? "message" : "application",
+          href: n.link || "/dashboard",
+        }));
+        setNotifications(formatted);
+      } catch (err) {
+        console.error("Failed to load notifications:", err);
+      } finally {
+        setLoadingFeed(false);
+      }
+    };
+
+    fetchFeed();
+  }, [isAuthenticated]);
 
   const filteredNotifications = useMemo(() => {
     if (activeTab === "all") {
@@ -124,8 +153,12 @@ export function NotificationsPage() {
     );
   };
 
-  if (isLoading) {
-    <Spinner />;
+  if (isLoading || loadingFeed) {
+    return (
+      <main className="min-h-screen grid place-items-center bg-[#f8f8fa]">
+        <Spinner />
+      </main>
+    );
   }
 
   if (!isAuthenticated) {

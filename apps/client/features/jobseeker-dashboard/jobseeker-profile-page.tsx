@@ -5,13 +5,6 @@ import {
   ProfileTopHeader,
 } from "./components/profile-settings-layout";
 import { JobseekerSidebar } from "./components/jobseeker-sidebar";
-import {
-  profileChecklist,
-  profileEducation,
-  profileExperience,
-  profileSkills,
-  profileSocialLinks,
-} from "./profile-data";
 import { EditBasicProfileModal } from "./modals/edit-basic-profile-modal";
 import { EditProfileImageModal } from "./modals/edit-profile-image-modal";
 import { EditEducationModal } from "./modals/edit-education-modal";
@@ -22,7 +15,7 @@ import { ChangePasswordModal } from "./modals/change-password-modal";
 import { api } from "../../lib/api";
 import { useAuth } from "@/contexts/auth-context";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useProfile } from "@/contexts/profile-context";
 import {
   JobseekerProfile,
@@ -247,7 +240,36 @@ export function JobseekerProfilePage() {
     );
   }
 
-  const fullName = `${jobseekerProfile?.firstName || ""} ${jobseekerProfile?.lastName || ""}`.trim() || user?.fullName || "Abdi Abiot";
+  const fullName =
+    `${jobseekerProfile?.firstName || ""} ${jobseekerProfile?.lastName || ""}`.trim() ||
+    user?.fullName ||
+    "Worker";
+
+  const checklistItems = useMemo(() => {
+    const hasBasic = Boolean(fullName && fullName !== "Worker");
+    const hasKyc = Boolean(user?.faydaFin || jobseekerProfile?.faydaFin);
+    const hasSkills = Boolean(jobseekerProfile?.skills && jobseekerProfile.skills.length > 0);
+    const hasExp = Boolean(jobseekerProfile?.experiences && jobseekerProfile.experiences.length > 0);
+    const hasEdu = Boolean(jobseekerProfile?.educations && jobseekerProfile.educations.length > 0);
+    const hasResume = Boolean(
+      jobseekerProfile?.socialLinks &&
+        jobseekerProfile.socialLinks.some((l: { platform: string; url: string }) => l.platform === "resume" && l.url)
+    );
+
+    return [
+      { id: "basic-info", label: "Basic Info", isComplete: hasBasic },
+      { id: "fayda-kyc", label: "Fayda National ID (KYC)", isComplete: hasKyc },
+      { id: "skills", label: "Skills", isComplete: hasSkills },
+      { id: "experience", label: "Experience", isComplete: hasExp },
+      { id: "education", label: "Education", isComplete: hasEdu },
+      { id: "resume", label: "Resumes", isComplete: hasResume },
+    ];
+  }, [fullName, user, jobseekerProfile]);
+
+  const completionPercent = useMemo(() => {
+    const completedCount = checklistItems.filter((i) => i.isComplete).length;
+    return Math.round((completedCount / checklistItems.length) * 100);
+  }, [checklistItems]);
 
   const avatarUrl =
     jobseekerProfile?.avatar?.url ||
@@ -270,32 +292,33 @@ export function JobseekerProfilePage() {
 
           <div className="mx-auto grid max-w-295 gap-6 px-4 py-6 sm:px-6 sm:py-9 lg:grid-cols-[240px_1fr]">
             <aside className="space-y-5">
-              <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-                <div className="mb-3 flex items-center justify-between">
-                  <h1 className="text-sm font-black text-slate-950">
-                    Profile Strength
-                  </h1>
-                  <span className="text-xs font-black text-emerald-600">
-                    70%
+              <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div className="mb-2 flex items-center justify-between text-xs font-bold text-slate-950">
+                  <span>Profile Completion</span>
+                  <span className="text-emerald-600">
+                    {completionPercent}% Complete
                   </span>
                 </div>
                 <div className="h-2 rounded-full bg-slate-200">
-                  <div className="h-2 w-[70%] rounded-full bg-emerald-500" />
+                  <div
+                    className="h-2 rounded-full bg-emerald-500 transition-all duration-300"
+                    style={{ width: `${completionPercent}%` }}
+                  />
                 </div>
                 <p className="mt-3 text-xs leading-5 text-neutral-600">
-                  Complete your profile to get most job opportunities
+                  Complete your profile to get the best job and trade booking opportunities.
                 </p>
               </section>
 
               <nav className="space-y-3">
-                {profileChecklist.map((item) => (
+                {checklistItems.map((item) => (
                   <button
                     key={item.id}
                     type="button"
                     className={
                       `flex h-11 w-full items-center gap-3 rounded-md border px-4 text-left text-sm font-semibold transition ` +
                       (item.isComplete
-                        ? "border-emerald-100 bg-emerald-100 text-slate-950"
+                        ? "border-emerald-100 bg-emerald-50 text-emerald-950 font-bold"
                         : "border-slate-200 bg-white text-slate-950 hover:border-emerald-200")
                     }
                   >
@@ -347,15 +370,21 @@ export function JobseekerProfilePage() {
                       <div>
                         <div className="flex items-center gap-2 flex-wrap">
                           <h2 className="text-xl font-bold leading-tight text-slate-950">
-                            {fullName}
+                            {fullName || user?.fullName || "Worker"}
                           </h2>
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-xs">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            Fayda Verified (FIN: {jobseekerProfile?.faydaFin || "FIN-9042-8821-3419"})
-                          </span>
+                          {jobseekerProfile?.faydaFin || user?.faydaFin ? (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-xs">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                              Fayda Verified (FIN: {jobseekerProfile?.faydaFin || user?.faydaFin})
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200 shadow-xs">
+                              Fayda Unverified
+                            </span>
+                          )}
                         </div>
                         <p className="text-sm font-semibold text-teal-600 mt-0.5">
-                          {jobseekerProfile?.bio ?? "Full Stack Engineer & Trades Professional"}
+                          {jobseekerProfile?.bio || jobseekerProfile?.currentPosition || "Skilled Trade Professional"}
                         </p>
                       </div>
                       <button
@@ -370,19 +399,22 @@ export function JobseekerProfilePage() {
                     <div className="mt-3 grid gap-2 text-xs text-neutral-600 sm:grid-cols-2">
                       <span className="flex items-center gap-2">
                         <CalendarIcon />
-                        {jobseekerProfile?.gender ?? "Male"}
+                        {jobseekerProfile?.gender || "Gender not set"}
                       </span>
                       <span className="flex items-center gap-2">
-                        {jobseekerProfile?.dateOfBirth ?? "May 30, 2005"}
+                        {jobseekerProfile?.dateOfBirth || "Birthdate not set"}
                       </span>
                       <span className="flex items-center gap-2">
                         <MapPinIcon />
-                        {jobseekerProfile?.location?.toString() ??
-                          "Dire Dawa, Ethiopia"}
+                        {jobseekerProfile?.location?.city
+                          ? `${jobseekerProfile.location.city}, Ethiopia`
+                          : typeof jobseekerProfile?.location === "string" && jobseekerProfile.location
+                          ? jobseekerProfile.location
+                          : "Location not set"}
                       </span>
                       <span className="flex items-center gap-2">
                         <PhoneIcon />
-                        {jobseekerProfile?.phone ?? "+251-900-000-000"}
+                        {jobseekerProfile?.phone || (user as any)?.phone || "Phone not set"}
                       </span>
                     </div>
                   </div>
@@ -437,39 +469,35 @@ export function JobseekerProfilePage() {
                   <textarea
                     readOnly
                     value={jobseekerProfile?.bio ?? ""}
-                    placeholder="Say something about your self..."
+                    placeholder="Say something about yourself..."
                     className="h-20 w-full resize-none bg-transparent text-xs outline-none placeholder:text-neutral-400"
                   />
                 </div>
               </ProfileShellCard>
 
-              <ProfileShellCard title="Address Line 1">
+              <ProfileShellCard title="Address Lines">
                 <div className="space-y-3">
                   {[
-                    jobseekerProfile?.location?.addressLine1 ??
-                      "youraddressline1@gmail.com",
-                    jobseekerProfile?.location?.addressLine2 ??
-                      "youraddressline2@gmail.com",
-                  ].map((address, index) => (
+                    { label: "Address Line 1", val: jobseekerProfile?.location?.addressLine1 },
+                    { label: "Address Line 2", val: jobseekerProfile?.location?.addressLine2 },
+                  ].map((item) => (
                     <div
-                      key={address}
+                      key={item.label}
                       className="flex h-10 items-center justify-between rounded-md border border-slate-200 px-3 text-xs text-neutral-500"
                     >
-                      <span>Address Line {index + 1}</span>
-                      <span className="ml-auto mr-3">{address}</span>
+                      <span>{item.label}</span>
+                      <span className="ml-auto mr-3 text-slate-700 font-medium">
+                        {item.val || "Not configured"}
+                      </span>
                       <div className="flex items-center gap-1">
                         <button
                           type="button"
-                          aria-label={`Edit address ${index + 1}`}
+                          aria-label={`Edit ${item.label}`}
                           onClick={() => openModal("basicProfile")}
                           className="grid h-6 w-6 place-items-center rounded text-xs transition text-emerald-600 hover:bg-emerald-50"
                         >
                           <EditIcon />
                         </button>
-                        <IconButton
-                          label={`Delete address ${index + 1}`}
-                          tone="delete"
-                        />
                       </div>
                     </div>
                   ))}
@@ -478,114 +506,129 @@ export function JobseekerProfilePage() {
 
               <ProfileShellCard title="Your Skills" action="Add Skills">
                 <div className="rounded-md border border-slate-200 p-4">
-                  <div className="flex flex-wrap gap-3">
-                    {(jobseekerProfile?.skills ?? profileSkills).map(
-                      (skill) => (
+                  {jobseekerProfile?.skills && jobseekerProfile.skills.length > 0 ? (
+                    <div className="flex flex-wrap gap-3">
+                      {jobseekerProfile.skills.map((skill) => (
                         <span
                           key={skill.toString()}
                           className="inline-flex h-7 min-w-24 items-center justify-center rounded-full bg-emerald-100 px-4 text-xs font-medium text-emerald-600"
                         >
                           {skill.toString()}
                         </span>
-                      ),
-                    )}
-                  </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-neutral-400 italic">No skills added yet. Click &quot;Add Skills&quot; to showcase your trade skills.</p>
+                  )}
                 </div>
               </ProfileShellCard>
 
               <ProfileShellCard
-                title="Your Experiences - 2 years"
+                title={`Your Experiences${jobseekerProfile?.experienceYears ? ` - ${jobseekerProfile.experienceYears} years` : ""}`}
                 action="Add Experience"
               >
                 <div className="rounded-md border border-slate-200 p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h3 className="text-sm font-black text-emerald-600">
-                        {jobseekerProfile?.experiences?.[0]?.position ??
-                          profileExperience.role}
-                      </h3>
-                      <p className="mt-1 text-xs text-slate-950">
-                        {jobseekerProfile?.experiences?.[0]?.companyName ??
-                          profileExperience.company}
-                      </p>
-                      <p className="mt-1 text-xs text-neutral-500">
-                        {jobseekerProfile?.experienceYears ??
-                          profileExperience.period}
-                      </p>
-                      <p className="mt-3 text-xs text-neutral-600">
-                        {jobseekerProfile?.experiences?.[0]?.description ??
-                          profileExperience.description}
-                      </p>
+                  {jobseekerProfile?.experiences && jobseekerProfile.experiences.length > 0 ? (
+                    <div className="space-y-4">
+                      {jobseekerProfile.experiences.map((exp, idx) => (
+                        <div key={idx} className="flex items-start justify-between gap-3">
+                          <div>
+                            <h3 className="text-sm font-black text-emerald-600">
+                              {exp.position}
+                            </h3>
+                            <p className="mt-1 text-xs text-slate-950">
+                              {exp.companyName}
+                            </p>
+                            <p className="mt-1 text-xs text-neutral-500">
+                              {exp.startDate ? `${exp.startDate} - ${exp.endDate || "Present"}` : ""}
+                            </p>
+                            {exp.description && (
+                              <p className="mt-3 text-xs text-neutral-600">
+                                {exp.description}
+                              </p>
+                            )}
+                          </div>
+                          <button
+                            type="button"
+                            aria-label="Edit experience"
+                            onClick={() => openModal("experience")}
+                            className="grid h-6 w-6 place-items-center rounded text-xs transition text-emerald-600 hover:bg-emerald-50"
+                          >
+                            <EditIcon />
+                          </button>
+                        </div>
+                      ))}
                     </div>
-                    <button
-                      type="button"
-                      aria-label="Edit experience"
-                      onClick={() => openModal("experience")}
-                      className="grid h-6 w-6 place-items-center rounded text-xs transition text-emerald-600 hover:bg-emerald-50"
-                    >
-                      <EditIcon />
-                    </button>
-                  </div>
+                  ) : (
+                    <p className="text-xs text-neutral-400 italic">No work experience added yet. Click &quot;Add Experience&quot; to highlight your background.</p>
+                  )}
                 </div>
               </ProfileShellCard>
 
               <ProfileShellCard title="Your Education" action="Add Education">
                 <div className="rounded-md border border-slate-200 p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h3 className="text-sm font-black text-emerald-600">
-                        {jobseekerProfile?.educations?.[0]?.fieldOfStudy ??
-                          profileEducation.program}
-                      </h3>
-                      <p className="mt-1 text-xs text-slate-950">
-                        {jobseekerProfile?.educations?.[0]?.schoolName ??
-                          profileEducation.school}
-                      </p>
-                      <p className="mt-1 whitespace-pre-line text-xs text-neutral-500">
-                        {jobseekerProfile?.educations?.[0]?.endDate ??
-                          profileEducation.period}
-                        {"\n"}
-                        {jobseekerProfile?.educations?.[0]?.description ??
-                          profileEducation.description}
-                      </p>
+                  {jobseekerProfile?.educations && jobseekerProfile.educations.length > 0 ? (
+                    <div className="space-y-4">
+                      {jobseekerProfile.educations.map((edu, idx) => (
+                        <div key={idx} className="flex items-start justify-between gap-3">
+                          <div>
+                            <h3 className="text-sm font-black text-emerald-600">
+                              {edu.fieldOfStudy}
+                            </h3>
+                            <p className="mt-1 text-xs text-slate-950">
+                              {edu.schoolName}
+                            </p>
+                            <p className="mt-1 whitespace-pre-line text-xs text-neutral-500">
+                              {edu.endDate || ""}
+                              {edu.description ? `\n${edu.description}` : ""}
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            aria-label="Edit education"
+                            onClick={() => openModal("education")}
+                            className="grid h-6 w-6 place-items-center rounded text-xs transition text-emerald-600 hover:bg-emerald-50"
+                          >
+                            <EditIcon />
+                          </button>
+                        </div>
+                      ))}
                     </div>
-                    <button
-                      type="button"
-                      aria-label="Edit education"
-                      onClick={() => openModal("education")}
-                      className="grid h-6 w-6 place-items-center rounded text-xs transition text-emerald-600 hover:bg-emerald-50"
-                    >
-                      <EditIcon />
-                    </button>
-                  </div>
+                  ) : (
+                    <p className="text-xs text-neutral-400 italic">No education history added yet. Click &quot;Add Education&quot; to add certifications or degrees.</p>
+                  )}
                 </div>
               </ProfileShellCard>
 
               <ProfileShellCard title="Resume & Socials">
                 <div className="space-y-3">
-                  {(jobseekerProfile?.socialLinks ?? profileSocialLinks).map(
-                    (link: { platform: string; url: string }) => (
-                      <div
-                        key={link.platform}
-                        className="flex h-9 items-center justify-between rounded-md border border-slate-200 px-3 text-xs text-neutral-500"
-                      >
-                        <span className="truncate">{link.url}</span>
-                        <div className="ml-3 flex items-center gap-1">
-                          <button
-                            type="button"
-                            aria-label={`Edit ${link.platform}`}
-                            onClick={() => openModal("resumesSocials")}
-                            className="grid h-6 w-6 place-items-center rounded text-xs transition text-emerald-600 hover:bg-emerald-50"
-                          >
-                            <EditIcon />
-                          </button>
-                          <IconButton
-                            label={`Delete ${link.platform}`}
-                            tone="delete"
-                          />
+                  {jobseekerProfile?.socialLinks && jobseekerProfile.socialLinks.length > 0 ? (
+                    jobseekerProfile.socialLinks.map(
+                      (link: { platform: string; url: string }) => (
+                        <div
+                          key={link.platform}
+                          className="flex h-9 items-center justify-between rounded-md border border-slate-200 px-3 text-xs text-neutral-500"
+                        >
+                          <span className="truncate">{link.url}</span>
+                          <div className="ml-3 flex items-center gap-1">
+                            <button
+                              type="button"
+                              aria-label={`Edit ${link.platform}`}
+                              onClick={() => openModal("resumesSocials")}
+                              className="grid h-6 w-6 place-items-center rounded text-xs transition text-emerald-600 hover:bg-emerald-50"
+                            >
+                              <EditIcon />
+                            </button>
+                            <IconButton
+                              label={`Delete ${link.platform}`}
+                              tone="delete"
+                            />
+                          </div>
                         </div>
-                      </div>
-                    ),
+                      ),
+                    )
+                  ) : (
+                    <p className="text-xs text-neutral-400 italic">No social links or resumes uploaded yet.</p>
                   )}
                 </div>
               </ProfileShellCard>

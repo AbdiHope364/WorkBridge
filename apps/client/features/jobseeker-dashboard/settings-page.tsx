@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { JobseekerSidebar } from "./components/jobseeker-sidebar";
 import { useAuth } from "@/contexts/auth-context";
+import { useProfile } from "@/contexts/profile-context";
 import { Button } from "@repo/ui";
 import {
   User,
@@ -24,25 +25,45 @@ import {
 
 export function JobseekerSettingsPage() {
   const { user, refreshUser } = useAuth();
+  const { jobseekerProfile } = useProfile();
 
   const [activeTab, setActiveTab] = useState<"general" | "kyc" | "security" | "notifications" | "account">("general");
 
   // General state
   const [fullName, setFullName] = useState(user?.fullName || "");
-  const [phone, setPhone] = useState("+251 91 123 4567");
-  const [location, setLocation] = useState("Addis Ababa, Ethiopia");
-  const [tradeHeadline, setTradeHeadline] = useState("Certified Master Electrician & Solar Installer");
-  const [hourlyRate, setHourlyRate] = useState("350");
+  const [phone, setPhone] = useState(jobseekerProfile?.phone || (user as any)?.phone || "");
+  const [location, setLocation] = useState(
+    typeof jobseekerProfile?.location === "string"
+      ? jobseekerProfile.location
+      : jobseekerProfile?.location?.city
+      ? `${jobseekerProfile.location.city}, Ethiopia`
+      : ""
+  );
+  const [tradeHeadline, setTradeHeadline] = useState(
+    jobseekerProfile?.bio || jobseekerProfile?.currentPosition || (user as any)?.profile?.headline || ""
+  );
+  const [hourlyRate, setHourlyRate] = useState(
+    (jobseekerProfile as any)?.hourlyRate ? String((jobseekerProfile as any).hourlyRate) : ""
+  );
 
   // Fayda KYC State
-  const [faydaNumber, setFaydaNumber] = useState(user?.faydaFin || "FIN-9042-8821-3419");
-  const [fullNameOnFayda, setFullNameOnFayda] = useState(user?.fullName || "Abdi Abiot");
-  const [dateOfBirth, setDateOfBirth] = useState("2001-05-14");
-  const [gender, setGender] = useState<"MALE" | "FEMALE" | "OTHER">("MALE");
-  const [kycStatus, setKycStatus] = useState<"VERIFIED" | "PENDING" | "UNVERIFIED" | "REJECTED">("VERIFIED");
-  const [frontDocName, setFrontDocName] = useState("fayda_nid_front_scan.jpg");
-  const [backDocName, setBackDocName] = useState("fayda_nid_back_scan.jpg");
+  const [faydaNumber, setFaydaNumber] = useState(user?.faydaFin || jobseekerProfile?.faydaFin || "");
+  const [fullNameOnFayda, setFullNameOnFayda] = useState(user?.fullName || "");
+  const [dateOfBirth, setDateOfBirth] = useState(jobseekerProfile?.dateOfBirth || "");
+  const [gender, setGender] = useState<"MALE" | "FEMALE" | "OTHER">((jobseekerProfile?.gender as any) || "MALE");
+  const [kycStatus, setKycStatus] = useState<"VERIFIED" | "PENDING" | "UNVERIFIED" | "REJECTED">(
+    (user as any)?.faydaStatus || (user?.faydaFin ? "VERIFIED" : "UNVERIFIED")
+  );
+  const [frontDocName, setFrontDocName] = useState("");
+  const [backDocName, setBackDocName] = useState("");
   const [kycSubmitting, setKycSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (user?.fullName && !fullName) setFullName(user.fullName);
+    if ((user?.faydaFin || jobseekerProfile?.faydaFin) && !faydaNumber) {
+      setFaydaNumber(user?.faydaFin || jobseekerProfile?.faydaFin || "");
+    }
+  }, [user, jobseekerProfile]);
 
   // Security state
   const [currentPassword, setCurrentPassword] = useState("");

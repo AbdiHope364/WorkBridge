@@ -3,19 +3,11 @@ import { mockMessages } from '../data/mocks/messages.mock.js';
 
 export const getConversations = async (req, res) => {
   try {
-    let conversations = await collections.messages.find({
+    const conversations = await collections.messages.find({
       participants: { $in: [req.user.id] },
     }).toArray();
 
-    if (!conversations || conversations.length === 0) {
-      conversations = mockMessages.map((conv, idx) => ({
-        ...conv,
-        id: conv.conversationId || `c${idx + 1}`,
-        participants: [req.user.id, ...(conv.participants.filter(p => p !== req.user.id))],
-      }));
-    }
-
-    res.json({ conversations });
+    res.json({ conversations: conversations || [] });
   } catch (error) {
     res.status(500).json({ error: error.message || 'Failed to fetch conversations' });
   }
