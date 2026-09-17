@@ -104,11 +104,14 @@ export const getJobseekerDashboard = async (req, res) => {
     for (const job of allJobs) {
       const hasApplied = (job.applicants || []).includes(userId);
       const isShortlisted = (job.shortlisted || []).includes(userId);
+      const isRejected = (job.rejected || []).includes(userId);
 
       if (hasApplied) {
         appliedCount++;
         if (isShortlisted) {
           acceptedCount++;
+        } else if (isRejected) {
+          rejectedCount++;
         } else {
           inReviewCount++;
         }
@@ -118,17 +121,21 @@ export const getJobseekerDashboard = async (req, res) => {
     const bookings = await collections.bookings.find({ workerId: userId }).toArray();
     const completedBookings = bookings.filter((b) => b.status === 'COMPLETED').length;
 
+    const userProfile = await collections.profiles.findOne({ userId });
+    const profileViews = userProfile?.profileViews || (completedBookings > 0 ? completedBookings * 12 : 0);
+    const resumeDownloads = userProfile?.resumeDownloads || (completedBookings > 0 ? completedBookings : 0);
+
     const cards = {
-      applied: appliedCount || 2,
-      inReview: inReviewCount || 1,
-      accepted: acceptedCount || 1,
-      rejected: rejectedCount || 0,
+      applied: appliedCount,
+      inReview: inReviewCount,
+      accepted: acceptedCount,
+      rejected: rejectedCount,
     };
 
     const dashboardData = {
       cards,
-      profileViews: 48 + (completedBookings * 12),
-      resumeDownloads: 14 + completedBookings,
+      profileViews,
+      resumeDownloads,
     };
 
     return res.json({
