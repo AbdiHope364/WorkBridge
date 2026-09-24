@@ -295,6 +295,7 @@ export function EmployerCreateJobPage() {
   const [isLoadingForm, setIsLoadingForm] = useState(true);
   const [skillInput, setSkillInput] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [postingMode, setPostingMode] = useState<"homeowner" | "company">("homeowner");
 
   const [form, setForm] = useState({
     title: "",
@@ -359,7 +360,7 @@ export function EmployerCreateJobPage() {
   }, [isLoading, user, router]);
 
   useEffect(() => {
-    if (!isLoading && isAuthenticated && !employerProfile?.canPostJobs) {
+    if (!isLoading && isAuthenticated && employerProfile && employerProfile.canPostJobs === false) {
       router.replace("/dashboard/employer/profile?tab=verification");
     }
   }, [isLoading, isAuthenticated, employerProfile, router]);
@@ -403,26 +404,44 @@ export function EmployerCreateJobPage() {
     try {
       setIsSubmitting(true);
 
-      const skillsAsObjects = form.skills.map((skill) => ({
+      const effectiveSkills =
+        postingMode === "homeowner" && form.skills.length < 3
+          ? Array.from(
+              new Set([
+                ...form.skills,
+                form.category.replace(/_/g, " "),
+                "Home Repair",
+                "Artisan Trades",
+              ]),
+            ).slice(0, 3)
+          : form.skills;
+
+      const skillsAsObjects = effectiveSkills.map((skill) => ({
         name: skill.trim(),
       }));
+
+      const defaultDeadline =
+        form.deadline ||
+        new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .split("T")[0];
 
       const payload = {
         title: form.title.trim(),
         description: form.description.trim(),
         category: form.category,
         skills: skillsAsObjects,
-        jobType: form.jobType,
-        workplaceType: form.workplaceType,
-        workerType: form.workerType,
-        experienceLevel: form.experienceLevel,
-        salary: Number(form.salary),
-        budget: form.budget,
-        deadline: form.deadline,
-        vacancies: form.vacancies,
+        jobType: postingMode === "homeowner" ? (form.isUrgent ? "EMERGENCY_REPAIR" : "ONE_TIME_TASK") : form.jobType,
+        workplaceType: postingMode === "homeowner" ? ("ONSITE" as WorkplaceType) : form.workplaceType,
+        workerType: postingMode === "homeowner" ? ("PHYSICAL" as WorkerType) : form.workerType,
+        experienceLevel: postingMode === "homeowner" ? ("INTERMEDIATE" as ExperienceLevel) : form.experienceLevel,
+        salary: Number(form.salary) || 0,
+        budget: postingMode === "homeowner" ? ("FIXED" as BudgetType) : form.budget,
+        deadline: defaultDeadline,
+        vacancies: form.vacancies || 1,
         isUrgent: form.isUrgent,
         location: {
-          city: form.city.trim(),
+          city: form.city.trim() || "Addis Ababa",
           country: "ETHIOPIA",
         },
       };
@@ -514,46 +533,143 @@ export function EmployerCreateJobPage() {
 
   return (
     <main className="min-h-screen w-full bg-[#f7f7fb] text-black">
-      <header className="relative flex h-12 items-center justify-center border-b border-[#00aaa8] bg-white">
+      <header className="relative flex flex-col items-center justify-center border-b border-[#00aaa8] bg-white py-4 px-6 text-center">
         <Link
           href="/dashboard/employer"
           aria-label="Back"
-          className="absolute left-9 top-1/2 -translate-y-1/2 text-black"
+          className="absolute left-6 top-1/2 -translate-y-1/2 text-black"
         >
           <BackIcon className="h-5 w-5" />
         </Link>
-        <h1 className="text-2xl font-medium text-black">Create Job Posting</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
+          {postingMode === "homeowner"
+            ? "🏡 Post Household Repair or Artisan Task"
+            : "🏢 Create Corporate Job Posting"}
+        </h1>
+        <p className="text-xs text-slate-500 mt-1">
+          {postingMode === "homeowner"
+            ? "Easily request plumbers, electricians, painters & home maintenance artisans in Ethiopia."
+            : "Hire corporate staff, software engineers, managers, and specialized professionals."}
+        </p>
+
+        {/* Mode Switcher Toggle */}
+        <div className="mt-3 flex items-center justify-center gap-1 rounded-xl bg-slate-100 p-1 border border-slate-200">
+          <button
+            type="button"
+            onClick={() => setPostingMode("homeowner")}
+            className={`flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold rounded-lg transition ${
+              postingMode === "homeowner"
+                ? "bg-emerald-600 text-white shadow-sm"
+                : "text-slate-600 hover:text-slate-900"
+            }`}
+          >
+            🏡 Homeowner Request
+          </button>
+          <button
+            type="button"
+            onClick={() => setPostingMode("company")}
+            className={`flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold rounded-lg transition ${
+              postingMode === "company"
+                ? "bg-slate-900 text-white shadow-sm"
+                : "text-slate-600 hover:text-slate-900"
+            }`}
+          >
+            🏢 Corporate Hiring
+          </button>
+        </div>
       </header>
 
       <form
         onSubmit={handleSubmit}
         className="mx-auto w-full max-w-4xl px-4 sm:px-8 py-7"
       >
+        {postingMode === "homeowner" && (
+          <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200">
+            <p className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-2">
+              ⚡ Quick Home Repair Presets
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  updateField("title", "Emergency Plumbing & Pipe Leak Fix");
+                  updateField("category", "PLUMBING" as any);
+                  updateField("isUrgent", true);
+                }}
+                className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white border border-emerald-300 text-emerald-700 hover:bg-emerald-100 transition"
+              >
+                🚨 Plumber (Water Leak)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  updateField("title", "Household Electrical Wiring Repair");
+                  updateField("category", "ELECTRICAL" as any);
+                  updateField("isUrgent", true);
+                }}
+                className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white border border-emerald-300 text-emerald-700 hover:bg-emerald-100 transition"
+              >
+                ⚡ Electrician (Wiring / Breaker)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  updateField("title", "House Painting & Wall Refurbishment");
+                  updateField("category", "PAINTING_DRYWALL" as any);
+                  updateField("isUrgent", false);
+                }}
+                className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white border border-emerald-300 text-emerald-700 hover:bg-emerald-100 transition"
+              >
+                🎨 Painter (House Walls)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  updateField("title", "Fridge & Washing Machine Maintenance");
+                  updateField("category", "APPLIANCE_REPAIR" as any);
+                  updateField("isUrgent", false);
+                }}
+                className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white border border-emerald-300 text-emerald-700 hover:bg-emerald-100 transition"
+              >
+                🧺 Appliance Technician
+              </button>
+            </div>
+          </div>
+        )}
+
         {error && (
-          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded text-xs font-semibold">
             {error}
           </div>
         )}
 
         <div className="grid gap-x-3 gap-y-4 lg:grid-cols-2">
           <label className="block">
-            <RequiredLabel>Job Title</RequiredLabel>
+            <RequiredLabel>
+              {postingMode === "homeowner" ? "What Needs Fixing? (Title)" : "Job Title"}
+            </RequiredLabel>
             <input
               value={form.title}
               onChange={(e) => updateField("title", e.target.value)}
-              placeholder="e.g. Senior Frontend Developer"
-              className="mt-2 h-8 w-full border border-[#c9cbd3] bg-white px-4 text-xs outline-none placeholder:text-[#8b8e99]"
+              placeholder={
+                postingMode === "homeowner"
+                  ? "e.g. Water leak under kitchen sink or Breaker tripping"
+                  : "e.g. Master Plumber or Commercial Rewiring"
+              }
+              className="mt-2 h-9 w-full border border-[#c9cbd3] bg-white px-4 text-xs outline-none placeholder:text-[#8b8e99] rounded-lg"
               required
             />
           </label>
 
           <label className="block">
-            <RequiredLabel>Job Location</RequiredLabel>
+            <RequiredLabel>
+              {postingMode === "homeowner" ? "Service Location (Sub-City)" : "Job Location"}
+            </RequiredLabel>
             <input
               value={form.city}
               onChange={(e) => updateField("city", e.target.value)}
-              placeholder="e.g. Addis Ababa"
-              className="mt-2 h-8 w-full border border-[#c9cbd3] bg-white px-4 text-xs outline-none placeholder:text-[#8b8e99]"
+              placeholder="e.g. Addis Ababa (Bole Sub-city, Woreda 03)"
+              className="mt-2 h-9 w-full border border-[#c9cbd3] bg-white px-4 text-xs outline-none placeholder:text-[#8b8e99] rounded-lg"
               required
             />
           </label>

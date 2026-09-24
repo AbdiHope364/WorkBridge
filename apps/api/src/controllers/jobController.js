@@ -248,7 +248,7 @@ export const getJobById = async (req, res) => {
 };
 
 export const createJob = async (req, res) => {
-  const { title, company, location, type, salary, category, description, requirements } = req.body;
+  const { title, company, location, type, jobType, salary, category, description, requirements, skills } = req.body;
 
   const user = await collections.users.findOne({ id: req.user.id });
   const sub = await collections.subscriptions.findOne({ userId: req.user.id, status: 'active' });
@@ -265,23 +265,38 @@ export const createJob = async (req, res) => {
     });
   }
 
-  const jobs = await collections.jobs.find().toArray();
+  const formattedLocation = typeof location === 'object' && location !== null
+    ? { city: location.city || 'Addis Ababa', country: location.country || 'ETHIOPIA' }
+    : { city: String(location || 'Addis Ababa'), country: 'ETHIOPIA' };
+
+  const parsedSkills = Array.isArray(skills)
+    ? skills.map(s => (typeof s === 'object' ? s : { name: String(s) }))
+    : Array.isArray(requirements)
+      ? requirements.map(r => ({ name: String(r) }))
+      : [];
+
   const newJob = {
-    id: String(jobs.length + 1),
+    id: `j_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
     title,
-    company: company || user?.name || 'Employer',
+    company: company || user?.name || user?.fullName || 'Employer',
     postedBy: req.user.id,
-    location: location || 'Addis Ababa',
-    type: type || 'Full-time',
-    salary: salary || 0,
-    category: category || 'General',
+    employerSnapshot: {
+      displayName: company || user?.name || user?.fullName || 'Employer',
+    },
+    location: formattedLocation,
+    type: type || jobType || 'FULL_TIME',
+    jobType: jobType || type || 'FULL_TIME',
+    salary: Number(salary) || 0,
+    category: category || 'GENERAL',
     description,
-    requirements: requirements || [],
+    skills: parsedSkills,
+    requirements: requirements || parsedSkills.map(s => s.name),
     applicants: [],
     shortlisted: [],
     isActive: true,
     status: 'OPEN',
     createdAt: new Date().toISOString(),
+    ...req.body,
   };
 
   await collections.jobs.insertOne(newJob);
@@ -308,7 +323,8 @@ export const updateJob = async (req, res) => {
     { returnDocument: 'after' }
   );
 
-  res.json({ job: updated.value });
+  const updatedJob = updated?.value !== undefined ? updated.value : updated;
+  res.json({ job: updatedJob });
 };
 
 export const deleteJob = async (req, res) => {
@@ -350,6 +366,21 @@ export const submitApplicationHandler = async (req, res) => {
     }
 
     if (userId) {
+      const user = await collections.users.findOne({ id: userId });
+      const sub = await collections.subscriptions.findOne({ userId, status: 'active' });
+      const isPro = sub && (sub.tier === 'pro_monthly' || sub.tier === 'pro_annual');
+      const applicationsUsed = user?.applicationsUsedThisMonth || user?.applicationsUsed || 0;
+
+      if (!isPro && applicationsUsed >= 5) {
+        return res.status(403).json({
+          error: 'QUOTA_EXCEEDED',
+          message: 'You have reached the free limit of 5 job applications per month. Upgrade to a Pro subscription for unlimited applications.',
+          code: 'QUOTA_EXCEEDED',
+          currentUsed: applicationsUsed,
+          limit: 5,
+        });
+      }
+
       try {
         await collections.jobs.updateOne(
           { $or: [{ id: String(jobId) }, { _id: String(jobId) }] },
@@ -370,7 +401,9 @@ export const submitApplicationHandler = async (req, res) => {
     const newApplication = {
       _id: `app_${Date.now()}`,
       id: `app_${Date.now()}`,
-      jobId: job,
+      jobId: String(job.id || job._id),
+      jobTitle: job.title,
+      job: job,
       workerId: userId || 'worker_me',
       coverLetter: req.body?.coverLetter || '',
       proposedRate: req.body?.proposedRate || job.salary || '',

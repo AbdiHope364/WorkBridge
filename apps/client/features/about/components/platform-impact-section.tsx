@@ -33,7 +33,7 @@ export function PlatformImpactSection() {
                       Daniel Tesfaye
                     </p>
                     <p className="text-[10px] text-slate-500">
-                      Frontend Developer
+                      Certified Master Electrician
                     </p>
                   </div>
                 </div>

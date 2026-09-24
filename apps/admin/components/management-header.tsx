@@ -2,8 +2,9 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Search, Filter, ChevronDown, X, Check } from "lucide-react";
+import { Search, Filter, ChevronDown, X, Check, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSidebar } from "@/context/sidebar-context";
 
 interface FilterOption {
   label: string;
@@ -30,6 +31,7 @@ export function ManagementHeader({
   filterOptions = [],
   showFilter = true,
 }: ManagementHeaderProps) {
+  const { toggle } = useSidebar();
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -97,27 +99,36 @@ export function ManagementHeader({
   };
 
   return (
-    <header className="flex items-center justify-between px-10 py-6 bg-transparent flex-wrap gap-4">
-      <div>
-        <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-          {title}
-        </h1>
-        <p className="text-slate-500 font-medium text-sm mt-0.5">
-          {description}
-        </p>
+    <header className="flex flex-col md:flex-row md:items-center justify-between px-4 sm:px-6 lg:px-10 py-4 sm:py-6 bg-transparent gap-4">
+      <div className="flex items-center gap-3">
+        <button
+          onClick={toggle}
+          className="p-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors lg:hidden shadow-2xs"
+          aria-label="Open Navigation Sidebar"
+        >
+          <Menu className="w-5 h-5 text-slate-800" />
+        </button>
+        <div>
+          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+            {title}
+          </h1>
+          <p className="text-slate-500 font-medium text-xs sm:text-sm mt-0.5">
+            {description}
+          </p>
+        </div>
       </div>
 
-      <div className="flex items-center gap-4 flex-wrap">
+      <div className="flex items-center gap-3 flex-wrap w-full md:w-auto">
         {/* Search Bar */}
         <div
           className={cn(
-            "relative group",
+            "relative group flex-1 md:flex-initial",
             isSearchFocused && "ring-4 ring-emerald-500/10 rounded-xl",
           )}
         >
           <Search
             className={cn(
-              "absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors",
+              "absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors",
               isSearchFocused ? "text-emerald-500" : "text-slate-400",
             )}
           />
@@ -129,14 +140,14 @@ export function ManagementHeader({
             onKeyDown={handleKeyDown}
             onFocus={() => setIsSearchFocused(true)}
             onBlur={() => setIsSearchFocused(false)}
-            className="w-80 h-11 pl-12 pr-10 bg-white border border-slate-100 rounded-xl shadow-sm outline-none focus:border-emerald-500 transition-all text-sm font-medium text-slate-700 placeholder:text-slate-400"
+            className="w-full md:w-64 lg:w-80 h-10 pl-10 pr-9 bg-white border border-slate-200/80 rounded-xl shadow-xs outline-none focus:border-emerald-500 transition-all text-xs sm:text-sm font-medium text-slate-700 placeholder:text-slate-400"
           />
           {searchQuery && (
             <button
               onClick={clearSearch}
               className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-slate-100 transition-colors"
             >
-              <X className="w-4 h-4 text-slate-400" />
+              <X className="w-3.5 h-3.5 text-slate-400" />
             </button>
           )}
         </div>

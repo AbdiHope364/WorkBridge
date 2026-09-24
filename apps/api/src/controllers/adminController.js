@@ -143,20 +143,32 @@ export const resolveDispute = async (req, res) => {
     { returnDocument: 'after' }
   );
 
-  res.json({ dispute: updated.value });
+  const updatedDispute = updated?.value !== undefined ? updated.value : updated;
+  res.json({ dispute: updatedDispute });
 };
 
 export const getVerifications = async (req, res) => {
-  const pendingUsers = await collections.users.find({ verified: false }).toArray();
-  const verifications = pendingUsers.map(user => ({
+  const users = await collections.users.find({
+    $or: [
+      { faydaFin: { $exists: true, $ne: '' } },
+      { faydaStatus: { $in: ['PENDING', 'VERIFIED', 'REJECTED'] } },
+      { verified: false }
+    ]
+  }).toArray();
+
+  const verifications = users.map((user) => ({
     id: `v_${user.id}`,
     userId: user.id,
-    name: user.name,
+    applicantName: user.fullName || user.name || 'Anonymous User',
+    name: user.fullName || user.name || 'Anonymous User',
     email: user.email,
     role: user.role,
-    type: user.role === 'employer' ? 'company' : 'individual',
-    status: 'pending',
+    userType: user.role === 'employer' ? 'Employer' : 'Jobseeker',
+    documentType: user.role === 'employer' ? 'Trade License & Officer Fayda' : 'Fayda National ID (FIN)',
+    faydaFin: user.faydaFin || 'Pending Submission',
+    status: user.faydaStatus ? (user.faydaStatus === 'VERIFIED' ? 'Verified' : user.faydaStatus === 'REJECTED' ? 'Rejected' : 'Pending') : (user.verified ? 'Verified' : 'Pending'),
     createdAt: user.createdAt || new Date().toISOString(),
+    submittedDate: user.updatedAt || user.createdAt || new Date().toISOString(),
   }));
   res.json(verifications);
 };
@@ -168,9 +180,15 @@ export const approveVerification = async (req, res) => {
     return res.status(404).json({ error: 'User not found.' });
   }
 
+  const now = new Date().toISOString();
   await collections.users.updateOne(
     { id: userId },
-    { $set: { verified: true } }
+    { $set: { verified: true, faydaStatus: 'VERIFIED', updatedAt: now } }
+  );
+
+  await collections.profiles.updateOne(
+    { userId: userId },
+    { $set: { verificationStatus: 'VERIFIED', faydaStatus: 'VERIFIED', updatedAt: now } }
   );
 
   const updated = await collections.users.findOne({ id: userId });

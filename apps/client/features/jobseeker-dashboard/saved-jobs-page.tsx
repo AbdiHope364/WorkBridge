@@ -180,7 +180,7 @@ export function SavedJobsPage() {
       <JobseekerSidebar />
 
       <section className="flex-1 min-w-0 overflow-y-auto pt-16 pb-20 md:pt-0 md:pb-0 p-4 sm:p-6 md:p-10 w-full">
-        <div className="max-w-5xl mx-auto w-full">
+        <div className="w-full">
           <header className="mb-6 sm:mb-8">
             <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-[#0F132E] tracking-tight">
               Saved Jobs

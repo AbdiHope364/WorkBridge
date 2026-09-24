@@ -60,23 +60,23 @@ export function DashboardCharts() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-10 mb-8">
-        <div className="lg:col-span-2 bg-white rounded-[1.5rem] p-6 shadow-sm border border-slate-100 h-[350px] animate-pulse" />
-        <div className="bg-white rounded-[1.5rem] p-6 shadow-sm border border-slate-100 h-[350px] animate-pulse" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-10 mb-6 sm:mb-8">
+        <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 h-[350px] animate-pulse" />
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 h-[350px] animate-pulse" />
       </div>
     );
   }
 
   if (error) {
-    return <div className="px-10 mb-8 text-sm text-rose-600">{error}</div>;
+    return <div className="px-4 sm:px-6 lg:px-10 mb-6 sm:mb-8 text-sm text-rose-600">{error}</div>;
   }
 
   const totalJobs = jobStatusData.reduce((sum, item) => sum + item.value, 0);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-10 mb-8">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-10 mb-6 sm:mb-8">
       {/* Overview Line Chart */}
-      <div className="lg:col-span-2 bg-white rounded-[1.5rem] p-6 shadow-sm border border-slate-100">
+      <div className="lg:col-span-2 bg-white rounded-2xl p-4 sm:p-6 shadow-xs border border-slate-100">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-bold text-slate-800">Overview</h3>
           <div className="flex items-center gap-2 px-3 py-1 bg-slate-50 border border-slate-100 rounded-lg cursor-pointer hover:bg-slate-100 transition-colors">

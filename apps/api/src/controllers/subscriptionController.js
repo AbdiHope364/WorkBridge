@@ -297,6 +297,7 @@ export const mockCheckout = async (req, res) => {
           subscriptionTier: plan.tier,
           subscriptionExpiresAt: endDate.toISOString(),
           isPro: plan.tier !== 'free',
+          ...(plan.tier !== 'free' ? { applicationsUsedThisMonth: 0, jobPostsUsed: 0 } : {}),
           updatedAt: new Date().toISOString(),
         },
       }

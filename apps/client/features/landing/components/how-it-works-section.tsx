@@ -3,46 +3,46 @@
 const seekerSteps = [
   {
     step: "01",
-    heading: "Create Your Profile",
-    body: "Add your experience, skills, and trade certifications in minutes.",
+    heading: "Create Your Trade Profile",
+    body: "Add your skilled trade expertise (Plumbing, Electrical, Carpentry, Painting), certification, and location.",
   },
   {
     step: "02",
-    heading: "Discover Jobs",
-    body: "Browse verified listings by category, location, or skill set.",
+    heading: "Discover Local Requests",
+    body: "Browse nearby homeowner repair requests, house call jobs, and property maintenance listings.",
   },
   {
     step: "03",
-    heading: "Apply Instantly",
-    body: "View job details and apply directly with your saved credentials.",
+    heading: "Send Quick Quotation",
+    body: "Submit estimated price quotes and availability directly to homeowners with zero hidden fees.",
   },
   {
     step: "04",
-    heading: "Get Hired & Paid",
-    body: "Track applications, chat with employers, and receive guaranteed pay.",
+    heading: "Complete & Direct Pay",
+    body: "Perform the house call, build your customer rating, and keep 100% of your earned pay in ETB.",
   },
 ];
 
 const employerSteps = [
   {
     step: "01",
-    heading: "Create a Profile",
-    body: "Set up as an Individual Client or Company and get verified.",
+    heading: "Pick a Repair Preset",
+    body: "Select 1-click presets for Plumbing, Electrical Fixes, Painting, Appliance Repair, or Handyman tasks.",
   },
   {
     step: "02",
-    heading: "Post Your Requirement",
-    body: "Define the job, required skills, and clear wage in ETB.",
+    heading: "Post House Call Request",
+    body: "Describe the issue, set your location in Ethiopia, and specify your budget in ETB.",
   },
   {
     step: "03",
-    heading: "Review Candidates",
-    body: "Filter applicants by verified ratings, experience, and proximity.",
+    heading: "Compare Nearby Artisans",
+    body: "Review local tradesmen by verified ratings, experience, photo portfolios, and proximity.",
   },
   {
     step: "04",
-    heading: "Hire with Confidence",
-    body: "Message, hire, and approve completed work with 0% platform commission.",
+    heading: "Hire & Approve Work",
+    body: "Message artisans, schedule home visits, and approve completed repair jobs with 0% platform fee.",
   },
 ];
 
@@ -195,10 +195,10 @@ export function HowItWorksSection() {
           {/* Seeker panel — light */}
           <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-5 sm:p-7 md:p-8 shadow-xs">
             <span className="inline-block rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-emerald-700">
-              For Job Seekers
+              For Skilled Trade Artisans
             </span>
             <p className="mt-2 text-lg sm:text-xl font-black text-slate-950">
-              Find work that fits your expertise
+              Get direct repair & house call requests
             </p>
             <StepList steps={seekerSteps} />
           </div>
@@ -206,10 +206,10 @@ export function HowItWorksSection() {
           {/* Employer panel — dark */}
           <div className="rounded-2xl sm:rounded-3xl bg-slate-950 p-5 sm:p-7 md:p-8 border border-slate-900 shadow-xs">
             <span className="inline-block rounded-full bg-slate-800 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-teal-400">
-              For Employers
+              For Homeowners & Clients
             </span>
             <p className="mt-2 text-lg sm:text-xl font-black text-white">
-              Hire verified professionals faster
+              Hire vetted home repair specialists fast
             </p>
             <StepList steps={employerSteps} dark />
           </div>

@@ -1,6 +1,4 @@
-"use client";
-
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Modal } from "@repo/ui";
 
 interface EditResumesAndSocialsModalProps {
@@ -29,6 +27,19 @@ export function EditResumesAndSocialsModal({
   }>(initialData || {});
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData(initialData || {
+        linkedin: "",
+        github: "",
+        portfolio: "",
+      });
+      if (typeof initialData?.resumeFile === "string" && initialData.resumeFile) {
+        setUploadedFileName(initialData.resumeFile.split("/").pop() || "resume.pdf");
+      }
+    }
+  }, [isOpen, initialData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -215,16 +226,16 @@ export function EditResumesAndSocialsModal({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-3 justify-end pt-4 border-t border-slate-200">
+        <div className="flex flex-col-reverse sm:flex-row gap-2.5 sm:gap-3 sm:justify-end pt-4 border-t border-slate-200">
           <button
             onClick={onClose}
-            className="px-6 py-2 text-sm font-semibold text-slate-950 bg-slate-100 hover:bg-slate-200 rounded-md transition"
+            className="w-full sm:w-auto px-6 py-2.5 text-sm font-semibold text-slate-950 bg-slate-100 hover:bg-slate-200 rounded-xl transition cursor-pointer text-center"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="px-6 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-md transition"
+            className="w-full sm:w-auto px-6 py-2.5 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition cursor-pointer text-center shadow-xs"
           >
             Save Changes
           </button>

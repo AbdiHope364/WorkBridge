@@ -34,13 +34,13 @@ export function JobCard({
     <Link href={href ?? "#"} className="block w-full min-w-0">
       <Card className="overflow-hidden h-full flex flex-col transition-all hover:border-teal-500 border-slate-200">
         <CardContent className="p-5 flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex min-w-0 gap-3">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-lg font-black text-slate-600">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 min-w-0">
+            <div className="flex min-w-0 flex-1 gap-3">
+              <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-base sm:text-lg font-black text-slate-600">
                 {title.charAt(0).toUpperCase()}
               </div>
               <div className="min-w-0 flex-1">
-                <CardTitle className="truncate text-base text-slate-900">
+                <CardTitle className="text-sm sm:text-base font-bold leading-snug text-slate-900 break-words">
                   {title}
                 </CardTitle>
                 <CardDescription className="mt-1 text-xs truncate text-slate-500">
@@ -53,8 +53,8 @@ export function JobCard({
               </div>
             </div>
             {salary ? (
-              <div className="text-right shrink-0">
-                <p className="text-sm font-black text-emerald-600">{salary}</p>
+              <div className="text-left sm:text-right shrink-0">
+                <p className="text-sm font-black text-emerald-600 leading-tight">{salary}</p>
                 <span className="block text-[10px] font-bold text-slate-400">
                   /month
                 </span>

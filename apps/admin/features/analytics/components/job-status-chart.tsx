@@ -66,8 +66,8 @@ const CustomTooltip = ({ active, payload }: any) => {
 
 export function JobStatusChart() {
   return (
-    <div className="px-10 pb-10">
-      <div className="bg-white rounded-[1.2rem] p-6 shadow-sm border border-slate-100">
+    <div className="px-4 sm:px-6 lg:px-10 pb-6 sm:pb-10">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 shadow-xs border border-slate-100">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Pie Chart */}
           <div>

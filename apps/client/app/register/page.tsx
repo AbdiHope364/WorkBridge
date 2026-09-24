@@ -3,18 +3,18 @@ import { Card, CardTitle, CardDescription } from "@repo/ui";
 
 const options = [
   {
-    title: "Register as a client",
+    title: "Register as a Homeowner",
     description:
-      "Find the right talent, post jobs, and manage your team hiring.",
+      "Hire verified trade artisans, post home repair jobs, and book electricians, plumbers & skilled workers.",
     href: "/register/client",
-    button: "Continue as employer",
+    button: "Continue as Homeowner",
   },
   {
-    title: "Register as a jobseeker",
+    title: "Register as a Skilled Worker",
     description:
-      "Create your profile, apply to jobs, and get discovered by employers.",
+      "Create your trade profile, apply to home service jobs, and get booked by homeowners.",
     href: "/register/jobseeker",
-    button: "Continue as candidate",
+    button: "Continue as Skilled Worker",
   },
 ];
 

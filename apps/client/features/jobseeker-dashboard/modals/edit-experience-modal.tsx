@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Modal } from "@repo/ui";
 
 interface EditExperienceModalProps {
@@ -13,6 +11,7 @@ interface EditExperienceModalProps {
     startDate?: string;
     endDate?: string;
     jobDescription?: string;
+    description?: string;
   };
   onSave?: (data: any) => void;
 }
@@ -23,7 +22,20 @@ export function EditExperienceModal({
   initialData,
   onSave,
 }: EditExperienceModalProps) {
-  const [formData, setFormData] = useState(initialData || {});
+  const [formData, setFormData] = useState<any>(initialData || {});
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData(initialData || {
+        companyName: "",
+        position: "",
+        isCurrent: false,
+        startDate: "",
+        endDate: "",
+        jobDescription: (initialData as any)?.jobDescription || (initialData as any)?.description || "",
+      });
+    }
+  }, [isOpen, initialData]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -31,7 +43,7 @@ export function EditExperienceModal({
     const { name, value, type } = e.target;
     const newValue =
       type === "checkbox" ? (e.target as HTMLInputElement).checked : value;
-    setFormData((prev) => ({ ...prev, [name]: newValue }));
+    setFormData((prev: any) => ({ ...prev, [name]: newValue }));
   };
 
   const handleSave = () => {
@@ -48,7 +60,7 @@ export function EditExperienceModal({
     >
       <div className="space-y-5">
         {/* Company Name and Position */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-semibold text-slate-950 mb-2">
               Company Name <span className="text-red-500">*</span>
@@ -96,7 +108,7 @@ export function EditExperienceModal({
         </div>
 
         {/* Start and End Dates */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-semibold text-slate-950 mb-2">
               Start Date <span className="text-red-500">*</span>
@@ -142,16 +154,16 @@ export function EditExperienceModal({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-3 justify-end pt-4 border-t border-slate-200">
+        <div className="flex flex-col-reverse sm:flex-row gap-2.5 sm:gap-3 sm:justify-end pt-4 border-t border-slate-200">
           <button
             onClick={onClose}
-            className="px-6 py-2 text-sm font-semibold text-slate-950 bg-slate-100 hover:bg-slate-200 rounded-md transition"
+            className="w-full sm:w-auto px-6 py-2.5 text-sm font-semibold text-slate-950 bg-slate-100 hover:bg-slate-200 rounded-xl transition cursor-pointer text-center"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="px-6 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-md transition"
+            className="w-full sm:w-auto px-6 py-2.5 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition cursor-pointer text-center shadow-xs"
           >
             Save Changes
           </button>

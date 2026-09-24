@@ -12,6 +12,9 @@ export const JOB_STATUSES = [
 ] as const;
 
 export const JOB_TYPES = [
+  'EMERGENCY_REPAIR',
+  'ONE_TIME_TASK',
+  'RECURRING_MAINTENANCE',
   'ONE_TIME',
   'FULL_TIME',
   'PART_TIME',
@@ -21,9 +24,9 @@ export const JOB_TYPES = [
   'TEMPORARY',
 ] as const;
 
-export const WORKPLACE_TYPES = ['REMOTE', 'ONSITE', 'HYBRID'] as const;
+export const WORKPLACE_TYPES = ['ONSITE', 'REMOTE', 'HYBRID'] as const;
 
-export const WORKER_TYPES = ['DIGITAL', 'PHYSICAL'] as const;
+export const WORKER_TYPES = ['PHYSICAL', 'DIGITAL'] as const;
 
 export const EXPERIENCE_LEVELS = [
   'ENTRY',
@@ -48,6 +51,15 @@ export const JOB_APPROVAL_STATUSES = [
 ] as const;
 
 export const JOB_CATEGORIES = [
+  'PLUMBING',
+  'ELECTRICAL',
+  'APPLIANCE_REPAIR',
+  'PAINTING_DRYWALL',
+  'CARPENTRY_FURNITURE',
+  'ROOFING_MASONRY',
+  'HOME_CLEANING',
+  'GARDENING_LANDSCAPING',
+  'GENERAL_HANDYMAN',
   'SOFTWARE_DEVELOPMENT',
   'DESIGN_AND_CREATIVE',
   'MARKETING_AND_SALES',

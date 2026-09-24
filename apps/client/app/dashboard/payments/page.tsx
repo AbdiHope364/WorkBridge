@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { api } from "@/lib/api";
 import { Button, Input } from "@repo/ui";
 import { JobseekerSidebar } from "@/features/jobseeker-dashboard/components/jobseeker-sidebar";
+import { WorkerSubscriptionModal } from "@/features/jobseeker-dashboard/components/worker-subscription-modal";
 
 interface PaymentItem {
   id: string;
@@ -43,94 +44,121 @@ interface BookingsResponse {
   bookings?: EscrowBooking[];
 }
 
-interface UserWithPhone {
-  phone?: string;
-}
-
-const paymentMethods = [
-  {
-    id: "Telebirr",
-    name: "Telebirr Mobile Wallet",
-    badge: "Most Popular",
-    color: "border-emerald-500 bg-emerald-50/40 text-emerald-900",
-    icon: "📱",
-    description: "Instant mobile wallet payment with automatic PIN verification.",
-  },
-  {
-    id: "CBE Birr",
-    name: "CBE Birr (Commercial Bank of Ethiopia)",
-    badge: "Zero Fee",
-    color: "border-purple-500 bg-purple-50/40 text-purple-900",
-    icon: "🏦",
-    description: "Pay directly via CBE Birr account or mobile banking USSD.",
-  },
-  {
-    id: "Chapa",
-    name: "Chapa Payment Gateway",
-    badge: "Cards & Wallets",
-    color: "border-teal-500 bg-teal-50/40 text-teal-900",
-    icon: "💳",
-    description: "Supports local debit cards, Visa, Mastercard, and mobile apps.",
-  },
-  {
-    id: "Awash Bank",
-    name: "Awash Birr / Bank Transfer",
-    badge: "Direct Transfer",
-    color: "border-blue-500 bg-blue-50/40 text-blue-900",
-    icon: "🏛️",
-    description: "Direct bank transfer with instant slip upload verification.",
-  },
-];
-
 const subscriptionPlans = [
+  // Worker / Tradesman Plans
   {
-    id: "starter",
-    name: "Starter / Basic",
+    id: "plan_worker_free",
+    tier: "free",
+    targetRole: "jobseeker",
+    name: "Free Worker Starter",
     monthlyPrice: 0,
     annualPrice: 0,
     currency: "ETB",
     popular: false,
+    quotaText: "5 Free Job Applications / Month",
     features: [
-      "Browse & book trade professionals",
-      "Standard escrow payment protection",
-      "Up to 3 active bookings simultaneously",
+      "5 Free job applications per month",
+      "0% platform commission on trade wages",
+      "Public worker profile & skill showcase",
+      "Direct chat & booking requests",
       "Standard support",
     ],
   },
   {
-    id: "pro",
-    name: "Pro Contractor / Specialist",
-    monthlyPrice: 1200,
-    annualPrice: 12000,
+    id: "plan_worker_pro_monthly",
+    tier: "pro_monthly",
+    targetRole: "jobseeker",
+    name: "Worker Pro Monthly",
+    monthlyPrice: 299,
+    annualPrice: 2499,
     currency: "ETB",
     popular: true,
+    quotaText: "Unlimited Job Applications",
     features: [
-      "Unlimited direct trade bookings",
-      "Priority worker dispatch & emergency alerts",
-      "Verified badge on worker & client profiles",
-      "Dedicated account support",
-      "0% platform withdrawal commission",
+      "Unlimited job applications (No 5-app limit)",
+      "Verified Pro Tradesman badge",
+      "Priority search placement in worker discovery",
+      "Featured portfolio & cert showcase",
+      "0% commission (Keep 100% of your earnings)",
+      "24/7 dedicated telephone & chat support",
     ],
   },
   {
-    id: "enterprise",
-    name: "Enterprise Facilities",
-    monthlyPrice: 3500,
-    annualPrice: 35000,
+    id: "plan_worker_pro_annual",
+    tier: "pro_annual",
+    targetRole: "jobseeker",
+    name: "Worker Pro Annual",
+    monthlyPrice: 208,
+    annualPrice: 2499,
     currency: "ETB",
     popular: false,
+    quotaText: "Unlimited Job Applications (Save 30%)",
     features: [
-      "All Pro Plan features included",
-      "Multi-site property manager dashboard",
-      "Custom bulk invoice & monthly consolidated billing",
-      "24/7 dedicated telephone support line",
+      "Everything in Pro Monthly for 1 full year",
+      "Unlimited applications all year round",
+      "Highest priority ranking in regional searches",
+      "30% discount vs monthly billing (2,499 ETB/year)",
+    ],
+  },
+
+  // Employer / Homeowner Plans
+  {
+    id: "plan_employer_free",
+    tier: "free",
+    targetRole: "employer",
+    name: "Free Client Starter",
+    monthlyPrice: 0,
+    annualPrice: 0,
+    currency: "ETB",
+    popular: false,
+    quotaText: "3 Free Job Postings / Month",
+    features: [
+      "3 Free job postings per month",
+      "Browse & search all verified trade workers",
+      "Direct booking requests & chat",
+      "Standard support",
+    ],
+  },
+  {
+    id: "plan_employer_pro_monthly",
+    tier: "pro_monthly",
+    targetRole: "employer",
+    name: "Employer Pro Monthly",
+    monthlyPrice: 599,
+    annualPrice: 4999,
+    currency: "ETB",
+    popular: true,
+    quotaText: "Unlimited Job Postings",
+    features: [
+      "Unlimited job postings (No 3-post limit)",
+      "Verified Employer badge",
+      "Direct phone & contact reveal for all workers",
+      "Featured job post badge & priority alerts",
+      "Applicant management pipeline",
+    ],
+  },
+  {
+    id: "plan_employer_pro_annual",
+    tier: "pro_annual",
+    targetRole: "employer",
+    name: "Employer Pro Annual",
+    monthlyPrice: 416,
+    annualPrice: 4999,
+    currency: "ETB",
+    popular: false,
+    quotaText: "Unlimited Job Postings (Save 30%)",
+    features: [
+      "Everything in Pro Monthly for 1 full year",
+      "Unlimited job postings all year round",
+      "Dedicated account manager & bulk hiring",
+      "Save over 30% annually (4,999 ETB/year)",
     ],
   },
 ];
 
 export default function PaymentsPage() {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<"history" | "escrow" | "subscriptions">("history");
+  const [activeTab, setActiveTab] = useState<"history" | "escrow" | "subscriptions">("subscriptions");
   const [payments, setPayments] = useState<PaymentItem[]>([]);
   const [bookings, setBookings] = useState<EscrowBooking[]>([]);
   const [loading, setLoading] = useState(true);
@@ -138,16 +166,10 @@ export default function PaymentsPage() {
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [annualBilling, setAnnualBilling] = useState(false);
 
-  // Modal States
-  const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
-  const [depositAmount, setDepositAmount] = useState("1500");
-  const [selectedMethod, setSelectedMethod] = useState("Telebirr");
-  const [phoneNumber, setPhoneNumber] = useState((user as UserWithPhone | null)?.phone || "+251 911 000 000");
-  const [isProcessingDeposit, setIsProcessingDeposit] = useState(false);
-  const [depositSuccess, setDepositSuccess] = useState(false);
-
   // Receipt Modal State
   const [selectedReceipt, setSelectedReceipt] = useState<PaymentItem | null>(null);
+  const [isWorkerSubModalOpen, setIsWorkerSubModalOpen] = useState(false);
+  const [selectedWorkerSubPlan, setSelectedWorkerSubPlan] = useState<"free" | "monthly" | "annual">("monthly");
 
   // Escrow Action State
   const [releasingEscrowId, setReleasingEscrowId] = useState<string | null>(null);
@@ -163,36 +185,34 @@ export default function PaymentsPage() {
           ? historyList
           : [
               {
-                id: "pay_101",
-                amount: 1500,
+                id: "sub_pay_101",
+                amount: 299,
                 currency: "ETB",
                 status: "completed",
                 method: "Telebirr",
-                type: "Escrow Deposit",
-                description: "Kitchen Electrical Panel Repair - Abebe Tadesse",
+                type: "Subscription",
+                description: "Pro Worker Monthly Subscription (Unlimited Applications)",
                 createdAt: new Date().toISOString(),
-                bookingId: "b_trade_1",
               },
               {
-                id: "pay_102",
-                amount: 900,
+                id: "sub_pay_102",
+                amount: 599,
                 currency: "ETB",
                 status: "completed",
                 method: "CBE Birr",
-                type: "Escrow Deposit",
-                description: "Sanitary Pipe Leak Fix - Kebede Kassaye",
-                createdAt: new Date(Date.now() - 2 * 86400000).toISOString(),
-                bookingId: "b_trade_2",
+                type: "Subscription",
+                description: "Pro Employer Monthly Subscription (Unlimited Job Posts)",
+                createdAt: new Date(Date.now() - 5 * 86400000).toISOString(),
               },
               {
-                id: "pay_103",
-                amount: 1200,
+                id: "sub_pay_103",
+                amount: 2499,
                 currency: "ETB",
                 status: "completed",
                 method: "Chapa Gateway",
                 type: "Subscription",
-                description: "Pro Contractor Monthly Plan",
-                createdAt: new Date(Date.now() - 15 * 86400000).toISOString(),
+                description: "Pro Worker Annual Subscription (Save 30%)",
+                createdAt: new Date(Date.now() - 25 * 86400000).toISOString(),
               },
             ]
       );
@@ -210,61 +230,6 @@ export default function PaymentsPage() {
   useEffect(() => {
     loadData();
   }, [loadData]);
-
-  // Calculated Wallet Totals
-  const walletStats = useMemo(() => {
-    const totalDeposited = payments.reduce((acc, p) => acc + (p.status === "completed" ? p.amount : 0), 0);
-    const inEscrow = bookings.filter((b) => b.paymentStatus === "HELD_IN_ESCROW").reduce((acc, b) => acc + b.offeredPrice, 0);
-    const availableBalance = Math.max(0, totalDeposited - inEscrow);
-    return { totalDeposited, inEscrow, availableBalance };
-  }, [payments, bookings]);
-
-  // Handle Interactive Deposit
-  const handlePerformDeposit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsProcessingDeposit(true);
-
-    try {
-      const numAmount = Number(depositAmount);
-      await api.client.request("/payments/deposit", {
-        method: "POST",
-        body: {
-          amount: numAmount,
-          method: selectedMethod,
-          currency: "ETB",
-          description: `Wallet Deposit (${selectedMethod} - ${phoneNumber})`,
-        },
-      });
-
-      setDepositSuccess(true);
-      setTimeout(async () => {
-        await loadData();
-        setIsProcessingDeposit(false);
-        setDepositSuccess(false);
-        setIsDepositModalOpen(false);
-      }, 1500);
-    } catch (err) {
-      console.error("Deposit error:", err);
-      // Fallback local update for offline testing
-      const newPay: PaymentItem = {
-        id: `pay_${Date.now()}`,
-        amount: Number(depositAmount),
-        currency: "ETB",
-        status: "completed",
-        method: selectedMethod,
-        type: "Deposit",
-        description: `Wallet Deposit (${selectedMethod} - ${phoneNumber})`,
-        createdAt: new Date().toISOString(),
-      };
-      setPayments((prev) => [newPay, ...prev]);
-      setDepositSuccess(true);
-      setTimeout(() => {
-        setIsProcessingDeposit(false);
-        setDepositSuccess(false);
-        setIsDepositModalOpen(false);
-      }, 1500);
-    }
-  };
 
   // Handle Escrow Release
   const handleReleaseEscrow = async (booking: EscrowBooking) => {
@@ -314,23 +279,39 @@ export default function PaymentsPage() {
 
       <main className="flex-1 min-w-0 overflow-y-auto pt-16 pb-20 md:pt-0 md:pb-0 p-4 sm:p-6 md:p-10">
         <div className="mx-auto max-w-7xl space-y-6 sm:space-y-8">
-          {/* Header */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          {/* Subscription Only Payment Policy Banner */}
+          <div className="mb-6 rounded-2xl bg-blue-50 border border-blue-200 p-4 sm:p-5 flex items-start gap-3">
+            <span className="text-xl shrink-0">ℹ️</span>
+            <div>
+              <h3 className="text-xs font-black uppercase tracking-wider text-blue-900">
+                WorkBridge Payment Policy: Subscriptions Only
+              </h3>
+              <p className="text-xs sm:text-sm text-blue-800 mt-1 leading-relaxed">
+                Website payments processed online (via Telebirr, CBE Birr, Chapa) are strictly for <strong>Platform Subscriptions</strong> (Employer Pro Plans & Worker Featured Badges). Payments for trade jobs (plumbing, electrical, repairs) are settled <strong>directly between Employers and Trade Workers</strong> via Cash, Direct Telebirr, or CBE with <strong>0% platform commission on wages</strong>.
+              </p>
+            </div>
+          </div>
+
+          {/* Top Banner / Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
               <h1 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-                Payments, Escrow & Wallet
+                Platform Subscriptions
               </h1>
               <p className="mt-1 text-xs sm:text-sm text-slate-600">
-                Manage your Telebirr, CBE Birr, Chapa escrow settlements, and service payouts securely.
+                Manage your Telebirr, CBE Birr, Chapa, and Awash Birr monthly and annual subscriptions.
               </p>
             </div>
 
             <div className="flex items-center gap-3">
               <Button
-                onClick={() => setIsDepositModalOpen(true)}
-                className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-xs"
+                onClick={() => {
+                  setSelectedWorkerSubPlan("monthly");
+                  setIsWorkerSubModalOpen(true);
+                }}
+                className="w-full sm:w-auto bg-gradient-to-r from-indigo-600 via-purple-600 to-amber-500 hover:from-indigo-700 hover:to-amber-600 text-white font-bold shadow-md"
               >
-                + Deposit Funds
+                ✨ Upgrade to Pro Subscription
               </Button>
             </div>
           </div>
@@ -339,60 +320,61 @@ export default function PaymentsPage() {
           <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-3">
             <div className="rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-xs">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Available Wallet</span>
-                <span className="rounded-full bg-emerald-100 p-2 text-emerald-700 text-xs">💰</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Current Billing Tier</span>
+                <span className="rounded-full bg-indigo-100 p-2 text-indigo-700 text-xs">⭐</span>
               </div>
-              <p className="mt-3 text-2xl sm:text-3xl font-black text-slate-950">
-                {walletStats.availableBalance.toLocaleString()} <span className="text-base font-bold text-slate-500">ETB</span>
+              <p className="mt-3 text-xl sm:text-2xl font-black text-slate-950 flex items-center gap-2">
+                {user?.subscriptionTier === "pro_monthly"
+                  ? "Pro Monthly"
+                  : user?.subscriptionTier === "pro_annual"
+                    ? "Pro Annual"
+                    : "Free Starter"}
+                {(user?.subscriptionTier === "pro_monthly" || user?.subscriptionTier === "pro_annual" || (user as any)?.isPro) && (
+                  <span className="text-xs bg-gradient-to-r from-indigo-600 to-amber-500 text-white font-black px-2 py-0.5 rounded-full shadow-xs">
+                    PRO
+                  </span>
+                )}
               </p>
-              <p className="mt-1 text-xs text-emerald-600 font-semibold">✓ Ready for instant worker booking</p>
+              <p className="mt-1 text-xs text-emerald-600 font-semibold">
+                {user?.subscriptionTier === "pro_monthly" || user?.subscriptionTier === "pro_annual" || (user as any)?.isPro
+                  ? "✓ Active Gemini-Style Pro Member"
+                  : "Free Tier Active (Upgrade for Unlimited Access)"}
+              </p>
             </div>
 
             <div className="rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-xs">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Funds Held in Escrow</span>
-                <span className="rounded-full bg-amber-100 p-2 text-amber-700 text-xs">🛡️</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Monthly Quota Allowance</span>
+                <span className="rounded-full bg-purple-100 p-2 text-purple-700 text-xs">⚡</span>
               </div>
-              <p className="mt-3 text-2xl sm:text-3xl font-black text-amber-700">
-                {walletStats.inEscrow.toLocaleString()} <span className="text-base font-bold text-amber-500">ETB</span>
+              <p className="mt-3 text-2xl sm:text-3xl font-black text-purple-900">
+                {user?.subscriptionTier === "pro_monthly" || user?.subscriptionTier === "pro_annual" || (user as any)?.isPro
+                  ? "Unlimited"
+                  : user?.role === "employer"
+                    ? "3 Posts / Mo"
+                    : "5 Apps / Mo"}
               </p>
-              <p className="mt-1 text-xs text-slate-500 font-medium">Locked safely until job completion</p>
+              <p className="mt-1 text-xs text-slate-500 font-medium">
+                {user?.subscriptionTier === "pro_monthly" || user?.subscriptionTier === "pro_annual" || (user as any)?.isPro
+                  ? "Zero restrictions on job applications & posts"
+                  : "Resets every 30 days automatically"}
+              </p>
             </div>
 
             <div className="rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-xs">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Total Processed</span>
-                <span className="rounded-full bg-purple-100 p-2 text-purple-700 text-xs">📈</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Trade Wage Commission</span>
+                <span className="rounded-full bg-emerald-100 p-2 text-emerald-700 text-xs">🤝</span>
               </div>
-              <p className="mt-3 text-2xl sm:text-3xl font-black text-slate-950">
-                {walletStats.totalDeposited.toLocaleString()} <span className="text-base font-bold text-slate-500">ETB</span>
+              <p className="mt-3 text-2xl sm:text-3xl font-black text-emerald-700">
+                0% Fee
               </p>
-              <p className="mt-1 text-xs text-slate-500 font-medium">100% Ethiopian gateway verified</p>
+              <p className="mt-1 text-xs text-slate-500 font-medium">100% of service wages paid directly to worker</p>
             </div>
           </div>
 
-          {/* Tabs Navigation - Horizontally Scrollable on Phones */}
+          {/* Tabs Navigation */}
           <div className="flex border-b border-slate-200 overflow-x-auto no-scrollbar gap-1">
-            <button
-              onClick={() => setActiveTab("history")}
-              className={`pb-3.5 px-4 sm:px-6 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition ${
-                activeTab === "history"
-                  ? "border-emerald-600 text-emerald-700"
-                  : "border-transparent text-slate-500 hover:text-slate-900"
-              }`}
-            >
-              📜 Transaction History ({payments.length})
-            </button>
-            <button
-              onClick={() => setActiveTab("escrow")}
-              className={`pb-3.5 px-4 sm:px-6 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition ${
-                activeTab === "escrow"
-                  ? "border-emerald-600 text-emerald-700"
-                  : "border-transparent text-slate-500 hover:text-slate-900"
-              }`}
-            >
-              🛡️ Escrow Settlements ({bookings.length})
-            </button>
             <button
               onClick={() => setActiveTab("subscriptions")}
               className={`pb-3.5 px-4 sm:px-6 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition ${
@@ -402,6 +384,16 @@ export default function PaymentsPage() {
               }`}
             >
               ⭐ Subscription Plans
+            </button>
+            <button
+              onClick={() => setActiveTab("history")}
+              className={`pb-3.5 px-4 sm:px-6 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition ${
+                activeTab === "history"
+                  ? "border-emerald-600 text-emerald-700"
+                  : "border-transparent text-slate-500 hover:text-slate-900"
+              }`}
+            >
+              📜 Subscription Receipts ({payments.length})
             </button>
           </div>
 
@@ -594,173 +586,60 @@ export default function PaymentsPage() {
             </div>
 
             <div className="grid gap-6 md:grid-cols-3">
-              {subscriptionPlans.map((plan) => {
-                const price = annualBilling ? plan.annualPrice : plan.monthlyPrice;
-                return (
-                  <div
-                    key={plan.id}
-                    className={`relative flex flex-col justify-between rounded-3xl bg-white p-8 shadow-sm border transition hover:shadow-md ${
-                      plan.popular ? "border-emerald-500 ring-2 ring-emerald-500/20" : "border-slate-200"
-                    }`}
-                  >
-                    {plan.popular && (
-                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-emerald-600 px-3.5 py-0.5 text-xs font-black text-white uppercase tracking-wider shadow-sm">
-                        Most Popular
-                      </span>
-                    )}
-
-                    <div>
-                      <h3 className="text-xl font-black text-slate-950">{plan.name}</h3>
-                      <div className="mt-4 flex items-baseline gap-1">
-                        <span className="text-4xl font-black text-slate-950">{price.toLocaleString()}</span>
-                        <span className="text-sm font-bold text-slate-500">{plan.currency}/{annualBilling ? "yr" : "mo"}</span>
-                      </div>
-
-                      <ul className="mt-6 space-y-3 text-xs leading-relaxed text-slate-600">
-                        {plan.features.map((feat) => (
-                          <li key={feat} className="flex items-center gap-2">
-                            <span className="text-emerald-600 font-bold">✓</span> {feat}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <Button
-                      onClick={() => {
-                        setIsDepositModalOpen(true);
-                        setDepositAmount(String(price || 1200));
-                      }}
-                      className={`mt-8 w-full font-bold ${
-                        plan.popular ? "bg-emerald-600 hover:bg-emerald-700 text-white" : "bg-slate-100 text-slate-800 hover:bg-slate-200"
+              {subscriptionPlans
+                .filter((plan) => {
+                  const role = user?.role === "employer" ? "employer" : "jobseeker";
+                  return plan.targetRole === role;
+                })
+                .map((plan) => {
+                  const price = annualBilling ? plan.annualPrice : plan.monthlyPrice;
+                  return (
+                    <div
+                      key={plan.id}
+                      className={`relative flex flex-col justify-between rounded-3xl bg-white p-8 shadow-sm border transition hover:shadow-md ${
+                        plan.popular ? "border-emerald-500 ring-2 ring-emerald-500/20" : "border-slate-200"
                       }`}
                     >
-                      {price === 0 ? "Current Plan" : "Upgrade Plan"}
-                    </Button>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
+                      {plan.popular && (
+                        <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-emerald-600 px-3.5 py-0.5 text-xs font-black text-white uppercase tracking-wider shadow-sm">
+                          Most Popular
+                        </span>
+                      )}
 
-        {/* Deposit / Top-up Modal */}
-        {isDepositModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm animate-in fade-in">
-            <div className="relative w-full max-w-lg overflow-hidden rounded-3xl bg-white p-6 shadow-2xl border border-slate-100">
-              <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                <h2 className="text-lg font-black text-slate-950">Deposit to WorkBridge Wallet</h2>
-                <button
-                  onClick={() => setIsDepositModalOpen(false)}
-                  className="rounded-full p-2 text-slate-400 hover:bg-slate-100"
-                >
-                  ✕
-                </button>
-              </div>
+                      <div>
+                        <span className="inline-block text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          {plan.quotaText}
+                        </span>
+                        <h3 className="text-xl font-black text-slate-950 mt-2">{plan.name}</h3>
+                        <div className="mt-4 flex items-baseline gap-1">
+                          <span className="text-4xl font-black text-slate-950">{price.toLocaleString()}</span>
+                          <span className="text-sm font-bold text-slate-500">{plan.currency}/{annualBilling ? "yr" : "mo"}</span>
+                        </div>
 
-              {depositSuccess ? (
-                <div className="flex flex-col items-center justify-center py-10 text-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 mb-4 animate-bounce">
-                    ✓
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-950">Deposit Verified & Funded!</h3>
-                  <p className="mt-2 text-xs text-slate-600">
-                    {depositAmount} ETB has been added to your escrow wallet via {selectedMethod}.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handlePerformDeposit} className="mt-4 space-y-4">
-                  {/* Amount with quick chips */}
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                      Deposit Amount (ETB) *
-                    </label>
-                    <Input
-                      type="number"
-                      value={depositAmount}
-                      onChange={(e) => setDepositAmount(e.target.value)}
-                      required
-                    />
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {["500", "1500", "3000", "5000", "10000"].map((amt) => (
-                        <button
-                          key={amt}
-                          type="button"
-                          onClick={() => setDepositAmount(amt)}
-                          className={`rounded-lg px-2.5 py-1 text-xs font-bold transition ${
-                            depositAmount === amt
-                              ? "bg-emerald-600 text-white"
-                              : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                          }`}
-                        >
-                          +{amt} ETB
-                        </button>
-                      ))}
+                        <ul className="mt-6 space-y-3 text-xs leading-relaxed text-slate-600">
+                          {plan.features.map((feat) => (
+                            <li key={feat} className="flex items-center gap-2">
+                              <span className="text-emerald-600 font-bold">✓</span> {feat}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <Button
+                        onClick={() => {
+                          const targetPlan = plan.tier.includes("annual") ? "annual" : plan.tier.includes("pro") ? "monthly" : "free";
+                          setSelectedWorkerSubPlan(targetPlan as any);
+                          setIsWorkerSubModalOpen(true);
+                        }}
+                        className={`mt-8 w-full font-bold cursor-pointer ${
+                          plan.popular ? "bg-emerald-600 hover:bg-emerald-700 text-white" : "bg-slate-100 text-slate-800 hover:bg-slate-200"
+                        }`}
+                      >
+                        {price === 0 ? "Free Direct Pay (0 ETB)" : `Subscribe & Choose Payment Provider (${price} ETB)`}
+                      </Button>
                     </div>
-                  </div>
-
-                  {/* Payment Method Cards */}
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                      Select Payment Provider *
-                    </label>
-                    <div className="grid gap-2.5">
-                      {paymentMethods.map((m) => (
-                        <label
-                          key={m.id}
-                          className={`flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition ${
-                            selectedMethod === m.id
-                              ? `${m.color} ring-2 ring-emerald-500/20`
-                              : "border-slate-200 hover:bg-slate-50"
-                          }`}
-                        >
-                          <div className="flex items-center gap-3">
-                            <input
-                              type="radio"
-                              name="method"
-                              value={m.id}
-                              checked={selectedMethod === m.id}
-                              onChange={() => setSelectedMethod(m.id)}
-                              className="text-emerald-600"
-                            />
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm font-bold">{m.name}</span>
-                                <span className="rounded-full bg-white px-2 py-0.5 text-[10px] font-black shadow-sm">
-                                  {m.badge}
-                                </span>
-                              </div>
-                              <p className="text-[11px] text-slate-500">{m.description}</p>
-                            </div>
-                          </div>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Phone input */}
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                      {selectedMethod} Registered Phone Number *
-                    </label>
-                    <Input
-                      type="tel"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      placeholder="+251 911 000 000"
-                      required
-                    />
-                  </div>
-
-                  <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
-                    <Button type="button" variant="outline" onClick={() => setIsDepositModalOpen(false)}>
-                      Cancel
-                    </Button>
-                    <Button type="submit" isLoading={isProcessingDeposit} className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold">
-                      Confirm & Pay {depositAmount} ETB
-                    </Button>
-                  </div>
-                </form>
-              )}
+                  );
+                })}
             </div>
           </div>
         )}
@@ -816,6 +695,15 @@ export default function PaymentsPage() {
             </div>
           </div>
         )}
+        {/* Worker Subscription Modal */}
+        <WorkerSubscriptionModal
+          isOpen={isWorkerSubModalOpen}
+          onClose={() => setIsWorkerSubModalOpen(false)}
+          initialPlan={selectedWorkerSubPlan}
+          onSuccess={(plan, provider) => {
+            alert(`Subscription plan '${plan.toUpperCase()}' activated via ${provider}! Your job application limits have been upgraded.`);
+          }}
+        />
         </div>
       </main>
     </div>

@@ -20,8 +20,8 @@ const clientBookingSteps = [
   },
   {
     step: "04",
-    heading: "Inspect & Release Payment",
-    body: "Review the completed job and release payment securely via Chapa with 100% escrow protection.",
+    heading: "Inspect & Direct Payment",
+    body: "Inspect the finished trade work and pay the worker directly (Cash, Telebirr, or CBE) with 0% platform commission.",
   },
 ];
 
@@ -43,8 +43,8 @@ const workerSteps = [
   },
   {
     step: "04",
-    heading: "Guaranteed Prompt Payouts",
-    body: "Receive secure escrow payouts directly to your Telebirr, CBE, or bank account upon completion.",
+    heading: "Direct 0% Fee Payment",
+    body: "Get paid 100% of your agreed wage directly from employers upon job completion with 0% platform cuts.",
   },
 ];
 

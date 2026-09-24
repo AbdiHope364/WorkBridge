@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ActionModal } from "@/components/action-modal";
+import { api } from "@/lib/api";
 
 export default function VerificationDetailPage() {
   const { id } = useParams();
@@ -64,10 +65,16 @@ export default function VerificationDetailPage() {
     ],
   };
 
-  const handleVerify = () => {
-    console.log("User Fayda KYC verified:", id);
-    alert(`Fayda KYC Application for ${request.applicantName} (FIN: ${request.faydaFin}) has been approved!`);
-    router.push("/verification");
+  const handleVerify = async () => {
+    try {
+      if (typeof id === "string") {
+        await api.admin.approveVerification(id);
+      }
+      alert(`Fayda KYC Application for ${request.applicantName} (FIN: ${request.faydaFin}) has been approved!`);
+      router.push("/verification");
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : "Failed to approve verification.");
+    }
   };
 
   const handleReject = (reason: string) => {

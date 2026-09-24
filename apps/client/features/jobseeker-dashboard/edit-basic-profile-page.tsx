@@ -125,7 +125,7 @@ export function EditBasicProfilePage() {
         <section className="min-w-0 flex-1">
           <ProfileTopHeader initials={initials} />
 
-          <div className="mx-auto w-full max-w-[940px] px-6 py-4">
+          <div className="w-full px-6 py-4">
             <h1 className="text-center text-2xl font-black text-black">
               Edit Profile
             </h1>

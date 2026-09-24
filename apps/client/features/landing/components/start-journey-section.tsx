@@ -1,23 +1,23 @@
 "use client";
 
-import { ArrowRight, Briefcase, Building2, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Wrench, Home, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { Card } from "@repo/ui/card";
 import { Container } from "@repo/ui/container";
 import { SectionHeader } from "@repo/ui/section-header";
 
 const seekerSteps = [
-  "Create your professional profile in minutes.",
-  "Browse thousands of verified job opportunities.",
-  "Apply instantly with your saved resume.",
-  "Track applications and chat with employers.",
+  "Build your verified trade artisan profile & showcase skills.",
+  "Receive instant proximity alerts for nearby household repairs.",
+  "Submit transparent price quotes directly to homeowners.",
+  "Complete house calls, build 5-star ratings & get paid via mobile money.",
 ];
 
 const employerSteps = [
-  "Create and verify your company profile.",
-  "Post jobs and define your hiring requirements.",
-  "Review applicants with smart filtering.",
-  "Hire and manage candidates with confidence.",
+  "Select a trade category or tap a 1-click repair preset.",
+  "Describe your repair issue & location in under 30 seconds.",
+  "Review quotes from verified nearby artisans with ratings.",
+  "Hire with confidence, inspect work, and pay with 0% commission.",
 ];
 
 function JourneyCard({
@@ -27,6 +27,7 @@ function JourneyCard({
   description,
   steps,
   cta,
+  ctaLink,
   icon,
 }: {
   badge: string;
@@ -35,6 +36,7 @@ function JourneyCard({
   description: string;
   steps: string[];
   cta: string;
+  ctaLink: string;
   icon: React.ReactNode;
 }) {
   return (
@@ -89,7 +91,7 @@ function JourneyCard({
 
       <div className="relative z-10 mt-6 sm:mt-8 pt-4 border-t border-slate-100">
         <Link
-          href={cta === "Explore Jobs" ? "/jobs" : "/dashboard/employer"}
+          href={ctaLink}
           className="inline-flex w-full sm:w-auto items-center justify-center rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white transition hover:bg-emerald-700 gap-2 shadow-xs active:scale-95"
         >
           <span>{cta}</span>
@@ -112,29 +114,31 @@ export function StartJourneySection() {
 
       <Container size="xl" className="relative max-w-6xl mx-auto">
         <SectionHeader
-          title="Start Your Journey with WorkBridge"
-          description="Whether you're searching for your next opportunity or hiring exceptional talent, WorkBridge helps you achieve your goals with a fast, secure, and reliable hiring experience."
+          title="How WorkBridge Works for Homeowners & Artisans"
+          description="Connecting Ethiopian homeowners with vetted trade professionals in 4 transparent, hassle-free steps."
         />
 
         <div className="mt-6 sm:mt-8 grid gap-6 sm:gap-8 lg:grid-cols-2">
           <JourneyCard
-            badge="For Job Seekers"
+            badge="For Homeowners"
             badgeColor="bg-emerald-50 text-emerald-700"
-            icon={<Briefcase className="h-5 w-5 sm:h-6 sm:w-6" />}
-            title="Find Your Next Opportunity"
-            description="Connect with verified employers, discover exciting opportunities, and manage your entire job search from one powerful platform."
-            steps={seekerSteps}
-            cta="Explore Jobs"
+            icon={<Home className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600" />}
+            title="Post a Repair & Hire Artisans"
+            description="Need a plumber, electrician, or handyman? Post your repair request in 30 seconds and connect directly with top-rated local experts."
+            steps={employerSteps}
+            cta="🏡 Post Household Request"
+            ctaLink="/dashboard/employer/create"
           />
 
           <JourneyCard
-            badge="For Employers"
+            badge="For Trade Artisans"
             badgeColor="bg-blue-50 text-blue-700"
-            icon={<Building2 className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />}
-            title="Hire Top Talent Faster"
-            description="Reach qualified candidates, simplify recruitment, and build high-performing teams through an efficient hiring workflow."
-            steps={employerSteps}
-            cta="Post a Job"
+            icon={<Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />}
+            title="Get Hired & Build Your Reputation"
+            description="Showcase your trade skills, receive proximity job alerts in your neighborhood, build verified reviews, and earn steady income."
+            steps={seekerSteps}
+            cta="🛠️ Browse Artisan Opportunities"
+            ctaLink="/find-workers"
           />
         </div>
       </Container>

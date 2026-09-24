@@ -6,19 +6,19 @@ import { Mail, Phone, MapPin } from "lucide-react";
 
 const footerColumns = [
   {
-    title: "For Job Seekers",
+    title: "For Skilled Artisans",
     links: [
-      { label: "Browse Jobs", href: "/jobs" },
-      { label: "Find Workers", href: "/find-workers" },
-      { label: "Pricing & Plans", href: "/pricing" },
+      { label: "Browse Trade Jobs", href: "/jobs" },
+      { label: "Artisan Profile Search", href: "/find-workers" },
+      { label: "Pro Membership Plans", href: "/pricing" },
     ],
   },
   {
-    title: "For Employers",
+    title: "For Homeowners",
     links: [
-      { label: "Post a Job", href: "/dashboard/employer" },
-      { label: "Employer Dashboard", href: "/dashboard/employer" },
-      { label: "Candidate Search", href: "/find-workers" },
+      { label: "Post Repair Request", href: "/dashboard/employer/create" },
+      { label: "Homeowner Dashboard", href: "/dashboard/employer" },
+      { label: "Find Nearby Artisans", href: "/find-workers" },
     ],
   },
   {

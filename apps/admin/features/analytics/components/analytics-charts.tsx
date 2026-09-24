@@ -63,8 +63,8 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 export function AnalyticsCharts() {
   return (
-    <div className="px-10 pb-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="px-4 sm:px-6 lg:px-10 pb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Overview Chart - Area Chart */}
         <div className="bg-white rounded-[1.2rem] p-6 shadow-sm border border-slate-100">
           <div className="flex items-center justify-between mb-4">

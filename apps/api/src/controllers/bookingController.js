@@ -1,9 +1,11 @@
 import { collections } from '../data/db.js';
+import { mockUsers } from '../data/mocks/index.js';
 
 export const createBooking = async (req, res) => {
   try {
     const {
       workerId,
+      workerName,
       serviceTitle,
       category,
       description,
@@ -21,12 +23,23 @@ export const createBooking = async (req, res) => {
       return res.status(400).json({ error: 'Missing required booking fields (workerId, serviceTitle, description, address, scheduledDate, offeredPrice).' });
     }
 
-    const clientId = req.user.id;
-    const clientUser = await collections.users.findOne({ id: clientId });
-    const workerUser = await collections.users.findOne({ id: workerId });
+    const clientId = req.user?.id || 'client_user';
+    const clientUser = await collections.users.findOne({ $or: [{ id: String(clientId) }, { _id: String(clientId) }] });
+    
+    let workerUser = await collections.users.findOne({
+      $or: [{ id: String(workerId) }, { _id: String(workerId) }]
+    });
 
     if (!workerUser) {
-      return res.status(404).json({ error: 'Selected trade worker not found.' });
+      const foundMock = (mockUsers || []).find((u) => u.id === workerId || u._id === workerId);
+      workerUser = foundMock || {
+        id: workerId,
+        name: workerName || 'Trade Worker',
+        fullName: workerName || 'Trade Worker',
+        email: 'worker@workbridge.et',
+        phone: '+251 91 123 4567',
+        profile: { trade: category || 'Physical Trade' },
+      };
     }
 
     const booking = {

@@ -15,6 +15,7 @@ import {
   Clock,
   ExternalLink,
   Users,
+  ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -42,8 +43,8 @@ export default function EmployerDetailPage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-slate-100 px-10 py-6">
-        <div className="flex items-center justify-between">
+      <header className="bg-white border-b border-slate-100 px-4 sm:px-6 lg:px-10 py-4 sm:py-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Link
               href="/employers"
@@ -52,7 +53,7 @@ export default function EmployerDetailPage() {
               <ArrowLeft className="w-5 h-5 text-slate-600" />
             </Link>
             <div>
-              <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                 Employer Details
               </h1>
               <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5">
@@ -62,21 +63,21 @@ export default function EmployerDetailPage() {
           </div>
 
           {/* Action buttons */}
-          <div className="flex items-center gap-3">
-            <button className="px-5 py-2.5 rounded-xl border border-rose-200 text-rose-600 font-bold text-sm hover:bg-rose-50 transition-colors">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <button className="px-4 py-2 rounded-xl border border-rose-200 text-rose-600 font-bold text-xs sm:text-sm hover:bg-rose-50 transition-colors cursor-pointer">
               Suspend Account
             </button>
-            <button className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 font-bold text-sm hover:bg-slate-50 transition-colors">
+            <button className="px-4 py-2 rounded-xl border border-slate-200 text-slate-700 font-bold text-xs sm:text-sm hover:bg-slate-50 transition-colors cursor-pointer">
               Edit Details
             </button>
-            <button className="px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-sm hover:bg-emerald-700 transition-colors shadow-sm">
+            <button className="px-4 py-2 rounded-xl bg-emerald-600 text-white font-bold text-xs sm:text-sm hover:bg-emerald-700 transition-colors shadow-xs cursor-pointer">
               Send Message
             </button>
           </div>
         </div>
 
         {/* Quick info bar */}
-        <div className="mt-8 pt-6 border-t border-slate-100 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="mt-6 pt-6 border-t border-slate-100 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-emerald-50 rounded-xl text-emerald-600">
               <Building2 className="w-5 h-5" />
@@ -123,7 +124,7 @@ export default function EmployerDetailPage() {
           </div>
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-amber-50 rounded-xl text-amber-600">
-              <Clock className="w-5 h-5" />
+              <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">
@@ -137,7 +138,7 @@ export default function EmployerDetailPage() {
         </div>
       </header>
 
-      <main className="flex-1 p-10 bg-[#F8FAFC]">
+      <main className="flex-1 p-4 sm:px-6 lg:p-10 bg-[#F8FAFC]">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {/* Left Column */}
           <div className="lg:col-span-1 space-y-8">

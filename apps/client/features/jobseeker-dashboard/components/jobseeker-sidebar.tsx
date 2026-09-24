@@ -15,6 +15,7 @@ import {
   XMarkIcon,
   ArrowRightOnRectangleIcon,
   SparklesIcon,
+  QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
 import { WorkBridgeLogo } from "@repo/ui";
 
@@ -83,7 +84,7 @@ export function JobseekerSidebar() {
     },
     {
       href: "/dashboard/payments",
-      label: "Payments",
+      label: "Subscriptions",
       icon: CreditCardIcon,
       isActive: (p: string) =>
         p === "/dashboard/payments" || p.startsWith("/dashboard/payments/"),
@@ -101,6 +102,13 @@ export function JobseekerSidebar() {
       icon: Cog6ToothIcon,
       isActive: (p: string) =>
         p === "/dashboard/settings" || p.startsWith("/dashboard/settings/"),
+    },
+    {
+      href: "/dashboard/support",
+      label: "Help & Support",
+      icon: QuestionMarkCircleIcon,
+      isActive: (p: string) =>
+        p === "/dashboard/support" || p.startsWith("/dashboard/support/"),
     },
   ];
 
@@ -135,7 +143,7 @@ export function JobseekerSidebar() {
     },
     {
       href: "/dashboard/payments",
-      label: "Payments",
+      label: "Subscriptions",
       icon: CreditCardIcon,
       isActive: (p: string) =>
         p === "/dashboard/payments" || p.startsWith("/dashboard/payments/"),
@@ -148,6 +156,11 @@ export function JobseekerSidebar() {
         p === "/dashboard/settings" || p.startsWith("/dashboard/settings/"),
     },
   ];
+
+  const isProUser =
+    user?.subscriptionTier === "pro_monthly" ||
+    user?.subscriptionTier === "pro_annual" ||
+    (user as any)?.isPro;
 
   return (
     <>
@@ -225,17 +238,48 @@ export function JobseekerSidebar() {
         {/* User Card */}
         <div className="p-4 border-b border-slate-100 bg-slate-50/60">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-emerald-700 text-amber-200 font-black text-sm flex items-center justify-center shadow-xs">
-              {user?.fullName?.charAt(0) || "U"}
+            <div className="relative shrink-0">
+              <div
+                className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-sm shadow-md transition-all ${
+                  isProUser
+                    ? "bg-gradient-to-tr from-indigo-500 via-purple-500 via-pink-500 to-amber-400 p-[2.5px]"
+                    : "bg-emerald-700 text-amber-200"
+                }`}
+              >
+                <div
+                  className={`w-full h-full rounded-full flex items-center justify-center font-extrabold ${
+                    isProUser
+                      ? "bg-slate-950 text-amber-300 border border-slate-800"
+                      : "bg-emerald-700 text-amber-200"
+                  }`}
+                >
+                  {user?.fullName?.charAt(0) || "U"}
+                </div>
+              </div>
+              {isProUser && (
+                <span
+                  className="absolute -bottom-1 -right-1 bg-gradient-to-r from-amber-400 via-purple-500 to-indigo-500 p-0.5 rounded-full ring-2 ring-white shadow-md"
+                  title="Pro Member"
+                >
+                  <SparklesIcon className="w-3.5 h-3.5 text-white" />
+                </span>
+              )}
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-sm font-black text-slate-900 truncate">
                 {user?.fullName || "Trades Professional"}
               </p>
-              <div className="flex items-center gap-1 text-[11px] font-bold text-emerald-700">
-                <SparklesIcon className="w-3 h-3" />
-                <span>0% Commission Account</span>
-              </div>
+              {isProUser ? (
+                <div className="flex items-center gap-1 text-[11px] font-extrabold bg-gradient-to-r from-indigo-600 via-purple-600 to-amber-500 bg-clip-text text-transparent">
+                  <SparklesIcon className="w-3 h-3 text-amber-500 shrink-0" />
+                  <span>Gemini Pro Subscriber</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1 text-[11px] font-bold text-emerald-700">
+                  <SparklesIcon className="w-3 h-3" />
+                  <span>0% Commission Account</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -360,16 +404,47 @@ export function JobseekerSidebar() {
         {/* Desktop Sidebar Footer */}
         <div className="p-4 border-t border-slate-100 flex items-center justify-between bg-slate-50/50">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-8 h-8 rounded-full bg-emerald-700 text-amber-200 font-black text-xs flex items-center justify-center shrink-0">
-              {user?.fullName?.charAt(0) || "U"}
+            <div className="relative shrink-0">
+              <div
+                className={`w-9 h-9 rounded-full flex items-center justify-center font-black text-xs shadow-md transition-all ${
+                  isProUser
+                    ? "bg-gradient-to-tr from-indigo-500 via-purple-500 via-pink-500 to-amber-400 p-[2.5px]"
+                    : "bg-emerald-700 text-amber-200"
+                }`}
+              >
+                <div
+                  className={`w-full h-full rounded-full flex items-center justify-center font-extrabold ${
+                    isProUser
+                      ? "bg-slate-950 text-amber-300 border border-slate-800"
+                      : "bg-emerald-700 text-amber-200"
+                  }`}
+                >
+                  {user?.fullName?.charAt(0) || "U"}
+                </div>
+              </div>
+              {isProUser && (
+                <span
+                  className="absolute -bottom-1 -right-1 bg-gradient-to-r from-amber-400 via-purple-500 to-indigo-500 p-0.5 rounded-full ring-2 ring-white shadow-md"
+                  title="Pro Member"
+                >
+                  <SparklesIcon className="w-3 h-3 text-white" />
+                </span>
+              )}
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-xs font-bold text-slate-900 truncate">
                 {user?.fullName || "Trades Professional"}
               </p>
-              <p className="text-[10px] text-emerald-600 font-semibold truncate">
-                0% Fee Direct Trade
-              </p>
+              {isProUser ? (
+                <p className="text-[10px] font-extrabold bg-gradient-to-r from-indigo-600 via-purple-600 to-amber-500 bg-clip-text text-transparent truncate flex items-center gap-1">
+                  <SparklesIcon className="w-3 h-3 text-amber-500 shrink-0 inline" />
+                  <span>Pro Member</span>
+                </p>
+              ) : (
+                <p className="text-[10px] text-emerald-600 font-semibold truncate">
+                  0% Fee Direct Trade
+                </p>
+              )}
             </div>
           </div>
           <button

@@ -20,6 +20,15 @@ const formatEnumLabel = (str: string) =>
         .toLowerCase()
         .replace(/\b\w/g, (c) => c.toUpperCase())
     : "";
+const formatSalary = (salary: any): string => {
+  if (salary === null || salary === undefined || salary === "") return "Negotiable";
+  const num = typeof salary === "number" ? salary : parseFloat(String(salary).replace(/[^0-9.]/g, ""));
+  if (!isNaN(num) && num > 0) {
+    return `${new Intl.NumberFormat().format(num)} ETB`;
+  }
+  return typeof salary === "string" && salary.trim() ? salary : "Negotiable";
+};
+
 const ChevronIcon = () => (
   <svg
     viewBox="0 0 24 24"
@@ -102,8 +111,8 @@ export function JobsPage() {
 
       <section className="bg-slate-50 py-10">
         <Container size="xl" className="max-w-6xl">
-          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 items-end">
+          <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-4 sm:p-6 md:p-8 shadow-sm">
+            <div className="grid gap-3 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-end">
               <Input
                 label="Search"
                 placeholder="Job title or skill..."
@@ -112,8 +121,8 @@ export function JobsPage() {
               />
 
               {/* Location Select */}
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700">
+              <div className="space-y-1 sm:space-y-2">
+                <label className="text-xs sm:text-sm font-bold text-slate-700">
                   Location
                 </label>
                 <div className="relative">
@@ -122,7 +131,7 @@ export function JobsPage() {
                     onChange={(e) =>
                       onFilterChange(setLocation, e.target.value)
                     }
-                    className="w-full h-11 px-4 pr-10 rounded-xl border border-slate-200 bg-white text-sm appearance-none outline-none focus:border-teal-500 transition-all"
+                    className="w-full h-9 sm:h-11 px-3 sm:px-4 pr-9 sm:pr-10 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm appearance-none outline-none focus:border-teal-500 transition-all"
                   >
                     <option value="">Any Location</option>
                     <option value="addis ababa">Addis Ababa</option>
@@ -135,8 +144,8 @@ export function JobsPage() {
               </div>
 
               {/* Category Select */}
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700">
+              <div className="space-y-1 sm:space-y-2">
+                <label className="text-xs sm:text-sm font-bold text-slate-700">
                   Category
                 </label>
                 <div className="relative">
@@ -145,7 +154,7 @@ export function JobsPage() {
                     onChange={(e) =>
                       onFilterChange(setCategory, e.target.value)
                     }
-                    className="w-full h-11 px-4 pr-10 rounded-xl border border-slate-200 bg-white text-sm appearance-none outline-none focus:border-teal-500 transition-all"
+                    className="w-full h-9 sm:h-11 px-3 sm:px-4 pr-9 sm:pr-10 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm appearance-none outline-none focus:border-teal-500 transition-all"
                   >
                     <option value="">All Categories</option>
                     {JOB_CATEGORIES.map((c) => (
@@ -161,15 +170,15 @@ export function JobsPage() {
               </div>
 
               {/* Salary Select */}
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700">
+              <div className="space-y-1 sm:space-y-2">
+                <label className="text-xs sm:text-sm font-bold text-slate-700">
                   Min Salary
                 </label>
                 <div className="relative">
                   <select
                     value={salary}
                     onChange={(e) => onFilterChange(setSalary, e.target.value)}
-                    className="w-full h-11 px-4 pr-10 rounded-xl border border-slate-200 bg-white text-sm appearance-none outline-none focus:border-teal-500 transition-all"
+                    className="w-full h-9 sm:h-11 px-3 sm:px-4 pr-9 sm:pr-10 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm appearance-none outline-none focus:border-teal-500 transition-all"
                   >
                     <option value="">Any Salary</option>
                     <option value="20000">20,000 ETB+</option>
@@ -185,17 +194,17 @@ export function JobsPage() {
             </div>
 
             {/* --- QUICK TAG BAR --- */}
-            <div className="mt-8 flex flex-wrap items-center gap-2 pt-6 border-t border-slate-50">
-              <span className="text-[10px] font-black uppercase text-slate-400 mr-2">
+            <div className="mt-4 sm:mt-8 flex items-center gap-2 pt-3 sm:pt-6 border-t border-slate-100 overflow-x-auto pb-1 no-scrollbar">
+              <span className="text-[10px] font-black uppercase text-slate-400 mr-1 shrink-0">
                 Quick Filter:
               </span>
               <button
                 type="button"
                 onClick={() => onFilterChange(setActiveTag, "All")}
-                className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${
+                className={`shrink-0 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs font-bold transition-all ${
                   activeTag === "All"
-                    ? "bg-slate-900 text-white shadow-lg shadow-slate-200"
-                    : "bg-slate-100 text-slate-500"
+                    ? "bg-slate-900 text-white shadow-md shadow-slate-200"
+                    : "bg-slate-100 text-slate-500 hover:bg-slate-200"
                 }`}
               >
                 All
@@ -205,9 +214,9 @@ export function JobsPage() {
                   key={type}
                   type="button"
                   onClick={() => onFilterChange(setActiveTag, type)}
-                  className={`px-5 py-2 rounded-full text-xs font-bold transition-all border ${
+                  className={`shrink-0 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs font-bold transition-all border ${
                     activeTag === type
-                      ? "bg-teal-600 border-teal-600 text-white shadow-md"
+                      ? "bg-teal-600 border-teal-600 text-white shadow-sm"
                       : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
                   }`}
                 >
@@ -247,7 +256,7 @@ export function JobsPage() {
                     company={job.employerSnapshot?.displayName || "Employer"}
                     location={job.location?.city}
                     type={formatEnumLabel(job.jobType)}
-                    salary={`${job.salary?.toLocaleString()} ETB`}
+                    salary={formatSalary(job.salary)}
                     description={job.description}
                     tags={
                       job.skills

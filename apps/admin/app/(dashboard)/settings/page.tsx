@@ -44,7 +44,7 @@ export default function SettingsPage() {
         description="Manage your platform settings and preferences"
         showFilter={false}
       />
-      <main className="flex-1 px-10 pb-10">
+      <main className="flex-1 px-4 sm:px-6 lg:px-10 pb-6 sm:pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="lg:col-span-1">

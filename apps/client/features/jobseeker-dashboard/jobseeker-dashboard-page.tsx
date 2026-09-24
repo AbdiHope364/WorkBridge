@@ -10,6 +10,7 @@ import {
   SmallCheckIcon,
 } from "./components/dashboard-icons";
 import { JobseekerSidebar } from "./components/jobseeker-sidebar";
+import { WorkerSubscriptionModal } from "./components/worker-subscription-modal";
 import { BookingsList } from "../bookings/components/bookings-list";
 import { useAuth } from "@/contexts/auth-context";
 import { useProfile } from "@/contexts/profile-context";
@@ -46,6 +47,8 @@ export function JobseekerDashboardPage() {
 
   const [analytics, setAnalytics] = useState<DashboardAnalytics | null>(null);
   const [loadingAnalytics, setLoadingAnalytics] = useState(true);
+  const [isSubModalOpen, setIsSubModalOpen] = useState(false);
+  const [selectedSubPlan, setSelectedSubPlan] = useState<"free" | "monthly" | "annual">("monthly");
 
   useEffect(() => {
     const loadDashboardData = async () => {
@@ -131,7 +134,7 @@ export function JobseekerDashboardPage() {
             </div>
           </header>
 
-          <div className="w-full max-w-275 px-4 py-6 sm:px-6 md:px-10 md:py-10">
+          <div className="w-full px-4 py-6 sm:px-6 md:px-10 md:py-10">
             <div className="mb-8 md:mb-10">
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
                 Hello, {jobseekerProfile?.firstName || user?.fullName?.split(" ")[0] || user?.fullName || "Worker"} 👋
@@ -139,6 +142,54 @@ export function JobseekerDashboardPage() {
               <p className="text-sm sm:text-base text-slate-500 mt-1 sm:mt-2 font-medium">
                 Checkout what is updated on your career journey today.
               </p>
+            </div>
+
+            {/* Worker Job Application Subscription CTA Banner */}
+            <div className="mb-8 rounded-3xl bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 p-6 text-white shadow-lg border border-emerald-500/30 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
+              <div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-2">
+                  ⚡ Job Application Subscription • Free / Monthly / Annual
+                </div>
+                <h3 className="text-lg sm:text-xl font-black text-white tracking-tight">
+                  Subscribe for Job Applications & Choose Payment Provider
+                </h3>
+                <p className="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
+                  Free tier includes <strong>5 Applications/month & 0% Wage Commission</strong> for direct homeowner pay. Upgrade to <strong>Monthly (299 ETB)</strong> or <strong>Annual (2,499 ETB - Save 30%)</strong> for <strong>unlimited job applications</strong> via <strong>Telebirr, CBE Birr, Chapa, or Awash Birr</strong>!
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedSubPlan("free");
+                    setIsSubModalOpen(true);
+                  }}
+                  className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold text-xs shadow-xs transition cursor-pointer"
+                >
+                  Free Direct Pay (0 ETB)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedSubPlan("monthly");
+                    setIsSubModalOpen(true);
+                  }}
+                  className="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl font-black text-xs shadow-md transition cursor-pointer active:scale-95"
+                >
+                  Monthly (299 ETB/mo) →
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedSubPlan("annual");
+                    setIsSubModalOpen(true);
+                  }}
+                  className="px-4 py-2.5 bg-teal-400 hover:bg-teal-300 text-slate-950 rounded-xl font-black text-xs shadow-md transition cursor-pointer active:scale-95"
+                >
+                  Annual (2,499 ETB/yr) ★
+                </button>
+              </div>
             </div>
 
             {/* Metrics Grid */}
@@ -285,6 +336,15 @@ export function JobseekerDashboardPage() {
           </div>
         </section>
       </div>
+
+      <WorkerSubscriptionModal
+        isOpen={isSubModalOpen}
+        onClose={() => setIsSubModalOpen(false)}
+        initialPlan={selectedSubPlan}
+        onSuccess={(plan, provider) => {
+          alert(`Successfully subscribed to ${plan.toUpperCase()} plan via ${provider}! Your account has been upgraded.`);
+        }}
+      />
     </main>
   );
 }

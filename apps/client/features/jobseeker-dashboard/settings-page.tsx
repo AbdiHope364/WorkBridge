@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { JobseekerSidebar } from "./components/jobseeker-sidebar";
 import { useAuth } from "@/contexts/auth-context";
 import { useProfile } from "@/contexts/profile-context";
+import { api } from "@/lib/api";
 import { Button } from "@repo/ui";
 import {
   User,
@@ -25,7 +26,7 @@ import {
 
 export function JobseekerSettingsPage() {
   const { user, refreshUser } = useAuth();
-  const { jobseekerProfile } = useProfile();
+  const { jobseekerProfile, refreshProfile } = useProfile();
 
   const [activeTab, setActiveTab] = useState<"general" | "kyc" | "security" | "notifications" | "account">("general");
 
@@ -52,16 +53,22 @@ export function JobseekerSettingsPage() {
   const [dateOfBirth, setDateOfBirth] = useState(jobseekerProfile?.dateOfBirth || "");
   const [gender, setGender] = useState<"MALE" | "FEMALE" | "OTHER">((jobseekerProfile?.gender as any) || "MALE");
   const [kycStatus, setKycStatus] = useState<"VERIFIED" | "PENDING" | "UNVERIFIED" | "REJECTED">(
-    (user as any)?.faydaStatus || (user?.faydaFin ? "VERIFIED" : "UNVERIFIED")
+    (jobseekerProfile as any)?.faydaStatus || (user as any)?.faydaStatus || (user?.faydaFin ? "VERIFIED" : "UNVERIFIED")
   );
-  const [frontDocName, setFrontDocName] = useState("");
-  const [backDocName, setBackDocName] = useState("");
+  const [frontDocName, setFrontDocName] = useState(jobseekerProfile?.frontDocName || "No file uploaded");
+  const [backDocName, setBackDocName] = useState(jobseekerProfile?.backDocName || "No file uploaded");
   const [kycSubmitting, setKycSubmitting] = useState(false);
 
   useEffect(() => {
     if (user?.fullName && !fullName) setFullName(user.fullName);
     if ((user?.faydaFin || jobseekerProfile?.faydaFin) && !faydaNumber) {
       setFaydaNumber(user?.faydaFin || jobseekerProfile?.faydaFin || "");
+    }
+    if (jobseekerProfile?.phone && !phone) {
+      setPhone(jobseekerProfile.phone);
+    }
+    if (jobseekerProfile?.faydaStatus || (user as any)?.faydaStatus) {
+      setKycStatus((jobseekerProfile?.faydaStatus || (user as any)?.faydaStatus) as any);
     }
   }, [user, jobseekerProfile]);
 
@@ -85,8 +92,25 @@ export function JobseekerSettingsPage() {
     setStatusMsg(null);
 
     try {
-      // Simulate/execute profile update
-      await new Promise((r) => setTimeout(r, 600));
+      const nameParts = fullName.trim().split(" ");
+      const firstName = nameParts[0] || "";
+      const lastName = nameParts.slice(1).join(" ") || "";
+
+      await api.profiles.jobseeker.updateMyProfile({
+        firstName,
+        lastName,
+        fullName: fullName.trim(),
+        phone: phone.trim(),
+        location: {
+          city: location.trim(),
+        },
+        bio: tradeHeadline.trim(),
+        currentPosition: tradeHeadline.trim(),
+        headline: tradeHeadline.trim(),
+        hourlyRate: hourlyRate ? Number(hourlyRate) : undefined,
+      });
+
+      if (refreshProfile) await refreshProfile();
       if (refreshUser) await refreshUser();
       setStatusMsg({ type: "success", text: "Profile and preferences updated successfully!" });
     } catch (err: any) {
@@ -111,7 +135,7 @@ export function JobseekerSettingsPage() {
     setStatusMsg(null);
 
     try {
-      await new Promise((r) => setTimeout(r, 800));
+      await new Promise((r) => setTimeout(r, 600));
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
@@ -132,7 +156,18 @@ export function JobseekerSettingsPage() {
     setKycSubmitting(true);
     setStatusMsg(null);
     try {
-      await new Promise((r) => setTimeout(r, 700));
+      await api.profiles.jobseeker.updateMyProfile({
+        faydaFin: faydaNumber.trim(),
+        faydaStatus: "PENDING",
+        fullName: fullNameOnFayda.trim() || undefined,
+        dateOfBirth: dateOfBirth || undefined,
+        gender: gender || undefined,
+        frontDocName: frontDocName || undefined,
+        backDocName: backDocName || undefined,
+      });
+
+      if (refreshProfile) await refreshProfile();
+      if (refreshUser) await refreshUser();
       setKycStatus("PENDING");
       setStatusMsg({
         type: "success",
@@ -164,7 +199,7 @@ export function JobseekerSettingsPage() {
           </div>
         </header>
 
-        <div className="max-w-5xl mx-auto p-4 sm:p-6 md:p-8 space-y-6">
+        <div className="w-full p-4 sm:p-6 md:p-8 space-y-6">
           {/* Status Message */}
           {statusMsg && (
             <div
@@ -435,11 +470,11 @@ export function JobseekerSettingsPage() {
                     <div className="col-span-2 space-y-1.5 text-xs">
                       <div>
                         <span className="text-[10px] uppercase text-emerald-300 font-bold block">Full Name</span>
-                        <span className="font-bold text-white text-sm">{fullNameOnFayda || "Abdi Abiot"}</span>
+                        <span className="font-bold text-white text-sm">{fullNameOnFayda || user?.fullName || "Not Provided"}</span>
                       </div>
                       <div>
                         <span className="text-[10px] uppercase text-emerald-300 font-bold block">Fayda ID (FIN)</span>
-                        <span className="font-mono font-extrabold text-amber-300 tracking-wider text-sm">{faydaNumber || "FIN-9042-8821-3419"}</span>
+                        <span className="font-mono font-extrabold text-amber-300 tracking-wider text-sm">{faydaNumber || "Unverified (FIN Pending)"}</span>
                       </div>
                       <div className="grid grid-cols-2 gap-2 pt-1">
                         <div>

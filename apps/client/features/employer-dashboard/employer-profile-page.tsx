@@ -39,6 +39,7 @@ import {
   UpdateIndividualEmployerProfileRequest,
 } from "@repo/api-client";
 import { useProfile } from "@/contexts/profile-context";
+import { useAuth } from "@/contexts/auth-context";
 import { useNotifications } from "@/contexts/notification-context";
 import { api } from "../../lib/api";
 import { env } from "../../lib/env";
@@ -926,16 +927,19 @@ function IndividualDetailsTab({
 // ─── Verification Tab ─────────────────────────────────────────────────────────
 
 function VerificationTab({ isCompany = false }: { isCompany?: boolean }) {
+  const { user, refreshUser } = useAuth();
+  const { employerProfile, refreshProfile } = useProfile();
+
   const [editing, setEditing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   // Form states
   const [faydaFin, setFaydaFin] = useState(
-    isCompany ? "FIN-8812-4439-0192" : "FIN-4820-1945-7731"
+    (employerProfile as any)?.faydaFin || user?.faydaFin || (isCompany ? "FIN-8812-4439-0192" : "FIN-4820-1945-7731")
   );
   const [officerName, setOfficerName] = useState(
-    isCompany ? "Solomon Tesfaye (Managing Director)" : "Dawit Mekonnen"
+    (employerProfile as any)?.fullName || (employerProfile as any)?.companyName || user?.fullName || (isCompany ? "Solomon Tesfaye (Managing Director)" : "Dawit Mekonnen")
   );
   const [tinNumber, setTinNumber] = useState("0048192847");
   const [businessLicense, setBusinessLicense] = useState("BL/AA/2024/99182");
@@ -947,7 +951,9 @@ function VerificationTab({ isCompany = false }: { isCompany?: boolean }) {
   );
   const [verificationStatus, setVerificationStatus] = useState<
     "VERIFIED" | "PENDING" | "UNVERIFIED"
-  >("VERIFIED");
+  >(
+    ((employerProfile as any)?.faydaStatus as any) || ((user as any)?.faydaStatus as any) || ((user as any)?.verified ? "VERIFIED" : "UNVERIFIED")
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -955,12 +961,25 @@ function VerificationTab({ isCompany = false }: { isCompany?: boolean }) {
     setSuccessMsg(null);
 
     try {
-      await new Promise((r) => setTimeout(r, 650));
+      const endpoint = isCompany
+        ? "/accounts/employer/companies/me"
+        : "/accounts/employer/individuals/me";
+      await api.client.request(endpoint, {
+        method: "PATCH",
+        body: {
+          faydaFin: faydaFin.trim(),
+          faydaStatus: "PENDING",
+          fullName: officerName.trim(),
+        },
+      });
+
+      if (refreshProfile) await refreshProfile();
+      if (refreshUser) await refreshUser();
       setVerificationStatus("PENDING");
       setEditing(false);
       setSuccessMsg("Fayda KYC credentials submitted for Admin Verification review!");
-    } catch {
-      // ignore
+    } catch (err: any) {
+      setSuccessMsg(err.message || "Failed to submit verification.");
     } finally {
       setSubmitting(false);
     }

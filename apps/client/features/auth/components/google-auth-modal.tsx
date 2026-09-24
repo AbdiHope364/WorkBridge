@@ -5,47 +5,43 @@ import { useSearchParams } from "next/navigation";
 import { Modal, Button } from "@repo/ui";
 import { setAuthToken, setSessionCookie } from "@/lib/api";
 import { useAuth } from "@/contexts/auth-context";
-import { UserCheck, Building2, UserPlus, ArrowRight } from "lucide-react";
+import { env } from "@/lib/env";
+import { ArrowRight } from "lucide-react";
 
 interface GoogleAuthModalProps {
   isOpen: boolean;
   onClose: () => void;
-  defaultRole?: "jobseeker" | "employer";
+  defaultRole?: "jobseeker" | "employer" | "worker" | "client";
 }
 
 export function GoogleAuthModal({
   isOpen,
   onClose,
-  defaultRole = "jobseeker",
+  defaultRole,
 }: GoogleAuthModalProps) {
   const searchParams = useSearchParams();
   const { refreshUser } = useAuth();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [customMode, setCustomMode] = useState(false);
-  const [customName, setCustomName] = useState("");
-  const [customEmail, setCustomEmail] = useState("");
-  const [selectedRole, setSelectedRole] = useState<"jobseeker" | "employer">(defaultRole);
+  const [googleEmail, setGoogleEmail] = useState("");
 
-  const handleAuthenticate = async (account: {
-    name: string;
-    email: string;
-    picture: string;
-    role: "jobseeker" | "employer";
-  }) => {
+  const handleAuthenticate = async (emailToAuth: string) => {
     setIsSubmitting(true);
     setError(null);
 
     try {
-      const response = await fetch("/api/auth/google/credential", {
+      const cleanEmail = emailToAuth.trim().toLowerCase();
+      const derivedName = cleanEmail.split("@")[0].replace(/[._-]/g, " ");
+
+      const response = await fetch(`${env.NEXT_PUBLIC_API_URL}/auth/google/credential`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          role: account.role,
-          name: account.name,
-          email: account.email,
-          picture: account.picture,
+          email: cleanEmail,
+          name: derivedName,
+          picture: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
+          role: defaultRole || "jobseeker",
         }),
       });
 
@@ -58,8 +54,10 @@ export function GoogleAuthModal({
       setSessionCookie();
       await refreshUser();
 
+      // Automatically route user to their database identified dashboard
+      const userRole = data.user?.role;
       const defaultRedirect =
-        account.role === "employer"
+        userRole === "employer"
           ? "/dashboard/employer"
           : "/dashboard/jobseeker";
       const next = searchParams.get("next") ?? defaultRedirect;
@@ -73,18 +71,13 @@ export function GoogleAuthModal({
     }
   };
 
-  const handleCustomSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!customEmail || !customName) {
-      setError("Please provide your name and email address.");
+    if (!googleEmail.trim()) {
+      setError("Please enter your Google email address.");
       return;
     }
-    handleAuthenticate({
-      name: customName.trim(),
-      email: customEmail.trim().toLowerCase(),
-      picture: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
-      role: selectedRole,
-    });
+    handleAuthenticate(googleEmail);
   };
 
   return (
@@ -97,7 +90,7 @@ export function GoogleAuthModal({
       <div className="py-2 space-y-5">
         {/* Google Header */}
         <div className="text-center space-y-1">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-50 border border-slate-200 shadow-sm mx-auto mb-2">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-50 border border-slate-200 shadow-xs mx-auto mb-2">
             <svg className="h-6 w-6" viewBox="0 0 24 24">
               <path
                 fill="#4285F4"
@@ -117,8 +110,8 @@ export function GoogleAuthModal({
               />
             </svg>
           </div>
-          <h2 className="text-xl font-bold text-slate-900">Sign in with Google</h2>
-          <p className="text-xs text-slate-500">Choose an account to continue to WorkBridge Ethiopia</p>
+          <h2 className="text-xl font-black text-slate-900">Sign in with Google</h2>
+          <p className="text-xs text-slate-500">Your role will be automatically identified from the database</p>
         </div>
 
         {error && (
@@ -127,178 +120,50 @@ export function GoogleAuthModal({
           </div>
         )}
 
-        {!customMode ? (
-          <div className="space-y-3">
-            {/* Account Option 1: Tradesman Worker */}
-            <button
-              type="button"
-              disabled={isSubmitting}
-              onClick={() =>
-                handleAuthenticate({
-                  name: "Abebe Bikila (Google)",
-                  email: "abebe.google@workbridge.et",
-                  picture: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
-                  role: "jobseeker",
-                })
-              }
-              className="w-full text-left p-3.5 rounded-2xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition-all flex items-center justify-between group shadow-sm bg-white"
-            >
-              <div className="flex items-center gap-3.5">
-                <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150"
-                  alt="Abebe Bikila"
-                  className="w-11 h-11 rounded-full object-cover border border-slate-200 shrink-0"
-                />
-                <div>
-                  <div className="font-bold text-sm text-slate-900 group-hover:text-emerald-900 flex items-center gap-1.5">
-                    Abebe Bikila
-                    <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">Worker</span>
-                  </div>
-                  <div className="text-xs text-slate-500">abebe.google@workbridge.et</div>
-                </div>
-              </div>
-              <UserCheck className="w-4 h-4 text-slate-400 group-hover:text-emerald-600 shrink-0" />
-            </button>
-
-            {/* Account Option 2: Client Employer */}
-            <button
-              type="button"
-              disabled={isSubmitting}
-              onClick={() =>
-                handleAuthenticate({
-                  name: "Sara Haile (Google)",
-                  email: "sara.google@workbridge.et",
-                  picture: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
-                  role: "employer",
-                })
-              }
-              className="w-full text-left p-3.5 rounded-2xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition-all flex items-center justify-between group shadow-sm bg-white"
-            >
-              <div className="flex items-center gap-3.5">
-                <img
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150"
-                  alt="Sara Haile"
-                  className="w-11 h-11 rounded-full object-cover border border-slate-200 shrink-0"
-                />
-                <div>
-                  <div className="font-bold text-sm text-slate-900 group-hover:text-emerald-900 flex items-center gap-1.5">
-                    Sara Haile
-                    <span className="text-[10px] bg-blue-100 text-blue-800 font-bold px-1.5 py-0.5 rounded-md">Client</span>
-                  </div>
-                  <div className="text-xs text-slate-500">sara.google@workbridge.et</div>
-                </div>
-              </div>
-              <Building2 className="w-4 h-4 text-slate-400 group-hover:text-emerald-600 shrink-0" />
-            </button>
-
-            {/* Use Another Account Button */}
-            <button
-              type="button"
-              onClick={() => setCustomMode(true)}
-              className="w-full py-2.5 text-xs font-bold text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5 border border-dashed border-slate-300 rounded-xl hover:bg-slate-50 transition"
-            >
-              <UserPlus className="w-3.5 h-3.5" /> Use another Google account
-            </button>
-
-            {/* Real Google Cloud OAuth Redirect Option */}
-            <div className="pt-1">
-              <button
-                type="button"
-                onClick={() => {
-                  window.location.href = `/api/auth/google?role=${defaultRole}`;
-                }}
-                className="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition"
-              >
-                <span>🌐</span> Continue via Official Google Accounts Window
-              </button>
-            </div>
+        {/* Simple Google Sign-In Form */}
+        <form onSubmit={handleFormSubmit} className="space-y-4 pt-1">
+          <div>
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              Enter Google Email *
+            </label>
+            <input
+              type="email"
+              value={googleEmail}
+              onChange={(e) => setGoogleEmail(e.target.value)}
+              placeholder="e.g. user@gmail.com"
+              className="w-full h-11 px-3.5 rounded-xl border border-slate-300 text-sm text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 font-medium"
+              required
+            />
           </div>
-        ) : (
-          <form onSubmit={handleCustomSubmit} className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                Full Name
-              </label>
-              <input
-                type="text"
-                value={customName}
-                onChange={(e) => setCustomName(e.target.value)}
-                placeholder="e.g. Dawit Tesfaye"
-                className="w-full h-10 px-3 rounded-xl border border-slate-300 text-sm text-slate-900 focus:border-emerald-500 focus:outline-none"
-                required
-              />
-            </div>
 
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                Google Email
-              </label>
-              <input
-                type="email"
-                value={customEmail}
-                onChange={(e) => setCustomEmail(e.target.value)}
-                placeholder="e.g. dawit@gmail.com"
-                className="w-full h-10 px-3 rounded-xl border border-slate-300 text-sm text-slate-900 focus:border-emerald-500 focus:outline-none"
-                required
-              />
-            </div>
+          <div className="pt-2 space-y-2">
+            <Button
+              type="submit"
+              isLoading={isSubmitting}
+              className="w-full h-11 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs"
+            >
+              Sign In with Google <ArrowRight className="w-4 h-4 ml-1.5" />
+            </Button>
 
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                WorkBridge Account Type
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole("jobseeker")}
-                  className={`py-2 px-3 rounded-xl text-xs font-bold border text-center transition ${
-                    selectedRole === "jobseeker"
-                      ? "bg-emerald-600 text-white border-emerald-600"
-                      : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"
-                  }`}
-                >
-                  👷 Worker / Tradesman
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole("employer")}
-                  className={`py-2 px-3 rounded-xl text-xs font-bold border text-center transition ${
-                    selectedRole === "employer"
-                      ? "bg-emerald-600 text-white border-emerald-600"
-                      : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"
-                  }`}
-                >
-                  🏢 Client / Employer
-                </button>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 pt-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setCustomMode(false)}
-                className="w-1/3 text-xs"
-              >
-                Back
-              </Button>
-              <Button
-                type="submit"
-                isLoading={isSubmitting}
-                className="w-2/3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold"
-              >
-                Sign In Now <ArrowRight className="w-3.5 h-3.5 ml-1" />
-              </Button>
-            </div>
-          </form>
-        )}
+            <button
+              type="button"
+              onClick={() => {
+                window.location.href = `${env.NEXT_PUBLIC_API_URL}/auth/google`;
+              }}
+              className="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-bold flex items-center justify-center gap-2 shadow-xs transition cursor-pointer"
+            >
+              <span>🌐</span> Continue via Official Google OAuth Window
+            </button>
+          </div>
+        </form>
 
         <div className="border-t border-slate-100 pt-3 text-center">
           <p className="text-[11px] text-slate-400">
-            To continue, Google will share your name, email address, and profile picture with WorkBridge.
+            WorkBridge automatically verifies your user role (Trade Worker or Homeowner) directly from the database.
           </p>
         </div>
       </div>
     </Modal>
   );
 }
+

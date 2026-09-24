@@ -229,7 +229,6 @@ export function LoginForm() {
       <GoogleAuthModal
         isOpen={isGoogleModalOpen}
         onClose={() => setIsGoogleModalOpen(false)}
-        defaultRole="jobseeker"
       />
     </>
   );

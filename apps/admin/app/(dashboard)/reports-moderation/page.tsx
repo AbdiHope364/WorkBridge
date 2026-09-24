@@ -15,7 +15,7 @@ export default function ReportsModerationPage() {
       />
       <main className="flex-1">
         <ModerationStats />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-10 pb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 lg:px-10 pb-6">
           <div className="lg:col-span-2">
             <ReportsTable />
           </div>

@@ -9,40 +9,40 @@ import { WorkBridgeLogo } from "@repo/ui";
 const filterTabs = ["All Workers", "Nearby", "Top Rated", "Verified Only"];
 
 const popularCategories = [
-  "Developers",
-  "Designing",
-  "Marketing",
-  "Construction",
-  "Cleaners",
   "Electricians",
+  "Plumbing",
+  "Carpentry",
+  "Painters",
+  "Appliance Repair",
+  "Cleaners",
 ];
 
 const professionals = [
   {
-    name: "Abdi Abiot",
-    role: "Full Stack Engineer & UI Architect",
-    category: "Developers",
-    location: "Dire Dawa / Addis Ababa",
+    name: "Abebe Tadesse",
+    role: "Certified Master Electrician & Solar PV Specialist",
+    category: "Electricians",
+    location: "Addis Ababa, Bole",
     rating: 5.0,
     reviews: 215,
     nearby: true,
     verified: true,
   },
   {
-    name: "Usmael Taju",
-    role: "Frontend Developer",
-    category: "Developers",
-    location: "Addis Ababa, Mexico",
+    name: "Kebede Kassaye",
+    role: "Sanitary Plumber & Pipe Leak Specialist",
+    category: "Plumbing",
+    location: "Addis Ababa, CMC",
     rating: 4.8,
     reviews: 184,
     nearby: true,
     verified: true,
   },
   {
-    name: "Naol Meseret",
-    role: "Marketing Specialist",
-    category: "Marketing",
-    location: "Addis Ababa, Mexico",
+    name: "Alemu Tefera",
+    role: "Master Painter & Interior Decorator",
+    category: "Painters",
+    location: "Addis Ababa, Sarbet",
     rating: 4.9,
     reviews: 207,
     nearby: false,
@@ -50,8 +50,8 @@ const professionals = [
   },
   {
     name: "Bonsa Daba",
-    role: "Construction Worker",
-    category: "Construction",
+    role: "Custom Woodworker & Kitchen Cabinet Specialist",
+    category: "Carpentry",
     location: "Addis Ababa, Mexico",
     rating: 4.7,
     reviews: 163,
@@ -183,44 +183,58 @@ function Avatar({ name, index }: { name: string; index: number }) {
     .split(" ")
     .map((part) => part[0])
     .join("")
-    .slice(0, 2);
+    .slice(0, 2)
+    .toUpperCase();
+
+  const bgStyles = [
+    "bg-gradient-to-tr from-emerald-600 to-teal-500 text-white",
+    "bg-gradient-to-tr from-blue-600 to-cyan-500 text-white",
+    "bg-gradient-to-tr from-amber-600 to-orange-500 text-white",
+    "bg-gradient-to-tr from-violet-600 to-indigo-500 text-white",
+  ];
+  const bg = bgStyles[index % bgStyles.length];
 
   return (
-    <div className="relative h-9 w-9 overflow-hidden rounded-full bg-[#15151d] text-white shadow-sm">
-      <div
-        className={`absolute inset-x-1 top-1 h-4 rounded-full ${
-          index % 2 === 0 ? "bg-[#f0c89a]" : "bg-[#b7835e]"
-        }`}
-      />
-      <div className="absolute inset-x-2 top-2 h-3 rounded-t-full bg-[#05050a]" />
-      <div
-        className={`absolute bottom-0 left-1/2 h-4 w-5 -translate-x-1/2 rounded-t-full ${
-          index % 2 === 0 ? "bg-[#24384f]" : "bg-[#3a2f4e]"
-        }`}
-      />
-      <span className="absolute inset-0 flex items-center justify-center pt-3 text-[8px] font-bold">
-        {initials}
-      </span>
+    <div className={`relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full font-black text-xs shadow-xs border border-white/20 ${bg}`}>
+      <span>{initials}</span>
     </div>
   );
 }
 
+import { BookWorkerModal } from "../bookings/components/book-worker-modal";
+import { WorkerProfileModal } from "../bookings/components/worker-profile-modal";
+
 function ProfessionalCard({
   professional,
   index,
+  onBook,
+  onViewProfile,
 }: {
   professional: (typeof professionals)[number];
   index: number;
+  onBook: (p: (typeof professionals)[number]) => void;
+  onViewProfile: (p: (typeof professionals)[number]) => void;
 }) {
   return (
     <article className="flex min-h-[70px] items-center justify-between rounded-[3px] border border-[#dfe7ea] bg-white px-3.5 py-3 shadow-[0_1px_1px_rgba(15,23,42,0.03)]">
       <div className="flex min-w-0 items-center gap-3">
-        <Avatar name={professional.name} index={index} />
+        <button
+          type="button"
+          onClick={() => onViewProfile(professional)}
+          className="relative shrink-0 text-left cursor-pointer hover:opacity-80 transition"
+          title="Click to view worker user profile"
+        >
+          <Avatar name={professional.name} index={index} />
+        </button>
         <div className="min-w-0">
           <div className="flex items-center gap-1">
-            <h3 className="truncate text-[12px] font-bold leading-none text-[#151827]">
+            <button
+              type="button"
+              onClick={() => onViewProfile(professional)}
+              className="truncate text-[12px] font-bold leading-none text-[#151827] hover:text-[#00a99d] transition cursor-pointer text-left"
+            >
               {professional.name}
-            </h3>
+            </button>
             {professional.verified ? <VerifiedIcon /> : null}
           </div>
           <p className="mt-1 text-[10px] leading-none text-[#59606b]">
@@ -233,19 +247,29 @@ function ProfessionalCard({
         </div>
       </div>
 
-      <div className="ml-3 flex shrink-0 flex-col items-end gap-3">
+      <div className="ml-3 flex shrink-0 flex-col items-end gap-2.5">
         <div className="flex items-center gap-1 text-[9px] font-medium text-[#59606b]">
           <span className="text-[#00a86b]">
             <StarIcon />
           </span>
           {professional.rating.toFixed(1)} ({professional.reviews})
         </div>
-        <Link
-          href="/register/client"
-          className="inline-flex h-5 min-w-[72px] items-center justify-center rounded-[2px] bg-[#00a99d] px-2 text-[8.5px] font-bold text-white transition hover:bg-[#008f85]"
-        >
-          View Profile
-        </Link>
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => onViewProfile(professional)}
+            className="inline-flex h-6 min-w-[70px] items-center justify-center rounded-[3px] border border-[#cbd5e1] bg-white px-2 text-[9px] font-bold text-[#334155] transition hover:bg-slate-100 active:scale-95 cursor-pointer shadow-xs"
+          >
+            View Profile
+          </button>
+          <button
+            type="button"
+            onClick={() => onBook(professional)}
+            className="inline-flex h-6 min-w-[80px] items-center justify-center rounded-[3px] bg-[#00a99d] px-2.5 text-[9px] font-bold text-white transition hover:bg-[#008f85] active:scale-95 cursor-pointer shadow-xs"
+          >
+            Book Worker
+          </button>
+        </div>
       </div>
     </article>
   );
@@ -255,6 +279,8 @@ export function EmployerFindWorkersPage() {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState(filterTabs[0]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [selectedWorker, setSelectedWorker] = useState<(typeof professionals)[number] | null>(null);
+  const [selectedProfileWorker, setSelectedProfileWorker] = useState<(typeof professionals)[number] | null>(null);
 
   const filteredProfessionals = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -368,13 +394,13 @@ export function EmployerFindWorkersPage() {
                 />
               </label>
 
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="mt-3 flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
                 {filterTabs.map((tab) => (
                   <button
                     key={tab}
                     type="button"
                     onClick={() => setActiveFilter(tab)}
-                    className={`h-6 rounded-full px-4 text-[9px] font-bold transition ${
+                    className={`shrink-0 h-6.5 rounded-full px-3 sm:px-4 text-[9.5px] font-bold transition ${
                       activeFilter === tab
                         ? "bg-[#00a99d] text-white"
                         : "bg-[#e4e7e9] text-[#717882] hover:bg-[#d7dcdf]"
@@ -386,9 +412,9 @@ export function EmployerFindWorkersPage() {
               </div>
             </div>
 
-            <div className="mt-4 border-t border-[#e1e7ea] pt-4">
-              <div className="flex flex-wrap items-center gap-4">
-                <span className="text-[11px] font-bold text-[#151827]">
+            <div className="mt-3 border-t border-[#e1e7ea] pt-3">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+                <span className="shrink-0 text-[11px] font-bold text-[#151827]">
                   Popular:
                 </span>
                 {popularCategories.map((category) => (
@@ -400,7 +426,7 @@ export function EmployerFindWorkersPage() {
                         currentCategory === category ? null : category,
                       )
                     }
-                    className={`h-5 min-w-[92px] rounded-[2px] px-3 text-[9px] font-bold transition ${
+                    className={`shrink-0 h-6 rounded-[2px] px-3 text-[9.5px] font-bold transition ${
                       activeCategory === category
                         ? "bg-[#00a99d] text-white"
                         : "bg-[#dcfbff] text-[#008c9a] hover:bg-[#c7f6fb]"
@@ -431,6 +457,8 @@ export function EmployerFindWorkersPage() {
                     key={professional.name}
                     professional={professional}
                     index={index}
+                    onBook={(p) => setSelectedWorker(p)}
+                    onViewProfile={(p) => setSelectedProfileWorker(p)}
                   />
                 ))
               ) : (
@@ -447,16 +475,63 @@ export function EmployerFindWorkersPage() {
 
             <div className="mt-10 flex justify-end border-t border-[#e1e7ea] pt-3">
               <Link
-                href="/register/client"
+                href="/dashboard/employer/create"
                 className="inline-flex h-7 items-center gap-1 rounded-full bg-[#00a65a] px-3.5 text-[10px] font-bold text-white shadow-sm transition hover:bg-[#008f4d]"
               >
                 <span className="text-sm leading-none">+</span>
-                Post a job
+                Post a Job
               </Link>
             </div>
           </div>
         </section>
       </div>
+
+      {selectedProfileWorker && (
+        <WorkerProfileModal
+          isOpen={!!selectedProfileWorker}
+          onClose={() => setSelectedProfileWorker(null)}
+          worker={{
+            id: `w_${selectedProfileWorker.name.toLowerCase().replace(/\s+/g, "_")}`,
+            name: selectedProfileWorker.name,
+            trade: selectedProfileWorker.category,
+            role: selectedProfileWorker.role,
+            hourlyRate: 350,
+            currency: "ETB",
+            location: selectedProfileWorker.location,
+            rating: selectedProfileWorker.rating,
+            reviews: selectedProfileWorker.reviews,
+            verified: selectedProfileWorker.verified,
+            isEmergencyAvailable: selectedProfileWorker.verified,
+          }}
+          onBookNow={() => {
+            const p = selectedProfileWorker;
+            setSelectedProfileWorker(null);
+            setSelectedWorker(p);
+          }}
+        />
+      )}
+
+      {selectedWorker && (
+        <BookWorkerModal
+          isOpen={!!selectedWorker}
+          onClose={() => setSelectedWorker(null)}
+          worker={{
+            id: `w_${selectedWorker.name.toLowerCase().replace(/\s+/g, "_")}`,
+            name: selectedWorker.name,
+            trade: selectedWorker.category,
+            hourlyRate: 350,
+            currency: "ETB",
+            location: selectedWorker.location,
+            rating: selectedWorker.rating,
+            reviews: selectedWorker.reviews,
+            verified: selectedWorker.verified,
+            isEmergencyAvailable: selectedWorker.verified,
+          }}
+          onBookingSuccess={() => {
+            setSelectedWorker(null);
+          }}
+        />
+      )}
     </main>
   );
 }

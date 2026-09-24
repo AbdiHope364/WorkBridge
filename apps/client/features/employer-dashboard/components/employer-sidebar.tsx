@@ -128,6 +128,21 @@ const Icons = {
       <line x1="4" x2="20" y1="18" y2="18" />
     </svg>
   ),
+  Support: (p: IconProps) => (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...p}
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+      <line x1="12" y1="17" x2="12.01" y2="17" />
+    </svg>
+  ),
   XClose: (p: IconProps) => (
     <svg
       viewBox="0 0 24 24"
@@ -164,9 +179,14 @@ const navigationItems = [
     icon: Icons.Profile,
   },
   {
-    label: "Find Workers",
+    label: "Book Workers",
     href: "/dashboard/employer/find-workers",
     icon: Icons.Users,
+  },
+  {
+    label: "Help & Support",
+    href: "/dashboard/employer/support",
+    icon: Icons.Support,
   },
 ];
 
@@ -179,7 +199,7 @@ const mobileBottomNavItems = [
 ];
 
 export function EmployerSidebar() {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -276,15 +296,61 @@ export function EmployerSidebar() {
           })}
         </nav>
 
-        {/* Footer / Logout */}
-        <div className="mt-auto border-t border-white/10 p-4 shrink-0">
+        {/* User Card & Footer / Logout */}
+        <div className="mt-auto border-t border-white/10 p-4 shrink-0 space-y-3">
+          <div className="flex items-center gap-3 px-1">
+            <div className="relative shrink-0">
+              <div
+                className={`w-9 h-9 rounded-full flex items-center justify-center font-black text-xs shadow-md transition-all ${
+                  user?.subscriptionTier === "pro_monthly" || user?.subscriptionTier === "pro_annual" || (user as any)?.isPro
+                    ? "bg-gradient-to-tr from-indigo-400 via-purple-400 via-pink-400 to-amber-300 p-[2.5px]"
+                    : "bg-teal-600 text-white"
+                }`}
+              >
+                <div
+                  className={`w-full h-full rounded-full flex items-center justify-center font-extrabold ${
+                    user?.subscriptionTier === "pro_monthly" || user?.subscriptionTier === "pro_annual" || (user as any)?.isPro
+                      ? "bg-slate-950 text-amber-300 border border-slate-800"
+                      : "bg-teal-600 text-white"
+                  }`}
+                >
+                  {user?.fullName?.charAt(0) || "E"}
+                </div>
+              </div>
+              {(user?.subscriptionTier === "pro_monthly" || user?.subscriptionTier === "pro_annual" || (user as any)?.isPro) && (
+                <span
+                  className="absolute -bottom-1 -right-1 bg-linear-to-r from-amber-400 via-purple-500 to-indigo-500 p-0.5 rounded-full ring-2 ring-[#172653] shadow-md"
+                  title="Pro Member"
+                >
+                  <svg className="w-3 h-3 text-white fill-current" viewBox="0 0 24 24">
+                    <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6.4-4.8-6.4 4.8 2.4-7.2-6-4.8h7.6z" />
+                  </svg>
+                </span>
+              )}
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-bold text-white truncate">
+                {user?.fullName || "Employer Partner"}
+              </p>
+              {user?.subscriptionTier === "pro_monthly" || user?.subscriptionTier === "pro_annual" || (user as any)?.isPro ? (
+                <p className="text-[10px] font-extrabold bg-gradient-to-r from-amber-300 via-purple-300 to-indigo-300 bg-clip-text text-transparent truncate">
+                  ✨ Gemini Pro Client
+                </p>
+              ) : (
+                <p className="text-[10px] text-teal-300 font-semibold truncate">
+                  Verified Client
+                </p>
+              )}
+            </div>
+          </div>
+
           <button
             type="button"
             onClick={handleLogout}
             disabled={isLoggingOut}
-            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-slate-300 transition-all hover:bg-red-500/20 hover:text-red-400 disabled:opacity-50"
+            className="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-300 transition-all hover:bg-red-500/20 hover:text-red-400 disabled:opacity-50"
           >
-            <Icons.Logout className="h-5 w-5" />
+            <Icons.Logout className="h-4 w-4" />
             {isLoggingOut ? "Signing out..." : "Sign Out"}
           </button>
         </div>

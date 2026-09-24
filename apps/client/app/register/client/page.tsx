@@ -13,35 +13,32 @@ export default function RegisterClientPage() {
           <section className="hidden rounded-4xl border border-slate-200 bg-slate-950/5 p-10 text-white shadow-lg lg:block">
             <div className="space-y-8">
               <div className="rounded-3xl bg-emerald-700 p-8 shadow-inner shadow-slate-900/5">
-                <p className="text-sm uppercase tracking-[0.24em] text-emerald-500">
-                  Employer onboarding
+                <p className="text-sm uppercase tracking-[0.24em] text-emerald-200 font-bold">
+                  Homeowner Account
                 </p>
                 <h1 className="mt-4 text-3xl font-black tracking-[-0.04em] text-white">
-                  Hire the right talent, faster.
+                  Hire verified tradesmen for your home or project.
                 </h1>
                 <p className="mt-4 text-sm leading-7 text-slate-200">
-                  Build your employer profile and unlock better candidate
-                  matches with a single account.
+                  Connect directly with Fayda-verified electricians, plumbers, painters, and technicians with 0% platform commission.
                 </p>
               </div>
               <ul className="space-y-4 text-sm text-slate-300">
                 <li className="rounded-3xl border border-slate-800/80 bg-slate-950/80 p-5">
                   <strong className="block text-slate-100">
-                    Find the right talent faster
+                    Direct hiring &amp; 0% commission
                   </strong>
                   <span className="mt-2 block text-slate-400">
-                    Create your company profile, publish job openings, and
-                    connect with qualified candidates—all from one place.
+                    Post household jobs, negotiate transparent pricing, and pay workers directly with zero intermediary fee.
                   </span>
                 </li>
 
                 <li className="rounded-3xl border border-slate-800/80 bg-slate-950/80 p-5">
                   <strong className="block text-slate-100">
-                    Trusted employer verification
+                    Fayda National ID Trust &amp; Safety
                   </strong>
                   <span className="mt-2 block text-slate-400">
-                    Verify your email to secure your account and build trust
-                    with job seekers on the platform.
+                    Link your Ethiopian Fayda National ID (FIN) to earn the Verified Homeowner badge and get priority worker responses.
                   </span>
                 </li>
               </ul>
@@ -51,9 +48,9 @@ export default function RegisterClientPage() {
             <Suspense fallback={<div className="flex items-center justify-center min-h-50">Loading...</div>}>
               <RegisterForm
                 role="employer"
-                title="Create your employer account"
-                subtitle="Use your work email to set up a client account and verify your team access."
-                buttonLabel="Create employer account"
+                title="Create your Homeowner Account"
+                subtitle="Set up your account in seconds to hire verified skilled workers in your neighborhood."
+                buttonLabel="Create Homeowner Account"
               />
             </Suspense>
             <p className="text-sm text-slate-500 p-4">

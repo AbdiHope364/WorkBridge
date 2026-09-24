@@ -16,6 +16,12 @@ interface WorkerToBook {
   location?: string;
   phone?: string;
   isEmergencyAvailable?: boolean;
+  rating?: number;
+  reviews?: number;
+  bio?: string;
+  verified?: boolean;
+  skills?: string[];
+  experienceYears?: number;
 }
 
 interface BookWorkerModalProps {
@@ -44,6 +50,7 @@ export function BookWorkerModal({
   worker,
   onBookingSuccess,
 }: BookWorkerModalProps) {
+  const [activeTab, setActiveTab] = useState<"booking" | "profile">("booking");
   const [serviceTitle, setServiceTitle] = useState("");
   const [category, setCategory] = useState<string>(worker.trade || "Electrician");
   const [description, setDescription] = useState("");
@@ -91,6 +98,7 @@ export function BookWorkerModal({
     try {
       await api.bookings.createBooking({
         workerId: worker.id,
+        workerName: worker.name,
         serviceTitle: serviceTitle.trim(),
         category,
         description: description.trim(),
@@ -119,50 +127,173 @@ export function BookWorkerModal({
     }
   };
 
+  const defaultSkills = worker.skills || [
+    worker.trade || "Specialized Trade",
+    "Fayda National ID Verified",
+    "Emergency Support",
+    "Direct On-Site Service",
+  ];
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm animate-in fade-in">
       <div className="relative w-full max-w-2xl overflow-hidden rounded-3xl bg-white shadow-2xl border border-slate-100 max-h-[90vh] flex flex-col">
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/80 px-6 py-4">
-          <div className="flex items-center gap-3">
-            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-emerald-50">
-              {worker.avatar ? (
-                <Image
-                  src={worker.avatar}
-                  alt={worker.name}
-                  fill
-                  unoptimized
-                  className="object-cover"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center font-bold text-emerald-700">
-                  {worker.name.charAt(0)}
+        {/* Header with Worker Summary & Tab Navigation */}
+        <div className="border-b border-slate-100 bg-slate-50/80 px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setActiveTab(activeTab === "booking" ? "profile" : "booking")}
+                className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-teal-200/60 bg-gradient-to-tr from-teal-700 via-emerald-600 to-cyan-600 text-left transition hover:opacity-90 cursor-pointer shadow-xs font-black text-white text-base"
+                title="Click to view worker profile"
+              >
+                {worker.avatar ? (
+                  <Image
+                    src={worker.avatar}
+                    alt={worker.name}
+                    fill
+                    unoptimized
+                    className="object-cover"
+                  />
+                ) : (
+                  <span>
+                    {worker.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .slice(0, 2)
+                      .toUpperCase()}
+                  </span>
+                )}
+              </button>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-lg font-black text-slate-950">{worker.name}</h2>
+                  <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800">
+                    {worker.trade || "Skilled Specialist"}
+                  </span>
+                  {worker.verified !== false && (
+                    <span className="inline-flex items-center justify-center h-4 w-4 rounded-full bg-teal-600 text-white text-[9px] font-bold" title="Fayda ID Verified">
+                      ✓
+                    </span>
+                  )}
                 </div>
-              )}
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-lg font-black text-slate-950">Book {worker.name}</h2>
-                <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800">
-                  {worker.trade || "Skilled Specialist"}
-                </span>
+                <p className="text-xs text-slate-500">
+                  Rate: {worker.hourlyRate || 350} {worker.currency || "ETB"}/hr • Location: {worker.location || "Addis Ababa"}
+                </p>
               </div>
-              <p className="text-xs text-slate-500">
-                Rate: {worker.hourlyRate || 350} {worker.currency || "ETB"}/hr • Location: {worker.location || "Addis Ababa"}
-              </p>
             </div>
+            <button
+              onClick={onClose}
+              className="rounded-full p-2 text-slate-400 hover:bg-slate-200 hover:text-slate-700 transition cursor-pointer"
+              aria-label="Close modal"
+            >
+              ✕
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="rounded-full p-2 text-slate-400 hover:bg-slate-200 hover:text-slate-700 transition"
-          >
-            ✕
-          </button>
+
+          {/* Modal Header Tabs: Booking Request vs Worker Profile */}
+          <div className="mt-4 flex items-center gap-2 border-t border-slate-200/60 pt-3">
+            <button
+              type="button"
+              onClick={() => setActiveTab("booking")}
+              className={`flex-1 rounded-xl py-1.5 text-xs font-bold transition cursor-pointer ${
+                activeTab === "booking"
+                  ? "bg-emerald-600 text-white shadow-xs"
+                  : "bg-slate-200/60 text-slate-700 hover:bg-slate-200"
+              }`}
+            >
+              📝 Create Booking Request
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("profile")}
+              className={`flex-1 rounded-xl py-1.5 text-xs font-bold transition cursor-pointer ${
+                activeTab === "profile"
+                  ? "bg-emerald-600 text-white shadow-xs"
+                  : "bg-slate-200/60 text-slate-700 hover:bg-slate-200"
+              }`}
+            >
+              👤 View User Profile
+            </button>
+          </div>
         </div>
 
-        {/* Form Body */}
+        {/* Modal Body */}
         <div className="overflow-y-auto p-6">
-          {success ? (
+          {activeTab === "profile" ? (
+            /* User Profile Tab View */
+            <div className="space-y-5">
+              {/* Profile Top Banner / Card */}
+              <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-900 via-teal-950 to-emerald-900 p-5 text-white shadow-md">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-[10px] font-bold text-emerald-300 border border-emerald-400/30">
+                      🛡️ Fayda ID Verified Worker
+                    </span>
+                    <h3 className="mt-2 text-lg font-black">{worker.name}</h3>
+                    <p className="text-xs text-teal-200 font-semibold">{worker.trade || "Skilled Specialist"}</p>
+                    <p className="mt-1 text-xs text-slate-300">📍 {worker.location || "Addis Ababa"}</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xl font-black text-emerald-400">
+                      {worker.hourlyRate || 350} <span className="text-xs font-normal text-slate-300">ETB/hr</span>
+                    </div>
+                    <div className="mt-1 flex items-center justify-end gap-1 text-xs text-amber-400 font-bold">
+                      ★ {worker.rating?.toFixed(1) || "4.9"} ({worker.reviews || 190} reviews)
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bio & Details */}
+              <div className="rounded-2xl bg-slate-50 p-4 border border-slate-100">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                  Worker Overview & Bio
+                </h4>
+                <p className="text-xs leading-relaxed text-slate-600 font-medium">
+                  {worker.bio ||
+                    `${worker.name} is a top-rated, certified trade professional based in ${
+                      worker.location || "Addis Ababa"
+                    }. Specializing in ${
+                      worker.trade || "residential and commercial services"
+                    } with over ${worker.experienceYears || 6} years of field experience and 0% commission service guarantee.`}
+                </p>
+              </div>
+
+              {/* Verified Credentials & Skills */}
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                  Skills & Verified Credentials
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {defaultSkills.map((sk, idx) => (
+                    <span
+                      key={idx}
+                      className="rounded-xl bg-teal-50 border border-teal-200 px-3 py-1 text-xs font-bold text-teal-900"
+                    >
+                      ✓ {sk}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quick Actions inside Profile Tab */}
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+                <Button type="button" variant="outline" onClick={onClose}>
+                  Close
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() => setActiveTab("booking")}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold"
+                >
+                  Proceed to Send Booking Request →
+                </Button>
+              </div>
+            </div>
+          ) : success ? (
+            /* Booking Request Success View */
             <div className="flex flex-col items-center justify-center py-10 text-center">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 mb-4 animate-bounce">
                 <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -175,6 +306,7 @@ export function BookWorkerModal({
               </p>
             </div>
           ) : (
+            /* Booking Request Form View */
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
                 <div className="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-xs font-semibold text-rose-700">
@@ -337,4 +469,3 @@ export function BookWorkerModal({
     </div>
   );
 }
-

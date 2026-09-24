@@ -310,7 +310,7 @@ function CompanyOnboardingForm({
           label="Industry"
           value={fields.industry}
           onChange={(v) => onChange({ industry: v })}
-          placeholder="e.g. Software Development"
+          placeholder="e.g. Property Management & Maintenance"
         />
         <SelectField
           label="Company Size"
@@ -451,7 +451,7 @@ function IndividualOnboardingForm({
           label="Occupation"
           value={fields.occupation}
           onChange={(v) => onChange({ occupation: v })}
-          placeholder="e.g. Software Engineer"
+          placeholder="e.g. Homeowner / Property Owner"
         />
         <SelectField
           label="Gender"

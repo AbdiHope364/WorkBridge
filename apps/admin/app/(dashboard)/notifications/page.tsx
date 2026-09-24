@@ -172,14 +172,14 @@ export default function NotificationsPage() {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
       {/* Page Header */}
-      <header className="flex-shrink-0 px-10 py-6 bg-[#F8FAFC] flex items-center justify-between">
+      <header className="shrink-0 px-4 sm:px-6 lg:px-10 py-4 sm:py-6 bg-[#F8FAFC] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
+          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-tight">
             Notifications
           </h1>
-          <p className="text-slate-500 font-medium text-sm mt-0.5">
+          <p className="text-slate-500 font-medium text-xs sm:text-sm mt-0.5">
             Stay updated on platform activity
             {unreadCount > 0 && (
               <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-600 uppercase tracking-wider">
@@ -191,7 +191,7 @@ export default function NotificationsPage() {
         {unreadCount > 0 && (
           <button
             onClick={markAllRead}
-            className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-black text-slate-600 hover:bg-slate-50 transition-all active:scale-95"
+            className="flex items-center justify-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-black text-slate-600 hover:bg-slate-50 transition-all active:scale-95 shadow-xs cursor-pointer w-fit"
           >
             <CheckCircle2 className="w-4 h-4 text-emerald-500" />
             Mark All as Read
@@ -199,10 +199,10 @@ export default function NotificationsPage() {
         )}
       </header>
 
-      <main className="flex-1 min-h-0 px-10 pb-10">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full">
+      <main className="flex-1 px-4 sm:px-6 lg:px-10 pb-6 sm:pb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Left: Filters sidebar */}
-          <div className="lg:col-span-1 space-y-4 sticky top-0 self-start max-h-[calc(100vh-120px)] overflow-y-auto pb-4">
+          <div className="lg:col-span-1 space-y-4">
             {/* Quick Filters */}
             <div className="bg-white rounded-[1.5rem] p-4 shadow-sm border border-slate-100">
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 px-2">

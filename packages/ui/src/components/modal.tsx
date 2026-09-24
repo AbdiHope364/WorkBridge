@@ -52,21 +52,21 @@ export function Modal({
   };
 
   return createPortal(
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs">
       <div
         className="fixed inset-0"
         onClick={onClose}
         aria-hidden="true"
       />
       <div
-        className={`relative z-10 w-full ${sizeClasses[size]} rounded-3xl bg-white shadow-2xl border border-slate-100 overflow-hidden`}
+        className={`relative z-10 w-full ${sizeClasses[size]} rounded-2xl sm:rounded-3xl bg-white shadow-2xl border border-slate-100 overflow-hidden my-auto`}
         role="dialog"
         aria-modal="true"
       >
         {(title || closeButton) && (
-          <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+          <div className="flex items-center justify-between border-b border-slate-100 px-4 sm:px-6 py-3 sm:py-3.5">
             {title ? (
-              <h2 className="text-lg font-bold text-slate-900">{title}</h2>
+              <h2 className="text-base sm:text-lg font-bold text-slate-900">{title}</h2>
             ) : (
               <div />
             )}
@@ -78,7 +78,7 @@ export function Modal({
                 aria-label="Close modal"
               >
                 <svg
-                  className="h-5 w-5"
+                  className="h-4.5 w-4.5 sm:h-5 sm:w-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -94,7 +94,7 @@ export function Modal({
             )}
           </div>
         )}
-        <div className="px-6 py-4 max-h-[85vh] overflow-y-auto">{children}</div>
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 max-h-[78vh] sm:max-h-[82vh] overflow-y-auto">{children}</div>
       </div>
     </div>,
     document.body

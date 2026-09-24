@@ -49,6 +49,7 @@ export interface Booking {
 
 export interface CreateBookingDto {
   workerId: string;
+  workerName?: string;
   serviceTitle: string;
   category: string;
   description: string;

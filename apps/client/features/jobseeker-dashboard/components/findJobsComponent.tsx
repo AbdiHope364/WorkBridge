@@ -82,9 +82,9 @@ export function JobsPage() {
   return (
     <main className="min-h-screen max-w-full bg-slate-50 text-slate-900">
       <section className="bg-slate-50 py-6 md:py-10">
-        <Container size="xl" className="max-w-6xl px-4 sm:px-6">
-          <div className="rounded-2xl md:rounded-3xl border border-slate-200 bg-white p-4 sm:p-6 md:p-8 shadow-sm">
-            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4 items-end">
+        <Container size="xl" className="w-full px-4 sm:px-6">
+          <div className="rounded-2xl md:rounded-3xl border border-slate-200 bg-white p-3.5 sm:p-6 md:p-8 shadow-sm">
+            <div className="grid gap-3 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-end">
               <Input
                 label="Search"
                 placeholder="Job title or keywords..."
@@ -133,7 +133,7 @@ export function JobsPage() {
             </div>
 
             {/* --- QUICK TAG BAR --- */}
-            <div className="mt-6 sm:mt-8 flex items-center gap-2 pt-4 sm:pt-6 border-t border-slate-100 overflow-x-auto pb-2 no-scrollbar">
+            <div className="mt-4 sm:mt-8 flex items-center gap-2 pt-3 sm:pt-6 border-t border-slate-100 overflow-x-auto pb-1 no-scrollbar">
               <span className="text-[10px] font-black uppercase text-slate-400 shrink-0 mr-1">
                 Quick Filter:
               </span>

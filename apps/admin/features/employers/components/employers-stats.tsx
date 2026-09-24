@@ -10,6 +10,7 @@ import {
   ArrowDownRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { api } from "@/lib/api";
 
 interface StatCardProps {
   label: string;
@@ -55,44 +56,73 @@ function StatCard({
 }
 
 export function EmployersStats() {
-  // TODO: Integrate with real backend to fetch employer stats
+  const [counts, setCounts] = React.useState({
+    total: 0,
+    activeJobs: 0,
+    verified: 0,
+    pending: 0,
+  });
+
+  React.useEffect(() => {
+    let mounted = true;
+    void Promise.all([
+      api.admin.listUsers(),
+      api.admin.listJobs(),
+    ])
+      .then(([users, jobs]) => {
+        if (!mounted) return;
+        const employers = users.filter((u) => u.role === "employer");
+        const verified = employers.filter((u) => u.verified).length;
+        setCounts({
+          total: employers.length,
+          activeJobs: jobs.filter((j) => j.isActive).length,
+          verified,
+          pending: employers.length - verified,
+        });
+      })
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   const stats = [
     {
       label: "Total Employers",
-      value: "1,200",
-      trend: "8.5%",
+      value: counts.total.toLocaleString(),
+      trend: "Live",
       trendType: "up" as const,
       icon: Building2,
       gradient: "bg-gradient-to-br from-[#00D47E] to-[#01B972]",
     },
     {
       label: "Active Jobs",
-      value: "4,200",
-      trend: "12.5%",
+      value: counts.activeJobs.toLocaleString(),
+      trend: "Live",
       trendType: "up" as const,
       icon: Briefcase,
       gradient: "bg-gradient-to-br from-[#4100F2] to-[#2B00A1]",
     },
     {
-      label: "Verified Companies",
-      value: "950",
-      trend: "15.2%",
+      label: "Verified Employers",
+      value: counts.verified.toLocaleString(),
+      trend: "Live",
       trendType: "up" as const,
       icon: CheckCircle2,
       gradient: "bg-gradient-to-br from-[#C41AF7] to-[#8E10B3]",
     },
     {
-      label: "New Requests",
-      value: "45",
-      trend: "2.5%",
-      trendType: "down" as const,
+      label: "Pending Verification",
+      value: counts.pending.toLocaleString(),
+      trend: "Live",
+      trendType: "up" as const,
       icon: Users,
       gradient: "bg-gradient-to-br from-[#FFA000] to-[#E67E00]",
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-10 mb-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 px-4 sm:px-6 lg:px-10 mb-6 sm:mb-8">
       {stats.map((stat) => (
         <StatCard key={stat.label} {...stat} />
       ))}

@@ -167,7 +167,7 @@ export function RegisterForm({
 
           <CardContent className="space-y-3">
             <Input
-              label={role === "jobseeker" ? "Your Full Name / Trade Name" : "Your Full Name / Company Contact"}
+              label={role === "jobseeker" ? "Your Full Name / Trade Name" : "Your Full Legal Name (Homeowner)"}
               name="fullName"
               type="text"
               autoComplete="name"
@@ -176,7 +176,7 @@ export function RegisterForm({
               onBlur={() => handleBlur("fullName")}
               error={visibleError("fullName")}
               isValid={isFieldValid("fullName")}
-              placeholder={role === "jobseeker" ? "e.g. Dawit Bekele (Electrician)" : "e.g. Sara Haile"}
+              placeholder={role === "jobseeker" ? "e.g. Dawit Bekele (Electrician)" : "e.g. Abebe Bikila (Homeowner)"}
             />
             <Input
               label="Email address"

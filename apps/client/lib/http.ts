@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
 
 export const http = {
   request: async (endpoint: string, options: RequestInit = {}) => {
@@ -8,7 +8,7 @@ export const http = {
       if (endpoint.startsWith('http')) {
         url = endpoint;
       } else if (endpoint.startsWith('/api')) {
-        url = `http://localhost:3001${endpoint}`;
+        url = `http://localhost:4000${endpoint}`;
       } else {
         url = `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
       }
@@ -32,20 +32,20 @@ export const http = {
             jobs: [
               {
                 id: '1',
-                title: 'Software Engineer',
-                company: 'Tech Corp',
-                location: 'Addis Ababa',
-                type: 'Full-time',
-                salary: '40,000 - 60,000 ETB / month',
+                title: 'Emergency Sanitary Plumbing Repair',
+                company: 'Private Residence (Almaz Tefera)',
+                location: 'Bole Atlas, Addis Ababa',
+                type: 'Contract',
+                salary: '4,000 - 6,000 ETB',
                 created_at: new Date().toISOString()
               },
               {
                 id: '2',
-                title: 'Product Manager',
-                company: 'Digital Solutions',
-                location: 'Remote',
+                title: 'Master Electrical Breaker Rewiring',
+                company: 'Acme Facilities',
+                location: 'Kazanchis, Addis Ababa',
                 type: 'Contract',
-                salary: '35,000 - 50,000 ETB / month',
+                salary: '3,500 - 5,000 ETB',
                 created_at: new Date().toISOString()
               }
             ]
@@ -63,20 +63,20 @@ export const http = {
         jobs: [
           {
             id: '1',
-            title: 'Software Engineer (Mock)',
-            company: 'Tech Corp',
-            location: 'Addis Ababa',
-            type: 'Full-time',
-            salary: '40,000 - 60,000 ETB / month',
+            title: 'Emergency Sanitary Plumbing Repair',
+            company: 'Private Residence (Almaz Tefera)',
+            location: 'Bole Atlas, Addis Ababa',
+            type: 'Contract',
+            salary: '4,000 - 6,000 ETB',
             created_at: new Date().toISOString()
           },
           {
             id: '2',
-            title: 'Product Manager (Mock)',
-            company: 'Digital Solutions',
-            location: 'Remote',
+            title: 'Master Electrical Breaker Rewiring',
+            company: 'Acme Facilities',
+            location: 'Kazanchis, Addis Ababa',
             type: 'Contract',
-            salary: '35,000 - 50,000 ETB / month',
+            salary: '3,500 - 5,000 ETB',
             created_at: new Date().toISOString()
           }
         ]

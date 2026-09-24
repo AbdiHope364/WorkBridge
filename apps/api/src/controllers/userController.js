@@ -76,7 +76,8 @@ export const updateUser = async (req, res) => {
     { returnDocument: 'after' }
   );
 
-  res.json({ user: sanitizeUser(updated.value) });
+  const updatedUser = updated?.value !== undefined ? updated.value : updated;
+  res.json({ user: sanitizeUser(updatedUser) });
 };
 
 export const getUserNotifications = async (req, res) => {

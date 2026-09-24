@@ -85,9 +85,9 @@ export function DashboardStats() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-10 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 px-4 sm:px-6 lg:px-10 mb-6 sm:mb-8">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="rounded-[1.5rem] p-6 bg-slate-100 animate-pulse h-32" />
+          <div key={i} className="rounded-2xl p-6 bg-slate-100 animate-pulse h-32" />
         ))}
       </div>
     );
@@ -95,7 +95,7 @@ export function DashboardStats() {
 
   if (error || !stats) {
     return (
-      <div className="px-10 mb-10 text-sm text-rose-600">{error || "No data available."}</div>
+      <div className="px-4 sm:px-6 lg:px-10 mb-6 sm:mb-8 text-sm text-rose-600">{error || "No data available."}</div>
     );
   }
 
@@ -131,7 +131,7 @@ export function DashboardStats() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-10 mb-10">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 px-4 sm:px-6 lg:px-10 mb-6 sm:mb-8">
       {items.map((stat) => (
         <StatCard key={stat.label} {...stat} />
       ))}

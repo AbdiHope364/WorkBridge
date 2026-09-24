@@ -110,9 +110,8 @@ export const createCharge = async (req, res) => {
     return res.status(400).json({ error: 'Amount must be greater than zero.' });
   }
 
-  const payments = await collections.payments.find().toArray();
   const payment = {
-    id: `p${payments.length + 1}`,
+    id: `pay_chg_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
     userId: req.user.id,
     type: 'Charge',
     amount,

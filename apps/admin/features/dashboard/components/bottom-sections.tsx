@@ -54,23 +54,23 @@ export function BottomSections() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-10 pb-8">
-        <div className="bg-white rounded-[1.5rem] p-6 shadow-sm border border-slate-100 h-64 animate-pulse" />
-        <div className="bg-white rounded-[1.5rem] p-6 shadow-sm border border-slate-100 h-64 animate-pulse" />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 sm:px-6 lg:px-10 pb-6 sm:pb-8">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 h-64 animate-pulse" />
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 h-64 animate-pulse" />
       </div>
     );
   }
 
   if (error) {
-    return <div className="px-10 pb-8 text-sm text-rose-600">{error}</div>;
+    return <div className="px-4 sm:px-6 lg:px-10 pb-6 sm:pb-8 text-sm text-rose-600">{error}</div>;
   }
 
   const totalVerifications = verificationData.reduce((sum, item) => sum + item.value, 0);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-10 pb-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 sm:px-6 lg:px-10 pb-6 sm:pb-8">
       {/* Top Job Categories */}
-      <div className="bg-white rounded-[1.5rem] p-6 shadow-sm border border-slate-100">
+      <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-xs border border-slate-100">
         <h3 className="text-lg font-bold text-slate-800 mb-6">
           Top Job Categories
         </h3>

@@ -47,18 +47,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (response) {
         setUser(response);
       }
-    } catch (error) {
-      console.error("Failed to refresh user:", error);
-      if (
-        error instanceof Error &&
-        (error.message.includes("Authorization") ||
-          error.message.includes("token") ||
-          error.message.includes("401"))
-      ) {
-        clearAuthToken();
-        clearSessionCookie();
-        setUser(null);
-      }
+    } catch {
+      // Cleanly purge stale token/cookie when user is not found or token is invalid
+      clearAuthToken();
+      clearSessionCookie();
+      setUser(null);
     }
   };
 

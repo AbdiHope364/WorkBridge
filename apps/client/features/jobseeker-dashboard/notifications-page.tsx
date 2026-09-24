@@ -171,7 +171,7 @@ export function NotificationsPage() {
         <JobseekerSidebar />
 
         <section className="min-w-0 flex-1 overflow-y-auto px-4 py-6 sm:px-6 md:px-9 pt-16 pb-20 md:pt-8 md:pb-8">
-          <div className="max-w-[1040px]">
+          <div className="w-full">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight text-slate-950">

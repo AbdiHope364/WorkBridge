@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { LandingHeader } from "../landing/components/landing-header";
 import { LandingFooter } from "../landing/components/landing-footer";
 import { BookWorkerModal } from "../bookings/components/book-worker-modal";
+import { WorkerProfileModal } from "../bookings/components/worker-profile-modal";
 
 const filterTabs = ["All Workers", "Nearby", "Top Rated", "Verified Only", "Emergency Callout"];
 
@@ -16,8 +17,8 @@ const popularCategories = [
   "Construction",
   "Painting",
   "Welding",
-  "Developers",
-  "Designing",
+  "Appliance Repair",
+  "Home Cleaning",
 ];
 
 interface Professional {
@@ -136,28 +137,29 @@ const professionals: Professional[] = [
   },
   {
     id: "u1",
-    name: "Alex Johnson",
-    role: "Senior Full-Stack Developer",
-    trade: "Software Engineer",
-    category: "Developers",
-    location: "Addis Ababa / Remote",
+    name: "Alemu Tefera",
+    role: "Master Painter & Interior Decorator",
+    trade: "Painter",
+    category: "Painting",
+    location: "Addis Ababa, Old Airport",
     rating: 4.9,
     reviews: 184,
-    hourlyRate: 450,
+    hourlyRate: 280,
     currency: "ETB",
     nearby: true,
     verified: true,
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
   },
   {
     id: "u_seeker_2",
-    name: "Bethany Clark",
-    role: "Lead Product & UX/UI Designer",
-    trade: "Product Designer",
-    category: "Designing",
-    location: "Addis Ababa / Remote",
+    name: "Teshale Worku",
+    role: "Appliance Repair & Refrigerator Specialist",
+    trade: "Appliance Repair",
+    category: "Appliance Repair",
+    location: "Addis Ababa, Kazanchis",
     rating: 5.0,
     reviews: 156,
-    hourlyRate: 550,
+    hourlyRate: 320,
     currency: "ETB",
     nearby: true,
     verified: true,
@@ -238,6 +240,7 @@ export function FindWorkersPage() {
   const [activeFilter, setActiveFilter] = useState("All Workers");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [selectedWorkerForBooking, setSelectedWorkerForBooking] = useState<Professional | null>(null);
+  const [selectedWorkerForProfile, setSelectedWorkerForProfile] = useState<Professional | null>(null);
 
   const filteredProfessionals = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -311,29 +314,29 @@ export function FindWorkersPage() {
           </div>
 
           {/* Search bar */}
-          <div className="mt-8">
-            <h2 className="text-base font-bold text-[#050816]">
+          <div className="mt-6 sm:mt-8">
+            <h2 className="text-sm sm:text-base font-bold text-[#050816]">
               Search For Physical & Technical Specialists
             </h2>
 
-            <label className="mt-2 flex h-12 items-center gap-3 rounded-2xl border border-[#b9d8df] bg-white px-4 text-[#98a0aa] shadow-sm">
+            <label className="mt-2 flex h-10 sm:h-12 items-center gap-2.5 sm:gap-3 rounded-xl sm:rounded-2xl border border-[#b9d8df] bg-white px-3.5 sm:px-4 text-[#98a0aa] shadow-sm">
               <SearchIcon />
               <input
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search electrician, plumber, carpenter, HVAC, wiring leak repair..."
-                className="h-full w-full bg-transparent text-sm font-medium text-[#151827] outline-none placeholder:text-[#98a0aa]"
+                className="h-full w-full bg-transparent text-xs sm:text-sm font-medium text-[#151827] outline-none placeholder:text-[#98a0aa]"
               />
             </label>
 
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-2.5 sm:mt-3 flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 no-scrollbar">
               {filterTabs.map((tab) => (
                 <button
                   key={tab}
                   type="button"
                   onClick={() => setActiveFilter(tab)}
-                  className={`h-8 rounded-full px-4 text-xs font-bold transition ${
+                  className={`shrink-0 h-7 sm:h-8 rounded-full px-3 sm:px-4 text-[11px] sm:text-xs font-bold transition ${
                     activeFilter === tab
                       ? "bg-[#00a99d] text-white shadow-sm"
                       : "bg-white text-[#717882] border border-slate-200 hover:bg-[#d7dcdf]"
@@ -346,9 +349,9 @@ export function FindWorkersPage() {
           </div>
 
           {/* Popular trade tags */}
-          <div className="mt-4 border-t border-[#e1e7ea] pt-4">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-bold text-[#151827] mr-1">
+          <div className="mt-3 sm:mt-4 border-t border-[#e1e7ea] pt-3 sm:pt-4">
+            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 no-scrollbar">
+              <span className="text-xs font-bold text-[#151827] mr-1 shrink-0">
                 Popular Trades:
               </span>
               {popularCategories.map((category) => (
@@ -360,7 +363,7 @@ export function FindWorkersPage() {
                       currentCategory === category ? null : category,
                     )
                   }
-                  className={`h-7 rounded-xl px-3.5 text-xs font-bold transition ${
+                  className={`shrink-0 h-6.5 sm:h-7 rounded-xl px-3 sm:px-3.5 text-[11px] sm:text-xs font-bold transition ${
                     activeCategory === category
                       ? "bg-[#00a99d] text-white"
                       : "bg-[#dcfbff] text-[#008c9a] hover:bg-[#c7f6fb]"
@@ -389,13 +392,18 @@ export function FindWorkersPage() {
                   <div>
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-3">
-                        <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+                        <div className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-teal-200/60 bg-gradient-to-tr from-teal-700 via-emerald-600 to-cyan-600 font-black text-white text-base shadow-sm">
                           {worker.avatar ? (
                             <img src={worker.avatar} alt={worker.name} className="h-full w-full object-cover" />
                           ) : (
-                            <div className="flex h-full w-full items-center justify-center font-bold text-slate-700 text-lg">
-                              {worker.name.charAt(0)}
-                            </div>
+                            <span>
+                              {worker.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")
+                                .slice(0, 2)
+                                .toUpperCase()}
+                            </span>
                           )}
                         </div>
 
@@ -434,11 +442,18 @@ export function FindWorkersPage() {
                     )}
                   </div>
 
-                  <div className="mt-5 flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+                  <div className="mt-5 flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedWorkerForProfile(worker)}
+                      className="inline-flex h-9 items-center justify-center rounded-xl border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 shadow-xs transition hover:bg-slate-50 cursor-pointer"
+                    >
+                      View Profile
+                    </button>
                     <button
                       type="button"
                       onClick={() => setSelectedWorkerForBooking(worker)}
-                      className="inline-flex h-9 items-center justify-center rounded-xl bg-emerald-600 px-5 text-xs font-bold text-white shadow-sm transition hover:bg-emerald-700"
+                      className="inline-flex h-9 items-center justify-center rounded-xl bg-emerald-600 px-5 text-xs font-bold text-white shadow-xs transition hover:bg-emerald-700 active:scale-95 cursor-pointer"
                     >
                       Book Service
                     </button>
@@ -459,6 +474,33 @@ export function FindWorkersPage() {
         </div>
       </section>
 
+      {/* Worker Profile Modal */}
+      {selectedWorkerForProfile && (
+        <WorkerProfileModal
+          isOpen={true}
+          onClose={() => setSelectedWorkerForProfile(null)}
+          worker={{
+            id: selectedWorkerForProfile.id,
+            name: selectedWorkerForProfile.name,
+            avatar: selectedWorkerForProfile.avatar,
+            trade: selectedWorkerForProfile.trade,
+            role: selectedWorkerForProfile.role,
+            hourlyRate: selectedWorkerForProfile.hourlyRate,
+            currency: selectedWorkerForProfile.currency,
+            location: selectedWorkerForProfile.location,
+            rating: selectedWorkerForProfile.rating,
+            reviews: selectedWorkerForProfile.reviews,
+            verified: selectedWorkerForProfile.verified,
+            isEmergencyAvailable: selectedWorkerForProfile.isEmergencyAvailable,
+          }}
+          onBookNow={() => {
+            const workerToBook = selectedWorkerForProfile;
+            setSelectedWorkerForProfile(null);
+            setSelectedWorkerForBooking(workerToBook);
+          }}
+        />
+      )}
+
       {/* Booking Modal */}
       {selectedWorkerForBooking && (
         <BookWorkerModal
@@ -472,6 +514,8 @@ export function FindWorkersPage() {
             hourlyRate: selectedWorkerForBooking.hourlyRate,
             currency: selectedWorkerForBooking.currency,
             location: selectedWorkerForBooking.location,
+            rating: selectedWorkerForBooking.rating,
+            reviews: selectedWorkerForBooking.reviews,
             isEmergencyAvailable: selectedWorkerForBooking.isEmergencyAvailable,
           }}
           onBookingSuccess={() => {

@@ -38,8 +38,8 @@ export const mockNotifications = [
   {
     id: 'n1',
     userId: 'u1',
-    title: 'Application Viewed',
-    message: 'Acme Corporation viewed your application for Senior Frontend Developer.',
+    title: 'Estimate Viewed',
+    message: 'Almaz Tefera viewed your estimate for Villa Wall Painting & Plastering.',
     type: 'application',
     category: 'job',
     isRead: true,
@@ -50,8 +50,8 @@ export const mockNotifications = [
   {
     id: 'n2',
     userId: 'u2',
-    title: 'New Candidate Applied',
-    message: 'Alex Johnson applied for Senior Frontend Developer.',
+    title: 'New Artisan Quotation',
+    message: 'Kebede Kassaye submitted a quote for Bathroom Sanitary Plumbing.',
     type: 'application',
     category: 'job',
     isRead: false,

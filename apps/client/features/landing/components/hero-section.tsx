@@ -5,10 +5,10 @@ import Link from "next/link";
 import { Container } from "@repo/ui/container";
 
 const stats = [
-  { value: "10K+", label: "Jobs Posted" },
-  { value: "3K+", label: "Companies Hiring" },
-  { value: "5K+", label: "Active Job Seekers" },
-  { value: "95%", label: "Successful Matches" },
+  { value: "10K+", label: "Households Served" },
+  { value: "3K+", label: "Vetted Artisans" },
+  { value: "15-Min", label: "Proximity Dispatch" },
+  { value: "98%", label: "Satisfied House Calls" },
 ];
 
 export function HeroSection() {
@@ -18,29 +18,30 @@ export function HeroSection() {
         <div className="grid items-center gap-6 lg:gap-10 lg:grid-cols-2">
           {/* Left - Text Content */}
           <div className="order-2 lg:order-1 text-center lg:text-left flex flex-col items-center lg:items-start">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3.5 py-1 text-xs font-bold text-emerald-700 border border-emerald-200">
+              <span>🏡</span> Ethiopia’s #1 Homeowner & Trade Artisan Marketplace
+            </div>
+
             <h1 className="text-2xl sm:text-4xl md:text-5xl font-black leading-[1.15] tracking-tight text-slate-950 max-w-xl">
-              Hire top talent or find your{" "}
-              <span className="text-emerald-600">dream job</span> in Ethiopia.
+              Hire verified <span className="text-emerald-600">Home Artisans</span> & trade experts in Ethiopia.
             </h1>
 
             <p className="mt-2.5 sm:mt-4 text-sm sm:text-base md:text-lg leading-relaxed text-slate-700 max-w-lg">
-              WorkBridge connects skilled workers and employers across Ethiopia.
-              Find trusted professionals or discover new job opportunities
-              quickly and securely.
+              WorkBridge connects Ethiopian homeowners directly with vetted plumbers, electricians, painters, carpenters, and appliance repairers. Fast house calls, transparent rates & 0% homeowner fee.
             </p>
 
             <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
               <Link
-                href="/jobs"
-                className="inline-flex items-center justify-center w-full sm:w-auto rounded-xl bg-emerald-600 hover:bg-emerald-700 px-6 py-3 text-sm sm:text-base font-bold text-white transition-all shadow-md hover:shadow-emerald-500/20 active:scale-95"
+                href="/dashboard/employer/create"
+                className="inline-flex items-center justify-center w-full sm:w-auto rounded-xl bg-emerald-600 hover:bg-emerald-700 px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all shadow-md hover:shadow-emerald-500/20 active:scale-95 gap-2"
               >
-                Find Jobs
+                <span>🏡 Hire Home Artisan</span>
               </Link>
               <Link
-                href="/dashboard/employer"
-                className="inline-flex items-center justify-center w-full sm:w-auto rounded-xl bg-slate-950 hover:bg-slate-800 px-6 py-3 text-sm sm:text-base font-bold text-white transition-all shadow-md active:scale-95"
+                href="/find-workers"
+                className="inline-flex items-center justify-center w-full sm:w-auto rounded-xl bg-slate-950 hover:bg-slate-800 px-6 py-3.5 text-sm sm:text-base font-bold text-white transition-all shadow-md active:scale-95 gap-2"
               >
-                Hire Workers
+                <span>🛠️ Browse Vetted Tradesmen</span>
               </Link>
             </div>
           </div>
@@ -51,7 +52,7 @@ export function HeroSection() {
               <div className="relative w-full aspect-video sm:aspect-4/3 max-h-[300px]">
                 <Image
                   src="/hero-image.png"
-                  alt="Professionals looking for jobs and talent"
+                  alt="Ethiopian Homeowner hiring skilled trade artisan"
                   fill
                   className="object-contain"
                   priority
